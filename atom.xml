@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
-    <title>Gridea</title>
-    <updated>2019-08-10T07:05:09.305Z</updated>
+    <title>Evangelion</title>
+    <updated>2019-08-10T07:15:32.744Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
+    <subtitle>Everyone Can (Not) Comprehend.</subtitle>
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2019, Gridea</rights>
+    <rights>All rights reserved 2019, Evangelion</rights>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://Zu3zz.github.io/post/hello-gridea</id>
