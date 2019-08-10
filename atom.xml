@@ -1,15 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
-    <title>Evangelion</title>
-    <updated>2019-08-10T07:43:44.599Z</updated>
+    <title>Zu3zz</title>
+    <updated>2019-08-10T08:02:28.447Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
     <subtitle>Everyone Can (Not) Comprehend.</subtitle>
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2019, Evangelion</rights>
+    <rights>All rights reserved 2019, Zu3zz</rights>
+    <entry>
+        <title type="html"><![CDATA[迈出React的第一步]]></title>
+        <id>https://Zu3zz.github.io/post/react-jian-shu</id>
+        <link href="https://Zu3zz.github.io/post/react-jian-shu">
+        </link>
+        <updated>2019-08-10T07:24:14.000Z</updated>
+        <summary type="html"><![CDATA[<p>1.安装npm node.js以获得node.js开发环境,安装yarn作为包管理工具<br>
+2.安装脚手架工具create-react-app<br>
+3.使用脚手架工具启动一个react项目......</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>1.安装npm node.js以获得node.js开发环境,安装yarn作为包管理工具<br>
+2.安装脚手架工具create-react-app<br>
+3.使用脚手架工具启动一个react项目......</p>
+<!-- more -->
+<h2 id="正式开始开发">正式开始开发</h2>
+<p>1.在入口文件 index.js添加<br>
+<code>import React from ‘react’</code><br>
+是为了react能够支持JSX语法</p>
+<p>2.<code>import App from './APP</code><br>
+App中A必须大写 JSX语法不支持app小写<br>
+所有渲染内容挂载到root节点上</p>
+<p>3.一个组件中render返回的内容必须整体被包裹在div中<br>
+<code>import { Fragment } from 'react'</code><br>
+Fragment用作占位符<br>
+用作占位符替代最外层的标签<br>
+但是不会再页面中显示</p>
+<p>4.this.xxxxxxxxxx.bind(this)为此组件变更作用域<br>
+Bind方法放在constructor里面 可以只执行一次 提升性能<br>
+改变state数据值 使用setstate方法</p>
+<h3 id="关于虚拟dom">关于虚拟DOM</h3>
+<p>JSX -&gt;createElement -&gt;虚拟DOM(js对象) -&gt;真实DOM<br>
+虚拟DOM比对 DIFF算法 不要用index作key值 因为index会随着组件删除被改变<br>
+setstate有延时 可以render多个改变的状态<br>
+Ref方法 尽量不用 获取DOM<br>
+Setstate异步执行 下一个函数放在后面的回调函数里</p>
+<h3 id="关于生命周期函数">关于生命周期函数</h3>
+<p>在某一个时刻 组件会自动调用执行的函数<br>
+mounting过程：<br>
+1.componentWillMount挂载之前<br>
+2.render<br>
+3.componentDidMount挂载之后</p>
+<p>initialization过程：<br>
+Setup props and state</p>
+<p>updation过程 ：<br>
+props：<br>
+子组件接受参数 但是如果第一次存在于父组件中 不会触发<br>
+如果已经之前存在于父组件里 就会触发<br>
+componentsWillReceiveProps<br>
+shouldComponentUpdate (true/false)<br>
+componentWillUpdate (true)<br>
+Render()方法<br>
+componentDidUpdate()方法</p>
+<p>States:<br>
+shouldComponentUpdate true/false<br>
+componentWillUpdate (true)<br>
+Render<br>
+componentDidUpdate</p>
+<p>unmounting过程：<br>
+componentWillUnmount<br>
+把组件从页面中去除</p>
+<h3 id="关于提高性能">关于提高性能</h3>
+<p>借助shouldComponentUpdate的方法 可以不用每次输入文本内容都重新渲染子组件</p>
+<pre><code class="language-javascript">shouldComponentUpdate(nextProps, nextState, nextContext) {
+  if (nextProps.content !== this.props.content) {
+    return true;
+  } else {
+    return false;
+  }
+}
+</code></pre>
+<p>Ajax请求写在componentDidMount函数中 写在只执行一次的函数中<br>
+React中写ajax请求<br>
+首先import axios 利用Charles中的tool 里的map local 新建一个中间件 接受浏览器的请求 返回 桌面上的todolist.json<br>
+拿到res的json内容之后 直接使用setState函数 return一个函数式的声明 将页面中的内容list设置为res中的data数组</p>
+<pre><code class="language-javascript">axios.get('/api/todolist')
+  .then((res)=&gt;{
+    console.log(res.data);
+    this.setState(()=&gt;({
+        list: [...res.data]
+    }))
+  })
+  .catch(()=&gt;{alert('error')})
+</code></pre>
+<p>Tip: 如果要返回对象 不用return 直接函数中返回({aaa:bbb})即可<br>
+另外需要使用es6中的语法 将res.data打散 重新传给list</p>
+<h3 id="关于transition动画">关于transition动画</h3>
+<p>CSS过度效果 transition<br>
+Css动画效果</p>
+<pre><code class="language-css">@keyframs bbb{
+	0%
+	50%
+	100%
+}
+之前就可以直接使用
+.aaa{
+	animation: bbb 2s ease-in;
+}
+</code></pre>
+<p>在animation里面 最后添加<br>
+animation: bbb 2s ease-in forwards forwards能够保存动画最后一帧css的样式<br>
+React-transition-group<br>
+CSSTransion 属性： in 添加标签 timeouot 持续时间 classNames= ‘fade’ fade对应css中的fade unmountOnExit 组件消失时DOM也消失<br>
+onEntered={}里面函数<br>
+Sytle.css里<br>
+fade-enter 刚入场的时候 fade-enter-active 第二个动执行结束 fade-enter-done 执行完成之后<br>
+Fade-exit 刚离开fade-exie-active离开时 fade-exit-done离开完成时<br>
+TransitionGroup写在外部 csstransition 写在dom的外部</p>
+<h3 id="关于ant-design">关于Ant Design</h3>
+<p>antd使用方法:<br>
+<code>yarn add antd</code><br>
+需要什么组件去官网看 需要使用直接先import 再在return里面用<br>
+可以直接在标签里添加style改变样式</p>
+<h3 id="关于redux">关于redux</h3>
+<p><img src="https://Zu3zz.github.io/post-images/1565422272515.png" alt="redux-flow"><br>
+Store相当于图书管理员<br>
+react components相当于借书人<br>
+reducers相当于记录查询的电脑<br>
+action creatores相当于借书人的所有请求</p>
+<h3 id="redux使用流程">Redux使用流程</h3>
+<p>Redux使用流程 首先 <code>yarn add redux</code><br>
+1.然后在src目录下创建store文件夹 在store文件夹下创建index.js 通过使用</p>
+<pre><code class="language-javascript">import { createStore } from 'redux'
+import reducer from './reducer'
+const store = createStore(reducer);
+export default
+</code></pre>
+<p>2.在store目录下创建reducer.js文件</p>
+<pre><code class="language-javascript">const defaultState = {
+	// 数据内容 随便填写
+}
+export default (state = defaultState, action) =&gt; {
+  return state;
+}
+</code></pre>
+<p>这样redux中的store和reducers都分别创建完毕<br>
+reducers可以看做记事本 store可以看做管理员<br>
+3.同时 在totolist.js中 直接引入store中的index.js 可以简写<br>
+<code>import store from ‘./store’;</code><br>
+同时 在constructor中 使用<br>
+<code>this.state = store.getState();</code><br>
+就可以用state拿到store中所有的数据</p>
+<p><strong>reducer可以接受state 但是绝对不能修改state</strong></p>
+<p>在reducer中判断action.type是否=== 然后return newState</p>
+<p>JSON.parse(JSON.stringfy(value)) // javascript深拷贝</p>
+<h3 id="在组件中-使用订阅者模式">在组件中 使用订阅者模式</h3>
+<p><code>store.subscribe(this.handleStoreChange);</code><br>
+只要store发生改变 那么救护执行subscribe中的子函数 handleStoreChange方法</p>
+<p>在handleStoreChange方法中 使用setState方法 重新加载数据 数据就从store中用getState重新获取</p>
+<pre><code class="language-javascript">handleStoreChange() {
+  this.setState(store.getState());
+}
+</code></pre>
+<p>再来一遍 btn上挂载一个方法</p>
+<pre><code class="language-javascript">static handleBtnClick() {
+  const action = {
+    type: 'add_todo_item'
+  };
+  store.dispatch(action);
+}
+</code></pre>
+<p>返回一个action 然后dispatch到store中<br>
+store收到action 交给reducer<br>
+在reducer中 将newState的list push进inputValue</p>
+<p>可以将actionTypes抽离出来放到一个公共文件 actionTypes.js文件中 不用字符串<br>
+也可以将公共的创建action抽离出来 新建一个acitonCreators文件 再在totolist.js文件中引入</p>
+<h3 id="redux补充">redux补充：</h3>
+<p>Store必须是唯一的 只有store能够改变自己的内容 reduer中不可以改变store<br>
+Reducer必须是纯函数 纯函数是指给定固定的输入 就一定会有固定的输出 而且不会有任何副作用<br>
+核心API<br>
+createStore<br>
+store.dispatch<br>
+store.getState<br>
+store.subscribe</p>
+<p>UI组件负责页面渲染 容器组件负责页面逻辑<br>
+Todolist todolisUI 互相之间传递要用的数据 函数<br>
+如果一个组件只有一个render函数 那么就是一个无状态组件<br>
+可以不用class extend 直接用下面的写法</p>
+<pre><code class="language-javascript">const aaa = (props)=&gt; {
+	return (
+		&lt;div&gt;
+	)
+}
+</code></pre>
+<h3 id="关于redux-thunk">关于redux-thunk</h3>
+<p>使用redux-thunk 是redux的中间件 进行ajax请求<br>
+使用多个中间件 参照git官网 redux-devtool-extion 有使用方法<br>
+1.在index.js中先配置</p>
+<pre><code class="language-javascript">import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+  // other store enhancers if any
+);
+const store = createStore(
+  reducer,
+  enhancer
+);
+</code></pre>
+<p>TodoList.js中 action可以从一个对象拓展成一个函数<br>
+函数也可以直接使用store.dispatch(action)触发redux<br>
+在函数中在执行一遍redux的流程  创建action的对象 然后dispatch<br>
+Redux的中间件 指的是action和store之间<br>
+<img src="https://Zu3zz.github.io/post-images/1565423250758.png" alt=""></p>
+<h3 id="redux-saga">redux-saga</h3>
+<p>在store中的index.js文件中<br>
+<code>import createSagaMilddleware from ‘redux-saga’;</code></p>
+<pre><code class="language-javascript">const sagaMiddleware = createSagaMilddleware();
+const enhancer = composeEnhancers(
+  applyMiddleware(sagaMiddleware),
+);
+const store = createStore(
+  reducer,
+  enhancer
+);
+sagaMiddleware.run(todoSagas);
+</code></pre>
+<p>Redux-saga需要额外创造新建一个sagas.js文件 文件中需要定义一个生成器函数 并且将其暴露出来 生成器函数的写法(es6)</p>
+<pre><code class="language-javascript">import { takeEvery } from 'redux-saga/effects';
+function* mySaga() {
+	yield takeEvery(接收到的action,执行的函数(最好也是生成器的形式))
+}
+</code></pre>
+<p>因为已经在index中进行了配置 所以sagas.js也可以接收到派发的action<br>
+执行的生成器函数里 最好不要用promise的写法  直接使用<br>
+function* aaa(){}这样的函数写法<br>
+内部的话<br>
+<code>const res = yield axios.get(url)</code><br>
+可以使用try catch 的方法部捕获错误</p>
+<h3 id="react-redux">React-redux</h3>
+<p>第一个核心API: Provider 能够获取store中的内容供provider中的组件使用<br>
+<code>import { Provider } from ‘react-redux’;</code><br>
+第二个核心API: connect方法<br>
+第一个参数 将state与props映射 第二个 将dispatch与props映射<br>
+<code>export default connect(mapStateToProps,mapDispatchToProps)(TodoList);</code></p>
+<h1 id="项目正式开始">项目正式开始</h1>
+<p>create-react-app 该删的都删掉<br>
+为了管理样式 使用styled-components<br>
+引入全局样式 style.js<br>
+<code>;</code></p>
+<pre><code class="language-javascript">import { createGlobalStyle } from ‘styled-components’
+export const globalStyle = createGlobalStyle`
+123{
+	123
+}
+`
+</code></pre>
+<p>再到子组件中以组件的形式包裹<br>
+将组件拆分 新建一个Header文件夹</p>
+<pre><code class="language-javascript">import styled from 'styled-components';
+import logoPic from '../../statics/logo.png'
+
+export const HeaderWrapper = styled.div`
+  position: relative
+  height: 56px;
+  border-bottom: 1px solid #f0f0f0
+`;
+export const Logo = styled.a.attrs({
+  href: '/' // 链接跳转
+})`
+  position: absolute
+  top: 0;
+  left: 0;
+  display: block;
+  height: 56px;
+  width: 100px;
+  background: url(${logoPic});// 引入图片
+  background-size: contain;
+`;
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://Zu3zz.github.io/post/hello-gridea</id>
@@ -21,6 +293,25 @@
 ]]></summary>
         <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
 ✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+<!-- more -->
+<p><a href="https://github.com/getgridea/gridea">Github</a><br>
+<a href="http://hvenotes.fehey.com/">Gridea 主页</a><br>
+<a href="http://fehey.com/">示例网站</a></p>
+<h2 id="特性">特性👇</h2>
+<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
+<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
+<p>🏷️  你可以对文章进行标签分组</p>
+<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
+<p>💻  你可以在 <strong>𝖶𝗂𝗇𝖽𝗈𝗐𝗌</strong> 或 <strong>𝖬𝖺𝖼𝖮𝖲</strong> 设备上使用此客户端</p>
+<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
+<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
+<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
+<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
+<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
+<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前🏃</p>
+<p>未来，它一定会成为你离不开的伙伴</p>
+<p>尽情发挥你的才华吧！</p>
+<p>😘 Enjoy~</p>
 ]]></content>
     </entry>
 </feed>

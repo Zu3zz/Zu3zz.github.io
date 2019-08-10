@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>迈出React的第一步 | Evangelion</title>
+<title>迈出React的第一步 | Zu3zz</title>
 <meta name="description" content="Everyone Can (Not) Comprehend.">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1565423021231">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1565424135407">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
 
@@ -30,8 +30,8 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://Zu3zz.github.io">
-        <img src="https://Zu3zz.github.io/images/avatar.png?v=1565423021231" class="site-logo">
-        <h1 class="site-title">Evangelion</h1>
+        <img src="https://Zu3zz.github.io/images/avatar.png?v=1565424135407" class="site-logo">
+        <h1 class="site-title">Zu3zz</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
         <div class="line"></div>
@@ -105,10 +105,14 @@
             <h2 class="post-title">迈出React的第一步</h2>
             <div class="post-date">2019-08-10</div>
             
+              <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/react-jian-shu.jpg')">
+              </div>
+            
             <div class="post-content">
               <p>1.安装npm node.js以获得node.js开发环境,安装yarn作为包管理工具<br>
 2.安装脚手架工具create-react-app<br>
-3.使用脚手架工具启动一个react项目</p>
+3.使用脚手架工具启动一个react项目......</p>
+<!-- more -->
 <h2 id="正式开始开发">正式开始开发</h2>
 <p>1.在入口文件 index.js添加<br>
 <code>import React from ‘react’</code><br>
@@ -297,8 +301,8 @@ const store = createStore(
 <p>TodoList.js中 action可以从一个对象拓展成一个函数<br>
 函数也可以直接使用store.dispatch(action)触发redux<br>
 在函数中在执行一遍redux的流程  创建action的对象 然后dispatch<br>
-Redux的中间件 指的是action和store之间</p>
-<!-- more -->
+Redux的中间件 指的是action和store之间<br>
+<img src="https://Zu3zz.github.io/post-images/1565423250758.png" alt=""></p>
 <h3 id="redux-saga">redux-saga</h3>
 <p>在store中的index.js文件中<br>
 <code>import createSagaMilddleware from ‘redux-saga’;</code></p>
@@ -344,7 +348,7 @@ export const globalStyle = createGlobalStyle`
 </code></pre>
 <p>再到子组件中以组件的形式包裹<br>
 将组件拆分 新建一个Header文件夹</p>
-<pre><code>import styled from 'styled-components';
+<pre><code class="language-javascript">import styled from 'styled-components';
 import logoPic from '../../statics/logo.png'
 
 export const HeaderWrapper = styled.div`
@@ -380,6 +384,15 @@ export const Logo = styled.a.attrs({
                 
               </div>
             
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://Zu3zz.github.io/post/hello-gridea">
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
+                </a>
+              </div>
             
 
             
