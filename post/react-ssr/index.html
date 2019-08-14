@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>从头梳理服务器渲染原理(SSR) | Zu3zz</title>
+<meta name="description" content="Everyone Can (Not) Comprehend.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1565795145244">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://Zu3zz.github.io">
+        <img src="https://Zu3zz.github.io/images/avatar.png?v=1565795145244" class="site-logo">
+        <h1 class="site-title">Zu3zz</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/projects" class="site-nav" target="_blank">
+            项目
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Everyone Can (Not) Comprehend.
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">从头梳理服务器渲染原理(SSR)</h2>
+            <div class="post-date">2019-08-14</div>
+            
+              <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/react-ssr.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>这一次，让我们来以React为例，把服务端渲染(Server Side Render，简称“SSR”)学个明明白白。</p>
+<!-- more -->
+<h2 id="part1实现一个基础的react组件ssr">part1：实现一个基础的React组件SSR</h2>
+<p>这一部分来简要实现一个React组件的SSR。</p>
+<h3 id="一-ssr-vs-csr">一. SSR vs CSR</h3>
+<p>什么是服务端渲染？</p>
+<p>废话不多说，直接起一个express服务器。</p>
+<pre><code class="language-javascript">var express = require('express')
+var app = express()
+
+app.get('/', (req, res) =&gt; {
+ res.send(
+ `
+   &lt;html&gt;
+     &lt;head&gt;
+       &lt;title&gt;hello&lt;/title&gt;
+     &lt;/head&gt;
+     &lt;body&gt;
+       &lt;h1&gt;hello&lt;/h1&gt;
+       &lt;p&gt;world&lt;/p&gt;
+     &lt;/body&gt;
+   &lt;/html&gt;
+ `
+ )
+})
+
+app.listen(3001, () =&gt; {
+ console.log('listen:3001')
+})
+</code></pre>
+<p>启动之后打开localhost:3001可以看到页面显示了hello world。而且打开网页源代码如下：<br>
+<img src="https://Zu3zz.github.io/post-images/1565794815666.jpg" alt=""><br>
+也能够完成显示。<br>
+这就是服务端渲染。其实非常好理解，就是服务器返回一堆html字符串，然后让浏览器显示。<br>
+与服务端渲染相对的是客户端渲染(Client Side Render)。那什么是客户端渲染？<br>
+现在创建一个新的React项目，用脚手架生成项目，然后run起来。<br>
+这里你可以看到React脚手架自动生成的首页。</p>
+<p><img src="https://Zu3zz.github.io/post-images/1565794890546.jpg" alt=""><br>
+然而打开网页源代码,我们会发现网页并没有任何DOM结构<br>
+<img src="https://Zu3zz.github.io/post-images/1565794896346.jpg" alt=""><br>
+body中除了兼容处理的noscript标签之外，只有一个id为root的标签。那首页的内容是从哪来的呢？很明显，是下面的script中拉取的JS代码控制的。<br>
+因此，CSR和SSR最大的区别在于前者的页面渲染是JS负责进行的，而后者是服务器端直接返回HTML让浏览器直接渲染。<br>
+为什么要使用服务端渲染呢？<br>
+<img src="https://Zu3zz.github.io/post-images/1565795001030.jpeg" alt=""><br>
+传统CSR的弊端：</p>
+<ol>
+<li>由于页面显示过程要进行JS文件拉取和React代码执行，首屏加载时间会比较慢。</li>
+<li>对于SEO(Search Engine Optimazition,即搜索引擎优化)，完全无能为力，因为搜索引擎爬虫只认识html结构的内容，而不能识别JS代码内容。</li>
+</ol>
+<p>SSR的出现，就是为了解决这些传统CSR的弊端。</p>
+<h2 id="二-实现react组件的服务端渲染">二、实现React组件的服务端渲染</h2>
+<p>刚刚起的express服务返回的只是一个普通的html字符串，但我们讨论的是如何进行React的服务端渲染，那么怎么做呢？ 首先创建containers文件夹，新建一个Home.js的文件，写一个简单的React组件:</p>
+<pre><code class="language-javascript">// containers/Home.js
+import React from 'react';
+const Home = () =&gt; {
+  return (
+    &lt;div&gt;
+      &lt;div&gt;This is sanyuan&lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+export default Home
+</code></pre>
+<p>现在的任务就是将它转换为html代码返回给浏览器。<br>
+总所周知，JSX中的标签其实是基于虚拟DOM的，最终要通过一定的方法将其转换为真实DOM。虚拟DOM也就是JS对象，可以看出整个服务端的渲染流程就是通过虚拟DOM的编译来完成的，因此虚拟DOM巨大的表达力也可见一斑了。<br>
+而react-dom这个库中刚好实现了编译虚拟DOM的方法。做法如下:</p>
+<pre><code class="language-javascript">// server/index.js
+import express from 'express';
+import { renderToString } from 'react-dom/server';
+import Home from './containers/Home';
+
+const app = express();
+const content = renderToString(&lt;Home /&gt;);
+app.get('/', function (req, res) {
+   res.send(
+   `
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;title&gt;ssr&lt;/title&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;div id=&quot;root&quot;&gt;${content}&lt;/div&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+   `
+   );
+})
+app.listen(3001, () =&gt; {
+  console.log('listen:3001')
+})
+</code></pre>
+<p>启动express服务，再浏览器上打开对应端口，页面显示出&quot;this is sanyuan&quot;。<br>
+到此，就初步实现了一个React组件是服务端渲染。<br>
+当然，这只是一个非常简陋的SSR，事实上对于复杂的项目而言是无能为力的，在之后会一步步完善，打造出一个功能完整的React的SSR框架。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://Zu3zz.github.io/tag/eDo687J7B" class="tag">
+                    React
+                  </a>
+                
+                  <a href="https://Zu3zz.github.io/tag/2Iiv88cUt" class="tag">
+                    Node.js
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://Zu3zz.github.io/post/koa-tricks">
+                  <h3 class="post-title">
+                    用优雅的代码武装我们的koa2项目
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
