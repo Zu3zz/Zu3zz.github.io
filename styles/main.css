@@ -753,13 +753,21 @@ a {
 }
 
       .sidebar {
-        width: 280px;
+        width: 300px;
       }
       .main-container {
-        margin-left: 280px;
+        margin-left: 300px;
+      }
+    
+      .sidebar .top-container .site-nav {
+        color: #343a40;
       }
     
       .post-item .right .feature-container {
         border-radius: 5px;
+      }
+    
+      body {
+        background: #e9ecef;
       }
     

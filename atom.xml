@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
-    <title>Zu3zz</title>
-    <updated>2019-08-14T15:06:37.126Z</updated>
+    <title>zz失乐园</title>
+    <updated>2019-08-15T06:58:35.920Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
     <subtitle>Everyone Can (Not) Comprehend.</subtitle>
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2019, Zu3zz</rights>
+    <rights>All rights reserved 2019, zz失乐园</rights>
     <entry>
         <title type="html"><![CDATA[从头梳理服务器渲染原理(SSR)]]></title>
         <id>https://Zu3zz.github.io/post/react-ssr</id>
@@ -75,7 +75,7 @@ import React from 'react';
 const Home = () =&gt; {
   return (
     &lt;div&gt;
-      &lt;div&gt;This is sanyuan&lt;/div&gt;
+      &lt;div&gt;This is zu3zz&lt;/div&gt;
     &lt;/div&gt;
   )
 }
