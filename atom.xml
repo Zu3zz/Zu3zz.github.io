@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>zz失乐园</title>
-    <updated>2019-08-17T11:13:26.569Z</updated>
+    <updated>2019-08-18T06:09:21.719Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -10,6 +10,150 @@
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, zz失乐园</rights>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-weeklyContest-150]]></title>
+        <id>https://Zu3zz.github.io/post/leetcode-weeklycontest-150</id>
+        <link href="https://Zu3zz.github.io/post/leetcode-weeklycontest-150">
+        </link>
+        <updated>2019-08-18T05:49:18.000Z</updated>
+        <summary type="html"><![CDATA[<p>第150周的题解</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>第150周的题解</p>
+<!-- more -->
+<h2 id="第一题">第一题</h2>
+<h3 id="5048-拼写单词">5048. 拼写单词</h3>
+<p>要求:<br>
+给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。</p>
+<p>假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。</p>
+<p>注意：每次拼写时，chars 中的每个字母都只能用一次。</p>
+<p>返回词汇表 words 中你掌握的所有单词的 长度之和。<br>
+示例1：</p>
+<pre><code>输入：words = [&quot;cat&quot;,&quot;bt&quot;,&quot;hat&quot;,&quot;tree&quot;], chars = &quot;atach&quot;
+输出：6
+解释： 
+可以形成字符串 &quot;cat&quot; 和 &quot;hat&quot;，所以答案是 3 + 3 = 6。
+</code></pre>
+<p>示例2：</p>
+<pre><code>输入：words = [&quot;hello&quot;,&quot;world&quot;,&quot;leetcode&quot;], chars = &quot;welldonehoneyr&quot;
+输出：10
+解释：
+可以形成字符串 &quot;hello&quot; 和 &quot;world&quot;，所以答案是 5 + 5 = 10。
+</code></pre>
+<p><strong>思路：</strong><br>
+直接把字符串问题转化成为一个大小为26的数组，对给定的「字母表」进行遍历，将数组的对应位置记录下每个字母出现了多少次，再循环一遍给出的「词汇表」，只要词汇表每个都比给定的字母表的数组元素小，那么就说明可以表示。</p>
+<p>solution in cpp:</p>
+<pre><code class="language-c++">class Solution {
+public:
+    int countCharacters(vector&lt;string&gt;&amp; words, string chars) {
+        int s[26],t[26],i,result = 0;
+        memset(s,0,sizeof(s));
+        for(auto c:chars)s[c-'a']++;
+        for(auto d:words){
+            memset(t,0,sizeof(t));
+            for(auto e:d)t[e-'a']++;
+            for(i=0;i&lt;26;i++) if(s[i]&lt;t[i]) break;
+            if(i==26) result+=d.size();
+        }
+        return result;
+    }
+};
+</code></pre>
+<h2 id="第二题">第二题</h2>
+<h3 id="5052最大层内元素和">5052.最大层内元素和</h3>
+<p>给你一个二叉树的根节点 root。设根节点位于二叉树的第 1 层，而根节点的子节点位于第 2 层，依此类推。</p>
+<p>请你找出层内元素之和 最大 的那几层（可能只有一层）的层号，并返回其中 最小 的那个。<br>
+给定一个二叉树 大概长下面这样<br>
+实例：<br>
+<img src="https://Zu3zz.github.io/post-images/1566107780628.jpeg" alt=""></p>
+<pre><code>输入：[1,7,0,7,-8,null,null]
+输出：2
+解释：
+第 1 层各元素之和为 1，
+第 2 层各元素之和为 7 + 0 = 7，
+第 3 层各元素之和为 7 + -8 = -1，
+所以我们返回第 2 层的层号，它的层内元素之和最大。
+</code></pre>
+<p>思路：<br>
+使用一个dict用来存储每一层的元素的值，每一对键值对都是层数和相对应的值的和，使用dfs遍历所有树的节点，同时将节点所在的层数传进去，传进去的同时直接访问对应的dict对应的元素,直接加起来，最后遍历一遍输出最大的值</p>
+<ul>
+<li>solution in cpp:</li>
+</ul>
+<pre><code class="language-c++">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int s[10005], n;
+    void dfs(TreeNode* root, int level){
+        if(!root) return;
+        n = max(n,level);
+        s[level]+=root-&gt;val;
+        dfs(root-&gt;left,level+1);
+        dfs(root-&gt;right,level+1);
+    }
+    int maxLevelSum(TreeNode* root) {
+        memset(s,0,sizeof(s));
+        n = 0;
+        dfs(root,1);
+        int j = 1;
+        for(int i = 1;i&lt;=n;i++){
+            if(s[i] &gt; s[j])
+                j = i;
+        }
+        return j;
+    }
+};
+</code></pre>
+<ul>
+<li>solution in python:</li>
+</ul>
+<pre><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    
+    def maxLevelSum(self, root: TreeNode) -&gt; int:
+        m,res,level = {},0,0
+        def dfs(root,level):
+            if root == None:
+                return
+            if level not in m:
+                m[level] = 0
+            m[level]+=root.val
+            dfs(root.left,level+1)
+            dfs(root.right,level+1)
+        dfs(root, 1)
+        min_ = -sys.maxsize
+        for key in m.keys():
+            if m[key] &gt; min_:
+                min_, res = m[key], key
+        return res
+</code></pre>
+<h2 id="第三题">第三题</h2>
+<h3 id="5053地图分析">5053.地图分析</h3>
+<p>你现在手里有一份大小为 N x N 的『地图』（网格） grid，上面的每个『区域』（单元格）都用 0 和 1 标记好了。其中 0 代表海洋，1 代表陆地，你知道距离陆地区域最远的海洋区域是是哪一个吗？请返回该海洋区域到离它最近的陆地区域的距离。</p>
+<p>我们这里说的距离是『曼哈顿距离』（ Manhattan Distance）：(x0, y0) 和 (x1, y1) 这两个区域之间的距离是 |x0 - x1| + |y0 - y1| 。</p>
+<p>如果我们的地图上只有陆地或者海洋，请返回 -1。</p>
+<p>实例1：<br>
+<img src="https://Zu3zz.github.io/post-images/1566108523044.jpeg" alt="实例"></p>
+<pre><code>输入：[[1,0,1],[0,0,0],[1,0,1]]
+输出：2
+解释： 
+海洋区域 (1, 1) 和所有陆地区域之间的距离都达到最大，最大距离为 2。
+</code></pre>
+<p>太菜了 没做出来</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[堆排序(Heap Sort)]]></title>
         <id>https://Zu3zz.github.io/post/heap-sort</id>
