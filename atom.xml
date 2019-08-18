@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>zz失乐园</title>
-    <updated>2019-08-18T06:09:21.719Z</updated>
+    <updated>2019-08-18T08:53:33.348Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -10,6 +10,108 @@
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, zz失乐园</rights>
+    <entry>
+        <title type="html"><![CDATA[leetcode-股票买卖问题(121,122,123,188,309,714)]]></title>
+        <id>https://Zu3zz.github.io/post/leetcode-gu-piao-mai-mai</id>
+        <link href="https://Zu3zz.github.io/post/leetcode-gu-piao-mai-mai">
+        </link>
+        <updated>2019-08-18T06:28:46.000Z</updated>
+        <summary type="html"><![CDATA[<p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
+<!-- more -->
+<p><strong>直接看题目188</strong></p>
+<h2 id="188-买卖股票的最佳时机-iv">188. 买卖股票的最佳时机 IV</h2>
+<p>给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。</p>
+<p>设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。</p>
+<p>注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
+<p>示例 1:</p>
+<pre><code>输入: [2,4,1], k = 2
+输出: 2
+解释: 在第 1 天 (股票价格 = 2) 的时候买入，在第 2 天 (股票价格 = 4) 的时候卖出，这笔交易所能获得利润 = 4-2 = 2 。
+</code></pre>
+<p>示例2：</p>
+<pre><code>输入: [3,2,6,5,0,3], k = 2
+输出: 7
+解释: 在第 2 天 (股票价格 = 2) 的时候买入，在第 3 天 (股票价格 = 6) 的时候卖出, 这笔交易所能获得利润 = 6-2 = 4 。
+     随后，在第 5 天 (股票价格 = 0) 的时候买入，在第 6 天 (股票价格 = 3) 的时候卖出, 这笔交易所能获得利润 = 3-0 = 3 。
+</code></pre>
+<p>对于这道题，最麻烦的无异于暴力，复杂度会变成O(2^n)。<br>
+使用动态规划(dp)，可以有效的解决</p>
+<p>对于一个常见的dp问题来说 通常分两步走</p>
+<ol>
+<li>定义状态方程</li>
+<li>转移公式</li>
+</ol>
+<p>对于这道题，可以定义一个状态方程max_profit[i]用来记录到第i天的最大利润</p>
+<pre><code class="language-c++">mp[i] = mp[i-1] + -a[i](如果买入) + a[i](如果卖出)
+</code></pre>
+<p>但是股票的买入需要当前手上没有股票买入<br>
+同样 股票的卖出需要手上已经持有了一股的股票<br>
+单纯的一维数组没有办法记录这些信息 所以需要增加一维度</p>
+<pre><code class="language-c++">使用mp[i][j]
+j=[0,1] // 0为可以买 1为可以卖
+</code></pre>
+<p>此时状态方程变为</p>
+<pre><code>mp[i][0] = max(mp[i-1][0] //不交易 ,mp[i-1][1] + a[i]// 前一天卖了一股)
+mp[i][1] = max(mp[i-1][1] // 不交易, mp[i-1][0] - a[i] //前一天买了一股)
+</code></pre>
+<p>由于188题有限制条件，即最多只能交易k次，还需要记录交易次数，还需要一维来记录交易了多少次<br>
+此时状态方程变成了</p>
+<pre><code>mp[i][h][k]
+i 表示天数
+j 表示是否持有股票
+k 表示之前交易了多少次
+</code></pre>
+<p>此时动态规划的转移方程变成了如下所示:</p>
+<pre><code class="language-c++">// 为了方便理解 把k放到了第二维
+
+//前一天 要么不操作 要么卖掉了一股
+mp[i][k][0] = max(mp[i-1][k][0], mp[i-1][k-1][1] + a[i])
+
+//  前一天 要么不操作 要么买入了一股
+mp[i][k][1] = max(mp[i-1][k][1], mp[i-1][k][0] - a[i)
+</code></pre>
+<p>想要求出最大的收益 只需要找到<br>
+<code>mp[n-1, {0...k},0]</code>的最大值即可</p>
+<h2 id="python-solution">python solution</h2>
+<h3 id="188买卖股票的最佳时机iv">188.买卖股票的最佳时机IV</h3>
+<pre><code class="language-python">class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -&gt; int:
+        if not prices or not k:
+            return 0
+        n  = len(prices)
+        # 如果k大于数组长度的一半，则可以用贪心解决
+        if k &gt; n//2:
+            return self.greedy(prices)
+        # 动态规划
+        dp = [[[0] * 2 for _ in range(k+1)] for _ in range(n)]
+        res = []
+        # 设置初始状态
+        for i in range(k+1):
+            dp[0][i][0], dp[0][i][1] = 0, -prices[0]
+        # 开始两层循环
+        for i in range(1,n):
+            for j in range(k+1):
+                if not j:
+                    dp[i][j][0] = dp[i-1][j][0]
+                else:
+                    dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j-1][1] + prices[i])
+                dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j][0] - prices[i])
+        # 找到最大值
+        for m in range(k+1):
+            print(dp[n-1][m][0])
+            res.append(dp[n-1][m][0])
+        return max(res)
+    def greedy(self, prices):
+        res = 0
+        for i in range(1,len(prices)):
+            if prices[i] &gt; prices[i-1]:
+                res += prices[i] - prices[i-1]
+        return res
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-weeklyContest-150]]></title>
         <id>https://Zu3zz.github.io/post/leetcode-weeklycontest-150</id>
