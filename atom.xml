@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>zz失乐园</title>
-    <updated>2019-09-07T12:45:34.304Z</updated>
+    <updated>2019-09-07T12:49:14.010Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -209,7 +209,11 @@ on e.deptno=d.deptno;
         <link href="https://Zu3zz.github.io/post/python-basic">
         </link>
         <updated>2019-09-04T13:23:26.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="file">file</h2>
+        <summary type="html"><![CDATA[<p>👏  分享Python的一些骚操作</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👏  分享Python的一些骚操作</p>
+<!-- more -->
+<h2 id="file">file</h2>
 <pre><code class="language-python">file1 = read(&quot;test.txt&quot;)
 # 找到当前位置的指针
 file1.tell()
