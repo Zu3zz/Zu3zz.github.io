@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Hive系列(1)----概念、部署、语法 | zz失乐园</title>
+<meta name="description" content="Everyone Can (Not) Comprehend.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1567860274796">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://Zu3zz.github.io">
+        <img src="https://Zu3zz.github.io/images/avatar.png?v=1567860274796" class="site-logo">
+        <h1 class="site-title">zz失乐园</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/projects" class="site-nav" target="_blank">
+            项目
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Everyone Can (Not) Comprehend.
+    </div>
+    <div class="site-footer">
+      By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Hive系列(1)----概念、部署、语法</h2>
+            <div class="post-date">2019-09-07</div>
+            
+              <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/hive-1.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>慢慢学习路 一步一脚印<br>
+今天带来hive学习笔记系列的第一篇</p>
+<!-- more -->
+<h1 id="hive-笔记">Hive 笔记</h1>
+<h2 id="hive-概念">Hive 概念</h2>
+<ul>
+<li>
+<p>统一元数据管理:</p>
+<ul>
+<li>Hive 数据是存放在 HDFS</li>
+<li>元数据信息(记录数据的数据)是存放在 MySQL 中</li>
+<li>SQL on Hadoop： Hive、Spark SQL、impala....</li>
+</ul>
+</li>
+<li>
+<p>Hive 体系架构</p>
+<ul>
+<li>client: shell、thrift/jdbc(server/jdbc)、WebUI(HUE/Zeppelin)</li>
+<li>metastore：==&gt; MySQL<br>
+database：name、location、owner....<br>
+table：name、location、owner、column name/type ....</li>
+</ul>
+</li>
+<li>
+<p>Hive 部署</p>
+<ol>
+<li>下载（官网）</li>
+<li>解压到~/app</li>
+<li>添加 HIVE_HOME 到系统环境变量</li>
+<li>修改配置<br>
+hive-env.sh<br>
+hive-site.xml</li>
+<li>拷贝 MySQL 驱动包 mysql-java-connector.jar 包到$HIVE_HOME/lib 下</li>
+<li>前提是要准备安装一个 MySQL 数据库，利用 yum install 安装一个 MySQL 数据库 https://www.cnblogs.com/julyme/p/5969626.html</li>
+</ol>
+<pre><code class="language-xml">&lt;!--hive-site.xml配置--&gt;
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;
+
+&lt;configuration&gt;
+&lt;property&gt;
+  &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;
+  &lt;value&gt;jdbc:mysql://hadoop000:3306/hadoop_hive?createDatabaseIfNotExist=true&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;
+  &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;
+  &lt;value&gt;我是用户名&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;
+  &lt;value&gt;我是密码&lt;/value&gt;
+&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+</ul>
+<h2 id="hive-的-sql-语言">Hive 的 sql 语言</h2>
+<h3 id="ddl">DDL</h3>
+<p>Hive Data Definition Language</p>
+<pre><code class="language-shell">create、delete、alter...
+</code></pre>
+<p>Hive 数据抽象/结构:</p>
+<pre><code class="language-ASCII">+-- database  HDFS一个目录
+|   +-- table HDFS一个目录
+    |   +-- data  文件
+    |   +-- partition 分区表  HDFS一个文件
+        |   +-- data  文件
+        |   +-- bucket  分桶  HDFS一个文件
+</code></pre>
+<p>Hive 具体 ddl 操作</p>
+<h3 id="创建数据库">创建数据库</h3>
+<pre><code class="language-sql">CREATE (DATABASE|SCHEMA) [IF NOT EXISTS] database_name
+  [COMMENT database_comment]
+  [LOCATION hdfs_path]
+  [WITH DBPROPERTIES (property_name=property_value, ...)];
+
+CREATE DATABASE IF NOT EXISTS hive;
+
+CREATE DATABASE IF NOT EXISTS hive2 LOCATION '/test/location';
+
+CREATE DATABASE IF NOT EXISTS hive3
+WITH DBPROPERTIES('creator'='pk');
+</code></pre>
+<p>/user/hive/warehouse 是 Hive 默认的存储在 HDFS 上的路径</p>
+<h3 id="创建表">创建表</h3>
+<pre><code class="language-sql">CREATE TABLE emp(
+empno int,
+ename string,
+job string,
+mgr int,
+hiredate string,
+sal double,
+comm double,
+deptno int
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+</code></pre>
+<h3 id="读取本地数据">读取本地数据</h3>
+<pre><code class="language-sql">LOAD DATA [LOCAL] INPATH 'filepath' [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=val1, partcol2=val2 ...)]
+
+LOAD DATA LOCAL INPATH '/home/hadoop/data/emp.txt' OVERWRITE INTO TABLE emp;
+</code></pre>
+<p>LOCAL：本地系统，如果没有 local 那么就是指的 HDFS 的路径<br>
+OVERWRITE：是否数据覆盖，如果没有那么就是数据追加</p>
+<pre><code class="language-sql">LOAD DATA LOCAL INPATH '/home/hadoop/data/emp.txt' OVERWRITE INTO TABLE emp;
+
+LOAD DATA INPATH 'hdfs://hadoop000:8020/data/emp.txt' INTO TABLE emp;
+
+INSERT OVERWRITE LOCAL DIRECTORY '/tmp/hive/'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+select empno,ename,sal,deptno from emp;
+</code></pre>
+<h3 id="基本统计">基本统计</h3>
+<pre><code class="language-sql">select * from emp where sal between 800 and 1500 (limit(5));
+
+select * from emp where ename in ('SMITH','KING');
+
+select * from emp where sal is (not) null;
+</code></pre>
+<h3 id="聚合操作">聚合操作</h3>
+<p>max/min/sum/avg</p>
+<pre><code class="language-sql">select count(1) from emp where deptno = 10;
+
+select max(sal),min(sal),sum(sal),avg(sal) from emp;
+</code></pre>
+<h3 id="分组函数">分组函数</h3>
+<p>group by</p>
+<p>出现在 select 中的字段，如果没有出现在聚合函数里，那么一定要实现在 group by 里</p>
+<pre><code class="language-sql">求每个部门的平均工资
+select deptno, avg(sal) from emp group by deptno;
+
+求每个部门、工作岗位的平均工资
+select deptno,job,avg(sal) from emp group by deptno, job;
+
+求每个部门的平均工资大于2000的部门
+select deptno, avg(sal) avg_sal from emp group by deptno where avg_sal &gt; 2000; 错误！！！
+
+group by 不能同时和 where 使用
+应该使用having替代where
+
+select deptno, avg(sal) abg_sal from emp group by deptno having avg_sal &gt; 2000;
+</code></pre>
+<h3 id="多表操作">多表操作</h3>
+<p>join</p>
+<p>两个表:</p>
+<ol>
+<li>emp</li>
+<li>dept</li>
+</ol>
+<pre><code class="language-sql">创建表
+CREATE TABLE dept(
+deptno int,
+dname string,
+loc string
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+加载数据
+LOAD DATA LOCAL INPATH '/home/hadoop/data/dept.txt' OVERWRITE INTO TABLE dept;
+
+select
+e.empno,e.ename,e.sal,e.deptno,d.name
+from emp e join dept d
+on e.deptno=d.deptno
+</code></pre>
+<h4 id="关于-stage-0-stage-3-stage-4">关于 stage-0、stage-3、stage-4</h4>
+<p>由于join是一个复杂操作，所以需要分步骤进行查询</p>
+<pre><code class="language-sql">explain EXTENDED
+select
+e.empno,e.ename,e.sal,e.deptno,d.dname
+from emp e join dept d
+on e.deptno=d.deptno;
+</code></pre>
+<ul>
+<li>stage-4 is root stage</li>
+<li>stage-3 depends on stage-4</li>
+<li>stage-0 depends on stage-3</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://Zu3zz.github.io/tag/8yVVJSLYY" class="tag">
+                    big data
+                  </a>
+                
+                  <a href="https://Zu3zz.github.io/tag/egbOn_Rcj" class="tag">
+                    MapReduce
+                  </a>
+                
+                  <a href="https://Zu3zz.github.io/tag/fxWruECqJ" class="tag">
+                    Hive
+                  </a>
+                
+                  <a href="https://Zu3zz.github.io/tag/7acBApeyq" class="tag">
+                    MySQL
+                  </a>
+                
+                  <a href="https://Zu3zz.github.io/tag/_el9BOoeY" class="tag">
+                    Java
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://Zu3zz.github.io/post/python-basic">
+                  <h3 class="post-title">
+                    python基础操作
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
