@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Hive系列(2)----内部表、外部表、实战 | zz失乐园</title>
+<meta name="description" content="Everyone Can (Not) Comprehend.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1568015426084">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://Zu3zz.github.io">
+        <img src="https://Zu3zz.github.io/images/avatar.png?v=1568015426084" class="site-logo">
+        <h1 class="site-title">zz失乐园</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/projects" class="site-nav" target="_blank">
+            项目
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Everyone Can (Not) Comprehend.
+    </div>
+    <div class="site-footer">
+      By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Hive系列(2)----内部表、外部表、实战</h2>
+            <div class="post-date">2019-09-09</div>
+            
+            <div class="post-content">
+              <p>这节咱们来点真实的<br>
+hive如何创建表以及读取数据</p>
+<!-- more -->
+<h1 id="hive-外部表-内部表">Hive 外部表、内部表</h1>
+<h2 id="内部表">内部表</h2>
+<p>可以通过 formatted 查看表的属性</p>
+<pre><code class="language-sql">desc formattede mp2
+
+可以看到一系列属性 其中有属性如下
+
+Table Type: MANAGED_TABLE
+
+MANAGED_TABLE就代emp2是一个内部表
+
+删除emp2
+drop table emp2;
+</code></pre>
+<p>删除表: HDFS 上的数据被删除 &amp; Meta 也被删除</p>
+<h2 id="外部表">外部表</h2>
+<p>创建外部表</p>
+<pre><code class="language-sql">CREATE EXTERNNAL TABLE emp_external(
+empno int,
+ename string,
+job string,
+mgr int,
+hiredate string,
+sal double,
+comm double,
+deptno int
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+location '/external/emp/';
+
+此时表是空表 还需要加载数据
+LOAD DATA LOCAL INPATH '/home/hadoop/data/emp.txt' ONVERWRITE INTO TABLE emp_external
+
+此时通过desc查看表的属性
+Table Type: EXTERNAL_TABLE
+是一个外部表
+
+drop table emp_external
+</code></pre>
+<p>删除表: HDFS 上的数据不被删除 &amp; Meta 上被删除<br>
+安全性更好</p>
+<h2 id="分区表">分区表</h2>
+<p>使用分区表创建</p>
+<pre><code class="language-sql">CREATE EXTERNAL TABLE track_info(
+ip string,
+country string,
+province string,
+city string,
+url string,
+time string,
+page string
+) partitioned by (day string)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+location '/project/trackinfo/';
+</code></pre>
+<p>此时通过执行 jar 包生成 ETL 文件</p>
+<p>将这个文件存储到 hive 中</p>
+<pre><code class="language-sql">LOAD DATA INPATH 'hdfs://localhost:8020/project/input/etl'
+OVERWRITE INTO TABLE track_info partition(day='2013-07-21');
+
+统计总数
+select count(*) from track_info where day='2013-07-21';
+
+统计省份的个数
+select province,count(*) from track_info where day='2013-07-21' group by province;
+
+为了方便展示 创建一张表用来存储省份的信息
+create table track_info_province_stat(
+province string,
+cnt bigint
+) partitioned by (day string)
+row format delimited fields terminated by '\t';
+
+通过sql语句直接写入数据
+insert overwrite table track_info_province_stat partition(day='2013-07-21') select province, count(*) as cnt from track_info where day='2013-07-21' group by province;
+
+统计页面访问情况
+select page,count(*) from track_info where day = '2013-07-21' group by page;
+
+创建一张表用来存储页面访问信息
+create table track_info_page_stat(
+province string,
+cnt bigint
+) partitioned by (day string)
+row format delimited fields terminated by '\t';
+
+写入数据
+insert overwrite table track_info_page_stat partition(day='2013-07-21') select page, count(*) as cnt from track_info where day='2013-07-21' group by page;
+</code></pre>
+<p>到现在为止，我们统计的数据已经在 Hive 表 track_info_province_stat<br>
+而且这个表是一个分区表，后续统计报表的数据可以直接从这个表中查询<br>
+也可以将 hive 表的数据导出到 RDBMS（sqoop<br>
+总结一下所有的操作</p>
+<ol>
+<li>ETL</li>
+<li>把 ETL 输出的数据加载到 track_info 分区表里</li>
+<li>各个维度统计结果的数据输出到各自维度的表里 （如 track_info_province_stat）</li>
+<li>将数据导出 (optional)</li>
+</ol>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://Zu3zz.github.io/post/hive-1">
+                  <h3 class="post-title">
+                    Hive系列(1)----概念、部署、语法
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
