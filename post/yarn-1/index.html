@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>堆排序(Heap Sort) | zz失乐园</title>
+<title>Yarn系列----基础、介绍、流程 | zz失乐园</title>
 <meta name="description" content="Everyone Can (Not) Comprehend.">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -102,47 +102,105 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">堆排序(Heap Sort)</h2>
-            <div class="post-date">2019-08-17</div>
-            
-              <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/heap-sort.jpg')">
-              </div>
+            <h2 class="post-title">Yarn系列----基础、介绍、流程</h2>
+            <div class="post-date">2019-09-10</div>
             
             <div class="post-content">
-              <p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
+              <p>简单介绍一下资源调度工具YARN<br>
+Yet Another Resource Negotiator</p>
 <!-- more -->
-<p>写这篇博客的原因是因为今天面试被问到了如何使用堆排序在一个百万数量级的数组中取出前k大的元素，可能是有点紧张，我大脑当场短路了，直接把二分搜索树和堆排序搞混了，真的是太丢人了，果不其然面试也挂了。</p>
-<p>痛定思痛，决定自己认真的再复习和回顾一下堆排序的所有操作。</p>
-<h2 id="1基本存储">1.基本存储</h2>
-<p>首先从堆这个数据结构说起，堆可以做到入堆和出堆都是O(logn)的复杂度，平均时间上比起O(1)+O(n)这种组合要快出去很多。</p>
-<p>首先从堆的基本形态说起，堆本质是就是一个数组，但是在存储的过程中，我们可以把它看做是一个完全二叉树:即索引为0的位置为根节点，索引为1、2的位置为根节点的子节点，下面就是一个二叉堆(Binary Heap)，对应的就是一个二叉树<br>
-<img src="https://Zu3zz.github.io/post-images/1566038321792.png" alt=""><br>
-可以看到，二叉堆满足性质如下，所有子节点均小于父亲节点，即<br>
-<code>41&lt;62 &amp;&amp; 30&lt;62</code></p>
-<p><strong>并且 二叉堆是一颗完全二叉树</strong><br>
-<img src="https://Zu3zz.github.io/post-images/1566038535528.png" alt=""></p>
-<p>所以上图所示的堆可以在cpp中如下所存储</p>
-<pre><code class="language-c++">int arr[] = {0,62,41,30,28,16,22,13,19,17,15}
+<h1 id="yarn-产生背景">YARN 产生背景</h1>
+<ul>
+<li>
+<p>MapReduce1.x ==&gt; MapReduce2.x</p>
+<ul>
+<li>master/slave : JobTracker/TaskTracker</li>
+<li>JobTracker：单点、压力大</li>
+<li>仅仅只能够支持 mapreduce 作业</li>
+</ul>
+</li>
+<li>
+<p>资源利用率</p>
+<ul>
+<li>所有的计算框架运行在一个集群中，共享一个集群的资源，按需分配！</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-txt">master: resource management：ResourceManager (RM)
+job scheduling/monitoring：per-application ApplicationMaster (AM)
+slave: NodeManager (NM)
 </code></pre>
-<p>可以注意到这里index为0的元素没有使用，这是为了方便堆排序进行左右节点的计算规则。<br>
-所以这样所有的子节点和父节点就满足如下的公式</p>
-<pre><code class="language-c++">parent i = i /2;
-left child i = 2 * i;
-right child i = 2 * i +1;
-</code></pre>
-<p>本节对应代码：<br>
-<strong><a href="https://github.com/Zu3zz/Learn_some_algorithm_and_data_structure/blob/master/heap-sort/01-MaxHeap/main.cpp">二叉堆的建立与基本操作</a></strong></p>
+<h2 id="yarn-架构">YARN 架构</h2>
+<ul>
+<li>Client、ResourceManager、NodeManager、ApplicationMaster</li>
+<li>master/slave: RM/NM</li>
+</ul>
+<h2 id="client-向-rm-提交任务-杀死任务等">Client: 向 RM 提交任务、杀死任务等</h2>
+<ul>
+<li>
+<p>ApplicationMaster：</p>
+<ul>
+<li>每个应用程序对应一个 AM</li>
+<li>AM 向 RM 申请资源用于在 NM 上启动对应的 Task</li>
+<li>数据切分</li>
+<li>为每个 task 向 RM 申请资源（container）</li>
+<li>NodeManager 通信</li>
+<li>任务的监控</li>
+</ul>
+</li>
+<li>
+<p>NodeManager： 多个</p>
+<ul>
+<li>干活</li>
+<li>向 RM 发送心跳信息、任务的执行情况</li>
+<li>接收来自 RM 的请求来启动任务</li>
+<li>处理来自 AM 的命令</li>
+</ul>
+</li>
+<li>
+<p>ResourceManager:集群中同一时刻对外提供服务的只有 1 个，负责资源相关</p>
+<ul>
+<li>处理来自客户端的请求：提交、杀死</li>
+<li>启动/监控 AM</li>
+<li>监控 NM</li>
+<li>资源相关</li>
+</ul>
+</li>
+<li>
+<p>container：任务的运行抽象</p>
+<ul>
+<li>memory、cpu....</li>
+<li>task 是运行在 container 里面的</li>
+<li>可以运行 am、也可以运行 map/reduce task</li>
+</ul>
+</li>
+</ul>
+<h2 id="yarn-执行流程">yarn 执行流程</h2>
+<p><img src="https://Zu3zz.github.io/post-images/1568100871914.png" alt="yarn执行流程"></p>
+<h2 id="提交自己开发的-mr-作业到-yarn-上运行的步骤">提交自己开发的 MR 作业到 YARN 上运行的步骤：</h2>
+<ol>
+<li>mvn clean package -DskipTests 打包 jar 包<br>
+windows/Mac/Linux ==&gt; Maven</li>
+<li>把编译出来的 jar 包(项目根目录/target/...jar)以及测试数据上传到服务器<br>
+scp xxxx hadoop@hostname:directory</li>
+<li>把数据上传到 HDFS<br>
+hadoop fs -put xxx hdfspath</li>
+<li>执行作业<br>
+hadoop jar xxx.jar 完整的类名(包名+类名) args.....</li>
+<li>到 YARN UI(8088) 上去观察作业的运行情况</li>
+<li>到输出目录去查看对应的输出结果</li>
+</ol>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://Zu3zz.github.io/tag/2NVzvTKDE" class="tag">
-                    algorithm
+                  <a href="https://Zu3zz.github.io/tag/8yVVJSLYY" class="tag">
+                    big data
                   </a>
                 
-                  <a href="https://Zu3zz.github.io/tag/We-dZJIaZ" class="tag">
-                    data structure
+                  <a href="https://Zu3zz.github.io/tag/egbOn_Rcj" class="tag">
+                    MapReduce
                   </a>
                 
               </div>
@@ -150,9 +208,9 @@ right child i = 2 * i +1;
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://Zu3zz.github.io/post/react-ssr">
+                <a href="https://Zu3zz.github.io/post/hadoop-4">
                   <h3 class="post-title">
-                    从头梳理服务器渲染原理(SSR)
+                    Hadoop()----多集群配置流程
                   </h3>
                 </a>
               </div>
