@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>zz失乐园</title>
-    <updated>2019-09-13T10:55:57.737Z</updated>
+    <updated>2019-09-13T11:58:16.840Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -11,7 +11,7 @@
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, zz失乐园</rights>
     <entry>
-        <title type="html"><![CDATA[HDFS系列----安装]]></title>
+        <title type="html"><![CDATA[HDFS系列(1)----安装]]></title>
         <id>https://Zu3zz.github.io/post/hdfs-3</id>
         <link href="https://Zu3zz.github.io/post/hdfs-3">
         </link>
@@ -376,7 +376,7 @@ inode=&quot;/&quot;:hadoop:supergroup:drwxr-xr-x
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Yarn系列----基础、介绍、流程]]></title>
+        <title type="html"><![CDATA[Yarn系列(1)----基础、介绍、流程]]></title>
         <id>https://Zu3zz.github.io/post/yarn-1</id>
         <link href="https://Zu3zz.github.io/post/yarn-1">
         </link>
@@ -471,9 +471,9 @@ hadoop jar xxx.jar 完整的类名(包名+类名) args.....</li>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Hadoop()----多集群配置流程]]></title>
-        <id>https://Zu3zz.github.io/post/hadoop-4</id>
-        <link href="https://Zu3zz.github.io/post/hadoop-4">
+        <title type="html"><![CDATA[Hadoop系列(1)----多集群配置流程]]></title>
+        <id>https://Zu3zz.github.io/post/hadoop-1</id>
+        <link href="https://Zu3zz.github.io/post/hadoop-1">
         </link>
         <updated>2019-09-09T13:12:27.000Z</updated>
         <summary type="html"><![CDATA[<p>终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上<br>
