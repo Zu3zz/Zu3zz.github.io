@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>HDFS系列----安装 | zz失乐园</title>
+<meta name="description" content="Everyone Can (Not) Comprehend.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1568372152441">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://Zu3zz.github.io">
+        <img src="https://Zu3zz.github.io/images/avatar.png?v=1568372152441" class="site-logo">
+        <h1 class="site-title">zz失乐园</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/projects" class="site-nav" target="_blank">
+            项目
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Everyone Can (Not) Comprehend.
+    </div>
+    <div class="site-footer">
+      By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">HDFS系列----安装</h2>
+            <div class="post-date">2019-09-13</div>
+            
+            <div class="post-content">
+              <p>这篇文章咱们就来讲讲如何安装HDFS</p>
+<!-- more -->
+<h1 id="hdfs-概述">HDFS 概述</h1>
+<ol>
+<li>分布式</li>
+<li>commodity hardware</li>
+<li>fault-tolerant 容错</li>
+<li>high throughput</li>
+<li>large data sets</li>
+</ol>
+<h2 id="hdfs-是一个分布式的文件系统">HDFS 是一个分布式的文件系统</h2>
+<ul>
+<li>文件系统：Linux、Windows、Mac....
+<ul>
+<li>目录结构: C /</li>
+<li>存放的是文件或者文件夹</li>
+<li>对外提供服务：创建、修改、删除、查看、移动等等</li>
+<li>普通文件系统 vs 分布式文件系统
+<ul>
+<li>单机</li>
+<li>分布式文件系统能够横跨 N 个机器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="hdfs-前提和设计目标">HDFS 前提和设计目标</h2>
+<ul>
+<li>Hardware Failure 硬件错误
+<ul>
+<li>每个机器只存储文件的部分数据，blocksize=128M</li>
+<li>block 存放在不同的机器上的，由于容错，HDFS 默认采用 3 副本机制</li>
+</ul>
+</li>
+<li>Streaming Data Access 流式数据访问
+<ul>
+<li>The emphasis is on high throughput of data access</li>
+<li>rather than low latency of data access.</li>
+</ul>
+</li>
+<li>Large Data Sets 大规模数据集</li>
+<li>Moving Computation is Cheaper than Moving Data 移动计算比移动数据更划算</li>
+</ul>
+<h2 id="hdfs-的架构">HDFS 的架构</h2>
+<ol>
+<li>NameNode(master) and DataNodes(slave)</li>
+<li>master/slave 的架构</li>
+<li>NN:</li>
+</ol>
+<ul>
+<li>the file system namespace
+<ul>
+<li>/home/hadoop/software</li>
+<li>/home/hadoop/app</li>
+<li>regulates access to files by clients</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>
+<p>DN：storage</p>
+</li>
+<li>
+<p>HDFS exposes a file system namespace and allows user data to be stored in files.</p>
+</li>
+<li>
+<p>a file is split into one or more blocks</p>
+<ul>
+<li>blocksize: 128M</li>
+<li>150M 拆成 2 个 block</li>
+</ul>
+</li>
+<li>
+<p>blocks are stored in a set of DataNodes</p>
+<ul>
+<li>为什么？ 容错！！！</li>
+</ul>
+</li>
+<li>
+<p>NameNode executes file system namespace operations：CRUD</p>
+</li>
+<li>
+<p>determines the mapping of blocks to DataNodes</p>
+<ul>
+<li>
+<p>a.txt 150M blocksize=128M</p>
+</li>
+<li>
+<p>a.txt 拆分成 2 个 block 一个是 block1：128M 另一个是 block2：22M<br>
+block1 存放在哪个 DN？block2 存放在哪个 DN？</p>
+</li>
+<li>
+<p>a.txt<br>
+_ block1：128M, 192.168.199.1<br>
+_ block2：22M, 192.168.199.2<br>
+_ get a.txt<br>
+_ 这个过程对于用户来说是不感知的</p>
+</li>
+</ul>
+</li>
+<li>
+<p>通常情况下：1 个 Node 部署一个组件</p>
+</li>
+</ol>
+<h2 id="课程环境介绍">课程环境介绍：</h2>
+<h3 id="本课程录制的系统是-mac所以我采用的-linux-客户端是-mac-自带的-shell">本课程录制的系统是 Mac，所以我采用的 linux 客户端是 mac 自带的 shell</h3>
+<ul>
+<li>如果你们是 win：xshell、crt</li>
+<li>服务器/linux 地址：192.168.199.233</li>
+<li>连接到 linux 环境<br>
+_ 登陆：ssh hadoop@192.168.199.233<br>
+_ 登陆成功以后：[hadoop@hadoop000 ~]$
+<ul>
+<li>linux机器：用户名hadoop、密码123456、hostname是* * hadoop000</li>
+<li>创建课程中所需要的目录（合适的文件存放在合适的目录）
+<ol>
+<li>[hadoop@hadoop000 ~]$ mkdir software 存放课程所使用的软件安装包 2. [hadoop@hadoop000 ~]$ mkdir app       存放课程所有软件的安装目录</li>
+<li>[hadoop@hadoop000 ~]$ mkdir data 存放课程中使用的数据 4. [hadoop@hadoop000 ~]$ mkdir lib       存放课程中开发过的作业jar存放的目录</li>
+<li>[hadoop@hadoop000 ~]$ mkdir shell 存放课程中相关的脚本 6. [hadoop@hadoop000 ~]$ mkdir maven_resp 存放课程中使用到的 maven 依赖包存放的目录</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>学员问：root 密码 1. 切换 hadoop 到 root 用户：[hadoop@hadoop000 ~]$ sudo -i 2. 切换 root 到 hadoop 用户：[root@hadoop000 ~]# su hadoop 3. 我 OOTB 环境中创建的 hadoop 用户是有 sudo 权限：sudo vi /etc/hosts</li>
+<li>Linux 版本： * 以前的课程是 centos6.4，本次课程升级成 centos7</li>
+</ul>
+<h3 id="hadoop-环境搭建">Hadoop 环境搭建</h3>
+<ul>
+<li>使用的 Hadoop 相关版本：CDH</li>
+<li>CDH 相关软件包下载地址：http://archive.cloudera.com/cdh5/cdh/5/</li>
+<li>Hadoop 使用版本：hadoop-2.6.0-cdh5.15.1</li>
+<li>Hadoop 下载：wget http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.15.1.tar.gz</li>
+<li>Hive 使用版本：hive-1.1.0-cdh5.15.1</li>
+</ul>
+<h3 id="hadoophivespark-相关框架的学习">Hadoop/Hive/Spark 相关框架的学习：</h3>
+<ul>
+<li>
+<p>使用单机版足够</p>
+</li>
+<li>
+<p>如果使用集群学习会导致：从入门到放弃</p>
+</li>
+<li>
+<p>使用 Linux/Mac 学习</p>
+</li>
+<li>
+<p>一定不要使用 Windows 搭建 Hadoop 环境</p>
+</li>
+<li>
+<p>所以 Linux 基础是要会的</p>
+</li>
+</ul>
+<h3 id="hadoop-安装前置要求">Hadoop 安装前置要求</h3>
+<ul>
+<li>Java 1.8+</li>
+<li>ssh</li>
+</ul>
+<h3 id="安装-java">安装 Java</h3>
+<ul>
+<li>拷贝本地软件包到服务器：scp jdk-8u91-linux-x64.tar.gz hadoop@192.168.199.233:~/software/</li>
+<li>解压 jdk 到~/app/：tar -zvxf jdk-8u91-linux-x64.tar.gz -C ~/app/</li>
+<li>把 jdk 配置系统环境变量中： ~/.bash_profile - export JAVA_HOME=/home/hadoop/app/jdk1.8.0_91 - export PATH=<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mi>A</mi><mi>V</mi><msub><mi>A</mi><mi>H</mi></msub><mi>O</mi><mi>M</mi><mi>E</mi><mi mathvariant="normal">/</mi><mi>b</mi><mi>i</mi><mi>n</mi><mo>:</mo></mrow><annotation encoding="application/x-tex">JAVA_HOME/bin:</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.09618em;">J</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord">/</span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span></span></span>PATH</li>
+<li>使得配置修改生效：source .bash_profile</li>
+<li>验证：java -version</li>
+</ul>
+<h3 id="安装-ssh-无密码登陆">安装 ssh 无密码登陆</h3>
+<ul>
+<li>
+<p>ls</p>
+</li>
+<li>
+<p>ls -a</p>
+</li>
+<li>
+<p>ls -la 并没有发现一个.ssh 的文件夹</p>
+</li>
+<li>
+<p>ssh-keygen -t rsa 一路回车</p>
+</li>
+<li>
+<p>cd ~/.ssh</p>
+</li>
+<li>
+<p>[hadoop@hadoop000 .ssh]$ ll</p>
+</li>
+<li>
+<p>总用量 12</p>
+<pre><code class="language-shell">-rw------- 1 hadoop hadoop 1679 10月 15 02:54 id_rsa  私钥
+-rw-r--r-- 1 hadoop hadoop  398 10月 15 02:54 id_rsa.pub 公钥
+-rw-r--r-- 1 hadoop hadoop  358 10月 15 02:54 known_hosts
+cat id_rsa.pub &gt;&gt; authorized_keys
+chmod 600 authorized_keys
+</code></pre>
+</li>
+</ul>
+<h3 id="hadoophdfs安装">Hadoop(HDFS)安装</h3>
+<ul>
+<li>
+<p>下载<br>
+_ 解压：~/app<br>
+_ 添加 HADOOP_HOME/bin 到系统环境变量<br>
+_ 修改 Hadoop 配置文件<br>
+_ hadoop-env.sh<br>
+_ export JAVA_HOME=/home/hadoop/app/jdk1.8.0_91<br>
+_ core-site.xml</p>
+<pre><code class="language-xml">  &lt;property&gt;
+      &lt;name&gt;fs.defaultFS&lt;/name&gt;
+      &lt;value&gt;hdfs://hadoop000:8020&lt;/value&gt;
+  &lt;/property&gt;
+
+  hdfs-site.xml
+  &lt;property&gt;
+      &lt;name&gt;dfs.replication&lt;/name&gt;
+      &lt;value&gt;1&lt;/value&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+      &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+      &lt;value&gt;/home/hadoop/app/tmp&lt;/value&gt;
+  &lt;/property&gt;
+</code></pre>
+<ul>
+<li>slaves<br>
+_ hadoop000<br>
+_ 启动 HDFS：<br>
+_ 第一次执行的时候一定要格式化文件系统，不要重复执行: hdfs namenode -format<br>
+_ 启动集群：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi><mi>A</mi><mi>D</mi><mi>O</mi><mi>O</mi><msub><mi>P</mi><mi>H</mi></msub><mi>O</mi><mi>M</mi><mi>E</mi><mi mathvariant="normal">/</mi><mi>s</mi><mi>b</mi><mi>i</mi><mi>n</mi><mi mathvariant="normal">/</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>r</mi><mi>t</mi><mo>−</mo><mi>d</mi><mi>f</mi><mi>s</mi><mi mathvariant="normal">.</mi><mi>s</mi><mi>h</mi><mo>∗</mo><mi mathvariant="normal">验</mi><mi mathvariant="normal">证</mi><mo>:</mo><mn>1.</mn><mo>[</mo><mi>h</mi><mi>a</mi><mi>d</mi><mi>o</mi><mi>o</mi><mi>p</mi><mi mathvariant="normal">@</mi><mi>h</mi><mi>a</mi><mi>d</mi><mi>o</mi><mi>o</mi><mi>p</mi><mn>000</mn><mi>s</mi><mi>b</mi><mi>i</mi><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">HADOOP_HOME/sbin/start-dfs.sh
+	* 验证:
+		1. [hadoop@hadoop000 sbin]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord">/</span><span class="mord mathdefault">s</span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">s</span><span class="mord">.</span><span class="mord mathdefault">s</span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord cjk_fallback">验</span><span class="mord cjk_fallback">证</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mopen">[</span><span class="mord mathdefault">h</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord">@</span><span class="mord mathdefault">h</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathdefault">s</span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mclose">]</span></span></span></span> jps 2. 60002 DataNode 3. 60171 SecondaryNameNode 4. 59870 NameNode 5. http://192.168.199.233:50070 6. 如果发现 jps ok，但是浏览器不 OK？ 十有八九是防火墙问题 7. 查看防火墙状态：sudo firewall-cmd --state 8. 关闭防火墙: sudo systemctl stop firewalld.service 9. 进制防火墙开机启动：</li>
+</ul>
+</li>
+</ul>
+<h3 id="hadoop-软件包常见目录说明">hadoop 软件包常见目录说明</h3>
+<ul>
+<li>bin：hadoop 客户端名单</li>
+<li>etc/hadoop：hadoop 相关的配置文件存放目录</li>
+<li>sbin：启动 hadoop 相关进程的脚本</li>
+<li>share：常用例子</li>
+</ul>
+<h3 id="注意">注意：</h3>
+<ul>
+<li>
+<p>start/stop-dfs.sh 与 hadoop-daemons.sh 的关系</p>
+</li>
+<li>
+<p>start-dfs.sh</p>
+<pre><code class="language-shell">hadoop-daemons.sh start namenode
+hadoop-daemons.sh start datanode
+hadoop-daemons.sh start secondarynamenode
+</code></pre>
+</li>
+<li>
+<p>stop-dfs.sh =</p>
+</li>
+<li>
+<p>hadoop 常用命令：</p>
+<ol>
+<li>hadoop fs -ls /</li>
+<li>hadoop fs -put</li>
+<li>hadoop fs -copyFromLocal</li>
+<li>hadoop fs -moveFromLocal</li>
+<li>hadoop fs -cat</li>
+<li>hadoop fs -text</li>
+<li>hadoop fs -get</li>
+<li>hadoop fs -mkdir</li>
+<li>hadoop fs -mv 移动/改名</li>
+<li>hadoop fs -getmerge</li>
+<li>hadoop fs -rm</li>
+<li>hadoop fs -rmdir</li>
+<li>hadoop fs -rm -r</li>
+</ol>
+</li>
+</ul>
+<h3 id="hdfs-存储扩展">HDFS 存储扩展：</h3>
+<ul>
+<li>put: 1file ==&gt; 1...n block ==&gt; 存放在不同的节点上的</li>
+<li>get: 去 nn 上查找这个 file 对应的元数据信息</li>
+<li>了解底层的存储机制这才是我们真正要学习的东西，掌握 API 那是毛毛雨</li>
+</ul>
+<h3 id="使用-hdfs-api-的方式来操作-hdfs-文件系统">使用 HDFS API 的方式来操作 HDFS 文件系统</h3>
+<ul>
+<li>IDEA/Eclipse</li>
+<li>Java
+<ul>
+<li>使用 Maven 来管理项目</li>
+<li>拷贝 jar 包</li>
+<li>我的所有课程都是使用 maven 来进行管理的</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-shell">Caused by: org.apache.hadoop.ipc.RemoteException
+(org.apache.hadoop.security.AccessControlException):
+Permission denied: user=rocky, access=WRITE,
+inode=&quot;/&quot;:hadoop:supergroup:drwxr-xr-x
+</code></pre>
+<h3 id="hdfs-操作shell-java-api">HDFS 操作：shell + Java API</h3>
+<ul>
+<li>综合性的 HDFS 实战：使用 HDFS Java API 才完成 HDFS 文件系统上的文件的词频统计</li>
+<li>词频统计：wordcount
+<ul>
+<li>/path/1.txt</li>
+<li>hello world hello</li>
+<li>/path/2.txt</li>
+<li>hello world hello
+<ul>
+<li>==&gt; (hello,4) (world,2)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>将统计完的结果输出到 HDFS 上去。</li>
+</ul>
+<h3 id="假设有的小伙伴了解过-mr-spark-等等觉得这个操作很简单">假设：有的小伙伴了解过 mr、spark 等等，觉得这个操作很简单</h3>
+<h3 id="本实战的要求只允许使用-hdfs-api-进行操作">本实战的要求：只允许使用 HDFS API 进行操作</h3>
+<h3 id="目的">目的</h3>
+<ol>
+<li>掌握 HDFS API 的操作</li>
+<li>通过这个案例，让你们对于后续要学习的 mr 有一个比较好的认识</li>
+</ol>
+<h3 id="硬编码-非常忌讳的">硬编码 ： 非常忌讳的</h3>
+<h3 id="可配置">==&gt; 可配置</h3>
+<h3 id="可插拔的开发管理方式-plugin">可插拔的开发/管理方式 plugin</h3>
+<h3 id="副本摆放策略">副本摆放策略</h3>
+<ul>
+<li>
+<p>1-本 rack 的一个节点上</p>
+</li>
+<li>
+<p>2-另外一个 rack 的节点上</p>
+</li>
+<li>
+<p>3-与 2 相同的 rack 的另外一个节点上</p>
+</li>
+<li>
+<p>1-本 rack 的一个节点上</p>
+</li>
+<li>
+<p>2-本 rack 的另外一个节点上</p>
+</li>
+<li>
+<p>3-不同 rack 的一个节点上</p>
+</li>
+</ul>
+<h3 id="hdfs-的元数据管理">HDFS 的元数据管理</h3>
+<ul>
+<li>元数据：HDFS 的目录结构以及每个文件的 BLOCK 信息(id，副本系数、block 存放在哪个 DN 上)</li>
+<li>存在什么地方：对应配置 ${hadoop.tmp.dir}/name/......</li>
+<li>元数据存放在文件中：</li>
+</ul>
+<pre><code class="language-shell">/test1
+/test1/a.txt
+/test2
+/test2/1.txt
+/test2/2.txt
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://Zu3zz.github.io/post/yarn-1">
+                  <h3 class="post-title">
+                    Yarn系列----基础、介绍、流程
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>zz失乐园</title>
-    <updated>2019-09-10T07:35:27.272Z</updated>
+    <updated>2019-09-13T10:55:57.737Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -10,6 +10,371 @@
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, zz失乐园</rights>
+    <entry>
+        <title type="html"><![CDATA[HDFS系列----安装]]></title>
+        <id>https://Zu3zz.github.io/post/hdfs-3</id>
+        <link href="https://Zu3zz.github.io/post/hdfs-3">
+        </link>
+        <updated>2019-09-13T10:54:04.000Z</updated>
+        <summary type="html"><![CDATA[<p>这篇文章咱们就来讲讲如何安装HDFS</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>这篇文章咱们就来讲讲如何安装HDFS</p>
+<!-- more -->
+<h1 id="hdfs-概述">HDFS 概述</h1>
+<ol>
+<li>分布式</li>
+<li>commodity hardware</li>
+<li>fault-tolerant 容错</li>
+<li>high throughput</li>
+<li>large data sets</li>
+</ol>
+<h2 id="hdfs-是一个分布式的文件系统">HDFS 是一个分布式的文件系统</h2>
+<ul>
+<li>文件系统：Linux、Windows、Mac....
+<ul>
+<li>目录结构: C /</li>
+<li>存放的是文件或者文件夹</li>
+<li>对外提供服务：创建、修改、删除、查看、移动等等</li>
+<li>普通文件系统 vs 分布式文件系统
+<ul>
+<li>单机</li>
+<li>分布式文件系统能够横跨 N 个机器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="hdfs-前提和设计目标">HDFS 前提和设计目标</h2>
+<ul>
+<li>Hardware Failure 硬件错误
+<ul>
+<li>每个机器只存储文件的部分数据，blocksize=128M</li>
+<li>block 存放在不同的机器上的，由于容错，HDFS 默认采用 3 副本机制</li>
+</ul>
+</li>
+<li>Streaming Data Access 流式数据访问
+<ul>
+<li>The emphasis is on high throughput of data access</li>
+<li>rather than low latency of data access.</li>
+</ul>
+</li>
+<li>Large Data Sets 大规模数据集</li>
+<li>Moving Computation is Cheaper than Moving Data 移动计算比移动数据更划算</li>
+</ul>
+<h2 id="hdfs-的架构">HDFS 的架构</h2>
+<ol>
+<li>NameNode(master) and DataNodes(slave)</li>
+<li>master/slave 的架构</li>
+<li>NN:</li>
+</ol>
+<ul>
+<li>the file system namespace
+<ul>
+<li>/home/hadoop/software</li>
+<li>/home/hadoop/app</li>
+<li>regulates access to files by clients</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>
+<p>DN：storage</p>
+</li>
+<li>
+<p>HDFS exposes a file system namespace and allows user data to be stored in files.</p>
+</li>
+<li>
+<p>a file is split into one or more blocks</p>
+<ul>
+<li>blocksize: 128M</li>
+<li>150M 拆成 2 个 block</li>
+</ul>
+</li>
+<li>
+<p>blocks are stored in a set of DataNodes</p>
+<ul>
+<li>为什么？ 容错！！！</li>
+</ul>
+</li>
+<li>
+<p>NameNode executes file system namespace operations：CRUD</p>
+</li>
+<li>
+<p>determines the mapping of blocks to DataNodes</p>
+<ul>
+<li>
+<p>a.txt 150M blocksize=128M</p>
+</li>
+<li>
+<p>a.txt 拆分成 2 个 block 一个是 block1：128M 另一个是 block2：22M<br>
+block1 存放在哪个 DN？block2 存放在哪个 DN？</p>
+</li>
+<li>
+<p>a.txt<br>
+_ block1：128M, 192.168.199.1<br>
+_ block2：22M, 192.168.199.2<br>
+_ get a.txt<br>
+_ 这个过程对于用户来说是不感知的</p>
+</li>
+</ul>
+</li>
+<li>
+<p>通常情况下：1 个 Node 部署一个组件</p>
+</li>
+</ol>
+<h2 id="课程环境介绍">课程环境介绍：</h2>
+<h3 id="本课程录制的系统是-mac所以我采用的-linux-客户端是-mac-自带的-shell">本课程录制的系统是 Mac，所以我采用的 linux 客户端是 mac 自带的 shell</h3>
+<ul>
+<li>如果你们是 win：xshell、crt</li>
+<li>服务器/linux 地址：192.168.199.233</li>
+<li>连接到 linux 环境<br>
+_ 登陆：ssh hadoop@192.168.199.233<br>
+_ 登陆成功以后：[hadoop@hadoop000 ~]$
+<ul>
+<li>linux机器：用户名hadoop、密码123456、hostname是* * hadoop000</li>
+<li>创建课程中所需要的目录（合适的文件存放在合适的目录）
+<ol>
+<li>[hadoop@hadoop000 ~]$ mkdir software 存放课程所使用的软件安装包 2. [hadoop@hadoop000 ~]$ mkdir app       存放课程所有软件的安装目录</li>
+<li>[hadoop@hadoop000 ~]$ mkdir data 存放课程中使用的数据 4. [hadoop@hadoop000 ~]$ mkdir lib       存放课程中开发过的作业jar存放的目录</li>
+<li>[hadoop@hadoop000 ~]$ mkdir shell 存放课程中相关的脚本 6. [hadoop@hadoop000 ~]$ mkdir maven_resp 存放课程中使用到的 maven 依赖包存放的目录</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>学员问：root 密码 1. 切换 hadoop 到 root 用户：[hadoop@hadoop000 ~]$ sudo -i 2. 切换 root 到 hadoop 用户：[root@hadoop000 ~]# su hadoop 3. 我 OOTB 环境中创建的 hadoop 用户是有 sudo 权限：sudo vi /etc/hosts</li>
+<li>Linux 版本： * 以前的课程是 centos6.4，本次课程升级成 centos7</li>
+</ul>
+<h3 id="hadoop-环境搭建">Hadoop 环境搭建</h3>
+<ul>
+<li>使用的 Hadoop 相关版本：CDH</li>
+<li>CDH 相关软件包下载地址：http://archive.cloudera.com/cdh5/cdh/5/</li>
+<li>Hadoop 使用版本：hadoop-2.6.0-cdh5.15.1</li>
+<li>Hadoop 下载：wget http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.15.1.tar.gz</li>
+<li>Hive 使用版本：hive-1.1.0-cdh5.15.1</li>
+</ul>
+<h3 id="hadoophivespark-相关框架的学习">Hadoop/Hive/Spark 相关框架的学习：</h3>
+<ul>
+<li>
+<p>使用单机版足够</p>
+</li>
+<li>
+<p>如果使用集群学习会导致：从入门到放弃</p>
+</li>
+<li>
+<p>使用 Linux/Mac 学习</p>
+</li>
+<li>
+<p>一定不要使用 Windows 搭建 Hadoop 环境</p>
+</li>
+<li>
+<p>所以 Linux 基础是要会的</p>
+</li>
+</ul>
+<h3 id="hadoop-安装前置要求">Hadoop 安装前置要求</h3>
+<ul>
+<li>Java 1.8+</li>
+<li>ssh</li>
+</ul>
+<h3 id="安装-java">安装 Java</h3>
+<ul>
+<li>拷贝本地软件包到服务器：scp jdk-8u91-linux-x64.tar.gz hadoop@192.168.199.233:~/software/</li>
+<li>解压 jdk 到~/app/：tar -zvxf jdk-8u91-linux-x64.tar.gz -C ~/app/</li>
+<li>把 jdk 配置系统环境变量中： ~/.bash_profile - export JAVA_HOME=/home/hadoop/app/jdk1.8.0_91 - export PATH=<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mi>A</mi><mi>V</mi><msub><mi>A</mi><mi>H</mi></msub><mi>O</mi><mi>M</mi><mi>E</mi><mi mathvariant="normal">/</mi><mi>b</mi><mi>i</mi><mi>n</mi><mo>:</mo></mrow><annotation encoding="application/x-tex">JAVA_HOME/bin:</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.09618em;">J</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord">/</span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span></span></span>PATH</li>
+<li>使得配置修改生效：source .bash_profile</li>
+<li>验证：java -version</li>
+</ul>
+<h3 id="安装-ssh-无密码登陆">安装 ssh 无密码登陆</h3>
+<ul>
+<li>
+<p>ls</p>
+</li>
+<li>
+<p>ls -a</p>
+</li>
+<li>
+<p>ls -la 并没有发现一个.ssh 的文件夹</p>
+</li>
+<li>
+<p>ssh-keygen -t rsa 一路回车</p>
+</li>
+<li>
+<p>cd ~/.ssh</p>
+</li>
+<li>
+<p>[hadoop@hadoop000 .ssh]$ ll</p>
+</li>
+<li>
+<p>总用量 12</p>
+<pre><code class="language-shell">-rw------- 1 hadoop hadoop 1679 10月 15 02:54 id_rsa  私钥
+-rw-r--r-- 1 hadoop hadoop  398 10月 15 02:54 id_rsa.pub 公钥
+-rw-r--r-- 1 hadoop hadoop  358 10月 15 02:54 known_hosts
+cat id_rsa.pub &gt;&gt; authorized_keys
+chmod 600 authorized_keys
+</code></pre>
+</li>
+</ul>
+<h3 id="hadoophdfs安装">Hadoop(HDFS)安装</h3>
+<ul>
+<li>
+<p>下载<br>
+_ 解压：~/app<br>
+_ 添加 HADOOP_HOME/bin 到系统环境变量<br>
+_ 修改 Hadoop 配置文件<br>
+_ hadoop-env.sh<br>
+_ export JAVA_HOME=/home/hadoop/app/jdk1.8.0_91<br>
+_ core-site.xml</p>
+<pre><code class="language-xml">  &lt;property&gt;
+      &lt;name&gt;fs.defaultFS&lt;/name&gt;
+      &lt;value&gt;hdfs://hadoop000:8020&lt;/value&gt;
+  &lt;/property&gt;
+
+  hdfs-site.xml
+  &lt;property&gt;
+      &lt;name&gt;dfs.replication&lt;/name&gt;
+      &lt;value&gt;1&lt;/value&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+      &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+      &lt;value&gt;/home/hadoop/app/tmp&lt;/value&gt;
+  &lt;/property&gt;
+</code></pre>
+<ul>
+<li>slaves<br>
+_ hadoop000<br>
+_ 启动 HDFS：<br>
+_ 第一次执行的时候一定要格式化文件系统，不要重复执行: hdfs namenode -format<br>
+_ 启动集群：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi><mi>A</mi><mi>D</mi><mi>O</mi><mi>O</mi><msub><mi>P</mi><mi>H</mi></msub><mi>O</mi><mi>M</mi><mi>E</mi><mi mathvariant="normal">/</mi><mi>s</mi><mi>b</mi><mi>i</mi><mi>n</mi><mi mathvariant="normal">/</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>r</mi><mi>t</mi><mo>−</mo><mi>d</mi><mi>f</mi><mi>s</mi><mi mathvariant="normal">.</mi><mi>s</mi><mi>h</mi><mo>∗</mo><mi mathvariant="normal">验</mi><mi mathvariant="normal">证</mi><mo>:</mo><mn>1.</mn><mo>[</mo><mi>h</mi><mi>a</mi><mi>d</mi><mi>o</mi><mi>o</mi><mi>p</mi><mi mathvariant="normal">@</mi><mi>h</mi><mi>a</mi><mi>d</mi><mi>o</mi><mi>o</mi><mi>p</mi><mn>000</mn><mi>s</mi><mi>b</mi><mi>i</mi><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">HADOOP_HOME/sbin/start-dfs.sh
+	* 验证:
+		1. [hadoop@hadoop000 sbin]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord">/</span><span class="mord mathdefault">s</span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">s</span><span class="mord">.</span><span class="mord mathdefault">s</span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord cjk_fallback">验</span><span class="mord cjk_fallback">证</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mopen">[</span><span class="mord mathdefault">h</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord">@</span><span class="mord mathdefault">h</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathdefault">s</span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mclose">]</span></span></span></span> jps 2. 60002 DataNode 3. 60171 SecondaryNameNode 4. 59870 NameNode 5. http://192.168.199.233:50070 6. 如果发现 jps ok，但是浏览器不 OK？ 十有八九是防火墙问题 7. 查看防火墙状态：sudo firewall-cmd --state 8. 关闭防火墙: sudo systemctl stop firewalld.service 9. 进制防火墙开机启动：</li>
+</ul>
+</li>
+</ul>
+<h3 id="hadoop-软件包常见目录说明">hadoop 软件包常见目录说明</h3>
+<ul>
+<li>bin：hadoop 客户端名单</li>
+<li>etc/hadoop：hadoop 相关的配置文件存放目录</li>
+<li>sbin：启动 hadoop 相关进程的脚本</li>
+<li>share：常用例子</li>
+</ul>
+<h3 id="注意">注意：</h3>
+<ul>
+<li>
+<p>start/stop-dfs.sh 与 hadoop-daemons.sh 的关系</p>
+</li>
+<li>
+<p>start-dfs.sh</p>
+<pre><code class="language-shell">hadoop-daemons.sh start namenode
+hadoop-daemons.sh start datanode
+hadoop-daemons.sh start secondarynamenode
+</code></pre>
+</li>
+<li>
+<p>stop-dfs.sh =</p>
+</li>
+<li>
+<p>hadoop 常用命令：</p>
+<ol>
+<li>hadoop fs -ls /</li>
+<li>hadoop fs -put</li>
+<li>hadoop fs -copyFromLocal</li>
+<li>hadoop fs -moveFromLocal</li>
+<li>hadoop fs -cat</li>
+<li>hadoop fs -text</li>
+<li>hadoop fs -get</li>
+<li>hadoop fs -mkdir</li>
+<li>hadoop fs -mv 移动/改名</li>
+<li>hadoop fs -getmerge</li>
+<li>hadoop fs -rm</li>
+<li>hadoop fs -rmdir</li>
+<li>hadoop fs -rm -r</li>
+</ol>
+</li>
+</ul>
+<h3 id="hdfs-存储扩展">HDFS 存储扩展：</h3>
+<ul>
+<li>put: 1file ==&gt; 1...n block ==&gt; 存放在不同的节点上的</li>
+<li>get: 去 nn 上查找这个 file 对应的元数据信息</li>
+<li>了解底层的存储机制这才是我们真正要学习的东西，掌握 API 那是毛毛雨</li>
+</ul>
+<h3 id="使用-hdfs-api-的方式来操作-hdfs-文件系统">使用 HDFS API 的方式来操作 HDFS 文件系统</h3>
+<ul>
+<li>IDEA/Eclipse</li>
+<li>Java
+<ul>
+<li>使用 Maven 来管理项目</li>
+<li>拷贝 jar 包</li>
+<li>我的所有课程都是使用 maven 来进行管理的</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-shell">Caused by: org.apache.hadoop.ipc.RemoteException
+(org.apache.hadoop.security.AccessControlException):
+Permission denied: user=rocky, access=WRITE,
+inode=&quot;/&quot;:hadoop:supergroup:drwxr-xr-x
+</code></pre>
+<h3 id="hdfs-操作shell-java-api">HDFS 操作：shell + Java API</h3>
+<ul>
+<li>综合性的 HDFS 实战：使用 HDFS Java API 才完成 HDFS 文件系统上的文件的词频统计</li>
+<li>词频统计：wordcount
+<ul>
+<li>/path/1.txt</li>
+<li>hello world hello</li>
+<li>/path/2.txt</li>
+<li>hello world hello
+<ul>
+<li>==&gt; (hello,4) (world,2)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>将统计完的结果输出到 HDFS 上去。</li>
+</ul>
+<h3 id="假设有的小伙伴了解过-mr-spark-等等觉得这个操作很简单">假设：有的小伙伴了解过 mr、spark 等等，觉得这个操作很简单</h3>
+<h3 id="本实战的要求只允许使用-hdfs-api-进行操作">本实战的要求：只允许使用 HDFS API 进行操作</h3>
+<h3 id="目的">目的</h3>
+<ol>
+<li>掌握 HDFS API 的操作</li>
+<li>通过这个案例，让你们对于后续要学习的 mr 有一个比较好的认识</li>
+</ol>
+<h3 id="硬编码-非常忌讳的">硬编码 ： 非常忌讳的</h3>
+<h3 id="可配置">==&gt; 可配置</h3>
+<h3 id="可插拔的开发管理方式-plugin">可插拔的开发/管理方式 plugin</h3>
+<h3 id="副本摆放策略">副本摆放策略</h3>
+<ul>
+<li>
+<p>1-本 rack 的一个节点上</p>
+</li>
+<li>
+<p>2-另外一个 rack 的节点上</p>
+</li>
+<li>
+<p>3-与 2 相同的 rack 的另外一个节点上</p>
+</li>
+<li>
+<p>1-本 rack 的一个节点上</p>
+</li>
+<li>
+<p>2-本 rack 的另外一个节点上</p>
+</li>
+<li>
+<p>3-不同 rack 的一个节点上</p>
+</li>
+</ul>
+<h3 id="hdfs-的元数据管理">HDFS 的元数据管理</h3>
+<ul>
+<li>元数据：HDFS 的目录结构以及每个文件的 BLOCK 信息(id，副本系数、block 存放在哪个 DN 上)</li>
+<li>存在什么地方：对应配置 ${hadoop.tmp.dir}/name/......</li>
+<li>元数据存放在文件中：</li>
+</ul>
+<pre><code class="language-shell">/test1
+/test1/a.txt
+/test2
+/test2/1.txt
+/test2/2.txt
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Yarn系列----基础、介绍、流程]]></title>
         <id>https://Zu3zz.github.io/post/yarn-1</id>
@@ -978,447 +1343,6 @@ app.listen(3001, () =&gt; {
 <p>启动express服务，再浏览器上打开对应端口，页面显示出&quot;this is sanyuan&quot;。<br>
 到此，就初步实现了一个React组件是服务端渲染。<br>
 当然，这只是一个非常简陋的SSR，事实上对于复杂的项目而言是无能为力的，在之后会一步步完善，打造出一个功能完整的React的SSR框架。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[用优雅的代码武装我们的koa2项目]]></title>
-        <id>https://Zu3zz.github.io/post/koa-tricks</id>
-        <link href="https://Zu3zz.github.io/post/koa-tricks">
-        </link>
-        <updated>2019-08-10T08:03:41.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏 众所周知，koa2是基于nodejs的一款非常轻量级的服务端框架，其简单易上手的特性更是大大节省了前端人员开发服务端api的成本。<br>
-💻 尽管许多功能能够实现，但是作为一个有素养的开发人员，代码的层次性、后期可维护性都是需要考虑周到的......</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏 众所周知，koa2是基于nodejs的一款非常轻量级的服务端框架，其简单易上手的特性更是大大节省了前端人员开发服务端api的成本。<br>
-💻 尽管许多功能能够实现，但是作为一个有素养的开发人员，代码的层次性、后期可维护性都是需要考虑周到的......</p>
-<!-- more -->
-<p>实话说，按照koa官方文档来照葫芦画瓢，我们的代码是写不漂亮的。</p>
-<p>这里需要我们在编码之前有一个非常清晰的认识：我们的代码如何组织？如何分层？如何复用？</p>
-<p>在经历一系列的思考斟酌以及一些项目的实践之后，我总结了一些关于koa的开发技巧，能够大幅度的提高项目的代码质量，再也不用让同伴笑话代码写的烂啦！</p>
-<h2 id="一路由的自动加载">一.路由的自动加载</h2>
-<p>之前我们的路由总是手动注册的？大概是这样的：</p>
-<pre><code class="language-javascript">//app.js
-const Koa = require('koa');
-const app = new Koa(); 
-
-const user = require('./app/api/user');
-const store = require('./app/api/store');
-
-app.use(user.routes());
-app.use(classic.routes());
-</code></pre>
-<p>对于写过koa项目的人来说，这段代码是不是相当熟悉呢？其实现在只有两个路由文件还好，但实际上这样的文件数量庞大到一定的程度，再像这样引入再use方式未免会显得繁琐拖沓。那有没有办法让这些文件自动被引入、自动被use呢？</p>
-<p>有的。现在让我们来安装一个非常好用的包:<br>
-<code>yarn add require-directory</code><br>
-现在只需要这么做：</p>
-<pre><code class="language-javascript">//...
-const Router = require('koa-router'); 
-const requireDirectory = require('require-directory');
-//module为固定参数，'./api'为路由文件所在的路径(支持嵌套目录下的文件)，第三个参数中的visit为回调函数
-const modules = requireDirectory(module, './app/api', {
-    visit: whenLoadModule
-});
-function whenLoadModule(obj) {
-    if(obj instanceof Router) {
-        app.use(obj.routes());
-    }
-}
-</code></pre>
-<p>由此可见，好的代码是可以提升效率的，这样的自动加载路由省去了很多注册配置的功夫，是不是非常酷炫？</p>
-<h2 id="二用管理器将入口文件内容抽离">二.用管理器将入口文件内容抽离</h2>
-<p>相信很多人都这样做：路由注册代码写在了入口文件app.js中，以后进行相应中间件的导入也是写在这个文件。但是对于入口文件来说，我们是不希望让它变得十分臃肿的，因此我们可以适当地将一些操作抽离出来。</p>
-<p>在根目录下建一个文件夹core，以后一些公共的代码都存放在这里。</p>
-<pre><code class="language-javascript">//core/init.js
-const requireDirectory = require('require-directory');
-const Router = require('koa-router'); 
-
-class InitManager {
-    static initCore(app) {
-        //把app.js中的koa实例传进来
-        InitManager.app = app;
-        InitManager.initLoadRouters();
-    }
-    static initLoadRouters() {
-        //注意这里的路径是依赖于当前文件所在位置的
-        //最好写成绝对路径
-        const apiDirectory = `${process.cwd()}/app/api`
-        const modules = requireDirectory(module, apiDirectory, {
-            visit: whenLoadModule
-        });
-        function whenLoadModule(obj) {
-            if(obj instanceof Router) {
-                InitManager.app.use(obj.routes())
-            }
-        }
-    }
-}
-
-module.exports = InitManager;
-</code></pre>
-<p>现在在app.js中</p>
-<pre><code class="language-javascript">const Koa = require('koa');
-const app = new Koa();
-
-const InitManager = require('./core/init');
-InitManager.initCore(app);
-</code></pre>
-<p>可以说已经精简很多了，而且功能的实现照样没有问题。</p>
-<h2 id="三开发环境和生产环境的区分">三.开发环境和生产环境的区分</h2>
-<p>有时候，在两种不同的环境下，我们需要做不同的处理，这时候就需要我们提前在全局中注入相应的参数。</p>
-<p>首先在项目根目录中，创建config文件夹：</p>
-<pre><code class="language-javascript">//config/config.js
-module.exports = {
-  environment: 'dev'
-}
-//core/init.js的initManager类中增加如下内容
-static loadConfig() {
-    const configPath = process.cwd() + '/config/config.js';
-    const config = require(configPath);
-    global.config = config;
-}
-</code></pre>
-<p>现在通过全局的global变量中就可以取到当前的环境啦.</p>
-<h2 id="四全局异常处理中间件">四.全局异常处理中间件</h2>
-<p><strong>1.异步异常处理的坑</strong><br>
-在服务端api编写的过程中，异常处理是非常重要的一环，因为不可能每个函数返回的结果都是我们想要的。无论是语法的错误，还是业务逻辑上的错误，都需要让异常抛出，让问题以最直观的方式暴露，而不是直接忽略。关于编码风格，《代码大全》里面也强调过，在一个函数遇到异常时，最好的方式不是直接return false/null，而是让异常直接抛出。</p>
-<p>而在JS中，很多时候我们都在写异步代码，例如定时器，Promise等等，这就会产生一个问题，如果用try/catch的话，这样的异步代码中的错误我们是无法捕捉的。例如：</p>
-<pre><code class="language-javascript">function func1() {
-  try {
-    func2();
-  } catch (error) {
-    console.log('error');
-  }
-}
-
-function func2() {
-  setTimeout(() =&gt; {
-    throw new Error('error')
-  }, 1000)
-}
-
-func1();
-</code></pre>
-<p>执行这些代码，你会发现过了一秒后程序直接报错，console.log('error')并没有执行，也就是func1并没有捕捉到func2的异常。这就是异步的问题所在。</p>
-<p>那怎么解决这个坑呢？</p>
-<p>最简便的方式是采取async-await。</p>
-<pre><code class="language-javascript">async function func1() {
-  try {
-    await func2();
-  } catch (error) {
-    console.log('error');
-  }
-}
-
-function func2() {
-  return new Promise((resolve, reject) =&gt; {
-    setTimeout(() =&gt; {
-      reject()
-    }, 1000)
-  })
-}
-
-func1();
-</code></pre>
-<p>在这里的异步函数被Promise封装，然后reject触发func1中的catch，这就捕捉到了func2中的异常。庆幸的是，像func2这样的异步代码，现在常用的库(如axios、sequelize)已经为我们封装好了Promise对象，不用我们自己去封装了，直接去通过async-await的方式去try/catch就行了。</p>
-<p>忠告: 通过这种方式，只要是异步代码，执行之前必须要加await，不加会报Unhandled promise rejection的错误。血的教训!</p>
-<p><strong>2.设计异常处理中间件</strong></p>
-<pre><code class="language-javascript">//middlewares/exception.js
-//这里的工作是捕获异常生成返回的接口
-const catchError = async (ctx, next) =&gt; {
-  try {
-    await next();
-  } catch (error) {
-    if(error.errorCode) {
-      ctx.body = {
-        msg: error.msg,
-        error_code: error.errorCode,
-        request: `${ctx.method} ${ctx.path}`
-      };
-    } else {
-      //对于未知的异常，采用特别处理
-      ctx.body = {
-        msg: 'we made a mistake',
-      };
-    }
-  }
-}
-module.exports = catchError;
-</code></pre>
-<p>到入口文件使用这个中间件。</p>
-<pre><code class="language-javascript">//app.js
-const catchError = require('./middlewares/exception');
-app.use(catchError)
-</code></pre>
-<p>接着我们来以HttpException为例生成特定类型的异常。</p>
-<pre><code class="language-javascript">//core/http-exception.js
-class HttpException extends Error {
-  //msg为异常信息，errorCode为错误码(开发人员内部约定),code为HTTP状态码
-  constructor(msg='服务器异常', errorCode=10000, code=400) {
-    super()
-    this.errorCode = errorCode
-    this.code = code
-    this.msg = msg
-  }
-}
-
-module.exports = {
-  HttpException
-}
-//app/api/user.js
-const Router = require('koa-router')
-const router = new Router()
-const { HttpException } = require('../../core/http-exception')
-
-router.post('/user', (ctx, next) =&gt; {
-    if(true){
-        const error = new HttpException('网络请求错误', 10001, 400)
-        throw error
-  }
-})
-</code></pre>
-<p>返回的接口这样:</p>
-<pre><code class="language-json">{
-	&quot;msg&quot;: &quot;网络请求错误&quot;,
-	&quot;error_code&quot;:10001,
-	&quot;request&quot;: &quot;POST /user&quot;
-}
-</code></pre>
-<p>这样就抛出了一个特定类型的错误。但是在业务中错误的类型是非常复杂的，现在我就把我编写的一些Exception类分享一下，供大家来参考:</p>
-<pre><code class="language-javascript">// http-exception.js
-class HttpException extends Error {
-  constructor(msg = '服务器异常', errorCode=10000, code=400) {
-    super()
-    this.error_code = errorCode
-    this.code = code
-    this.msg = msg
-  }
-}
-
-class ParameterException extends HttpException{
-  constructor(msg, errorCode){
-    super()
-    this.code = 400
-    this.msg = msg || '参数错误'
-    this.errorCode = errorCode || 10000
-  }
-}
-
-class NotFound extends HttpException{
-  constructor(msg, errorCode) {
-    super();
-    this.msg = msg || '资源未找到';
-    this.errorCode = errorCode || 10001;
-    this.code = 404;
-  }
-}
-
-class AuthFailed extends HttpException{
-  constructor(msg, errorCode) {
-    super();
-    this.msg = msg || '授权失败';
-    this.errorCode = errorCode || 10002;
-    this.code = 404;
-  }
-}
-
-class Forbidden extends HttpException{
-  constructor(msg, errorCode) {
-    super();
-    this.msg = msg || '禁止访问';
-    this.errorCode = errorCode || 10003;
-    this.code = 404;
-  }
-}
-
-module.exports = {
-  HttpException,
-  ParameterException,
-  Success,
-  NotFound,
-  AuthFailed,
-  Forbidden
-}
-</code></pre>
-<p>对于这种经常需要调用的错误处理的代码，有必要将它放到全局，不用每次都导入。</p>
-<p>现在的init.js中是这样的：</p>
-<pre><code class="language-javascript">// init.js
-const requireDirectory = require('require-directory');
-const Router = require('koa-router');
-
-class InitManager {
-  static initCore(app) {
-    //入口方法
-    InitManager.app = app;
-    InitManager.initLoadRouters();
-    InitManager.loadConfig();
-    InitManager.loadHttpException();//加入全局的Exception
-  }
-  static initLoadRouters() {
-    // path config
-    const apiDirectory = `${process.cwd()}/app/api/v1`;
-    requireDirectory(module, apiDirectory, {
-      visit: whenLoadModule
-    });
-
-    function whenLoadModule(obj) {
-      if (obj instanceof Router) {
-        InitManager.app.use(obj.routes());
-      }
-    }
-  }
-  static loadConfig(path = '') {
-    const configPath = path || process.cwd() + '/config/config.js';
-    const config = require(configPath);
-    global.config = config;
-  }
-  static loadHttpException() {
-    const errors = require('./http-exception');
-    global.errs = errors;
-  }
-}
-
-module.exports = InitManager;
-</code></pre>
-<h2 id="五使用jwt完成认证授权">五.使用JWT完成认证授权</h2>
-<p>JWT(即Json Web Token)目前最流行的跨域身份验证解决方案之一。它的工作流程是这样的：</p>
-<p>1.前端向后端传递用户名和密码</p>
-<p>2.用户名和密码在后端核实成功后，返回前端一个token(或存在cookie中)</p>
-<p>3.前端拿到token并进行保存</p>
-<p>4.前端访问后端接口时先进行token认证，认证通过才能访问接口。</p>
-<p>那么在koa中我们需要做哪些事情？</p>
-<p>在生成token阶段：首先是验证账户，然后生成token令牌，传给前端。</p>
-<p>在认证token阶段: 完成认证中间件的编写，对前端的访问做一层拦截，token认证过后才能访问后面的接口。</p>
-<p><strong>1.生成token</strong><br>
-先安装两个包:</p>
-<pre><code class="language-javascript">yarn add jsonwebtoken basic-auth
-//config.js
-module.exports = {
-  environment: 'dev',
-  database: {
-    dbName: 'island',
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'fjfj'
-  },
-  security: {
-    secretKey: 'lajsdflsdjfljsdljfls',//用来生成token的key值
-    expiresIn: 60 * 60//过期时间
-  }
-}
-
-//utils.js 
-//生成token令牌函数，uid为用户id，scope为权限等级(类型为数字，内部约定)
-const generateToken = function(uid, scope){
-    const { secretKey, expiresIn } = global.config.security
-    //第一个参数为用户信息的js对象，第二个为用来生成token的key值，第三个为配置项
-    const token = jwt.sign({
-        uid,
-        scope
-    },secretKey,{
-        expiresIn
-    })
-    return token
-}
-</code></pre>
-<p><strong>2.Auth中间件实现拦截</strong></p>
-<pre><code class="language-javascript">//前端传token方式
-//在请求头中加上Authorization:`Basic ${base64(token+&quot;:&quot;)}`即可
-//其中base64为第三方库js-base64导出的一个方法
-
-//middlewares/auth.js
-const basicAuth = require('basic-auth');
-const jwt = require('jsonwebtoken');
-
-class Auth {
-  constructor(level) {
-    Auth.USER = 8;
-    Auth.ADMIN = 16;
-    this.level = level || 1;
-  }
-  //注意这里的m是一个属性
-  get m() {
-    return async (ctx, next) =&gt; {
-      const userToken = basicAuth(ctx.req);
-      let errMsg = 'token不合法';
-
-      if(!userToken || !userToken.name) {
-        throw new global.errs.Forbidden();
-      }
-      try {
-        //将前端传过来的token值进行认证，如果成功会返回一个decode对象，包含uid和scope
-        var decode = jwt.verify(userToken.name, global.config.security.secretKey);
-      } catch (error) {
-        // token不合法
-        // 或token过期
-        // 抛异常
-        errMsg = '//根据情况定义'
-        throw new global.errs.Forbidden(errMsg);
-      }
-      //将uid和scope挂载ctx中
-      ctx.auth = {
-        uid: decode.uid,
-        scope: decode.scope
-      };
-      //现在走到这里token认证通过
-      await next();
-    }
-  }
-}
-module.exports = Auth;
-</code></pre>
-<p>在路由相应文件中编写如下:</p>
-<pre><code class="language-javascript">//中间件先行，如果中间件中认证未通过，则不会走到路由处理逻辑这里来
-router.post('/xxx', new Auth().m , async (ctx, next) =&gt; {
-    //......
-})
-</code></pre>
-<h2 id="六require路径别名">六.require路径别名</h2>
-<p>在开发的过程，当项目的目录越来越复杂的时候，包的引用路径也变得越来越麻烦。曾经就出现过这样的导入路径:</p>
-<pre><code class="language-javascript">const Favor = require('../../../models/favor');
-</code></pre>
-<p>甚至还有比这个更加冗长的导入方式，作为一个有代码洁癖的程序员，实在让人看的非常不爽。其实通过绝对路径process.cwd()的方式也是可以解决这样一个问题的，但是当目录深到一定程度的时候，导入的代码也非常繁冗。那有没有更好的解决方式呢？</p>
-<p>使用module-alias将路径别名就可以。</p>
-<pre><code class="language-javascript">yarn add module-alias
-//package.json添加如下内容
-  &quot;_moduleAliases&quot;: {
-    &quot;@models&quot;: &quot;app/models&quot;
-  },
-</code></pre>
-<p>然后在app.js引入这个库：</p>
-<pre><code class="language-javascript">//引入即可
-require('module-alias/register');
-</code></pre>
-<p>现在引入代码就变成这样了:</p>
-<pre><code class="language-javascript">const Favor = require('@models/favor');
-</code></pre>
-<p>简洁清晰了许多，也更容易让人维护。</p>
-<h2 id="七利用sequelize的事务解决数据不一致问题">七.利用sequelize的事务解决数据不一致问题</h2>
-<p>当一个业务要进行多项数据库的操作时，拿点赞功能为例，首先你得在点赞记录的表中增加记录，然后你要将对应对象的点赞数加1，这两个操作是必须要一起完成的，如果有一个操作成功，另一个操作出现了问题，那就会导致数据不一致，这是一个非常严重的安全问题。</p>
-<p>我们希望如果出现了任何问题，直接回滚到未操作之前的状态。这个时候建议用数据库事务的操作。利用sequelize的transaction是可以完成的，把业务部分的代码贴一下:</p>
-<pre><code class="language-javascript">async like(art_id, uid) {
-    //查找是否有重复的
-    const favor = await Favor.findOne({
-      where: { art_id, uid }
-      }
-    );
-    //有重复则抛异常
-    if (favor) {
-      throw new global.errs.LikeError('你已经点过赞了');
-    }
-    //db为sequelize的实例
-    //下面是事务的操作
-    return db.transaction(async t =&gt; {
-      //1.创建点赞记录
-      await Favor.create({ art_id, uid }, { transaction: t });
-      //2.增加点赞数
-      const art = await Art.getData(art_id, type);//拿到被点赞的对象
-      await art.increment('fav_nums', { by: 1, transaction: t });//加1操作
-    });
-  }
-</code></pre>
-<p>sequelize中的transaction大概就是这样做的，官方文档是promise的方式，看起来实在太不美观，改成async/await方式会好很多，但是千万不要忘了写await。</p>
-<p>关于koa2的代码优化，就先分享到这里，未完待续，后续会不断补充。欢迎点赞、留言!</p>
 ]]></content>
     </entry>
 </feed>
