@@ -1,15 +1,18 @@
+
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
+    
+<meta charset="utf-8" >
 
 <title>用优雅的代码武装我们的koa2项目 | zz失乐园</title>
 <meta name="description" content="Everyone Can (Not) Comprehend.">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1568375882613">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1569389296416">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
 
@@ -18,98 +21,98 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
 
 
   </head>
   <body>
     <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://Zu3zz.github.io">
-        <img src="https://Zu3zz.github.io/images/avatar.png?v=1568375882613" class="site-logo">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://Zu3zz.github.io">
+        <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1569389296416" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://Zu3zz.github.io">
         <h1 class="site-title">zz失乐园</h1>
       </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
     </div>
-    <div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
       
         
-          <a href="/" class="site-nav">
+          <a href="/" class="menu purple-link">
             首页
           </a>
         
       
         
-          <a href="/archives" class="site-nav">
+          <a href="/archives" class="menu purple-link">
             归档
           </a>
         
       
         
-          <a href="/tags" class="site-nav">
+          <a href="/tags" class="menu purple-link">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="site-nav">
+          <a href="/post/about" class="menu purple-link">
             关于
           </a>
         
       
         
-          <a href="/projects" class="site-nav" target="_blank">
+          <a class="menu purple-link" href="/projects" class="menu" target="_blank">
             项目
           </a>
         
       
     </div>
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      Everyone Can (Not) Comprehend.
-    </div>
-    <div class="site-footer">
-      By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-</div>
+</transition>
 
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">用优雅的代码武装我们的koa2项目</h2>
-            <div class="post-date">2019-08-10</div>
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/koa-tricks.jpg')">
+            </div>
+          
+          <h2 class="post-title">用优雅的代码武装我们的koa2项目</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-08-10</span>
             
-              <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/koa-tricks.jpg')">
-              </div>
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://Zu3zz.github.io/tag/Zkk1cdrv0">
+                    Koa
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://Zu3zz.github.io/tag/2Iiv88cUt">
+                    Node.js
+                    
+                  </a>
+                
+              </span>
             
-            <div class="post-content">
-              <p>👏 众所周知，koa2是基于nodejs的一款非常轻量级的服务端框架，其简单易上手的特性更是大大节省了前端人员开发服务端api的成本。<br>
+          </div>
+          <div class="post-content">
+            <p>👏 众所周知，koa2是基于nodejs的一款非常轻量级的服务端框架，其简单易上手的特性更是大大节省了前端人员开发服务端api的成本。<br>
 💻 尽管许多功能能够实现，但是作为一个有素养的开发人员，代码的层次性、后期可维护性都是需要考虑周到的......</p>
 <!-- more -->
 <p>实话说，按照koa官方文档来照葫芦画瓢，我们的代码是写不漂亮的。</p>
@@ -540,44 +543,43 @@ require('module-alias/register');
 <p>sequelize中的transaction大概就是这样做的，官方文档是promise的方式，看起来实在太不美观，改成async/await方式会好很多，但是千万不要忘了写await。</p>
 <p>关于koa2的代码优化，就先分享到这里，未完待续，后续会不断补充。欢迎点赞、留言!</p>
 
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://Zu3zz.github.io/tag/Zkk1cdrv0" class="tag">
-                    Koa
-                  </a>
-                
-                  <a href="https://Zu3zz.github.io/tag/2Iiv88cUt" class="tag">
-                    Node.js
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://Zu3zz.github.io/post/react-jian-shu">
-                  <h3 class="post-title">
-                    迈出React的第一步
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-
           </div>
-
         </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://Zu3zz.github.io/post/react-jian-shu">
+              <h3 class="post-title">
+                下一篇：迈出React的第一步
+              </h3>
+            </a>
+          </div>
+          
       </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">Everyone Can (Not) Comprehend.</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
     </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-<script type="application/javascript">
-
-AOS.init();
+    <script type="application/javascript">
 
 hljs.initHighlightingOnLoad()
 
