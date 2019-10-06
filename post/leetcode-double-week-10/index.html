@@ -1,0 +1,396 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LeetCode-double-week-10 | 第三新东京</title>
+<meta name="description" content="Everyone Can (Not) Comprehend." />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1570369495907">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Zu3zz.github.io">
+  <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1570369495907" alt="">
+  </a>
+  <h1 class="site-title">
+    第三新东京
+  </h1>
+  <p class="site-description">
+    Everyone Can (Not) Comprehend.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" target="_blank">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              LeetCode-double-week-10
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-10-06
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://Zu3zz.github.io/tag/M7yGdMp3y" class="post-tag">
+                  # python
+                </a>
+              
+                <a href="https://Zu3zz.github.io/tag/2NVzvTKDE" class="post-tag">
+                  # algorithm
+                </a>
+              
+                <a href="https://Zu3zz.github.io/tag/We-dZJIaZ" class="post-tag">
+                  # data structure
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <center>又到了每周拼手速的时刻了！(大雾</center>
+<center>👏👏👏👏👏👏👏👏👏👏👏👏</center>
+<center>这周题目难度适中 冲！</center>
+<!-- more -->
+<h2 id="第一题">第一题</h2>
+<h3 id="5079三个有序数组的交集">5079.三个有序数组的交集</h3>
+<ul>
+<li>
+<p>给出三个均为 严格递增排列 的整数数组 arr1，arr2 和 arr3。</p>
+</li>
+<li>
+<p>返回一个由 仅 在这三个数组中 同时出现 的整数所构成的有序数组。</p>
+</li>
+</ul>
+<ol>
+<li>示例：</li>
+</ol>
+<pre><code class="language-shell">输入: arr1 = [1,2,3,4,5], arr2 = [1,2,5,7,9], arr3 = [1,3,4,5,8]
+输出: [1,5]
+解释: 只有 1 和 5 同时在这三个数组中出现.
+</code></pre>
+<h3 id="思路">思路</h3>
+<p>直接创建一个比较大的数组，遍历三遍，每次遍历到的数字都在相应位置上+1，如果数组中有值为3，说明三个数组中都有<br>
+时间复杂度O(n) 比较快<br>
+当然也可以直接循环一遍查看是否这个数都在两个数组中，但是这样就是O(nlogn)，会相对慢一些</p>
+<h3 id="python-solution">Python solution</h3>
+<pre><code class="language-python">class Solution:
+    def arraysIntersection(self, arr1: List[int], arr2: List[int], arr3: List[int]) -&gt; List[int]:
+        res = [0] * 2010
+        res1 = []
+        for i in arr1:
+            res[i]+=1
+        for i in arr2:
+            res[i]+=1
+        for i in arr3:
+            res[i]+=1
+        for j in range(len(res)):
+            if res[j] == 3:
+                res1.append(j)
+        return res1
+</code></pre>
+<h2 id="第二题">第二题</h2>
+<h3 id="5080-查找两棵二叉搜索树之和">5080. 查找两棵二叉搜索树之和</h3>
+<ul>
+<li>
+<p>给出两棵二叉搜索树，请你从两棵树中各找出一个节点，使得这两个节点的值之和等于目标值 Target。</p>
+</li>
+<li>
+<p>如果可以找到返回 True，否则返回 False。</p>
+</li>
+</ul>
+<ol>
+<li>示例 1：</li>
+</ol>
+<pre><code class="language-shell">输入：root1 = [2,1,4], root2 = [1,0,3], target = 5
+输出：true
+解释：2 加 3 和为 5 。
+</code></pre>
+<ol start="2">
+<li>示例 2：</li>
+</ol>
+<pre><code class="language-shell">输入：root1 = [0,-10,10], root2 = [5,1,7,0,2], target = 18
+输出：false
+</code></pre>
+<h3 id="思路-2">思路</h3>
+<p>暂时没有想到更好的了<br>
+首先，把两个二叉搜索树变成set，所使用到的函数就如上图t2s和_t2s所示。然后在两个set中进行类似twosum的操作<br>
+但是可以利用二叉搜索树的性质，即所有左子树的节点值都小于根节点，右子树的节点的值都大于根节点。但是这道题好像这样做就麻烦了，索性转成数组省事一点。</p>
+<h3 id="python-solution-2">Python Solution</h3>
+<pre><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def _t2s(self, root, s):
+        if root:
+            s.add(root.val)
+            self._t2s(root.left, s)
+            self._t2s(root.right, s)
+    def t2s(self, root):
+        s = set()
+        self._t2s(root,s)
+        return s
+    def twoSumBSTs(self, root1: TreeNode, root2: TreeNode, target: int) -&gt; bool:
+        t1 = self.t2s(root1)
+        t2 = self.t2s(root2)
+        for i in t1:
+            if target - i in t2:
+                return True
+        return False
+</code></pre>
+<h2 id="第三题">第三题</h2>
+<h3 id="5081-步进数">5081. 步进数</h3>
+<ul>
+<li>
+<p>如果一个整数上的每一位数字与其相邻位上的数字的绝对差都是 1，那么这个数就是一个「步进数」。</p>
+</li>
+<li>
+<p>例如， <strong>321</strong> 是一个步进数，而 <strong>421</strong> 不是。</p>
+</li>
+<li>
+<p>给你两个整数，low 和 high，请你找出在 [low, high] 范围内的所有步进数，并返回 排序后 的结果。</p>
+</li>
+</ul>
+<ol>
+<li>实例：</li>
+</ol>
+<pre><code class="language-shell">输入：low = 0, high = 21
+输出：[0,1,2,3,4,5,6,7,8,9,10,12,21]
+</code></pre>
+<h3 id="思路-3">思路</h3>
+<p>找出从low到high的范围里满足进步数要求的数字。<br>
+使用一个queue来存储所有数字，具体实现就是从1开始，queue中添加10，01；对于2，添加12，21.....<br>
+并且要满足所有添加的数字小于high.<br>
+最后sorted一遍就可以了<br>
+不知道python里的queue咋用，还是用回老本行cpp吧。</p>
+<h3 id="cpp-solution">Cpp Solution</h3>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; countSteppingNumbers(int low, int high) {
+        vector&lt;int&gt; res;
+        queue&lt;int&gt; q;
+        int i,j;
+        for(i=1;i&lt;10&amp;&amp;i&lt;=high;i++)q.push(i);
+        if(!low)res.push_back(0);
+        while(!q.empty())
+        {
+            i=q.front();
+            q.pop();
+            if(i&gt;=low) res.push_back(i);
+            j=i%10;
+            if(j&amp;&amp;i*10LL+j-1&lt;=high)q.push(i*10+j-1);
+            if(j&lt;9&amp;&amp;i*10LL+j+1&lt;=high)q.push(i*10+j+1);
+        }
+        sort(res.begin(),res.end());
+        return res;
+    }
+};
+</code></pre>
+<h2 id="第四题">第四题</h2>
+<h3 id="5099验证回文字符串iii">5099.验证回文字符串III</h3>
+<ul>
+<li>
+<p>给出一个字符串 s 和一个整数 k，请你帮忙判断这个字符串是不是一个「K 回文」。</p>
+</li>
+<li>
+<p>所谓「K 回文」：如果可以通过从字符串中删去最多 k 个字符将其转换为回文，那么这个字符串就是一个「K 回文」。</p>
+</li>
+</ul>
+<ol>
+<li>示例：</li>
+</ol>
+<pre><code class="language-shell">输入：s = &quot;abcdeca&quot;, k = 2
+输出：true
+解释：删除字符 “b” 和 “e”。
+</code></pre>
+<h3 id="思路-4">思路</h3>
+<p>首先先把给定的字符串s逆序得到s2,把s与s2进行比较。<br>
+dp方程就是用来记录到了最后一位，s与s2有多少位能够相等，如果加上了k还能够大于字符串本身的长度，那么就是“K回文”。<br>
+用python写好像很方便 索性又换回python了</p>
+<h3 id="python-solution-3">Python Solution</h3>
+<pre><code class="language-python">class Solution:
+    def isValidPalindrome(self, s: str, k: int) -&gt; bool:
+        s2 = s[::-1]
+        n = len(s)
+        dp = [[0] * (n+1) for i in range(n+1)]
+        for i in range(1,n+1):
+            for j in range(1,n+1):
+                if s[i-1] == s2[j-1]:
+                    dp[i][j] = dp[i-1][j-1] +1
+                else:
+                    dp[i][j] = max(dp[i-1][j],dp[i][j-1])
+        if dp[-1][-1] +k &gt;= n:
+            return True
+        return False
+</code></pre>
+<h3 id="总结">总结</h3>
+<p>每周的双周赛难度适中，比较适合新手打。不过这一周香港局势动荡，学校也停课了，在家呆着真窝心啊。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E9%A2%98">第一题</a>
+<ul>
+<li><a href="#5079%E4%B8%89%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86">5079.三个有序数组的交集</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#python-solution">Python solution</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E9%A2%98">第二题</a>
+<ul>
+<li><a href="#5080-%E6%9F%A5%E6%89%BE%E4%B8%A4%E6%A3%B5%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B9%8B%E5%92%8C">5080. 查找两棵二叉搜索树之和</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#python-solution-2">Python Solution</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E9%A2%98">第三题</a>
+<ul>
+<li><a href="#5081-%E6%AD%A5%E8%BF%9B%E6%95%B0">5081. 步进数</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#cpp-solution">Cpp Solution</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E5%9B%9B%E9%A2%98">第四题</a>
+<ul>
+<li><a href="#5099%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E5%AD%97%E7%AC%A6%E4%B8%B2iii">5099.验证回文字符串III</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="#python-solution-3">Python Solution</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Zu3zz.github.io/post/hdfs-3">
+              <h3 class="post-title">
+                HDFS系列(1)----安装
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  By 3zz. | 
+  <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

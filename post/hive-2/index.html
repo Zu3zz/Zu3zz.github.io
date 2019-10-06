@@ -1,99 +1,100 @@
-
-<!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
-
-<title>Hive系列(2)----内部表、外部表、实战 | zz失乐园</title>
-<meta name="description" content="Everyone Can (Not) Comprehend.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hive系列(2)----内部表、外部表、实战 | 第三新东京</title>
+<meta name="description" content="Everyone Can (Not) Comprehend." />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1570369495907">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1569389296416">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
   </head>
   <body>
-    <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://Zu3zz.github.io">
-        <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1569389296416" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://Zu3zz.github.io">
-        <h1 class="site-title">zz失乐园</h1>
-      </a>
-    </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Zu3zz.github.io">
+  <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1570369495907" alt="">
+  </a>
+  <h1 class="site-title">
+    第三新东京
+  </h1>
+  <p class="site-description">
+    Everyone Can (Not) Comprehend.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" target="_blank">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
   </div>
 </div>
 
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
-      
-        
-          <a href="/" class="menu purple-link">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="menu purple-link">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="menu purple-link">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="menu purple-link">
-            关于
-          </a>
-        
-      
-        
-          <a class="menu purple-link" href="/projects" class="menu" target="_blank">
-            项目
-          </a>
-        
-      
-    </div>
-  </div>
-</transition>
-
-
-      <div class="content-container">
         <div class="post-detail">
-          
-          <h2 class="post-title">Hive系列(2)----内部表、外部表、实战</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2019-09-09</span>
+          <article class="post">
+            <h2 class="post-title">
+              Hive系列(2)----内部表、外部表、实战
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-09-09
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
             
-          </div>
-          <div class="post-content">
-            <p>这节咱们来点真实的<br>
-hive如何创建表以及读取数据</p>
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <center>这节咱们来点真实的</center>
+<center>hive如何创建表以及读取数据</center>
 <!-- more -->
 <h1 id="hive-外部表-内部表">Hive 外部表、内部表</h1>
 <h2 id="内部表">内部表</h2>
@@ -194,57 +195,84 @@ insert overwrite table track_info_page_stat partition(day='2013-07-21') select p
 <li>将数据导出 (optional)</li>
 </ol>
 
-          </div>
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#hive-%E5%A4%96%E9%83%A8%E8%A1%A8-%E5%86%85%E9%83%A8%E8%A1%A8">Hive 外部表、内部表</a>
+<ul>
+<li><a href="#%E5%86%85%E9%83%A8%E8%A1%A8">内部表</a></li>
+<li><a href="#%E5%A4%96%E9%83%A8%E8%A1%A8">外部表</a></li>
+<li><a href="#%E5%88%86%E5%8C%BA%E8%A1%A8">分区表</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://Zu3zz.github.io/post/hive-1">
+            <div class="next">下一篇</div>
+            <a href="https://Zu3zz.github.io/post/hive-1">
               <h3 class="post-title">
-                下一篇：Hive系列(1)----概念、部署、语法
+                Hive系列(1)----概念、部署、语法
               </h3>
             </a>
           </div>
-          
-      </div>
+        
 
-      
+        
 
-      <div class="site-footer">
-  <div class="slogan">Everyone Can (Not) Comprehend.</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-  By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+        <div class="site-footer">
+  By 3zz. | 
+  <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
+<script>
+  hljs.initHighlightingOnLoad()
 
-    </div>
-    <script type="application/javascript">
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-hljs.initHighlightingOnLoad()
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
 
 </script>
 
-
-
-
+      </div>
+    </div>
   </body>
 </html>

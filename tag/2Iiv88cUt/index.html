@@ -1,228 +1,66 @@
-
-<!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
-
-<title>Node.js | zz失乐园</title>
-<meta name="description" content="Everyone Can (Not) Comprehend.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Node.js | 第三新东京</title>
+<meta name="description" content="Everyone Can (Not) Comprehend." />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1570369495907">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1569389296416">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
   </head>
   <body>
-    <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://Zu3zz.github.io">
-        <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1569389296416" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://Zu3zz.github.io">
-        <h1 class="site-title">zz失乐园</h1>
-      </a>
-    </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Zu3zz.github.io">
+  <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1570369495907" alt="">
+  </a>
+  <h1 class="site-title">
+    第三新东京
+  </h1>
+  <p class="site-description">
+    Everyone Can (Not) Comprehend.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" target="_blank">
+          项目
+        </a>
+      
+    
   </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
-      
-        
-          <a href="/" class="menu purple-link">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="menu purple-link">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="menu purple-link">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="menu purple-link">
-            关于
-          </a>
-        
-      
-        
-          <a class="menu purple-link" href="/projects" class="menu" target="_blank">
-            项目
-          </a>
-        
-      
-    </div>
-  </div>
-</transition>
-
-
-      <div class="content-container">
-
-        <div class="current-tag-container">
-          <h2 class="title">
-            <i class="icon icon-pricetags-outline"></i> Node.js
-          </h2> 
-        </div>
-
-        
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/react-ssr">
-        <h2 class="post-title">从头梳理服务器渲染原理(SSR)</h2>
-      </a>
-      <div class="post-abstract">
-        <p>这一次，让我们来以React为例，把服务端渲染(Server Side Render，简称“SSR”)学个明明白白。</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-08-14</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/eDo687J7B">
-                React
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/2Iiv88cUt">
-                Node.js
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://Zu3zz.github.io/post/react-ssr">
-        <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/react-ssr.jpg')">
-        </div>
-      </a>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/koa-tricks">
-        <h2 class="post-title">用优雅的代码武装我们的koa2项目</h2>
-      </a>
-      <div class="post-abstract">
-        <p>👏 众所周知，koa2是基于nodejs的一款非常轻量级的服务端框架，其简单易上手的特性更是大大节省了前端人员开发服务端api的成本。<br>
-💻 尽管许多功能能够实现，但是作为一个有素养的开发人员，代码的层次性、后期可维护性都是需要考虑周到的......</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-08-10</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/Zkk1cdrv0">
-                Koa
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/2Iiv88cUt">
-                Node.js
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://Zu3zz.github.io/post/koa-tricks">
-        <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/koa-tricks.jpg')">
-        </div>
-      </a>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/react-jian-shu">
-        <h2 class="post-title">迈出React的第一步</h2>
-      </a>
-      <div class="post-abstract">
-        <p>1.安装npm node.js以获得node.js开发环境,安装yarn作为包管理工具<br>
-2.安装脚手架工具create-react-app<br>
-3.使用脚手架工具启动一个react项目......</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-08-10</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/eDo687J7B">
-                React
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/2Iiv88cUt">
-                Node.js
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://Zu3zz.github.io/post/react-jian-shu">
-        <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/react-jian-shu.jpg')">
-        </div>
-      </a>
-    
-  </section>
-
-
-<div class="pagination-container">
-  
-  
-</div>
-
-
-      </div>
-
-      <div class="site-footer">
-  <div class="slogan">Everyone Can (Not) Comprehend.</div>
   <div class="social-container">
     
       
@@ -236,26 +74,157 @@
       
     
   </div>
-  By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
+        <div class="current-tag-container">
+            <h2 class="title">
+                标签：# Node.js
+            </h2> 
+        </div>
+        <div class="post-container">
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/react-ssr">
+        <h2 class="post-title">从头梳理服务器渲染原理(SSR)</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-08-14
+        </span>
+        <span>
+          4 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/eDo687J7B" class="post-tag">
+            # React
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/2Iiv88cUt" class="post-tag">
+            # Node.js
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <p>这一次，让我们来以React为例，把服务端渲染(Server Side Render，简称“SSR”)学个明明白白。</p>
 
-    </div>
-    <script type="application/javascript">
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/koa-tricks">
+        <h2 class="post-title">用优雅的代码武装我们的koa2项目</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-08-10
+        </span>
+        <span>
+          14 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/Zkk1cdrv0" class="post-tag">
+            # Koa
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/2Iiv88cUt" class="post-tag">
+            # Node.js
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <p>👏 众所周知，koa2是基于nodejs的一款非常轻量级的服务端框架，其简单易上手的特性更是大大节省了前端人员开发服务端api的成本。<br>
+💻 尽管许多功能能够实现，但是作为一个有素养的开发人员，代码的层次性、后期可维护性都是需要考虑周到的......</p>
 
-hljs.initHighlightingOnLoad()
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/react-jian-shu">
+        <h2 class="post-title">迈出React的第一步</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-08-10
+        </span>
+        <span>
+          9 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/eDo687J7B" class="post-tag">
+            # React
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/2Iiv88cUt" class="post-tag">
+            # Node.js
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <p>1.安装npm node.js以获得node.js开发环境,安装yarn作为包管理工具<br>
+2.安装脚手架工具create-react-app<br>
+3.使用脚手架工具启动一个react项目......</p>
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+      </di>
+    </article>
+  
+</div>
+
+        <div class="pagination-container">
+  
+  
+</div>
+
+        <div class="site-footer">
+  By 3zz. | 
+  <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
 
 </script>
 
-
-
-
+      </div>
+    </div>
   </body>
 </html>

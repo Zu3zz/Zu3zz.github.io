@@ -1,118 +1,107 @@
-
-<!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
-
-<title>堆排序(Heap Sort) | zz失乐园</title>
-<meta name="description" content="Everyone Can (Not) Comprehend.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>堆排序(Heap Sort) | 第三新东京</title>
+<meta name="description" content="Everyone Can (Not) Comprehend." />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1570369495907">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1569389296416">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
   </head>
   <body>
-    <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://Zu3zz.github.io">
-        <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1569389296416" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://Zu3zz.github.io">
-        <h1 class="site-title">zz失乐园</h1>
-      </a>
-    </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Zu3zz.github.io">
+  <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1570369495907" alt="">
+  </a>
+  <h1 class="site-title">
+    第三新东京
+  </h1>
+  <p class="site-description">
+    Everyone Can (Not) Comprehend.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" target="_blank">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
   </div>
 </div>
 
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
-      
-        
-          <a href="/" class="menu purple-link">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="menu purple-link">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="menu purple-link">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="menu purple-link">
-            关于
-          </a>
-        
-      
-        
-          <a class="menu purple-link" href="/projects" class="menu" target="_blank">
-            项目
-          </a>
-        
-      
-    </div>
-  </div>
-</transition>
-
-
-      <div class="content-container">
         <div class="post-detail">
-          
-            <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/heap-sort.jpg')">
-            </div>
-          
-          <h2 class="post-title">堆排序(Heap Sort)</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2019-08-17</span>
-            
+          <article class="post">
+            <h2 class="post-title">
+              堆排序(Heap Sort)
+            </h2>
+            <div class="post-info">
               <span>
-                <i class="icon-pricetags-outline"></i>
-                
-                  <a href="https://Zu3zz.github.io/tag/2NVzvTKDE">
-                    algorithm
-                    
-                      ，
-                    
-                  </a>
-                
-                  <a href="https://Zu3zz.github.io/tag/We-dZJIaZ">
-                    data structure
-                    
-                  </a>
-                
+                2019-08-17
               </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://Zu3zz.github.io/tag/2NVzvTKDE" class="post-tag">
+                  # algorithm
+                </a>
+              
+                <a href="https://Zu3zz.github.io/tag/We-dZJIaZ" class="post-tag">
+                  # data structure
+                </a>
+              
+            </div>
             
-          </div>
-          <div class="post-content">
-            <p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
 <!-- more -->
 <p>写这篇博客的原因是因为今天面试被问到了如何使用堆排序在一个百万数量级的数组中取出前k大的元素，可能是有点紧张，我大脑当场短路了，直接把二分搜索树和堆排序搞混了，真的是太丢人了，果不其然面试也挂了。</p>
 <p>痛定思痛，决定自己认真的再复习和回顾一下堆排序的所有操作。</p>
@@ -136,57 +125,82 @@ right child i = 2 * i +1;
 <p>本节对应代码：<br>
 <strong><a href="https://github.com/Zu3zz/Learn_some_algorithm_and_data_structure/blob/master/heap-sort/01-MaxHeap/main.cpp">二叉堆的建立与基本操作</a></strong></p>
 
-          </div>
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1%E5%9F%BA%E6%9C%AC%E5%AD%98%E5%82%A8">1.基本存储</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://Zu3zz.github.io/post/react-ssr">
+            <div class="next">下一篇</div>
+            <a href="https://Zu3zz.github.io/post/react-ssr">
               <h3 class="post-title">
-                下一篇：从头梳理服务器渲染原理(SSR)
+                从头梳理服务器渲染原理(SSR)
               </h3>
             </a>
           </div>
-          
-      </div>
+        
 
-      
+        
 
-      <div class="site-footer">
-  <div class="slogan">Everyone Can (Not) Comprehend.</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-  By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+        <div class="site-footer">
+  By 3zz. | 
+  <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
+<script>
+  hljs.initHighlightingOnLoad()
 
-    </div>
-    <script type="application/javascript">
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-hljs.initHighlightingOnLoad()
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
 
 </script>
 
-
-
-
+      </div>
+    </div>
   </body>
 </html>

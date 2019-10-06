@@ -1,24 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
-    <title>zz失乐园</title>
-    <updated>2019-09-25T05:28:45.509Z</updated>
+    <title>第三新东京</title>
+    <updated>2019-10-06T13:45:27.265Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
     <subtitle>Everyone Can (Not) Comprehend.</subtitle>
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2019, zz失乐园</rights>
+    <rights>All rights reserved 2019, 第三新东京</rights>
+    <entry>
+        <title type="html"><![CDATA[LeetCode-double-week-10]]></title>
+        <id>https://Zu3zz.github.io/post/leetcode-double-week-10</id>
+        <link href="https://Zu3zz.github.io/post/leetcode-double-week-10">
+        </link>
+        <updated>2019-10-06T11:56:00.000Z</updated>
+        <summary type="html"><![CDATA[<center>又到了每周拼手速的时刻了！(大雾</center>
+<center>👏👏👏👏👏👏👏👏👏👏👏👏</center>
+<center>这周题目难度适中 冲！</center>]]></summary>
+        <content type="html"><![CDATA[<center>又到了每周拼手速的时刻了！(大雾</center>
+<center>👏👏👏👏👏👏👏👏👏👏👏👏</center>
+<center>这周题目难度适中 冲！</center>
+<!-- more -->
+<h2 id="第一题">第一题</h2>
+<h3 id="5079三个有序数组的交集">5079.三个有序数组的交集</h3>
+<ul>
+<li>
+<p>给出三个均为 严格递增排列 的整数数组 arr1，arr2 和 arr3。</p>
+</li>
+<li>
+<p>返回一个由 仅 在这三个数组中 同时出现 的整数所构成的有序数组。</p>
+</li>
+</ul>
+<ol>
+<li>示例：</li>
+</ol>
+<pre><code class="language-shell">输入: arr1 = [1,2,3,4,5], arr2 = [1,2,5,7,9], arr3 = [1,3,4,5,8]
+输出: [1,5]
+解释: 只有 1 和 5 同时在这三个数组中出现.
+</code></pre>
+<h3 id="思路">思路</h3>
+<p>直接创建一个比较大的数组，遍历三遍，每次遍历到的数字都在相应位置上+1，如果数组中有值为3，说明三个数组中都有<br>
+时间复杂度O(n) 比较快<br>
+当然也可以直接循环一遍查看是否这个数都在两个数组中，但是这样就是O(nlogn)，会相对慢一些</p>
+<h3 id="python-solution">Python solution</h3>
+<pre><code class="language-python">class Solution:
+    def arraysIntersection(self, arr1: List[int], arr2: List[int], arr3: List[int]) -&gt; List[int]:
+        res = [0] * 2010
+        res1 = []
+        for i in arr1:
+            res[i]+=1
+        for i in arr2:
+            res[i]+=1
+        for i in arr3:
+            res[i]+=1
+        for j in range(len(res)):
+            if res[j] == 3:
+                res1.append(j)
+        return res1
+</code></pre>
+<h2 id="第二题">第二题</h2>
+<h3 id="5080-查找两棵二叉搜索树之和">5080. 查找两棵二叉搜索树之和</h3>
+<ul>
+<li>
+<p>给出两棵二叉搜索树，请你从两棵树中各找出一个节点，使得这两个节点的值之和等于目标值 Target。</p>
+</li>
+<li>
+<p>如果可以找到返回 True，否则返回 False。</p>
+</li>
+</ul>
+<ol>
+<li>示例 1：</li>
+</ol>
+<pre><code class="language-shell">输入：root1 = [2,1,4], root2 = [1,0,3], target = 5
+输出：true
+解释：2 加 3 和为 5 。
+</code></pre>
+<ol start="2">
+<li>示例 2：</li>
+</ol>
+<pre><code class="language-shell">输入：root1 = [0,-10,10], root2 = [5,1,7,0,2], target = 18
+输出：false
+</code></pre>
+<h3 id="思路-2">思路</h3>
+<p>暂时没有想到更好的了<br>
+首先，把两个二叉搜索树变成set，所使用到的函数就如上图t2s和_t2s所示。然后在两个set中进行类似twosum的操作<br>
+但是可以利用二叉搜索树的性质，即所有左子树的节点值都小于根节点，右子树的节点的值都大于根节点。但是这道题好像这样做就麻烦了，索性转成数组省事一点。</p>
+<h3 id="python-solution-2">Python Solution</h3>
+<pre><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def _t2s(self, root, s):
+        if root:
+            s.add(root.val)
+            self._t2s(root.left, s)
+            self._t2s(root.right, s)
+    def t2s(self, root):
+        s = set()
+        self._t2s(root,s)
+        return s
+    def twoSumBSTs(self, root1: TreeNode, root2: TreeNode, target: int) -&gt; bool:
+        t1 = self.t2s(root1)
+        t2 = self.t2s(root2)
+        for i in t1:
+            if target - i in t2:
+                return True
+        return False
+</code></pre>
+<h2 id="第三题">第三题</h2>
+<h3 id="5081-步进数">5081. 步进数</h3>
+<ul>
+<li>
+<p>如果一个整数上的每一位数字与其相邻位上的数字的绝对差都是 1，那么这个数就是一个「步进数」。</p>
+</li>
+<li>
+<p>例如， <strong>321</strong> 是一个步进数，而 <strong>421</strong> 不是。</p>
+</li>
+<li>
+<p>给你两个整数，low 和 high，请你找出在 [low, high] 范围内的所有步进数，并返回 排序后 的结果。</p>
+</li>
+</ul>
+<ol>
+<li>实例：</li>
+</ol>
+<pre><code class="language-shell">输入：low = 0, high = 21
+输出：[0,1,2,3,4,5,6,7,8,9,10,12,21]
+</code></pre>
+<h3 id="思路-3">思路</h3>
+<p>找出从low到high的范围里满足进步数要求的数字。<br>
+使用一个queue来存储所有数字，具体实现就是从1开始，queue中添加10，01；对于2，添加12，21.....<br>
+并且要满足所有添加的数字小于high.<br>
+最后sorted一遍就可以了<br>
+不知道python里的queue咋用，还是用回老本行cpp吧。</p>
+<h3 id="cpp-solution">Cpp Solution</h3>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; countSteppingNumbers(int low, int high) {
+        vector&lt;int&gt; res;
+        queue&lt;int&gt; q;
+        int i,j;
+        for(i=1;i&lt;10&amp;&amp;i&lt;=high;i++)q.push(i);
+        if(!low)res.push_back(0);
+        while(!q.empty())
+        {
+            i=q.front();
+            q.pop();
+            if(i&gt;=low) res.push_back(i);
+            j=i%10;
+            if(j&amp;&amp;i*10LL+j-1&lt;=high)q.push(i*10+j-1);
+            if(j&lt;9&amp;&amp;i*10LL+j+1&lt;=high)q.push(i*10+j+1);
+        }
+        sort(res.begin(),res.end());
+        return res;
+    }
+};
+</code></pre>
+<h2 id="第四题">第四题</h2>
+<h3 id="5099验证回文字符串iii">5099.验证回文字符串III</h3>
+<ul>
+<li>
+<p>给出一个字符串 s 和一个整数 k，请你帮忙判断这个字符串是不是一个「K 回文」。</p>
+</li>
+<li>
+<p>所谓「K 回文」：如果可以通过从字符串中删去最多 k 个字符将其转换为回文，那么这个字符串就是一个「K 回文」。</p>
+</li>
+</ul>
+<ol>
+<li>示例：</li>
+</ol>
+<pre><code class="language-shell">输入：s = &quot;abcdeca&quot;, k = 2
+输出：true
+解释：删除字符 “b” 和 “e”。
+</code></pre>
+<h3 id="思路-4">思路</h3>
+<p>首先先把给定的字符串s逆序得到s2,把s与s2进行比较。<br>
+dp方程就是用来记录到了最后一位，s与s2有多少位能够相等，如果加上了k还能够大于字符串本身的长度，那么就是“K回文”。<br>
+用python写好像很方便 索性又换回python了</p>
+<h3 id="python-solution-3">Python Solution</h3>
+<pre><code class="language-python">class Solution:
+    def isValidPalindrome(self, s: str, k: int) -&gt; bool:
+        s2 = s[::-1]
+        n = len(s)
+        dp = [[0] * (n+1) for i in range(n+1)]
+        for i in range(1,n+1):
+            for j in range(1,n+1):
+                if s[i-1] == s2[j-1]:
+                    dp[i][j] = dp[i-1][j-1] +1
+                else:
+                    dp[i][j] = max(dp[i-1][j],dp[i][j-1])
+        if dp[-1][-1] +k &gt;= n:
+            return True
+        return False
+</code></pre>
+<h3 id="总结">总结</h3>
+<p>每周的双周赛难度适中，比较适合新手打。不过这一周香港局势动荡，学校也停课了，在家呆着真窝心啊。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[HDFS系列(1)----安装]]></title>
         <id>https://Zu3zz.github.io/post/hdfs-3</id>
         <link href="https://Zu3zz.github.io/post/hdfs-3">
         </link>
         <updated>2019-09-13T10:54:04.000Z</updated>
-        <summary type="html"><![CDATA[<p>这篇文章咱们就来讲讲如何安装HDFS</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>这篇文章咱们就来讲讲如何安装HDFS</p>
+        <summary type="html"><![CDATA[<center>这篇文章咱们就来讲讲如何安装HDFS</center>]]></summary>
+        <content type="html"><![CDATA[<center>这篇文章咱们就来讲讲如何安装HDFS</center>
 <!-- more -->
 <h1 id="hdfs-概述">HDFS 概述</h1>
 <ol>
@@ -381,11 +572,10 @@ inode=&quot;/&quot;:hadoop:supergroup:drwxr-xr-x
         <link href="https://Zu3zz.github.io/post/yarn-1">
         </link>
         <updated>2019-09-10T07:31:48.000Z</updated>
-        <summary type="html"><![CDATA[<p>简单介绍一下资源调度工具YARN<br>
-Yet Another Resource Negotiator</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>简单介绍一下资源调度工具YARN<br>
-Yet Another Resource Negotiator</p>
+        <summary type="html"><![CDATA[<center>简单介绍一下资源调度工具YARN</center>
+<center>Yet Another Resource Negotiator</center>]]></summary>
+        <content type="html"><![CDATA[<center>简单介绍一下资源调度工具YARN</center>
+<center>Yet Another Resource Negotiator</center>
 <!-- more -->
 <h1 id="yarn-产生背景">YARN 产生背景</h1>
 <ul>
@@ -476,11 +666,10 @@ hadoop jar xxx.jar 完整的类名(包名+类名) args.....</li>
         <link href="https://Zu3zz.github.io/post/hadoop-1">
         </link>
         <updated>2019-09-09T13:12:27.000Z</updated>
-        <summary type="html"><![CDATA[<p>终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上<br>
-这篇文章会详细告诉你~</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上<br>
-这篇文章会详细告诉你~</p>
+        <summary type="html"><![CDATA[<center>终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上</center>
+<center>这篇文章会详细告诉你~</center>]]></summary>
+        <content type="html"><![CDATA[<center>终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上</center>
+<center>这篇文章会详细告诉你~</center>
 <!-- more -->
 <h1 id="hadoop-集群规划">Hadoop 集群规划</h1>
 <ul>
@@ -626,11 +815,10 @@ scp ~/.bash_profile hadoop@hadoop002:~/
         <link href="https://Zu3zz.github.io/post/hive-2">
         </link>
         <updated>2019-09-09T07:48:10.000Z</updated>
-        <summary type="html"><![CDATA[<p>这节咱们来点真实的<br>
-hive如何创建表以及读取数据</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>这节咱们来点真实的<br>
-hive如何创建表以及读取数据</p>
+        <summary type="html"><![CDATA[<center>这节咱们来点真实的</center>
+<center>hive如何创建表以及读取数据</center>]]></summary>
+        <content type="html"><![CDATA[<center>这节咱们来点真实的</center>
+<center>hive如何创建表以及读取数据</center>
 <!-- more -->
 <h1 id="hive-外部表-内部表">Hive 外部表、内部表</h1>
 <h2 id="内部表">内部表</h2>
@@ -1239,110 +1427,6 @@ right child i = 2 * i +1;
 </code></pre>
 <p>本节对应代码：<br>
 <strong><a href="https://github.com/Zu3zz/Learn_some_algorithm_and_data_structure/blob/master/heap-sort/01-MaxHeap/main.cpp">二叉堆的建立与基本操作</a></strong></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[从头梳理服务器渲染原理(SSR)]]></title>
-        <id>https://Zu3zz.github.io/post/react-ssr</id>
-        <link href="https://Zu3zz.github.io/post/react-ssr">
-        </link>
-        <updated>2019-08-14T14:54:33.000Z</updated>
-        <summary type="html"><![CDATA[<p>这一次，让我们来以React为例，把服务端渲染(Server Side Render，简称“SSR”)学个明明白白。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>这一次，让我们来以React为例，把服务端渲染(Server Side Render，简称“SSR”)学个明明白白。</p>
-<!-- more -->
-<h2 id="part1实现一个基础的react组件ssr">part1：实现一个基础的React组件SSR</h2>
-<p>这一部分来简要实现一个React组件的SSR。</p>
-<h3 id="一-ssr-vs-csr">一. SSR vs CSR</h3>
-<p>什么是服务端渲染？</p>
-<p>废话不多说，直接起一个express服务器。</p>
-<pre><code class="language-javascript">var express = require('express')
-var app = express()
-
-app.get('/', (req, res) =&gt; {
- res.send(
- `
-   &lt;html&gt;
-     &lt;head&gt;
-       &lt;title&gt;hello&lt;/title&gt;
-     &lt;/head&gt;
-     &lt;body&gt;
-       &lt;h1&gt;hello&lt;/h1&gt;
-       &lt;p&gt;world&lt;/p&gt;
-     &lt;/body&gt;
-   &lt;/html&gt;
- `
- )
-})
-
-app.listen(3001, () =&gt; {
- console.log('listen:3001')
-})
-</code></pre>
-<p>启动之后打开localhost:3001可以看到页面显示了hello world。而且打开网页源代码如下：<br>
-<img src="https://Zu3zz.github.io/post-images/1565794815666.jpg" alt=""><br>
-也能够完成显示。<br>
-这就是服务端渲染。其实非常好理解，就是服务器返回一堆html字符串，然后让浏览器显示。<br>
-与服务端渲染相对的是客户端渲染(Client Side Render)。那什么是客户端渲染？<br>
-现在创建一个新的React项目，用脚手架生成项目，然后run起来。<br>
-这里你可以看到React脚手架自动生成的首页。</p>
-<p><img src="https://Zu3zz.github.io/post-images/1565794890546.jpg" alt=""><br>
-然而打开网页源代码,我们会发现网页并没有任何DOM结构<br>
-<img src="https://Zu3zz.github.io/post-images/1565794896346.jpg" alt=""><br>
-body中除了兼容处理的noscript标签之外，只有一个id为root的标签。那首页的内容是从哪来的呢？很明显，是下面的script中拉取的JS代码控制的。<br>
-因此，CSR和SSR最大的区别在于前者的页面渲染是JS负责进行的，而后者是服务器端直接返回HTML让浏览器直接渲染。<br>
-为什么要使用服务端渲染呢？<br>
-<img src="https://Zu3zz.github.io/post-images/1565795001030.jpeg" alt=""><br>
-传统CSR的弊端：</p>
-<ol>
-<li>由于页面显示过程要进行JS文件拉取和React代码执行，首屏加载时间会比较慢。</li>
-<li>对于SEO(Search Engine Optimazition,即搜索引擎优化)，完全无能为力，因为搜索引擎爬虫只认识html结构的内容，而不能识别JS代码内容。</li>
-</ol>
-<p>SSR的出现，就是为了解决这些传统CSR的弊端。</p>
-<h2 id="二-实现react组件的服务端渲染">二、实现React组件的服务端渲染</h2>
-<p>刚刚起的express服务返回的只是一个普通的html字符串，但我们讨论的是如何进行React的服务端渲染，那么怎么做呢？ 首先创建containers文件夹，新建一个Home.js的文件，写一个简单的React组件:</p>
-<pre><code class="language-javascript">// containers/Home.js
-import React from 'react';
-const Home = () =&gt; {
-  return (
-    &lt;div&gt;
-      &lt;div&gt;This is zu3zz&lt;/div&gt;
-    &lt;/div&gt;
-  )
-}
-export default Home
-</code></pre>
-<p>现在的任务就是将它转换为html代码返回给浏览器。<br>
-总所周知，JSX中的标签其实是基于虚拟DOM的，最终要通过一定的方法将其转换为真实DOM。虚拟DOM也就是JS对象，可以看出整个服务端的渲染流程就是通过虚拟DOM的编译来完成的，因此虚拟DOM巨大的表达力也可见一斑了。<br>
-而react-dom这个库中刚好实现了编译虚拟DOM的方法。做法如下:</p>
-<pre><code class="language-javascript">// server/index.js
-import express from 'express';
-import { renderToString } from 'react-dom/server';
-import Home from './containers/Home';
-
-const app = express();
-const content = renderToString(&lt;Home /&gt;);
-app.get('/', function (req, res) {
-   res.send(
-   `
-    &lt;html&gt;
-      &lt;head&gt;
-        &lt;title&gt;ssr&lt;/title&gt;
-      &lt;/head&gt;
-      &lt;body&gt;
-        &lt;div id=&quot;root&quot;&gt;${content}&lt;/div&gt;
-      &lt;/body&gt;
-    &lt;/html&gt;
-   `
-   );
-})
-app.listen(3001, () =&gt; {
-  console.log('listen:3001')
-})
-</code></pre>
-<p>启动express服务，再浏览器上打开对应端口，页面显示出&quot;this is sanyuan&quot;。<br>
-到此，就初步实现了一个React组件是服务端渲染。<br>
-当然，这只是一个非常简陋的SSR，事实上对于复杂的项目而言是无能为力的，在之后会一步步完善，打造出一个功能完整的React的SSR框架。</p>
 ]]></content>
     </entry>
 </feed>

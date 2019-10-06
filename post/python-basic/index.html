@@ -1,139 +1,66 @@
-
-<!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
-
-<title>python基础操作 | zz失乐园</title>
-<meta name="description" content="Everyone Can (Not) Comprehend.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>python基础操作 | 第三新东京</title>
+<meta name="description" content="Everyone Can (Not) Comprehend." />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1570369495907">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1569389296416">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
   </head>
   <body>
-    <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://Zu3zz.github.io">
-        <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1569389296416" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://Zu3zz.github.io">
-        <h1 class="site-title">zz失乐园</h1>
-      </a>
-    </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Zu3zz.github.io">
+  <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1570369495907" alt="">
+  </a>
+  <h1 class="site-title">
+    第三新东京
+  </h1>
+  <p class="site-description">
+    Everyone Can (Not) Comprehend.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" target="_blank">
+          项目
+        </a>
+      
+    
   </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
-      
-        
-          <a href="/" class="menu purple-link">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="menu purple-link">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="menu purple-link">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="menu purple-link">
-            关于
-          </a>
-        
-      
-        
-          <a class="menu purple-link" href="/projects" class="menu" target="_blank">
-            项目
-          </a>
-        
-      
-    </div>
-  </div>
-</transition>
-
-
-      <div class="content-container">
-        <div class="post-detail">
-          
-            <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/python-basic.jpg')">
-            </div>
-          
-          <h2 class="post-title">python基础操作</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2019-09-04</span>
-            
-              <span>
-                <i class="icon-pricetags-outline"></i>
-                
-                  <a href="https://Zu3zz.github.io/tag/M7yGdMp3y">
-                    python
-                    
-                  </a>
-                
-              </span>
-            
-          </div>
-          <div class="post-content">
-            <p>👏  分享Python的一些骚操作</p>
-<!-- more -->
-<h2 id="file">file</h2>
-<pre><code class="language-python">file1 = read(&quot;test.txt&quot;)
-# 找到当前位置的指针
-file1.tell()
-# 让文件的指示指针进行偏移 第一个参数代表偏移位置 第二个参数 0代表从文件开头偏移 1代表从当前位置进行偏移 2代表从文件结尾进行偏移
-file1.seek(5,0)
-</code></pre>
-<h2 id="error处理">error处理</h2>
-
-          </div>
-        </div>
-
-        
-          <div class="next-post">
-            <a class="purple-link" href="https://Zu3zz.github.io/post/leetcode-stock">
-              <h3 class="post-title">
-                下一篇：leetcode-股票买卖问题(121,122,123,188,309,714)
-              </h3>
-            </a>
-          </div>
-          
-      </div>
-
-      
-
-      <div class="site-footer">
-  <div class="slogan">Everyone Can (Not) Comprehend.</div>
   <div class="social-container">
     
       
@@ -147,26 +74,117 @@ file1.seek(5,0)
       
     
   </div>
-  By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              python基础操作
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-09-04
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://Zu3zz.github.io/tag/M7yGdMp3y" class="post-tag">
+                  # python
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>👏  分享Python的一些骚操作</p>
+<!-- more -->
+<h2 id="file">file</h2>
+<pre><code class="language-python">file1 = read(&quot;test.txt&quot;)
+# 找到当前位置的指针
+file1.tell()
+# 让文件的指示指针进行偏移 第一个参数代表偏移位置 第二个参数 0代表从文件开头偏移 1代表从当前位置进行偏移 2代表从文件结尾进行偏移
+file1.seek(5,0)
+</code></pre>
+<h2 id="error处理">error处理</h2>
 
-    </div>
-    <script type="application/javascript">
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#file">file</a></li>
+<li><a href="#error%E5%A4%84%E7%90%86">error处理</a></li>
+</ul>
+</li>
+</ul>
 
-hljs.initHighlightingOnLoad()
+              </div>
+            </div>
+          </article>
+        </div>
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Zu3zz.github.io/post/leetcode-stock">
+              <h3 class="post-title">
+                leetcode-股票买卖问题(121,122,123,188,309,714)
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  By 3zz. | 
+  <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
 
 </script>
 
-
-
-
+      </div>
+    </div>
   </body>
 </html>

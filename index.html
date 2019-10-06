@@ -1,454 +1,66 @@
-
 <html>
   <head>
-    
-<meta charset="utf-8" >
-
-<title>zz失乐园</title>
-<meta name="description" content="Everyone Can (Not) Comprehend.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>第三新东京</title>
+<meta name="description" content="Everyone Can (Not) Comprehend." />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1570369495907">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1569389296416">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
   </head>
   <body>
-    <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://Zu3zz.github.io">
-        <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1569389296416" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://Zu3zz.github.io">
-        <h1 class="site-title">zz失乐园</h1>
-      </a>
-    </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Zu3zz.github.io">
+  <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1570369495907" alt="">
+  </a>
+  <h1 class="site-title">
+    第三新东京
+  </h1>
+  <p class="site-description">
+    Everyone Can (Not) Comprehend.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" target="_blank">
+          项目
+        </a>
+      
+    
   </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
-      
-        
-          <a href="/" class="menu purple-link">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="menu purple-link">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="menu purple-link">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="menu purple-link">
-            关于
-          </a>
-        
-      
-        
-          <a class="menu purple-link" href="/projects" class="menu" target="_blank">
-            项目
-          </a>
-        
-      
-    </div>
-  </div>
-</transition>
-
-
-      <div class="content-container">
-        
-        
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/hdfs-3">
-        <h2 class="post-title">HDFS系列(1)----安装</h2>
-      </a>
-      <div class="post-abstract">
-        <p>这篇文章咱们就来讲讲如何安装HDFS</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-09-13</span>
-        
-      </div>
-    </div>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/yarn-1">
-        <h2 class="post-title">Yarn系列(1)----基础、介绍、流程</h2>
-      </a>
-      <div class="post-abstract">
-        <p>简单介绍一下资源调度工具YARN<br>
-Yet Another Resource Negotiator</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-09-10</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/8yVVJSLYY">
-                big data
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/egbOn_Rcj">
-                MapReduce
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/hadoop-1">
-        <h2 class="post-title">Hadoop系列(1)----多集群配置流程</h2>
-      </a>
-      <div class="post-abstract">
-        <p>终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上<br>
-这篇文章会详细告诉你~</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-09-09</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/8yVVJSLYY">
-                big data
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/egbOn_Rcj">
-                MapReduce
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/fxWruECqJ">
-                Hive
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/hive-2">
-        <h2 class="post-title">Hive系列(2)----内部表、外部表、实战</h2>
-      </a>
-      <div class="post-abstract">
-        <p>这节咱们来点真实的<br>
-hive如何创建表以及读取数据</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-09-09</span>
-        
-      </div>
-    </div>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/hive-1">
-        <h2 class="post-title">Hive系列(1)----概念、部署、语法</h2>
-      </a>
-      <div class="post-abstract">
-        <p>慢慢学习路 一步一脚印<br>
-今天带来hive学习笔记系列的第一篇</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-09-07</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/8yVVJSLYY">
-                big data
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/egbOn_Rcj">
-                MapReduce
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/fxWruECqJ">
-                Hive
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/7acBApeyq">
-                MySQL
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/_el9BOoeY">
-                Java
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://Zu3zz.github.io/post/hive-1">
-        <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/hive-1.jpg')">
-        </div>
-      </a>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/python-basic">
-        <h2 class="post-title">python基础操作</h2>
-      </a>
-      <div class="post-abstract">
-        <p>👏  分享Python的一些骚操作</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-09-04</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/M7yGdMp3y">
-                python
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://Zu3zz.github.io/post/python-basic">
-        <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/python-basic.jpg')">
-        </div>
-      </a>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/leetcode-stock">
-        <h2 class="post-title">leetcode-股票买卖问题(121,122,123,188,309,714)</h2>
-      </a>
-      <div class="post-abstract">
-        <p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-08-18</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/M7yGdMp3y">
-                python
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/2NVzvTKDE">
-                algorithm
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/We-dZJIaZ">
-                data structure
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://Zu3zz.github.io/post/leetcode-stock">
-        <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/leetcode-stock.png')">
-        </div>
-      </a>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/leetcode-weeklycontest-150">
-        <h2 class="post-title">Leetcode-weeklyContest-150</h2>
-      </a>
-      <div class="post-abstract">
-        <p>第150周的题解</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-08-18</span>
-        
-      </div>
-    </div>
-    
-      <a href="https://Zu3zz.github.io/post/leetcode-weeklycontest-150">
-        <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/leetcode-weeklycontest-150.png')">
-        </div>
-      </a>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/heap-sort">
-        <h2 class="post-title">堆排序(Heap Sort)</h2>
-      </a>
-      <div class="post-abstract">
-        <p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-08-17</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/2NVzvTKDE">
-                algorithm
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/We-dZJIaZ">
-                data structure
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://Zu3zz.github.io/post/heap-sort">
-        <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/heap-sort.jpg')">
-        </div>
-      </a>
-    
-  </section>
-
-<section class="post-item">
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/react-ssr">
-        <h2 class="post-title">从头梳理服务器渲染原理(SSR)</h2>
-      </a>
-      <div class="post-abstract">
-        <p>这一次，让我们来以React为例，把服务端渲染(Server Side Render，简称“SSR”)学个明明白白。</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2019-08-14</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://Zu3zz.github.io/tag/eDo687J7B">
-                React
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://Zu3zz.github.io/tag/2Iiv88cUt">
-                Node.js
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://Zu3zz.github.io/post/react-ssr">
-        <div class="feature-container" style="background-image: url('https://Zu3zz.github.io/post-images/react-ssr.jpg')">
-        </div>
-      </a>
-    
-  </section>
-
-
-<div class="pagination-container">
-  
-  
-    <a href="https://Zu3zz.github.io/page/2/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
-  
-</div>
-
-
-      </div>
-
-      <div class="site-footer">
-  <div class="slogan">Everyone Can (Not) Comprehend.</div>
   <div class="social-container">
     
       
@@ -462,26 +74,347 @@ hive如何创建表以及读取数据</p>
       
     
   </div>
-  By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
+    
+        <div class="post-container">
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/leetcode-double-week-10">
+        <h2 class="post-title">LeetCode-double-week-10</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-10-06
+        </span>
+        <span>
+          6 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/M7yGdMp3y" class="post-tag">
+            # python
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/2NVzvTKDE" class="post-tag">
+            # algorithm
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/We-dZJIaZ" class="post-tag">
+            # data structure
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <center>又到了每周拼手速的时刻了！(大雾</center>
+<center>👏👏👏👏👏👏👏👏👏👏👏👏</center>
+<center>这周题目难度适中 冲！</center>
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/hdfs-3">
+        <h2 class="post-title">HDFS系列(1)----安装</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-09-13
+        </span>
+        <span>
+          9 min read
+        </span>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <center>这篇文章咱们就来讲讲如何安装HDFS</center>
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/yarn-1">
+        <h2 class="post-title">Yarn系列(1)----基础、介绍、流程</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-09-10
+        </span>
+        <span>
+          2 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/8yVVJSLYY" class="post-tag">
+            # big data
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/egbOn_Rcj" class="post-tag">
+            # MapReduce
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <center>简单介绍一下资源调度工具YARN</center>
+<center>Yet Another Resource Negotiator</center>
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/hadoop-1">
+        <h2 class="post-title">Hadoop系列(1)----多集群配置流程</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-09-09
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/8yVVJSLYY" class="post-tag">
+            # big data
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/egbOn_Rcj" class="post-tag">
+            # MapReduce
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/fxWruECqJ" class="post-tag">
+            # Hive
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <center>终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上</center>
+<center>这篇文章会详细告诉你~</center>
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/hive-2">
+        <h2 class="post-title">Hive系列(2)----内部表、外部表、实战</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-09-09
+        </span>
+        <span>
+          3 min read
+        </span>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <center>这节咱们来点真实的</center>
+<center>hive如何创建表以及读取数据</center>
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/hive-1">
+        <h2 class="post-title">Hive系列(1)----概念、部署、语法</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-09-07
+        </span>
+        <span>
+          5 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/8yVVJSLYY" class="post-tag">
+            # big data
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/egbOn_Rcj" class="post-tag">
+            # MapReduce
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/fxWruECqJ" class="post-tag">
+            # Hive
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/7acBApeyq" class="post-tag">
+            # MySQL
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/_el9BOoeY" class="post-tag">
+            # Java
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <p>慢慢学习路 一步一脚印<br>
+今天带来hive学习笔记系列的第一篇</p>
 
-    </div>
-    <script type="application/javascript">
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/python-basic">
+        <h2 class="post-title">python基础操作</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-09-04
+        </span>
+        <span>
+          1 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/M7yGdMp3y" class="post-tag">
+            # python
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <p>👏  分享Python的一些骚操作</p>
 
-hljs.initHighlightingOnLoad()
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/leetcode-stock">
+        <h2 class="post-title">leetcode-股票买卖问题(121,122,123,188,309,714)</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-08-18
+        </span>
+        <span>
+          6 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/M7yGdMp3y" class="post-tag">
+            # python
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/2NVzvTKDE" class="post-tag">
+            # algorithm
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/We-dZJIaZ" class="post-tag">
+            # data structure
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/leetcode-weeklycontest-150">
+        <h2 class="post-title">Leetcode-weeklyContest-150</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-08-18
+        </span>
+        <span>
+          5 min read
+        </span>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <p>第150周的题解</p>
+
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://Zu3zz.github.io/post/heap-sort">
+        <h2 class="post-title">堆排序(Heap Sort)</h2>
+      </a>
+      <div class="post-info">
+        <span>
+          2019-08-17
+        </span>
+        <span>
+          2 min read
+        </span>
+        
+          <a href="https://Zu3zz.github.io/tag/2NVzvTKDE" class="post-tag">
+            # algorithm
+          </a>
+        
+          <a href="https://Zu3zz.github.io/tag/We-dZJIaZ" class="post-tag">
+            # data structure
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
+
+      </di>
+    </article>
+  
+</div>
+
+    
+        <div class="pagination-container">
+  
+  
+    <a href="https://Zu3zz.github.io/page/2/" class="prev-page">下一页</a>
+  
+</div>
+
+    
+        <div class="site-footer">
+  By 3zz. | 
+  <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
 
 </script>
 
-
-
-
+      </div>
+    </div>
   </body>
 </html>

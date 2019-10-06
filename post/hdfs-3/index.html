@@ -1,98 +1,99 @@
-
-<!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
-
-<title>HDFS系列(1)----安装 | zz失乐园</title>
-<meta name="description" content="Everyone Can (Not) Comprehend.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HDFS系列(1)----安装 | 第三新东京</title>
+<meta name="description" content="Everyone Can (Not) Comprehend." />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1570369495907">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1569389296416">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
   </head>
   <body>
-    <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://Zu3zz.github.io">
-        <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1569389296416" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://Zu3zz.github.io">
-        <h1 class="site-title">zz失乐园</h1>
-      </a>
-    </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Zu3zz.github.io">
+  <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1570369495907" alt="">
+  </a>
+  <h1 class="site-title">
+    第三新东京
+  </h1>
+  <p class="site-description">
+    Everyone Can (Not) Comprehend.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" target="_blank">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
   </div>
 </div>
 
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
-      
-        
-          <a href="/" class="menu purple-link">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="menu purple-link">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="menu purple-link">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="menu purple-link">
-            关于
-          </a>
-        
-      
-        
-          <a class="menu purple-link" href="/projects" class="menu" target="_blank">
-            项目
-          </a>
-        
-      
-    </div>
-  </div>
-</transition>
-
-
-      <div class="content-container">
         <div class="post-detail">
-          
-          <h2 class="post-title">HDFS系列(1)----安装</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2019-09-13</span>
+          <article class="post">
+            <h2 class="post-title">
+              HDFS系列(1)----安装
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-09-13
+              </span>
+              <span>
+                9 min read
+              </span>
+              
+            </div>
             
-          </div>
-          <div class="post-content">
-            <p>这篇文章咱们就来讲讲如何安装HDFS</p>
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <center>这篇文章咱们就来讲讲如何安装HDFS</center>
 <!-- more -->
 <h1 id="hdfs-概述">HDFS 概述</h1>
 <ol>
@@ -448,57 +449,108 @@ inode=&quot;/&quot;:hadoop:supergroup:drwxr-xr-x
 /test2/2.txt
 </code></pre>
 
-          </div>
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#hdfs-%E6%A6%82%E8%BF%B0">HDFS 概述</a>
+<ul>
+<li><a href="#hdfs-%E6%98%AF%E4%B8%80%E4%B8%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">HDFS 是一个分布式的文件系统</a></li>
+<li><a href="#hdfs-%E5%89%8D%E6%8F%90%E5%92%8C%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87">HDFS 前提和设计目标</a></li>
+<li><a href="#hdfs-%E7%9A%84%E6%9E%B6%E6%9E%84">HDFS 的架构</a></li>
+<li><a href="#%E8%AF%BE%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%BB%8B%E7%BB%8D">课程环境介绍：</a>
+<ul>
+<li><a href="#%E6%9C%AC%E8%AF%BE%E7%A8%8B%E5%BD%95%E5%88%B6%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%98%AF-mac%E6%89%80%E4%BB%A5%E6%88%91%E9%87%87%E7%94%A8%E7%9A%84-linux-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%98%AF-mac-%E8%87%AA%E5%B8%A6%E7%9A%84-shell">本课程录制的系统是 Mac，所以我采用的 linux 客户端是 mac 自带的 shell</a></li>
+<li><a href="#hadoop-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA">Hadoop 环境搭建</a></li>
+<li><a href="#hadoophivespark-%E7%9B%B8%E5%85%B3%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AD%A6%E4%B9%A0">Hadoop/Hive/Spark 相关框架的学习：</a></li>
+<li><a href="#hadoop-%E5%AE%89%E8%A3%85%E5%89%8D%E7%BD%AE%E8%A6%81%E6%B1%82">Hadoop 安装前置要求</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85-java">安装 Java</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85-ssh-%E6%97%A0%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86">安装 ssh 无密码登陆</a></li>
+<li><a href="#hadoophdfs%E5%AE%89%E8%A3%85">Hadoop(HDFS)安装</a></li>
+<li><a href="#hadoop-%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%B8%B8%E8%A7%81%E7%9B%AE%E5%BD%95%E8%AF%B4%E6%98%8E">hadoop 软件包常见目录说明</a></li>
+<li><a href="#%E6%B3%A8%E6%84%8F">注意：</a></li>
+<li><a href="#hdfs-%E5%AD%98%E5%82%A8%E6%89%A9%E5%B1%95">HDFS 存储扩展：</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-hdfs-api-%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9D%A5%E6%93%8D%E4%BD%9C-hdfs-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">使用 HDFS API 的方式来操作 HDFS 文件系统</a></li>
+<li><a href="#hdfs-%E6%93%8D%E4%BD%9Cshell-java-api">HDFS 操作：shell + Java API</a></li>
+<li><a href="#%E5%81%87%E8%AE%BE%E6%9C%89%E7%9A%84%E5%B0%8F%E4%BC%99%E4%BC%B4%E4%BA%86%E8%A7%A3%E8%BF%87-mr-spark-%E7%AD%89%E7%AD%89%E8%A7%89%E5%BE%97%E8%BF%99%E4%B8%AA%E6%93%8D%E4%BD%9C%E5%BE%88%E7%AE%80%E5%8D%95">假设：有的小伙伴了解过 mr、spark 等等，觉得这个操作很简单</a></li>
+<li><a href="#%E6%9C%AC%E5%AE%9E%E6%88%98%E7%9A%84%E8%A6%81%E6%B1%82%E5%8F%AA%E5%85%81%E8%AE%B8%E4%BD%BF%E7%94%A8-hdfs-api-%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C">本实战的要求：只允许使用 HDFS API 进行操作</a></li>
+<li><a href="#%E7%9B%AE%E7%9A%84">目的</a></li>
+<li><a href="#%E7%A1%AC%E7%BC%96%E7%A0%81-%E9%9D%9E%E5%B8%B8%E5%BF%8C%E8%AE%B3%E7%9A%84">硬编码 ： 非常忌讳的</a></li>
+<li><a href="#%E5%8F%AF%E9%85%8D%E7%BD%AE">==&gt; 可配置</a></li>
+<li><a href="#%E5%8F%AF%E6%8F%92%E6%8B%94%E7%9A%84%E5%BC%80%E5%8F%91%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F-plugin">可插拔的开发/管理方式 plugin</a></li>
+<li><a href="#%E5%89%AF%E6%9C%AC%E6%91%86%E6%94%BE%E7%AD%96%E7%95%A5">副本摆放策略</a></li>
+<li><a href="#hdfs-%E7%9A%84%E5%85%83%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86">HDFS 的元数据管理</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://Zu3zz.github.io/post/yarn-1">
+            <div class="next">下一篇</div>
+            <a href="https://Zu3zz.github.io/post/yarn-1">
               <h3 class="post-title">
-                下一篇：Yarn系列(1)----基础、介绍、流程
+                Yarn系列(1)----基础、介绍、流程
               </h3>
             </a>
           </div>
-          
-      </div>
+        
 
-      
+        
 
-      <div class="site-footer">
-  <div class="slogan">Everyone Can (Not) Comprehend.</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-  By 3zz. | <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+        <div class="site-footer">
+  By 3zz. | 
+  <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
+<script>
+  hljs.initHighlightingOnLoad()
 
-    </div>
-    <script type="application/javascript">
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-hljs.initHighlightingOnLoad()
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
 
 </script>
 
-
-
-
+      </div>
+    </div>
   </body>
 </html>
