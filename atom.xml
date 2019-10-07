@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>第三新东京</title>
-    <updated>2019-10-06T15:49:30.744Z</updated>
+    <updated>2019-10-07T09:15:20.583Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -10,6 +10,258 @@
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 第三新东京</rights>
+    <entry>
+        <title type="html"><![CDATA[SpringBoot系列(1)----SpringBoot入门]]></title>
+        <id>https://Zu3zz.github.io/post/springboot-1</id>
+        <link href="https://Zu3zz.github.io/post/springboot-1">
+        </link>
+        <updated>2019-10-07T08:53:18.000Z</updated>
+        <summary type="html"><![CDATA[<center>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉</center>
+<center>🎊🎊有源码级别的分析哦~~🎊🎊</center>]]></summary>
+        <content type="html"><![CDATA[<center>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉</center>
+<center>🎊🎊有源码级别的分析哦~~🎊🎊</center>
+<!-- more -->
+<h2 id="1-spring-boot-入门">1、Spring Boot 入门</h2>
+<h3 id="1-spring-boot-简介">1、 Spring Boot 简介</h3>
+<blockquote>
+<p>简化Spring应用开发的一个框架;</p>
+<p>整个Spring技术栈的一个大整合;</p>
+<p>J2EE开发的一站式解决方案;</p>
+</blockquote>
+<h2 id="2-微服务">2、微服务</h2>
+<p>2014，martin fowler</p>
+<p>微服务：架构风格（服务微化）</p>
+<p>一个应用应该是一组小型服务；可以通过HTTP的方式进行互通；</p>
+<p>单体应用：ALL IN ONE</p>
+<p>微服务：每一个功能元素最终都是一个可独立替换和独立升级的软件单元；</p>
+<p><a href="https://martinfowler.com/articles/microservices.html#MicroservicesAndSoa">详细参照微服务文档</a></p>
+<h2 id="3-环境准备">3、环境准备</h2>
+<p>环境约束</p>
+<ul>
+<li>jdk1.8：Spring Boot 推荐jdk1.7及以上；java version &quot;1.8.0_112&quot;</li>
+<li>maven3.x：maven 3.3以上版本；Apache Maven 3.3.9</li>
+<li>IntelliJIDEA2017：IntelliJ IDEA 2017.2.2 x64、STS</li>
+<li>SpringBoot 1.5.9.RELEASE：1.5.9；</li>
+</ul>
+<p>统一环境；</p>
+<h3 id="1-maven设置">1、MAVEN设置</h3>
+<p>给maven 的settings.xml配置文件的profiles标签添加</p>
+<pre><code class="language-xml">&lt;profile&gt;
+  &lt;id&gt;jdk-1.8&lt;/id&gt;
+  &lt;activation&gt;
+    &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+    &lt;jdk&gt;1.8&lt;/jdk&gt;
+  &lt;/activation&gt;
+  &lt;properties&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+    &lt;maven.compiler.compilerVersion&gt;1.8&lt;/maven.compiler.compilerVersion&gt;
+  &lt;/properties&gt;
+&lt;/profile&gt;
+</code></pre>
+<h3 id="2-idea设置">2、IDEA设置</h3>
+<p>整合maven</p>
+<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io/post-images/1570438626151.png" alt="IDEA"></figure>
+<figure data-type="image" tabindex="2"><img src="https://Zu3zz.github.io/post-images/1570438637757.png" alt="IDEA_MAVEN"></figure>
+<h2 id="4-spring-boot-helloworld">4、Spring Boot HelloWorld</h2>
+<p>一个功能：</p>
+<p>浏览器发送hello请求，服务器接收请求并处理，相应HelloWorld字符串;</p>
+<h3 id="1-创建一个maven工程jar">1、创建一个maven工程；(jar)</h3>
+<h3 id="2-导入spring-boot相关的依赖">2、导入spring boot相关的依赖</h3>
+<pre><code class="language-xml">&lt;parent&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+  &lt;version&gt;1.5.9.RELEASE&lt;/version&gt;
+&lt;/parent&gt;
+&lt;dependencies&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h3 id="3-编写一个主程序启动spring-boot应用">3、编写一个主程序：启动Spring Boot应用</h3>
+<pre><code class="language-java">/**
+ *  @SpringBootApplication 来标注一个主程序类，说明这是一个Spring Boot应用
+ */
+@SpringBootApplication
+public class HelloWorldMainApplication {
+  public static void main(String[] args) {
+    // Spring应用启动起来
+    SpringApplication.run(HelloWorldMainApplication.class,args);
+  }
+}
+</code></pre>
+<h3 id="4-编写相关的controller-service">4、编写相关的Controller、Service</h3>
+<pre><code class="language-java">@Controller
+public class HelloController{
+  @ResponseBody
+  @RequestMapping(&quot;/hello&quot;)
+  public String hello(){
+    return &quot;Hello World&quot;;
+  }
+}
+</code></pre>
+<h3 id="5-运行主程序测试">5、运行主程序测试</h3>
+<h3 id="6-简化部署">6、简化部署</h3>
+<pre><code class="language-xml">&lt;!-- 这个插件，可以将应用打包成一个可执行的jar包；--&gt;
+&lt;build&gt;
+  &lt;plugins&gt;
+    &lt;plugin&gt;
+      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+    &lt;/plugin&gt;
+  &lt;/plugins&gt;
+&lt;/build&gt;
+</code></pre>
+<p>将这个应用打成jar包，直接使用java -jar的命令进行执行；</p>
+<h2 id="5-hello-world-探究">5、Hello World 探究</h2>
+<h3 id="1-pom文件">1、POM文件</h3>
+<h4 id="1-父项目">1、父项目</h4>
+<pre><code class="language-xml">&lt;parent&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+  &lt;version&gt;1.5.9.RELEASE&lt;/version&gt;
+&lt;/parent&gt;
+
+他的父项目是
+&lt;parent&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;
+  &lt;version&gt;1.5.9.RELEASE&lt;/version&gt;
+  &lt;relativePath&gt;../../spring-boot-dependencies&lt;/relativePath&gt;
+&lt;/parent&gt;
+他来真正管理Spring Boot应用里面的所有依赖版本；
+</code></pre>
+<p>Spring Boot的版本仲裁中心;</p>
+<p>以后我们导入依赖默认是不需要写版本的;(没有在dependencies里面管理的依赖自然需要声明版本号)</p>
+<h4 id="2-启动器">2、启动器</h4>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>spring-boot-starter-web</strong></p>
+<p>spring-boot-starter：spring-boot场景启动器；帮我们导入了web模块正常运行所依赖的组件；</p>
+<p>Spring Boot将所有的功能场景都抽取出来，做成一个个的starters（启动器），只需要在项目里面引入这些starter相关场景的所有依赖都会导入进来。要用什么功能就导入什么场景的启动器</p>
+<h3 id="2-主程序类主入口类">2、主程序类，主入口类</h3>
+<pre><code class="language-java">/**
+ *  @SpringBootApplication 来标注一个主程序类，说明这是一个Spring Boot应用
+ */
+@SpringBootApplication
+public class HelloWorldMainApplication {
+  public static void main(String[] args) {
+    // Spring应用启动起来
+    SpringApplication.run(HelloWorldMainApplication.class,args);
+  }
+}
+</code></pre>
+<p>@<strong>SpringBootApplication</strong>:    Spring Boot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动SpringBoot应用；</p>
+<pre><code class="language-java">@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan(excludeFilters = {
+  @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
+  @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
+public @interface SpringBootApplication {}
+</code></pre>
+<ul>
+<li>
+<p>@<strong>SpringBootConfiguration</strong>:Spring Boot的配置类；</p>
+<ul>
+<li>标注在某个类上，表示这是一个Spring Boot的配置类；</li>
+<li>@<strong>Configuration</strong>:配置类上来标注这个注解；
+<ul>
+<li>配置类 -----  配置文件；配置类也是容器中的一个组件；@Component</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>@<strong>EnableAutoConfiguration</strong>：开启自动配置功能；</p>
+<ul>
+<li>
+<p>以前我们需要配置的东西，Spring Boot帮我们自动配置；@<strong>EnableAutoConfiguration</strong>告诉SpringBoot开启自动配置功能；这样自动配置才能生效；</p>
+<pre><code class="language-java">@AutoConfigurationPackage
+@Import(EnableAutoConfigurationImportSelector.class)
+public @interface EnableAutoConfiguration {}
+</code></pre>
+<ul>
+<li>
+<p>@<strong>AutoConfigurationPackage</strong>：自动配置包</p>
+</li>
+<li>
+<p>@<strong>Import</strong>(AutoConfigurationPackages.Registrar.class)：</p>
+<ul>
+<li>
+<p>Spring的底层注解@Import，给容器中导入一个组件；导入的组件由AutoConfigurationPackages.Registrar.class来实现</p>
+</li>
+<li>
+<p>将主配置类（@SpringBootApplication标注的类）的所在包及下面所有子包里面的所有组件扫描到Spring容器；</p>
+</li>
+<li>
+<p>@<strong>Import</strong>(EnableAutoConfigurationImportSelector.class)；</p>
+<p>给容器导入组件</p>
+<ul>
+<li>
+<p><strong>EnableAutoConfigurationImportSelector</strong>：导入哪些组件的选择器；</p>
+</li>
+<li>
+<p>将所有需要导入的组件以全类名的方式返回；这些组件就会被添加到容器中；</p>
+</li>
+<li>
+<p>会给容器中导入非常多的自动配置类（xxxAutoConfiguration）；就是给容器中导入这个场景需要的所有组件，并配置好这些组件；		<img src="https://Zu3zz.github.io/post-images/1570438503004.png" alt="自动配置类"></p>
+</li>
+<li>
+<p>有了自动配置类，免去了我们手动编写配置注入功能组件等的工作；</p>
+</li>
+</ul>
+<pre><code class="language-java">  SpringFactoriesLoader.loadFactoryNames(EnableAutoConfiguration.class,classLoader)
+</code></pre>
+<ul>
+<li>
+<p>Spring Boot在启动的时候从类路径下的META-INF/spring.factories中获取<strong>EnableAutoConfiguration</strong>指定的值，将这些值作为自动配置类导入到容器中，自动配置类就生效，帮我们进行自动配置工作；<img src="https://Zu3zz.github.io/post-images/1570438722722.png" alt="SpringFactories"></p>
+</li>
+<li>
+<p>以前我们需要自己配置的东西，现在自动配置类都帮我们实现了；</p>
+</li>
+<li>
+<p>J2EE的整体整合解决方案和自动配置都在spring-boot-autoconfigure-2.x.x.RELEASE.jar；</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-使用spring-initializer快速创建spring-boot项目">6、使用Spring Initializer快速创建Spring Boot项目</h2>
+<h3 id="1-idea-使用spring-initializer快速创建项目">1、IDEA: 使用Spring Initializer快速创建项目</h3>
+<ul>
+<li>IDE都支持使用Spring的项目创建想到快速创建一个Spring Boot项目；</li>
+<li>选择我们需要的模块；向导会联网创建Spring Boot项目；</li>
+<li>默认生成的Spring Boot项目：
+<ul>
+<li>主程序已经写好，我们只需要写自己的逻辑</li>
+<li>resources文件夹中的目录结构
+<ul>
+<li>static: 保存所有的静态资源：js、css、images</li>
+<li>templates：保存所有的模板页面；(Spring Boot默认jar包使用嵌入式的Tomcat， 默认不支持JSP页面)；可以使用模板引擎（freemarker、thymeleaf）；</li>
+<li>application.properties：Spring Boot应用的配置文件；可以修改一些默认配置</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-sts使用-spring-starter-project快速创建项目">2、STS使用 Spring Starter Project快速创建项目</h3>
+<hr>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[LeetCode-double-week-10]]></title>
         <id>https://Zu3zz.github.io/post/leetcode-double-week-10</id>
@@ -1394,39 +1646,6 @@ class Solution:
 海洋区域 (1, 1) 和所有陆地区域之间的距离都达到最大，最大距离为 2。
 </code></pre>
 <p>太菜了 没做出来</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[堆排序(Heap Sort)]]></title>
-        <id>https://Zu3zz.github.io/post/heap-sort</id>
-        <link href="https://Zu3zz.github.io/post/heap-sort">
-        </link>
-        <updated>2019-08-17T10:17:56.000Z</updated>
-        <summary type="html"><![CDATA[<p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
-<!-- more -->
-<p>写这篇博客的原因是因为今天面试被问到了如何使用堆排序在一个百万数量级的数组中取出前k大的元素，可能是有点紧张，我大脑当场短路了，直接把二分搜索树和堆排序搞混了，真的是太丢人了，果不其然面试也挂了。</p>
-<p>痛定思痛，决定自己认真的再复习和回顾一下堆排序的所有操作。</p>
-<h2 id="1基本存储">1.基本存储</h2>
-<p>首先从堆这个数据结构说起，堆可以做到入堆和出堆都是O(logn)的复杂度，平均时间上比起O(1)+O(n)这种组合要快出去很多。</p>
-<p>首先从堆的基本形态说起，堆本质是就是一个数组，但是在存储的过程中，我们可以把它看做是一个完全二叉树:即索引为0的位置为根节点，索引为1、2的位置为根节点的子节点，下面就是一个二叉堆(Binary Heap)，对应的就是一个二叉树<br>
-<img src="https://Zu3zz.github.io/post-images/1566038321792.png" alt=""><br>
-可以看到，二叉堆满足性质如下，所有子节点均小于父亲节点，即<br>
-<code>41&lt;62 &amp;&amp; 30&lt;62</code></p>
-<p><strong>并且 二叉堆是一颗完全二叉树</strong><br>
-<img src="https://Zu3zz.github.io/post-images/1566038535528.png" alt=""></p>
-<p>所以上图所示的堆可以在cpp中如下所存储</p>
-<pre><code class="language-c++">int arr[] = {0,62,41,30,28,16,22,13,19,17,15}
-</code></pre>
-<p>可以注意到这里index为0的元素没有使用，这是为了方便堆排序进行左右节点的计算规则。<br>
-所以这样所有的子节点和父节点就满足如下的公式</p>
-<pre><code class="language-c++">parent i = i /2;
-left child i = 2 * i;
-right child i = 2 * i +1;
-</code></pre>
-<p>本节对应代码：<br>
-<strong><a href="https://github.com/Zu3zz/Learn_some_algorithm_and_data_structure/blob/master/heap-sort/01-MaxHeap/main.cpp">二叉堆的建立与基本操作</a></strong></p>
 ]]></content>
     </entry>
 </feed>
