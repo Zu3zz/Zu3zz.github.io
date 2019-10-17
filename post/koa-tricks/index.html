@@ -1,107 +1,165 @@
-<html>
-  <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>用优雅的代码武装我们的koa2项目 | 第三新东京</title>
-<meta name="description" content="Everyone Can (Not) Comprehend." />
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1571309121441">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>用优雅的代码武装我们的koa2项目 | 第三新东京</title>	
+
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
 
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+            display = "https://Zu3zz.github.io/media/css/night.css";
+
+            display = "https://Zu3zz.github.io/media/css/night.css";   
+      
+            display = "https://Zu3zz.github.io/media/css/day.css";
+
+            display = "https://Zu3zz.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Noto+Sans+SC:300|Montserrat&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://Zu3zz.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
 
 
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://Zu3zz.github.io" rel="home">第三新东京</a></h1>
+										
+					<h2 class="site-description">Everyone Can (Not) Comprehend.</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> 首页</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> 归档</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> 标签</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> 关于</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/projects"> 项目</a></li>
+	
+    
 
-  </head>
-  <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://Zu3zz.github.io">
-  <img class="avatar" src="https://Zu3zz.github.io/images/avatar.png?v=1571309121441" alt="">
-  </a>
-  <h1 class="site-title">
-    第三新东京
-  </h1>
-  <p class="site-description">
-    Everyone Can (Not) Comprehend.
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-      
-        <a href="/projects" class="menu" target="_blank">
-          项目
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-</div>
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              用优雅的代码武装我们的koa2项目
-            </h2>
-            <div class="post-info">
-              <span>
-                2019-08-10
-              </span>
-              <span>
-                14 min read
-              </span>
-              
-                <a href="https://Zu3zz.github.io/tag/Zkk1cdrv0" class="post-tag">
-                  # Koa
-                </a>
-              
-                <a href="https://Zu3zz.github.io/tag/2Iiv88cUt" class="post-tag">
-                  # Node.js
-                </a>
-              
-            </div>
-            
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <p>👏 众所周知，koa2是基于nodejs的一款非常轻量级的服务端框架，其简单易上手的特性更是大大节省了前端人员开发服务端api的成本。<br>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">用优雅的代码武装我们的koa2项目</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-08-10 16:03:41" itemprop="datePublished" pubdate="">2019-08-10</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<p>👏 众所周知，koa2是基于nodejs的一款非常轻量级的服务端框架，其简单易上手的特性更是大大节省了前端人员开发服务端api的成本。<br>
 💻 尽管许多功能能够实现，但是作为一个有素养的开发人员，代码的层次性、后期可维护性都是需要考虑周到的......</p>
 <!-- more -->
 <p>实话说，按照koa官方文档来照葫芦画瓢，我们的代码是写不漂亮的。</p>
@@ -532,88 +590,239 @@ require('module-alias/register');
 <p>sequelize中的transaction大概就是这样做的，官方文档是promise的方式，看起来实在太不美观，改成async/await方式会好很多，但是千万不要忘了写await。</p>
 <p>关于koa2的代码优化，就先分享到这里，未完待续，后续会不断补充。欢迎点赞、留言!</p>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E4%B8%80%E8%B7%AF%E7%94%B1%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD">一.路由的自动加载</a></li>
-<li><a href="#%E4%BA%8C%E7%94%A8%E7%AE%A1%E7%90%86%E5%99%A8%E5%B0%86%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E6%8A%BD%E7%A6%BB">二.用管理器将入口文件内容抽离</a></li>
-<li><a href="#%E4%B8%89%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%92%8C%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%9A%84%E5%8C%BA%E5%88%86">三.开发环境和生产环境的区分</a></li>
-<li><a href="#%E5%9B%9B%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E4%B8%AD%E9%97%B4%E4%BB%B6">四.全局异常处理中间件</a></li>
-<li><a href="#%E4%BA%94%E4%BD%BF%E7%94%A8jwt%E5%AE%8C%E6%88%90%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83">五.使用JWT完成认证授权</a></li>
-<li><a href="#%E5%85%ADrequire%E8%B7%AF%E5%BE%84%E5%88%AB%E5%90%8D">六.require路径别名</a></li>
-<li><a href="#%E4%B8%83%E5%88%A9%E7%94%A8sequelize%E7%9A%84%E4%BA%8B%E5%8A%A1%E8%A7%A3%E5%86%B3%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98">七.利用sequelize的事务解决数据不一致问题</a></li>
-</ul>
-</li>
-</ul>
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://Zu3zz.github.io/tag/Zkk1cdrv0" rel="tag">Koa</a>	
+				 
+				<a href="https://Zu3zz.github.io/tag/2Iiv88cUt" rel="tag">Node.js</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://Zu3zz.github.io/post/react-ssr" rel="prev"> 从头梳理服务器渲染原理(SSR)</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://Zu3zz.github.io/post/react-jian-shu" rel="next"> 迈出React的第一步</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://Zu3zz.github.io/images/avatar.png" ></div>
+ 
 
-              </div>
-            </div>
-          </article>
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://Zu3zz.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
         </div>
+    </div>
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://Zu3zz.github.io/post/react-jian-shu">
-              <h3 class="post-title">
-                迈出React的第一步
-              </h3>
-            </a>
-          </div>
-        
 
-        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
 
-        <div class="site-footer">
-  By 3zz. | 
-  <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">By 3zz.<br>Theme:   <a href="https://github.com/alterfang/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>. Powered by <a href="https://gridea.dev/" target="_blank" title="Gridea"><span>Gridea</span></a></div>		
+			</div>
+		
+		</footer>
+
 </div>
 
-<script>
-  hljs.initHighlightingOnLoad()
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://Zu3zz.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
 
-  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+a.back_to_top span {
+    color: #888;
+}
 
-  // This should probably be throttled.
-  // Especially because it triggers during smooth scrolling.
-  // https://lodash.com/docs/4.17.10#throttle
-  // You could do like...
-  // window.addEventListener("scroll", () => {
-  //    _.throttle(doThatStuff, 100);
-  // });
-  // Only not doing it here to keep this Pen dependency-free.
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
 
-  window.addEventListener("scroll", event => {
-    let fromTop = window.scrollY;
+a.back_to_top:hover span {
+    color: #555;
+}
 
-    mainNavLinks.forEach((link, index) => {
-      let section = document.getElementById(decodeURI(link.hash).substring(1));
-      let nextSection = null
-      if (mainNavLinks[index + 1]) {
-        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-      }
-      console.log('section.offsetHeight', section.offsetHeight);
-      if (section.offsetTop <= fromTop) {
-        if (nextSection) {
-          if (nextSection.offsetTop > fromTop) {
-            link.classList.add("current");
-          } else {
-            link.classList.remove("current");    
-          }
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
         } else {
-          link.classList.add("current");
+          return bt.css('display', 'none');
         }
-      } else {
-        link.classList.remove("current");
-      }
-    });
-  });
-
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
 </script>
 
-      </div>
-    </div>
-  </body>
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
 </html>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>第三新东京</title>
-    <updated>2019-10-17T10:45:30.013Z</updated>
+    <updated>2019-10-17T12:28:52.805Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -53,7 +53,7 @@
 </li>
 <li>
 <p>YAML配置例子</p>
-<pre><code class="language-yaml">server:
+<pre><code class="language-yml">server:
 	port: 8081
 </code></pre>
 </li>
@@ -77,7 +77,7 @@
 </li>
 <li>
 <p>以<strong>空格</strong>的缩进来控制层级关系；只要是左对齐的一列数据，都是同一层级的</p>
-<pre><code class="language-yaml">server:
+<pre><code class="language-text">server:
 	port: 8081
 	path: /hello
 </code></pre>
@@ -204,7 +204,7 @@ public class DemoApplicationTests {}
 </code></pre>
 <h4 id="1-properties配置文件在idea中默认utf-8可能会乱码">1、properties配置文件在idea中默认utf-8可能会乱码</h4>
 <ul>
-<li>调整IDEA中的默认编码<img src="/Users/3zz/Desktop/SpringBoot%E7%AC%94%E8%AE%B0/images/ideachange.png" alt="调整idea配置"></li>
+<li>调整IDEA中的默认编码<img src="https://Zu3zz.github.io/post-images/1571315004181.png" alt="调整IDEA"></li>
 </ul>
 <h4 id="2-value获取值和configurationproperties获取值比较">2、@Value获取值和@ConfigurationProperties获取值比较</h4>
 <table>
@@ -494,6 +494,8 @@ spring:
 </li>
 <li>
 <p>将类路径下的 META-INF/spring.factories里面配置的所有EnableAutoConfiguration的值加入到了容器中；</p>
+</li>
+</ul>
 <pre><code class="language-properties"># Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\
@@ -503,10 +505,8 @@ org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,\
 org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration,\...
 # 省略若干
 </code></pre>
-</li>
-<li>
-<p>每一个这样的  xxxAutoConfiguration类都是容器中的一个组件，都加入到容器中；用他们来做自动配置；</p>
-</li>
+<ul>
+<li>每一个这样的  xxxAutoConfiguration类都是容器中的一个组件，都加入到容器中；用他们来做自动配置；</li>
 </ul>
 </li>
 <li>
@@ -652,31 +652,35 @@ public class HttpProperties {
 </ul>
 <h4 id="2-自动配置类必须在一定的条件下才能生效">2、自动配置类必须在一定的条件下才能生效</h4>
 <ul>
-<li>我们怎么知道哪些自动配置类生效？</li>
-<li><strong>我们可以通过启用  debug=true属性；来让控制台打印自动配置报告</strong>，这样我们可以很方便的知道哪些哪些自动配置类生效</li>
-</ul>
+<li>
+<p>我们怎么知道哪些自动配置类生效？</p>
+</li>
+<li>
+<p><strong>我们可以通过启用  debug=true属性；来让控制台打印自动配置报告</strong>，这样我们可以很方便的知道哪些哪些自动配置类生效</p>
 <pre><code class="language-shell">============================
 CONDITIONS EVALUATION REPORT
 ============================
 Positive matches: （自动配置类启用的）
 -----------------
-   CodecsAutoConfiguration matched:
-      - @ConditionalOnClass found required class 'org.springframework.http.codec.CodecConfigurer' (OnClassCondition)
+CodecsAutoConfiguration matched:
+    - @ConditionalOnClass found required class 'org.springframework.http.codec.CodecConfigurer' (OnClassCondition)
 
-   CodecsAutoConfiguration.JacksonCodecConfiguration matched:
-      - @ConditionalOnClass found required class 'com.fasterxml.jackson.databind.ObjectMapper' (OnClassCondition)
-      下面若干省略...
+CodecsAutoConfiguration.JacksonCodecConfiguration matched:
+    - @ConditionalOnClass found required class 'com.fasterxml.jackson.databind.ObjectMapper' (OnClassCondition)
+    下面若干省略...
     
 Negative matches:（没有启动，没有匹配成功的自动配置类）
 -----------------
-   ActiveMQAutoConfiguration:
-      Did not match:
-         - @ConditionalOnClass did not find required classes 'javax.jms.ConnectionFactory', 'org.apache.activemq.ActiveMQConnectionFactory' (OnClassCondition)
+ActiveMQAutoConfiguration:
+    Did not match:
+        - @ConditionalOnClass did not find required classes 'javax.jms.ConnectionFactory', 'org.apache.activemq.ActiveMQConnectionFactory' (OnClassCondition)
 
-   AopAutoConfiguration:
-      Did not match:
-         - @ConditionalOnClass did not find required classes 'org.aspectj.lang.annotation.Aspect', 'org.aspectj.lang.reflect.Advice' (OnClassCondition)
+AopAutoConfiguration:
+    Did not match:
+        - @ConditionalOnClass did not find required classes 'org.aspectj.lang.annotation.Aspect', 'org.aspectj.lang.reflect.Advice' (OnClassCondition)
 </code></pre>
+</li>
+</ul>
 <hr>
 ]]></content>
     </entry>
