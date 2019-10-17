@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>第三新东京</title>
-    <updated>2019-10-07T09:15:20.583Z</updated>
+    <updated>2019-10-17T10:44:31.542Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -10,6 +10,676 @@
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 第三新东京</rights>
+    <entry>
+        <title type="html"><![CDATA[SpringBoot系列(2)----配置文件]]></title>
+        <id>https://Zu3zz.github.io/post/springboot-2</id>
+        <link href="https://Zu3zz.github.io/post/springboot-2">
+        </link>
+        <updated>2019-10-10T09:11:01.000Z</updated>
+        <summary type="html"><![CDATA[<center>🎏那么又到了我们SpringBoot系列的第二篇！！</center>
+<center>🎀这一篇，我们来讲讲SpringBoot中的配置相关问题，依旧有源码级别的分析哦！</center>]]></summary>
+        <content type="html"><![CDATA[<center>🎏那么又到了我们SpringBoot系列的第二篇！！</center>
+<center>🎀这一篇，我们来讲讲SpringBoot中的配置相关问题，依旧有源码级别的分析哦！</center>
+<!-- more -->
+<h2 id="1-配置文件">1、配置文件</h2>
+<ul>
+<li>
+<p>Spring Boot使用一个全局的配置文件，配置文件名是固定的</p>
+<ol>
+<li>application.properties</li>
+<li>application.yml</li>
+</ol>
+</li>
+<li>
+<p>配置文件的作用：修改SpringBoot自动默认的设置值；SpringBoot在底层都给我们自动配置好了</p>
+</li>
+<li>
+<p>YAML( YAML Ain't Markup Language)</p>
+<ul>
+<li>
+<p>YAML A Markup Language: 是一个标记语言</p>
+</li>
+<li>
+<p>YAML isn't Markup Language: 不是一个标记语言</p>
+</li>
+<li>
+<p>标记语言：</p>
+<ul>
+<li>
+<p>以前的配置文件：大多使用 <strong>xxxx.xml</strong>文件；</p>
+</li>
+<li>
+<p>YAML: <strong>以数据为中心</strong>，比JSON、XML更适合做配置文件</p>
+</li>
+<li>
+<p>YAML配置例子</p>
+<pre><code class="language-yaml">server:
+	port: 8081
+</code></pre>
+</li>
+<li>
+<p>XML:</p>
+<pre><code class="language-xml">&lt;server&gt;
+  &lt;port&gt;8081&lt;/port&gt;
+&lt;/server&gt;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-yaml语法">2、 YAML语法</h2>
+<h3 id="1-基本语法">1、基本语法</h3>
+<ul>
+<li>
+<p>k:(空格)v : 表示一对键值对(空格必须有)；</p>
+</li>
+<li>
+<p>以<strong>空格</strong>的缩进来控制层级关系；只要是左对齐的一列数据，都是同一层级的</p>
+<pre><code class="language-yaml">server:
+	port: 8081
+	path: /hello
+</code></pre>
+</li>
+<li>
+<p>属性和值也是大小写敏感的</p>
+</li>
+</ul>
+<h3 id="2-值的写法">2、值的写法</h3>
+<h4 id="字面量普通的值数字-字符串-布尔值">字面量：普通的值(数字、字符串、布尔值)</h4>
+<ul>
+<li>
+<p>K：V：字面直接来写</p>
+</li>
+<li>
+<p>字符串默认不用加上单引号或者双引号</p>
+<ul>
+<li>&quot;&quot;:双引号；不会转义字符串里面的特殊字符；特殊字符会作为本身想表达的意思</li>
+</ul>
+<pre><code class="language-yaml">name: &quot;zhangsan \n lisi&quot;
+输出： zhangsan 换行 lisi
+</code></pre>
+<ul>
+<li>:单引号；会转义特殊字符，特殊字符最终只是一个普通的字符串数据</li>
+</ul>
+<pre><code class="language-yaml">name: 'zhangsan \n lisi'
+输出： zhangsan \n  lisi
+</code></pre>
+</li>
+</ul>
+<h4 id="对象-map属性和值键值对">对象、Map(属性和值)(键值对)：</h4>
+<ul>
+<li>
+<p>k：v：在下一行来写对象的属性和值的关系；注意缩进</p>
+<ul>
+<li>对象还是k：v的方式</li>
+</ul>
+<pre><code class="language-yaml">friends:
+	lastname: zhangsan
+	age: 20
+</code></pre>
+<ul>
+<li>行内写法</li>
+</ul>
+<pre><code class="language-yaml">fridends: {lastName: zhangsan, age: 18}
+</code></pre>
+</li>
+</ul>
+<h4 id="数组list-set">数组（List、Set）：</h4>
+<ul>
+<li>
+<p>用- 值表示数组中的一个元素</p>
+<pre><code class="language-yaml">pets:
+ - cat
+ - dot
+ - pig
+</code></pre>
+</li>
+<li>
+<p>行内写法</p>
+<pre><code class="language-yaml">pets: [cat,dog,pig]
+</code></pre>
+</li>
+</ul>
+<h2 id="3-配置文件值注入">3、配置文件值注入</h2>
+<ul>
+<li>配置文件</li>
+</ul>
+<pre><code class="language-yaml">person:
+	lastName: hello
+	age: 18
+	boss: false
+	birth: 2019/10/7
+	maps: {k1:v1, k2:v2}
+	lists:
+	 - lisi
+	 - zhaoliu
+	dog:
+		name: 小狗
+		age: 12
+</code></pre>
+<ul>
+<li>JavaBean</li>
+</ul>
+<pre><code class="language-java">/**
+ * 将配置文件中配置的每一个属性的值，映射到这个组件中
+ * @ConfigurationProperties：告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定；
+ *      prefix = &quot;person&quot;：配置文件中哪个下面的所有属性进行一一映射
+ * 只有这个组件是容器中的组件，才能容器提供的@ConfigurationProperties功能；
+ */
+@Component
+@ConfigurationProperties(prefix = &quot;person&quot;)
+public class Person {
+    private String lastName;
+    private Integer age;
+    private Boolean boss;
+    private Date birth;
+  
+    private Map&lt;String,Object&gt; maps;
+    private List&lt;Object&gt; lists;
+    private Dog dog;
+}
+</code></pre>
+<ul>
+<li>我们可以导入配置文件处理器，以后编写配置就有提示了</li>
+</ul>
+<pre><code class="language-xml">&lt;!--导入配置文件处理器，配置文件进行绑定就会有提示--&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+  &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+</code></pre>
+<ul>
+<li>SpringBoot中的测试类</li>
+</ul>
+<pre><code class="language-java">/**
+ * SpringBoot单元测试
+ * 可以在测试期间很方便的类似编码一样进行自动注入等容器的功能
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class DemoApplicationTests {}
+</code></pre>
+<h4 id="1-properties配置文件在idea中默认utf-8可能会乱码">1、properties配置文件在idea中默认utf-8可能会乱码</h4>
+<ul>
+<li>调整IDEA中的默认编码<img src="/Users/3zz/Desktop/SpringBoot%E7%AC%94%E8%AE%B0/images/ideachange.png" alt="调整idea配置"></li>
+</ul>
+<h4 id="2-value获取值和configurationproperties获取值比较">2、@Value获取值和@ConfigurationProperties获取值比较</h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>@ConfigurationProperties</th>
+<th>@Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>功能</td>
+<td>批量注入配置文件中的属性</td>
+<td>一个个指定</td>
+</tr>
+<tr>
+<td>松散绑定(驼峰与下划线转换)</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>SpEL(Spring表达式)</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>JSR303数据校验(@Validated)</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>复杂类型封装</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>配置文件yml还是properties他们都能获取到值；</li>
+<li>如果说，我们只是在某个业务逻辑中需要获取一下配置文件中的某项值，使用@Value；</li>
+<li>如果说，我们专门编写了一个JavaBean来和配置文件进行映射，我们就直接使用@ConfigurationProperties；</li>
+</ul>
+<h4 id="3-配置文件注入值数据校验">3、配置文件注入值数据校验</h4>
+<pre><code class="language-java">@Component
+@ConfigurationProperties(prefix = &quot;person&quot;)
+@Validated
+public class Person {
+    /**
+     * &lt;bean class=&quot;Person&quot;&gt;
+     * 	&lt;property name=&quot;lastName&quot; value=&quot;字面量/${key}从环境变量、配置文件中获取值/#{Spring表达式}&quot;&gt;
+     	&lt;/property&gt;
+     * &lt;bean/&gt;
+     */
+   	// lastName必须是邮箱格式
+    @Email
+    // @Value(&quot;${person.last-name}&quot;)
+    private String lastName;
+    // @Value(&quot;#{11*2}&quot;)
+    private Integer age;
+    // @Value(&quot;true&quot;)
+    private Boolean boss;
+    private Date birth;
+    private Map&lt;String,Object&gt; maps;
+    private List&lt;Object&gt; lists;
+    private Dog dog;
+}
+</code></pre>
+<h4 id="4-propertysource-importresource">4、@PropertySource &amp; @ImportResource</h4>
+<ul>
+<li><strong>@PropertySource:</strong> ： 加载指定的配置文件</li>
+</ul>
+<pre><code class="language-java">/**
+ * 将配置文件中配置的每一个属性的值，映射到这个组件中
+ * @ConfigurationProperties：告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定；
+ *      prefix = &quot;person&quot;：配置文件中哪个下面的所有属性进行一一映射
+ * 只有这个组件是容器中的组件，才能容器提供的@ConfigurationProperties功能；
+ *  @ConfigurationProperties(prefix = &quot;person&quot;)默认从全局配置文件中获取值；
+ */
+@PropertySource(value = {&quot;classpath:person.properties&quot;})
+@Component
+@ConfigurationProperties(prefix = &quot;person&quot;)
+//@Validated
+public class Person {
+   	//lastName必须是邮箱格式
+   	// @Email
+    //@Value(&quot;${person.last-name}&quot;)
+    private String lastName;
+    //@Value(&quot;#{11*2}&quot;)
+    private Integer age;
+    //@Value(&quot;true&quot;)
+    private Boolean boss;
+}
+</code></pre>
+<ul>
+<li>
+<p><strong>@ImportResource</strong>: 导入Sprinig的配置文件，让配置文件里面的内容生效</p>
+</li>
+<li>
+<p>Spring Boot里面没有Spring的配置文件，我们自己编写的配置文件，也不能自动识别；</p>
+</li>
+<li>
+<p>想让Spring的配置文件生效，加载进来，@<strong>ImportResource</strong>标注在一个配置类上</p>
+<pre><code class="language-java">@ImportResource(locations = {&quot;classpath:beans.xml&quot;})
+导入Spring的配置文件让其生效
+</code></pre>
+</li>
+<li>
+<p>不来编写Spring中的配置文件</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;helloService&quot; class=&quot;com.zth.springboot.service.HelloService&quot;&gt;&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>上面这种方式在SpringBoot2.x中已经不再使用！！！！！！！</strong></p>
+</li>
+<li>
+<p>SpringBoot推荐给容器中添加组件的方式：推荐使用全注解的方式</p>
+<ol>
+<li>配置类**@Configuration** -----&gt; Spring配置文件</li>
+<li>使用**@Bean**给容器中添加组件</li>
+</ol>
+<pre><code class="language-java">/**
+ * @Configuration：指明当前类是一个配置类；就是来替代之前的Spring配置文件
+ * 在配置文件中用&lt;bean&gt;&lt;bean/&gt;标签添加组件
+ */
+@Configuration
+public class MyAppConfig {
+    //将方法的返回值添加到容器中；容器中这个组件默认的id就是方法名
+    @Bean
+    public HelloService helloService02(){
+        System.out.println(&quot;配置类@Bean给容器中添加组件了...&quot;);
+        return new HelloService();
+    }
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="4-配置文件占位符">4、配置文件占位符</h2>
+<h3 id="1-随机数">1、随机数</h3>
+<pre><code class="language-java">${random.value}、${random.int}、${random.long}
+${random.int(10)}、${random.int[1024,65536]}
+</code></pre>
+<h3 id="2-占位符获取之前配置的值如果没有可以是用指定默认值">2、占位符获取之前配置的值，如果没有可以是用:指定默认值</h3>
+<pre><code class="language-properties">person.last-name=张三${random.uuid}
+person.age=${random.int}
+person.birth=2017/12/15
+person.boss=false
+person.maps.k1=v1
+person.maps.k2=14
+person.lists=a,b,c
+person.dog.name=${person.hello:hello}_dog
+person.dog.age=15
+</code></pre>
+<h2 id="5-profile">5、Profile</h2>
+<h3 id="1-多profile文件">1、多Profile文件</h3>
+<ul>
+<li>我们在主配置文件编写的时候，文件名可以是   application-{profile}.properties/yml</li>
+<li>当创建多个文件时，默认使用application.properties的配置；</li>
+</ul>
+<h3 id="2-yml支持多文档块方式">2、yml支持多文档块方式</h3>
+<ul>
+<li>yml更简洁一些</li>
+</ul>
+<pre><code class="language-yml">server:
+  port: 8081
+spring:
+  profiles:
+    active: prod # 激活prod环境
+---
+server:
+  port: 8083
+spring:
+  profiles: dev
+---
+server:
+  port: 8084
+spring:
+  profiles: prod  #指定属于哪个环境
+</code></pre>
+<h3 id="3-激活指定profile">3、激活指定profile</h3>
+<p>1、在配置文件中指定  spring.profiles.active=dev（yml中配置如上）</p>
+<p>2、命令行：</p>
+<pre><code class="language-shell">java -jar spring-boot-02-config-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev；
+</code></pre>
+<ul>
+<li>可以直接在测试的时候，配置传入命令行参数，在IDEA中配置**--spring.profiles.active=dev**</li>
+</ul>
+<p>3、虚拟机参数；</p>
+<pre><code class="language-shell">-Dspring.profiles.active=dev
+</code></pre>
+<h2 id="6-配置文件加载位置">6、配置文件加载位置</h2>
+<ul>
+<li>
+<p>springboot 启动会扫描以下位置的application.properties或者application.yml文件作为Spring boot的默认配置文件</p>
+<ol>
+<li>–file:./config/</li>
+<li>–file:./</li>
+<li>–classpath:/config/</li>
+<li>–classpath:/</li>
+</ol>
+</li>
+<li>
+<p>优先级由高到底，高优先级的配置会覆盖低优先级的配置；</p>
+</li>
+<li>
+<p>SpringBoot会从这四个位置全部加载主配置文件；<strong>互补配置</strong>；</p>
+</li>
+<li>
+<p>我们还可以通过spring.config.location来改变默认的配置文件位置</p>
+</li>
+<li>
+<p><strong>项目打包好以后，我们可以使用命令行参数的形式，启动项目的时候来指定配置文件的新位置；指定配置文件和默认加载的这些配置文件共同起作用形成互补配置；</strong></p>
+<pre><code class="language-shell">java -jar spring-boot-02-config-02-0.0.1-SNAPSHOT.jar --spring.config.location=G:/application.properties
+</code></pre>
+</li>
+</ul>
+<h2 id="7-外部配置加载顺序">7、外部配置加载顺序</h2>
+<ul>
+<li>
+<p><strong>SpringBoot也可以从以下位置加载配置； 优先级从高到低；高优先级的配置覆盖低优先级的配置，所有的配置会形成互补配置</strong></p>
+<ol>
+<li><strong>命令行参数</strong></li>
+</ol>
+<ul>
+<li>
+<p>所有的配置都可以在命令行上进行指定</p>
+<pre><code class="language-shell">java -jar spring-boot-02-config-02-0.0.1-SNAPSHOT.jar --server.port=8087  --server.context-path=/abc
+</code></pre>
+</li>
+<li>
+<p>多个配置用空格分开； --配置项=值</p>
+</li>
+</ul>
+<ol start="2">
+<li>来自java: comp/env的JNDI属性</li>
+<li>Java系统属性(System.getProperties())</li>
+<li>操作系统环境变量</li>
+<li>RandomValuePropertySource配置的random.*属性值</li>
+<li><strong>jar包外部的application-{profile}.properties或application.yml(带spring.profile)配置文件</strong></li>
+<li><strong>jar包内部的application-{profile}.properties或application.yml(带spring.profile)配置文件</strong></li>
+</ol>
+</li>
+<li>
+<p><strong>再来加载不带profile</strong></p>
+<ol start="8">
+<li><strong>jar包外部的application.properties或application.yml(不带spring.profile)配置文件</strong></li>
+<li><strong>jar包内部的application.properties或application.yml(不带spring.profile)配置文件</strong></li>
+<li>@Configuration注解类上的@PropertySource</li>
+<li>通过SpringApplication.setDefaultProperties指定的默认属性</li>
+</ol>
+</li>
+<li>
+<p>所有支持的配置加载来源；<a href="https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/htmlsingle/#boot-features-external-config">参考官方文档</a></p>
+</li>
+</ul>
+<h2 id="8-自动配置原理">8、自动配置原理</h2>
+<ul>
+<li>配置文件到底能写什么？怎么写？自动配置原理？</li>
+<li><a href="https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/htmlsingle/#common-application-properties">配置文件能配置的属性参照</a></li>
+</ul>
+<h3 id="1-自动配置原理">1、<strong>自动配置原理</strong></h3>
+<ol>
+<li>
+<p>SpringBoot启动的时候加载主配置类，开启了自动配置功能**@EnableAutoConfiguration**</p>
+</li>
+<li>
+<p><strong>@EnableAutoConfiguration的作用</strong></p>
+<ul>
+<li>
+<p>利用EnableAutoConfigurationImportSelector给容器中导入一些组件？</p>
+</li>
+<li>
+<p>可以查看selectImports()方法的内容</p>
+</li>
+<li>
+<p>List<String> configurations = getCandidateConfigurations(annotationMetadata, attributes);获取候选的配置</p>
+<pre><code class="language-java">SpringFactoriesLoader.loadFactoryNames()
+扫描所有jar包类路径下  META-INF/spring.factories
+把扫描到的这些文件的内容包装成properties对象
+从properties中获取到EnableAutoConfiguration.class类（类名）对应的值，然后把他们添加在容器中
+</code></pre>
+</li>
+<li>
+<p>将类路径下的 META-INF/spring.factories里面配置的所有EnableAutoConfiguration的值加入到了容器中；</p>
+<pre><code class="language-properties"># Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\
+org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\
+org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,\
+org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,\
+org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration,\...
+# 省略若干
+</code></pre>
+</li>
+<li>
+<p>每一个这样的  xxxAutoConfiguration类都是容器中的一个组件，都加入到容器中；用他们来做自动配置；</p>
+</li>
+</ul>
+</li>
+<li>
+<p>每一个自动配置类进行自动配置功能；</p>
+</li>
+<li>
+<p>以**HttpEncodingAutoConfiguration（Http编码自动配置）**为例解释自动配置原理；</p>
+<pre><code class="language-java">// 表示这是一个配置类，以前编写的配置文件一样，也可以给容器中添加组件
+@Configuration
+
+// 启动指定类的ConfigurationProperties功能；将配置文件中对应的值和HttpProperties绑定起来；并把HttpProperties加入到ioc容器中
+@EnableConfigurationProperties(HttpProperties.class)
+
+// Spring底层@Conditional注解，根据不同的条件，如果满足指定的条件，整个配置类里面的配置就会生效；判断当前应用是否是web应用，如果是，当前配置类生效
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+
+// 判断当前项目有没有这个类CharacterEncodingFilter；SpringMVC中进行乱码解决的过滤器；
+@ConditionalOnClass(CharacterEncodingFilter.class)
+
+// 判断配置文件中是否存在某个配置  spring.http.encoding.enabled；如果不存在，判断也是成立的
+@ConditionalOnProperty(prefix = &quot;spring.http.encoding&quot;, value = &quot;enabled&quot;, matchIfMissing = true)
+public class HttpEncodingAutoConfiguration {
+  // 这里与SpringBoot配置文件进行映射
+  private final HttpProperties.Encoding properties;
+  
+  // 只有一个有参构造器的情况下，参数的值就会从容器中拿
+	public HttpEncodingAutoConfiguration(HttpProperties properties) {
+		this.properties = properties.getEncoding();
+	}
+	@Bean // 给容器中添加一个组件，这个组件的某些值需要从properties中获取
+	@ConditionalOnMissingBean // 判断容器中是否有这个组件
+	public CharacterEncodingFilter characterEncodingFilter() {
+		CharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();
+		filter.setEncoding(this.properties.getCharset().name());
+		filter.setForceRequestEncoding(this.properties.shouldForce(Type.REQUEST));
+		filter.setForceResponseEncoding(this.properties.shouldForce(Type.RESPONSE));
+		return filter;
+	}
+}
+</code></pre>
+<ul>
+<li>
+<p>根据当前不同的条件判断，决定这个配置类，是否生效</p>
+</li>
+<li>
+<p>一旦这个配置类生效；这个配置类就会给容器中添加各种组件；这些组件的属性都是在xxxxProperties类中封装着；配置文件能配置什么就可以参照某个功能对应的这个配置类</p>
+<pre><code class="language-java">// 从配置文件中获取指定的值和bean的属性进行绑定
+@ConfigurationProperties(prefix = &quot;spring.http&quot;)
+public class HttpProperties {
+  public static class Encoding {
+    public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+  }
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>SpringBoot的精髓</strong></p>
+<ol>
+<li><strong>SpringBoot会加载大量的自动配置类</strong></li>
+<li><strong>我们看我们需要的功能有没有SpringBoot默认写好的自动配置类</strong></li>
+<li><strong>我们再来看这个自动配置类中到底配置了哪些组件；(只要我们要用的组件有，我们就不需要再来配置了)</strong></li>
+<li><strong>给容器中自动配置类添加组件的时候，会从properties类中获取某些属性。我们就可以在配置文件中指定这些属性的值；</strong></li>
+</ol>
+</li>
+<li>
+<p>xxxxAutoConfigurartion：自动配置类；</p>
+</li>
+<li>
+<p>给容器中添加组件</p>
+</li>
+<li>
+<p>xxxxProperties:封装配置文件中相关属性；</p>
+</li>
+</ul>
+<h3 id="2-细节">2、细节</h3>
+<h4 id="1-conditional派生注解spring中原生的conditional作用">1、@Conditional派生注解(Spring中原生的@Conditional作用)</h4>
+<ul>
+<li>
+<p>作用：必须是@Conditional指定的条件成立，才给容器中添加组件，配置里面的所有内容才生效；</p>
+<table>
+<thead>
+<tr>
+<th>@Conditional扩展注解</th>
+<th>作用（判断是否满足当前指定条件）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@ConditionalOnJava</td>
+<td>系统的java版本是否符合要求</td>
+</tr>
+<tr>
+<td>@ConditionalOnBean</td>
+<td>容器中存在指定Bean；</td>
+</tr>
+<tr>
+<td>@ConditionalOnMissingBean</td>
+<td>容器中不存在指定Bean；</td>
+</tr>
+<tr>
+<td>@ConditionalOnExpression</td>
+<td>满足SpEL表达式指定</td>
+</tr>
+<tr>
+<td>@ConditionalOnClass</td>
+<td>系统中有指定的类</td>
+</tr>
+<tr>
+<td>@ConditionalOnMissingClass</td>
+<td>系统中没有指定的类</td>
+</tr>
+<tr>
+<td>@ConditionalOnSingleCandidate</td>
+<td>容器中只有一个指定的Bean，或者这个Bean是首选Bean</td>
+</tr>
+<tr>
+<td>@ConditionalOnProperty</td>
+<td>系统中指定的属性是否有指定的值</td>
+</tr>
+<tr>
+<td>@ConditionalOnResource</td>
+<td>类路径下是否存在指定资源文件</td>
+</tr>
+<tr>
+<td>@ConditionalOnWebApplication</td>
+<td>当前是web环境</td>
+</tr>
+<tr>
+<td>@ConditionalOnNotWebApplication</td>
+<td>当前不是web环境</td>
+</tr>
+<tr>
+<td>@ConditionalOnJndi</td>
+<td>JNDI存在指定项</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h4 id="2-自动配置类必须在一定的条件下才能生效">2、自动配置类必须在一定的条件下才能生效</h4>
+<ul>
+<li>我们怎么知道哪些自动配置类生效？</li>
+<li><strong>我们可以通过启用  debug=true属性；来让控制台打印自动配置报告</strong>，这样我们可以很方便的知道哪些哪些自动配置类生效</li>
+</ul>
+<pre><code class="language-shell">============================
+CONDITIONS EVALUATION REPORT
+============================
+Positive matches: （自动配置类启用的）
+-----------------
+   CodecsAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.codec.CodecConfigurer' (OnClassCondition)
+
+   CodecsAutoConfiguration.JacksonCodecConfiguration matched:
+      - @ConditionalOnClass found required class 'com.fasterxml.jackson.databind.ObjectMapper' (OnClassCondition)
+      下面若干省略...
+    
+Negative matches:（没有启动，没有匹配成功的自动配置类）
+-----------------
+   ActiveMQAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'javax.jms.ConnectionFactory', 'org.apache.activemq.ActiveMQConnectionFactory' (OnClassCondition)
+
+   AopAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'org.aspectj.lang.annotation.Aspect', 'org.aspectj.lang.reflect.Advice' (OnClassCondition)
+</code></pre>
+<hr>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SpringBoot系列(1)----SpringBoot入门]]></title>
         <id>https://Zu3zz.github.io/post/springboot-1</id>
@@ -1502,150 +2172,6 @@ mp[i][k][1] = max(mp[i-1][k][1], mp[i-1][k][0] - a[i)
             dp[i][2] = dp[i-1][1] + prices[i]
         return max(dp[n-1][0], dp[n-1][2])
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-weeklyContest-150]]></title>
-        <id>https://Zu3zz.github.io/post/leetcode-weeklycontest-150</id>
-        <link href="https://Zu3zz.github.io/post/leetcode-weeklycontest-150">
-        </link>
-        <updated>2019-08-18T05:49:18.000Z</updated>
-        <summary type="html"><![CDATA[<p>第150周的题解</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>第150周的题解</p>
-<!-- more -->
-<h2 id="第一题">第一题</h2>
-<h3 id="5048-拼写单词">5048. 拼写单词</h3>
-<p>要求:<br>
-给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。</p>
-<p>假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。</p>
-<p>注意：每次拼写时，chars 中的每个字母都只能用一次。</p>
-<p>返回词汇表 words 中你掌握的所有单词的 长度之和。<br>
-示例1：</p>
-<pre><code>输入：words = [&quot;cat&quot;,&quot;bt&quot;,&quot;hat&quot;,&quot;tree&quot;], chars = &quot;atach&quot;
-输出：6
-解释： 
-可以形成字符串 &quot;cat&quot; 和 &quot;hat&quot;，所以答案是 3 + 3 = 6。
-</code></pre>
-<p>示例2：</p>
-<pre><code>输入：words = [&quot;hello&quot;,&quot;world&quot;,&quot;leetcode&quot;], chars = &quot;welldonehoneyr&quot;
-输出：10
-解释：
-可以形成字符串 &quot;hello&quot; 和 &quot;world&quot;，所以答案是 5 + 5 = 10。
-</code></pre>
-<p><strong>思路：</strong><br>
-直接把字符串问题转化成为一个大小为26的数组，对给定的「字母表」进行遍历，将数组的对应位置记录下每个字母出现了多少次，再循环一遍给出的「词汇表」，只要词汇表每个都比给定的字母表的数组元素小，那么就说明可以表示。</p>
-<p>solution in cpp:</p>
-<pre><code class="language-c++">class Solution {
-public:
-    int countCharacters(vector&lt;string&gt;&amp; words, string chars) {
-        int s[26],t[26],i,result = 0;
-        memset(s,0,sizeof(s));
-        for(auto c:chars)s[c-'a']++;
-        for(auto d:words){
-            memset(t,0,sizeof(t));
-            for(auto e:d)t[e-'a']++;
-            for(i=0;i&lt;26;i++) if(s[i]&lt;t[i]) break;
-            if(i==26) result+=d.size();
-        }
-        return result;
-    }
-};
-</code></pre>
-<h2 id="第二题">第二题</h2>
-<h3 id="5052最大层内元素和">5052.最大层内元素和</h3>
-<p>给你一个二叉树的根节点 root。设根节点位于二叉树的第 1 层，而根节点的子节点位于第 2 层，依此类推。</p>
-<p>请你找出层内元素之和 最大 的那几层（可能只有一层）的层号，并返回其中 最小 的那个。<br>
-给定一个二叉树 大概长下面这样<br>
-实例：<br>
-<img src="https://Zu3zz.github.io/post-images/1566107780628.jpeg" alt=""></p>
-<pre><code>输入：[1,7,0,7,-8,null,null]
-输出：2
-解释：
-第 1 层各元素之和为 1，
-第 2 层各元素之和为 7 + 0 = 7，
-第 3 层各元素之和为 7 + -8 = -1，
-所以我们返回第 2 层的层号，它的层内元素之和最大。
-</code></pre>
-<p>思路：<br>
-使用一个dict用来存储每一层的元素的值，每一对键值对都是层数和相对应的值的和，使用dfs遍历所有树的节点，同时将节点所在的层数传进去，传进去的同时直接访问对应的dict对应的元素,直接加起来，最后遍历一遍输出最大的值</p>
-<ul>
-<li>solution in cpp:</li>
-</ul>
-<pre><code class="language-c++">/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-class Solution {
-public:
-    int s[10005], n;
-    void dfs(TreeNode* root, int level){
-        if(!root) return;
-        n = max(n,level);
-        s[level]+=root-&gt;val;
-        dfs(root-&gt;left,level+1);
-        dfs(root-&gt;right,level+1);
-    }
-    int maxLevelSum(TreeNode* root) {
-        memset(s,0,sizeof(s));
-        n = 0;
-        dfs(root,1);
-        int j = 1;
-        for(int i = 1;i&lt;=n;i++){
-            if(s[i] &gt; s[j])
-                j = i;
-        }
-        return j;
-    }
-};
-</code></pre>
-<ul>
-<li>solution in python:</li>
-</ul>
-<pre><code class="language-python"># Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    
-    def maxLevelSum(self, root: TreeNode) -&gt; int:
-        m,res,level = {},0,0
-        def dfs(root,level):
-            if root == None:
-                return
-            if level not in m:
-                m[level] = 0
-            m[level]+=root.val
-            dfs(root.left,level+1)
-            dfs(root.right,level+1)
-        dfs(root, 1)
-        min_ = -sys.maxsize
-        for key in m.keys():
-            if m[key] &gt; min_:
-                min_, res = m[key], key
-        return res
-</code></pre>
-<h2 id="第三题">第三题</h2>
-<h3 id="5053地图分析">5053.地图分析</h3>
-<p>你现在手里有一份大小为 N x N 的『地图』（网格） grid，上面的每个『区域』（单元格）都用 0 和 1 标记好了。其中 0 代表海洋，1 代表陆地，你知道距离陆地区域最远的海洋区域是是哪一个吗？请返回该海洋区域到离它最近的陆地区域的距离。</p>
-<p>我们这里说的距离是『曼哈顿距离』（ Manhattan Distance）：(x0, y0) 和 (x1, y1) 这两个区域之间的距离是 |x0 - x1| + |y0 - y1| 。</p>
-<p>如果我们的地图上只有陆地或者海洋，请返回 -1。</p>
-<p>实例1：<br>
-<img src="https://Zu3zz.github.io/post-images/1566108523044.jpeg" alt="实例"></p>
-<pre><code>输入：[[1,0,1],[0,0,0],[1,0,1]]
-输出：2
-解释： 
-海洋区域 (1, 1) 和所有陆地区域之间的距离都达到最大，最大距离为 2。
-</code></pre>
-<p>太菜了 没做出来</p>
 ]]></content>
     </entry>
 </feed>
