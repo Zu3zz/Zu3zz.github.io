@@ -1,363 +1,278 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
- <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
-<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
-<meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>algorithm | 第三新东京</title>	
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="Everyone Can (Not) Comprehend." />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1571422368180">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
-<script type="text/javascript">
-function getCSS()
-{
-        datetoday = new Date();
-        timenow=datetoday.getTime();
-        datetoday.setTime(timenow);
-        thehour = datetoday.getHours();
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://Zu3zz.github.io/atom.xml">
 
-            display = "https://Zu3zz.github.io/media/css/night.css";
 
-            display = "https://Zu3zz.github.io/media/css/night.css";   
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://Zu3zz.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1571422368180" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
       
-            display = "https://Zu3zz.github.io/media/css/day.css";
-
-            display = "https://Zu3zz.github.io/media/css/day.css";
-      
-
-var css = '<';
-        css+='link rel="stylesheet" href='+display+' \/';
-        css+='>';
-        document.write(css);
-}
-</script>
-<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Noto+Sans+SC:300|Montserrat&display=swap" rel="stylesheet">
-<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<script type='text/javascript' src='https://Zu3zz.github.io/media/scripts/script.js'></script>
-<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
-  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
-  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
-
-<script type="text/javascript">
-window.onload=getCSS();
-</script>
-
-
-</head>
-<body class="home blog">
-    <div id="wrapper">
-        
-		<header id="header" class="site-header" >
-			<div class="site-branding">
-									<h1 class="site-title"><a href="https://Zu3zz.github.io" rel="home">第三新东京</a></h1>
-										
-					<h2 class="site-description">Everyone Can (Not) Comprehend.</h2>
-										
-							</div>
-			<nav id="nav-wrapper">
-				<div class="container">
-					<div class="nav-toggle">
-						<div class="bars">
-							<div class="bar"></div>
-							<div class="bar"></div>
-							<div class="bar"></div>
-						</div>
-					</div>
-					<div class="clear"></div>
-					<ul class="dove">
-		 
-     			
-<li>
-	 
-	<a  href="/"> 首页</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/archives"> 归档</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/tags"> 标签</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/post/about"> 关于</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/projects"> 项目</a></li>
-	
-    
-
-</ul>
-</li>		
-		
-</ul>				</div>
-			</nav>
-
-<div class="jingge">
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        </header>
-
-		<div id="content" class="container">
-			<div class="row">
-	<div class="col-md-8 site-main">
-		
-		<div class="wow slideInLeft archive-box">
-			  <header class="page-header">
-				  
-				<h1 class="page-title">algorithm</h1> 
-
-</header>
-			</div>	
- 		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://Zu3zz.github.io/post/leetcode-double-week-10" rel="bookmark">LeetCode-double-week-10</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-10-06 19:56:00" itemprop="datePublished" pubdate="">2019-10-06</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<center>又到了每周拼手速的时刻了！(大雾</center>
-<center>👏👏👏👏👏👏👏👏👏👏👏👏</center>
-<center>这周题目难度适中 冲！</center>
-			<p class="readmore">
-				<a href="https://Zu3zz.github.io/post/leetcode-double-week-10" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://Zu3zz.github.io/post/leetcode-stock" rel="bookmark">leetcode-股票买卖问题(121,122,123,188,309,714)</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-08-18 14:28:46" itemprop="datePublished" pubdate="">2019-08-18</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
-
-			<p class="readmore">
-				<a href="https://Zu3zz.github.io/post/leetcode-stock" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://Zu3zz.github.io/post/heap-sort" rel="bookmark">堆排序(Heap Sort)</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-08-17 18:17:56" itemprop="datePublished" pubdate="">2019-08-17</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
-
-			<p class="readmore">
-				<a href="https://Zu3zz.github.io/post/heap-sort" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 
-
-
-
-
-							
-	</div>
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            Everyone Can (Not) Comprehend.
+          </p>
+          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
             
-
-
-			</div> 
-			<nav class="navigation pagination" role="navigation">
-	
-			
-	</nav>	
-    	<script type="text/javascript">
-//点击加载更多
-jQuery(document).ready(function($) {
-    //点击下一页的链接(即那个a标签)
-    $(' .next').click(function() {
-        $this = $(this);
-        $this.addClass('loading').text('正在努力加载'); //给a标签加载一个loading的class属性，用来添加加载效果
-        var href = $this.attr('href'); //获取下一页的链接地址
-        if (href != undefined) { //如果地址存在
-            $.ajax({ //发起ajax请求
-                url: href,
-                //请求的地址就是下一页的链接
-                type: 'get',
-                //请求类型是get
-                error: function(request) {
-                    //如果发生错误怎么处理
-                },
-                success: function(data) { //请求成功
-                    $this.removeClass('loading').text('点击查看更多'); //移除loading属性
-                    var $res = $(data).find('.post-318 '); //从数据中挑出文章数据，请根据实际情况更改
-                    $('.col-md-8').append($res.fadeIn(500)); //将数据加载加进posts-loop的标签中。
-                    var newhref = $(data).find(' .next').attr('href'); //找出新的下一页链接
-                    if (newhref != undefined) {
-                        $('.next').attr('href', newhref);
-                    } else {
-                        $('.next').remove(); //如果没有下一页了，隐藏
-                    }
-                }
-            });
-        }
-        return false;
-    });
-});
-</script>
-													   
-		</div>
-
-		
-	 	<footer id="colophon" class="site-footer">
-
-			<div class="container">
-	
-				<div class="copyright">By 3zz.<br>Theme:   <a href="https://github.com/alterfang/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>. Powered by <a href="https://gridea.dev/" target="_blank" title="Gridea"><span>Gridea</span></a></div>		
-			</div>
-		
-		</footer>
-
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+          </div>
+        </div>
+      
+    </div>
+  </div>
 </div>
 
-<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
-<script type='text/javascript' src='https://Zu3zz.github.io/media/scripts/marlin-scripts.js'></script>
- <script src="//tokinx.github.io/lately/lately.min.js"></script>
-  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
-  <style type="text/css">a.back_to_top {
-    text-decoration: none;
-    position: fixed;
-    bottom: 40px;
-    right: 30px;
-    background: #f0f0f0;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    line-height: 36px;
-    font-size: 18px;
-    text-align: center;
-    transition-duration: .5s;
-    transition-propety: background-color;
-    display: none;
-}
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s" target="_blank">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
+        <h2 class="text-lg text-gray-700 mb-8">
+          <i class="remixicon-bookmark-line"></i> algorithm
+        </h2>
+        
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
+    
+      <a href="https://Zu3zz.github.io/post/leetcode-double-week-10" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://Zu3zz.github.io/post-images/leetcode-double-week-10.png'">
+        </div>
+      </a>
+    
+    <div class="content">
+      <a href="https://Zu3zz.github.io/post/leetcode-double-week-10">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">LeetCode-double-week-10</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        <center>又到了每周拼手速的时刻了！(大雾</center>
+<center>👏👏👏👏👏👏👏👏👏👏👏👏</center>
+<center>这周题目难度适中 冲！</center>
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-10-06 / 6 min read</div>
+    </div>
+  </section>
 
-a.back_to_top span {
-    color: #888;
-}
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
+    
+      <a href="https://Zu3zz.github.io/post/leetcode-stock" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://Zu3zz.github.io/post-images/leetcode-stock.png'">
+        </div>
+      </a>
+    
+    <div class="content">
+      <a href="https://Zu3zz.github.io/post/leetcode-stock">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">leetcode-股票买卖问题(121,122,123,188,309,714)</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        <p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
 
-a.back_to_top:hover {
-    cursor: pointer;
-    background: #dfdfdf;
-}
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-08-18 / 6 min read</div>
+    </div>
+  </section>
 
-a.back_to_top:hover span {
-    color: #555;
-}
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${2 * 0.2}s` }">
+    
+      <a href="https://Zu3zz.github.io/post/heap-sort" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://Zu3zz.github.io/post-images/heap-sort.jpg'">
+        </div>
+      </a>
+    
+    <div class="content">
+      <a href="https://Zu3zz.github.io/post/heap-sort">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">堆排序(Heap Sort)</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        <p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
 
-@media print, screen and (max-width: 580px) {
-    .back_to_top {
-        display: none !important;
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-08-17 / 2 min read</div>
+    </div>
+  </section>
+
+        <div class="pagination-container animated fadeIn">
+  
+  
+</div>
+
+      </div>
+    </div>
+
+    <script src="https://Zu3zz.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
     }
-}
-
-
-
-</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
-</a>
-
-
-<script>$(document).ready((function(_this) {
-  return function() {
-    var bt;
-    bt = $('#back_to_top');
-    if ($(document).width() > 480) {
-      $(window).scroll(function() {
-        var st;
-        st = $(window).scrollTop();
-        if (st > 30) {
-          return bt.css('display', 'block');
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
         } else {
-          return bt.css('display', 'none');
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
         }
       });
-      return bt.click(function() {
-        $('body,html').animate({
-          scrollTop: 0
-        }, 800);
-        return false;
-      });
-    }
-  };
-})(this));
-</script>
+    });
 
-		
-</body>
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
 </html>

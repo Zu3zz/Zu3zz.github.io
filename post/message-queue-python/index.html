@@ -1,165 +1,207 @@
-
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
- <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
-<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
-<meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>Python与常用消息中间件(1)----概念篇 | 第三新东京</title>	
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="Everyone Can (Not) Comprehend." />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1571422368180">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
 <link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
-<script type="text/javascript">
-function getCSS()
-{
-        datetoday = new Date();
-        timenow=datetoday.getTime();
-        datetoday.setTime(timenow);
-        thehour = datetoday.getHours();
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://Zu3zz.github.io/atom.xml">
 
-            display = "https://Zu3zz.github.io/media/css/night.css";
 
-            display = "https://Zu3zz.github.io/media/css/night.css";   
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://Zu3zz.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1571422368180" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
       
-            display = "https://Zu3zz.github.io/media/css/day.css";
-
-            display = "https://Zu3zz.github.io/media/css/day.css";
-      
-
-var css = '<';
-        css+='link rel="stylesheet" href='+display+' \/';
-        css+='>';
-        document.write(css);
-}
-</script>
-<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Noto+Sans+SC:300|Montserrat&display=swap" rel="stylesheet">
-<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<script type='text/javascript' src='https://Zu3zz.github.io/media/scripts/script.js'></script>
-<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
-  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
-  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
-
-<script type="text/javascript">
-window.onload=getCSS();
-</script>
-
-
- 	
-</head>
-<body class="post-template-default single single-post postid-70 single-format-standard">
-    <div id="wrapper">
-        
-			
-		<header id="header" class="site-header" 
-		
-		>
-			<div class="site-branding">
-									<h1 class="site-title"><a href="https://Zu3zz.github.io" rel="home">第三新东京</a></h1>
-										
-					<h2 class="site-description">Everyone Can (Not) Comprehend.</h2>
-										
-							</div>
-			<nav id="nav-wrapper">
-				<div class="container">
-					<div class="nav-toggle">
-						<div class="bars">
-							<div class="bar"></div>
-							<div class="bar"></div>
-							<div class="bar"></div>
-						</div>
-					</div>
-					<div class="clear"></div>
-					<ul id="" class="dove">
-		 
-     			
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
 <li>
-	 
-	<a  href="/"> 首页</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/archives"> 归档</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/tags"> 标签</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/post/about"> 关于</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/projects"> 项目</a></li>
-	
-    
-
+<ul>
+<li><a href="#1-%E5%B8%B8%E7%94%A8%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%AF%94%E8%BE%83">1. 常用消息中间件比较</a>
+<ul>
+<li><a href="#11-%E5%B8%B8%E7%94%A8%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%BB%8B%E7%BB%8D">1.1 常用消息中间件介绍</a></li>
+<li><a href="#12-%E5%B8%B8%E7%94%A8%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%AF%B9%E6%AF%94">1.2 常用消息中间件对比</a></li>
 </ul>
-</li>		
-		
-</ul>				</div>
-			</nav>
-						<div class="jingge">
+</li>
+<li><a href="#2-%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5">2. 消息中间件常见概念</a>
+<ul>
+<li><a href="#21-%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E6%A6%82%E5%BF%B5%E5%92%8C%E8%A7%92%E8%89%B2">2.1 消息中间件中的各种概念和角色</a></li>
+<li><a href="#22-%E7%94%9F%E4%BA%A7%E8%80%85">2.2 生产者</a></li>
+<li><a href="#23-partition">2.3 Partition</a></li>
+<li><a href="#24-%E8%AE%A2%E9%98%85">2.4 订阅</a></li>
+<li><a href="#25-%E6%B6%88%E6%81%AF%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6">2.5 消息确认机制</a></li>
+</ul>
+</li>
+<li><a href="#3-redis">3. Redis</a>
+<ul>
+<li><a href="#31-redis%E7%AE%80%E4%BB%8B">3.1 Redis简介</a></li>
+<li><a href="#32-redis%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">3.2 Redis常见应用场景</a></li>
+<li><a href="#33-redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE">3.3 Redis安装与默认配置</a>
+<ul>
+<li><a href="#331redis%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE">3.3.1Redis服务器默认配置</a></li>
+<li><a href="#332-redis%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">3.3.2 Redis服务器配置文件</a></li>
+<li><a href="#333-%E5%B8%B8%E8%A7%81%E5%8F%82%E6%95%B0">3.3.3 常见参数</a></li>
+</ul>
+</li>
+<li><a href="#34-redis%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%92%8C%E5%91%BD%E4%BB%A4">3.4 Redis常见操作和命令</a>
+<ul>
+<li><a href="#341-redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B2%E8%A7%A3">3.4.1 Redis常用命令讲解</a></li>
+<li><a href="#342-redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E4%B9%8Bstring">3.4.2 Redis常用命令之String</a></li>
+<li><a href="#343-redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B2%E8%A7%A3%E4%B9%8Bhash">3.4.3 Redis常用命令讲解之Hash</a></li>
+<li><a href="#344-redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B2%E8%A7%A3%E4%B9%8Blist">3.4.4 Redis常用命令讲解之List</a></li>
+<li><a href="#345-redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B2%E8%A7%A3%E4%B9%8Bset">3.4.5 Redis常用命令讲解之Set</a></li>
+<li><a href="#346-redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B2%E8%A7%A3%E4%B9%8Bsorted-set">3.4.6 Redis常用命令讲解之Sorted Set</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4-python%E4%B8%8Eredis">4. Python与Redis</a>
+<ul>
+<li><a href="#41-redis-python%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%8B%E7%BB%8D">4.1 Redis Python客户端介绍</a></li>
+<li><a href="#42-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E6%8F%92%E5%85%A5%E4%B8%8E%E5%8F%96%E5%87%BA">4.2 消息队列的插入与取出</a>
+<ul>
+<li><a href="#421-%E5%9F%BA%E4%BA%8E-redis-py-%E7%94%9F%E4%BA%A7%E8%80%85%E5%BC%80%E5%8F%91">4.2.1 基于 redis-py 生产者开发</a></li>
+<li><a href="#422-%E5%9F%BA%E4%BA%8E-redis-py-%E6%B6%88%E8%B4%B9%E8%80%85%E5%BC%80%E5%8F%91">4.2.2 基于 redis-py 消费者开发</a></li>
+</ul>
+</li>
+<li><a href="#43-%E5%9F%BA%E4%BA%8E%E9%A2%91%E9%81%93%E7%9A%84%E5%8F%91%E5%B8%83%E4%B8%8E%E8%AE%A2%E9%98%85">4.3 基于频道的发布与订阅</a>
+<ul>
+<li><a href="#431-%E5%9F%BA%E4%BA%8E-redis-py-%E7%94%9F%E4%BA%A7%E8%80%85%E5%BC%80%E5%8F%91">4.3.1 基于 redis-py 生产者开发</a></li>
+<li><a href="#432-%E5%9F%BA%E4%BA%8E-redis-py-%E6%B6%88%E8%B4%B9%E8%80%85%E5%BC%80%E5%8F%91">4.3.2 基于 redis-py 消费者开发</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#5-kafka">5. Kafka</a>
+<ul>
+<li><a href="#51-kafka%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">5.1 Kafka简介与应用场景</a></li>
+<li><a href="#52-kafka%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">5.2 Kafka常见应用场景</a></li>
+<li><a href="#53-kafka%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E7%94%A8%E4%BE%8B">5.3 Kafka安装与简单用例</a>
+<ul>
+<li><a href="#531-%E5%AE%89%E8%A3%85">5.3.1 安装</a></li>
+<li><a href="#532-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1">5.3.2 启动服务</a></li>
+<li><a href="#533-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAtopic">5.3.3 创建一个Topic</a></li>
+<li><a href="#534-%E6%B6%88%E6%81%AF%E7%9A%84%E7%94%9F%E4%BA%A7%E4%B8%8E%E6%B6%88%E8%B4%B9">5.3.4 消息的生产与消费</a></li>
+</ul>
+</li>
+<li><a href="#54-kafka%E7%9A%84%E9%85%8D%E7%BD%AE">5.4 Kafka的配置</a>
+<ul>
+<li><a href="#541-kafka%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">5.4.1 Kafka服务器配置文件</a></li>
+<li><a href="#542-kafka%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E9%A1%B9">5.4.2 Kafka默认配置项</a></li>
+</ul>
+</li>
+<li><a href="#55-kafka%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5">5.5 Kafka相关概念</a>
+<ul>
+<li><a href="#551-%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5-%E9%9B%86%E7%BE%A4">5.5.1 常见概念--集群</a></li>
+<li><a href="#552-%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5-%E6%B6%88%E6%81%AF">5.5.2 常见概念--消息</a></li>
+<li><a href="#553-%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5-topic">5.5.3 常见概念--Topic</a></li>
+<li><a href="#554-%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5-partition">5.5.4 常见概念--Partition</a></li>
+<li><a href="#555-%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5-segment">5.5.5 常见概念--Segment</a></li>
+<li><a href="#556-%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5-%E9%9B%86%E7%BE%A4">5.5.6 常见概念--集群</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#6-python%E4%B8%8Ekafka">6. Python与Kafka</a></li>
+<li><a href="#7-%E6%A1%86%E6%9E%B6%E6%95%B4%E5%90%88">7. 框架整合</a>
+<ul>
+<li><a href="#71-%E9%87%87%E9%9B%86%E6%97%A5%E5%BF%97">7.1 采集日志</a>
+<ul>
+<li><a href="#711-%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86%E6%96%B9%E6%A1%88%E4%BB%8B%E7%BB%8D">7.1.1 日志采集方案介绍</a></li>
+<li><a href="#712-nginx%E8%AE%BF%E9%97%AE%E6%97%A5%E5%BF%97%E6%A0%BC%E5%BC%8F%E9%85%8D%E7%BD%AE">7.1.2 nginx访问日志格式配置</a></li>
+</ul>
+</li>
+<li><a href="#72-logstash%E9%85%8D%E7%BD%AE">7.2 logstash配置</a>
+<ul>
+<li><a href="#721-kafka%E6%8F%92%E4%BB%B6">7.2.1 kafka插件</a></li>
+</ul>
+</li>
+<li><a href="#73-%E5%90%AF%E5%8A%A8%E6%97%A5%E5%BF%97">7.3 启动日志</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
 
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
     
-
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
     
-
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
     
-
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
     
-
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
     
-
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s" target="_blank">
+          项目
+        </a>
+      
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        </header>
-
-		<div id="content" class="container">
-			<div class="row">
-	<div class="col-md-8 site-main">
-				
-<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
-
-	
-	                      
-		<div class="entry-content">
-			<h1 class="wow swing entry-title">Python与常用消息中间件(1)----概念篇</h1>
-<div class="entry-meta">
-<div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-10-18 18:51:28" itemprop="datePublished" pubdate="">2019-10-18</time></i>
-	          </div>
-			
-</span>
-													 
-		</div>
-                  
-			<div class="wow slideInLeft entry-summary song">
-				<p>🌈最近在学习消息中间件，由于大数据端天生靠近数据，所以在很多场景下，会需要对日志等文件进行分析<br>
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Python与常用消息中间件(1)----概念篇</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-10-18 / 20 min read
+        </div>
+        
+          <img class="post-feature-image rounded-lg mx-auto my-4" src="https://Zu3zz.github.io/post-images/message-queue-python.png" alt="">
+        
+        <div class="post-content yue">
+          <p>🌈最近在学习消息中间件，由于大数据端天生靠近数据，所以在很多场景下，会需要对日志等文件进行分析<br>
 🎊那么这一系列，我们使用Python语言对常用的消息中间件进行一次整合<br>
 🎉看看如何将nginx、kafka、zookeeper、redis、logstash一起，使用python语言搭建一个日志报警系统吧</p>
 <!-- more -->
@@ -1080,237 +1122,145 @@ output {
 <li>Zookeeper</li>
 </ul>
 
-							</div>
-	<div class="wow bounceInDown vt-post-tags">
- 
-				<a href="https://Zu3zz.github.io/tag/M7yGdMp3y" rel="tag">python</a>	
-				 
-				<a href="https://Zu3zz.github.io/tag/8yVVJSLYY" rel="tag">big data</a>	
-				 
-					</div>						
-<nav class="navigation3 post-navigation3" role="navigation">
-		
-		<div class="nav-links3">
-      
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://Zu3zz.github.io/post/springboot-2" rel="next"> SpringBoot系列(2)----配置文件</a></div>
-		
-		</div>
-	</nav>
-	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
-	<div class="author-avatar pull-left"><img src="https://Zu3zz.github.io/images/avatar.png" ></div>
- 
-
-		</div>
-		
- 
-		
-</article>
-
-<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
-		
-        
-		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src='https://Zu3zz.github.io/media/scripts/Valine.min.js'></script>
-
-<div class="comment"></div>
-<script>
-        new Valine({
-            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
-            av: AV, 
-            el: '.comment',
-            lang: 'zh-cn',
-            
-            
-      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
-     	
-      	
-          
-        });
-    </script> 
-
-
-   
-  
- 
-
-		</div>
-
-			</div>
-			
-
-
-<div class="tocc col l3 hide-on-med-and-down">
-	
-        <div class="toc-widget">
-			
-            <div class="toc-title"></div>
-			
-            <div id="toc-content">
-			
-			
-			</div>
         </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/VQJGfklWj">
+            <span class="flex-auto">Kafka</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/FlCGh236W">
+            <span class="flex-auto">Redis</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/M7yGdMp3y">
+            <span class="flex-auto">python</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://Zu3zz.github.io/post/springboot-2">
+                <h3 class="post-title">
+                  SpringBoot系列(2)----配置文件
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
     </div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+    <script src="https://Zu3zz.github.io/media/prism.js"></script>  
 <script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '.entry-summary',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            // headingsOffset: -205,
-            headingSelector: 'h2, h3, h4'
-        });
 
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
+Prism.highlightAll()
 
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('.entry-summary').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-    });
-</script>										 
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
 
- 
-       
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
 
-
-			</div>
-		</div>
-
-		
-		 	<footer id="colophon" class="site-footer">
-
-			<div class="container">
-	
-				<div class="copyright">By 3zz.<br>Theme:   <a href="https://github.com/alterfang/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>. Powered by <a href="https://gridea.dev/" target="_blank" title="Gridea"><span>Gridea</span></a></div>		
-			</div>
-		
-		</footer>
-
-</div>
-
-<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
-<script type='text/javascript' src='https://Zu3zz.github.io/media/scripts/marlin-scripts.js'></script>
- <script src="//tokinx.github.io/lately/lately.min.js"></script>
-  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
-  <style type="text/css">a.back_to_top {
-    text-decoration: none;
-    position: fixed;
-    bottom: 40px;
-    right: 30px;
-    background: #f0f0f0;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    line-height: 36px;
-    font-size: 18px;
-    text-align: center;
-    transition-duration: .5s;
-    transition-propety: background-color;
-    display: none;
-}
-
-a.back_to_top span {
-    color: #888;
-}
-
-a.back_to_top:hover {
-    cursor: pointer;
-    background: #dfdfdf;
-}
-
-a.back_to_top:hover span {
-    color: #555;
-}
-
-@media print, screen and (max-width: 580px) {
-    .back_to_top {
-        display: none !important;
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
     }
-}
-
-
-
-</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
-</a>
-
-
-<script>$(document).ready((function(_this) {
-  return function() {
-    var bt;
-    bt = $('#back_to_top');
-    if ($(document).width() > 480) {
-      $(window).scroll(function() {
-        var st;
-        st = $(window).scrollTop();
-        if (st > 30) {
-          return bt.css('display', 'block');
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
         } else {
-          return bt.css('display', 'none');
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
         }
       });
-      return bt.click(function() {
-        $('body,html').animate({
-          scrollTop: 0
-        }, 800);
-        return false;
-      });
-    }
-  };
-})(this));
-</script>
+    });
 
-		<script data-no-instant>
-    (function ($) {
-        $.extend({
-            adamsOverload: function () {
-                $('.navigation:eq(0)').remove();
-                $("").attr("rel" , "external");
-                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
-                $("a.vi").attr("rel" , "");
-                $.viewImage({
-                    'target'  : 'img',
-                    'exclude' : '.vsmile-icons img,.gallery img',
-                    'delay'   : 300
-                });
-                $.lately({
-                    'target' : '.commentmetadata a,.infos time,.post-list time'
-                });
-                prettyPrint();
-                
-                $('ul.links li a').each(function(){
-                    if($(this).parent().find('.bg').length==0){
-                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
-                    }
-                });
-            }
-        });
-    })(jQuery);
-    jQuery.adamsOverload();
-</script>
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
 
-</body>
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
 </html>
