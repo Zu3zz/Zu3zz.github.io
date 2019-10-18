@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>第三新东京</title>
-    <updated>2019-10-17T12:28:52.805Z</updated>
+    <updated>2019-10-18T11:00:27.847Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -10,6 +10,938 @@
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 第三新东京</rights>
+    <entry>
+        <title type="html"><![CDATA[Python与常用消息中间件(1)----概念篇]]></title>
+        <id>https://Zu3zz.github.io/post/message-queue-python</id>
+        <link href="https://Zu3zz.github.io/post/message-queue-python">
+        </link>
+        <updated>2019-10-18T10:51:28.000Z</updated>
+        <summary type="html"><![CDATA[<p>🌈最近在学习消息中间件，由于大数据端天生靠近数据，所以在很多场景下，会需要对日志等文件进行分析<br>
+🎊那么这一系列，我们使用Python语言对常用的消息中间件进行一次整合<br>
+🎉看看如何将nginx、kafka、zookeeper、redis、logstash一起，使用python语言搭建一个日志报警系统吧</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🌈最近在学习消息中间件，由于大数据端天生靠近数据，所以在很多场景下，会需要对日志等文件进行分析<br>
+🎊那么这一系列，我们使用Python语言对常用的消息中间件进行一次整合<br>
+🎉看看如何将nginx、kafka、zookeeper、redis、logstash一起，使用python语言搭建一个日志报警系统吧</p>
+<!-- more -->
+<h2 id="1-常用消息中间件比较">1. 常用消息中间件比较</h2>
+<h3 id="11-常用消息中间件介绍">1.1 常用消息中间件介绍</h3>
+<ul>
+<li>Redis</li>
+<li>RabbitMQ</li>
+<li>RocketMQ</li>
+<li>ZeroMQ</li>
+<li>Kafka</li>
+</ul>
+<h3 id="12-常用消息中间件对比">1.2 常用消息中间件对比</h3>
+<ul>
+<li>实现语言</li>
+<li>对外接口</li>
+<li>持久化策略</li>
+<li>消息处理模式</li>
+<li>时序保证</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>消息中间件</th>
+<th>实现语言</th>
+<th>持久化</th>
+<th>消息处理模式</th>
+<th>时序保证</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Redis</td>
+<td>C</td>
+<td>支持磁盘</td>
+<td>Push-Pull Pub-Sub</td>
+<td>有序</td>
+</tr>
+<tr>
+<td>RabbitMQ</td>
+<td>Erlang</td>
+<td>磁盘</td>
+<td>Push</td>
+<td>单消费者有序</td>
+</tr>
+<tr>
+<td>RocketMQ</td>
+<td>Java</td>
+<td>磁盘</td>
+<td>Puch-Pull</td>
+<td>同队列有序</td>
+</tr>
+<tr>
+<td>Kafka</td>
+<td>Scala</td>
+<td>磁盘</td>
+<td>Pull</td>
+<td>单Paritition有序</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-消息中间件常见概念">2. 消息中间件常见概念</h2>
+<h3 id="21-消息中间件中的各种概念和角色">2.1 消息中间件中的各种概念和角色</h3>
+<ul>
+<li>Producer/borker/cunsumer</li>
+<li>Queue/channel/topic</li>
+<li>Partition</li>
+<li>Publish/subscribe</li>
+<li>Acknowledge</li>
+</ul>
+<h3 id="22-生产者">2.2 生产者</h3>
+<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io/post-images/1571396146907.png" alt="producer"></figure>
+<h3 id="23-partition">2.3 Partition</h3>
+<ul>
+<li>一个topic可以分为多个partition</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://Zu3zz.github.io/post-images/1571396164758.png" alt=""></figure>
+<h3 id="24-订阅">2.4 订阅</h3>
+<figure data-type="image" tabindex="3"><img src="https://Zu3zz.github.io/post-images/1571396178821.png" alt=""></figure>
+<h3 id="25-消息确认机制">2.5 消息确认机制</h3>
+<ul>
+<li>只有经过用户确认的消息才会从queue中去除</li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://Zu3zz.github.io/post-images/1571396204405.png" alt=""></figure>
+<h2 id="3-redis">3. Redis</h2>
+<h3 id="31-redis简介">3.1 Redis简介</h3>
+<p><strong>Redis关键词</strong></p>
+<ul>
+<li>Key-value</li>
+<li>高性能</li>
+<li>缓存</li>
+<li>C开发</li>
+<li>五大数据结构</li>
+<li>lua扩展</li>
+</ul>
+<h3 id="32-redis常见应用场景">3.2 Redis常见应用场景</h3>
+<ol>
+<li>
+<p>String</p>
+<ul>
+<li>缓存二进制对象，比如图片、序列化对象等</li>
+<li>计数器，比如文章访问量统计</li>
+<li>位运算，节约内存</li>
+</ul>
+</li>
+<li>
+<p>List</p>
+<ul>
+<li>获取最新的N条数据</li>
+<li>消息队列</li>
+<li>实时分析系统，比如服务器监控程序</li>
+</ul>
+</li>
+<li>
+<p>Hash</p>
+<ul>
+<li>
+<p>类似Python中的Dict</p>
+</li>
+<li>
+<p>存储具有多个属性的对象</p>
+</li>
+<li>
+<p>比如用户的年龄、姓名、性别、积分</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Set</p>
+<ul>
+<li>集合操作，比如通过交集实现共同关注，共同好友</li>
+<li>存储无序不重复数据，比如存储文章标签</li>
+</ul>
+</li>
+<li>
+<p>Sorted Set</p>
+<ul>
+<li>TopN排序，比如排行榜</li>
+<li>范围查找，比如判断ip地址所在地</li>
+<li>优先级队列</li>
+<li>过期项目处理</li>
+</ul>
+</li>
+<li>
+<p>Pub Sub</p>
+<ul>
+<li>实时消息系统</li>
+<li>比如即时聊天，群聊</li>
+</ul>
+</li>
+</ol>
+<h3 id="33-redis安装与默认配置">3.3 Redis安装与默认配置</h3>
+<h4 id="331redis服务器默认配置">3.3.1Redis服务器默认配置</h4>
+<ul>
+<li>端口号：port=6379</li>
+<li>IP地址 bind=0.0.0.0</li>
+<li>数据库存放位置 dir=./</li>
+<li>数据库名字 dbfilename=dump.rdb</li>
+<li>守护进程模式 daemonize=no</li>
+</ul>
+<h4 id="332-redis服务器配置文件">3.3.2 Redis服务器配置文件</h4>
+<ul>
+<li>
+<p>Redis服务器启用配置文件：运行</p>
+<pre><code class="language-shell">redis-server name.conf
+</code></pre>
+</li>
+<li>
+<p>查看redis服务器所有选项配置：运行</p>
+<pre><code class="language-shell">redis-cli config get '*'
+</code></pre>
+</li>
+<li>
+<p>查看redis服务器某个配置选项：运行</p>
+<pre><code class="language-shell">redis-cli config get xxx(e.g: bind)
+</code></pre>
+</li>
+</ul>
+<h4 id="333-常见参数">3.3.3 常见参数</h4>
+<ol>
+<li>--daemonize
+<ul>
+<li>含义：是否以守护进程的形式启动(后台启动)</li>
+<li>用法：daemonize yes|no</li>
+<li>默认值：no</li>
+<li>实例：daemonize yes</li>
+</ul>
+</li>
+<li>--bind
+<ul>
+<li>含义：redis监听的ip地址</li>
+<li>用法：bind ip地址</li>
+<li>默认值：127.0.0.1</li>
+<li>实例：bind 0.0.0.0(监听所有)</li>
+</ul>
+</li>
+<li>--port(一般不改)
+<ul>
+<li>含义：redis监听的端口号</li>
+<li>用法：port 端口号</li>
+<li>默认值：6379</li>
+<li>实例：port 6380</li>
+</ul>
+</li>
+<li>--dir
+<ul>
+<li>含义：redis持久化文件存放目录</li>
+<li>用法：dir 文件路径</li>
+<li>默认值：./</li>
+<li>实例：dir /mnt/redis/data/</li>
+</ul>
+</li>
+<li>--dbfilename
+<ul>
+<li>含义：redis持久化文件文件名</li>
+<li>用法：dbfilename 文件名</li>
+<li>默认值：dump.rdb</li>
+<li>实例：dbfilename xxxx.rdb(e.g. user.rdb)</li>
+</ul>
+</li>
+<li>--unixsocket(效率高于socket套接字)
+<ul>
+<li>含义：redis监听的unix套接字地址</li>
+<li>用法：unixsocket文件地址</li>
+<li>默认值：空</li>
+<li>实例：unixsocket /tmp/redis.sock</li>
+</ul>
+</li>
+</ol>
+<h3 id="34-redis常见操作和命令">3.4 Redis常见操作和命令</h3>
+<p><strong>首先使用redis-server启动redis服务，然后使用redis-cli进入命令行界面</strong></p>
+<h4 id="341-redis常用命令讲解">3.4.1 Redis常用命令讲解</h4>
+<ul>
+<li>测试客户端与服务器连接是否正常：PING</li>
+<li>获得符合规则的键名列表：KEYS pattern</li>
+<li>判断一个键是否存在：EXISTS key</li>
+<li>删除一个键：DEL key</li>
+<li>获取键的类型：TYPE key</li>
+<li>清空当前数据库所有数据：FLUSHDB</li>
+<li>设置一个键的生育生存时间：EXPIRE key seconds</li>
+<li>返回一个键的生育生存时间：TTL key</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; ping
+PONG
+127.0.0.1:6379&gt; keys *
+ 1) &quot;1558695101775_0.7258740928094547&quot;
+ 2) &quot;1558693978601_0.21519364815403463&quot;
+ 3) &quot;1558695158141_0.8666190807031027&quot;
+127.0.0.1:6379&gt; flushdb
+OK
+127.0.0.1:6379&gt; keys *
+(empty list or set)
+127.0.0.1:6379&gt; set foo bar
+OK
+127.0.0.1:6379&gt; keys foo
+1) &quot;foo&quot;
+127.0.0.1:6379&gt; type foo
+string
+127.0.0.1:6379&gt; exists foo
+(integer) 1
+127.0.0.1:6379&gt; del foo
+(integer) 1
+127.0.0.1:6379&gt; keys *
+(empty list or set)
+127.0.0.1:6379&gt; set foo bar
+OK
+127.0.0.1:6379&gt; expire foo 60
+(integer) 1
+127.0.0.1:6379&gt; ttl foo
+(integer) 58
+127.0.0.1:6379&gt; ttl foo
+(integer) -2
+</code></pre>
+<h4 id="342-redis常用命令之string">3.4.2 Redis常用命令之String</h4>
+<ul>
+<li>SET</li>
+<li>GET</li>
+<li>INCR(递增一个值为整数的string)</li>
+<li>MSET(批量设置)</li>
+<li>MGET(批量获取)</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; set foo barstring
+OK
+127.0.0.1:6379&gt; get foo
+&quot;barstring&quot;
+127.0.0.1:6379&gt; get ffo
+(nil)
+127.0.0.1:6379&gt; mset foo1 bar1 foo2 bar2 foo3 bar3
+OK
+127.0.0.1:6379&gt; mget foo1 foo2 foo3
+1) &quot;bar1&quot;
+2) &quot;bar2&quot;
+3) &quot;bar3&quot;
+127.0.0.1:6379&gt; set num 1
+OK
+127.0.0.1:6379&gt; incr num
+(integer) 2
+127.0.0.1:6379&gt; get num
+&quot;2&quot;
+</code></pre>
+<h4 id="343-redis常用命令讲解之hash">3.4.3 Redis常用命令讲解之Hash</h4>
+<ul>
+<li>HSET</li>
+<li>HGET</li>
+<li>HMSET</li>
+<li>HMGET</li>
+<li>HGETALL</li>
+<li>HDEL</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; hset user name 3zz
+(integer) 1
+127.0.0.1:6379&gt; hset user sex man
+(integer) 1
+127.0.0.1:6379&gt; hget user name
+&quot;3zz&quot;
+127.0.0.1:6379&gt; hgetall user
+1) &quot;name&quot;
+2) &quot;3zz&quot;
+3) &quot;sex&quot;
+4) &quot;man&quot;
+127.0.0.1:6379&gt; hdel user name
+(integer) 1
+127.0.0.1:6379&gt; hgetall user
+1) &quot;sex&quot;
+2) &quot;man&quot;
+127.0.0.1:6379&gt; del user
+(integer) 1
+127.0.0.1:6379&gt; exists user
+(integer) 0
+</code></pre>
+<h4 id="344-redis常用命令讲解之list">3.4.4 Redis常用命令讲解之List</h4>
+<ul>
+<li>LPUSH(从左侧放入)</li>
+<li>RPUSH(从右侧放入)</li>
+<li>LPOP(从左侧拿出)</li>
+<li>RPOP(从右侧拿出)</li>
+<li>BRPOP(有数据则返回，没有就一直等待直到有数据)</li>
+<li>LLEN(返回长度)</li>
+<li>LRANGE(返回从索引start到end两端的元素，左右都闭)</li>
+<li>RPOPLPUSH(先右拿出 左放入)</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; lpush list0 a
+(integer) 1
+127.0.0.1:6379&gt; lpush list0 b c 
+(integer) 4
+127.0.0.1:6379&gt; lrange list0 0 -1
+1) &quot;c&quot;
+2) &quot;b&quot;
+3) &quot;a&quot;
+127.0.0.1:6379&gt; rpush list0 d e
+(integer) 5
+127.0.0.1:6379&gt; lrange list0 0 -1
+1) &quot;c&quot;
+2) &quot;b&quot;
+3) &quot;a&quot;
+4) &quot;d&quot;
+5) &quot;e&quot;
+127.0.0.1:6379&gt; llen list0
+(integer) 5
+127.0.0.1:6379&gt; rpoplpush list0 list1
+&quot;e&quot;
+127.0.0.1:6379&gt; lrange list1 0 -1
+1) &quot;e&quot;
+127.0.0.1:6379&gt; lrange list0 0 -1
+1) &quot;c&quot;
+2) &quot;b&quot;
+3) &quot;a&quot;
+4) &quot;d&quot;
+127.0.0.1:6379&gt; rpoplpush list0 list0 
+&quot;d&quot;
+127.0.0.1:6379&gt; lrange list0 0 -1
+1) &quot;d&quot;
+2) &quot;c&quot;
+3) &quot;b&quot;
+4) &quot;a&quot;
+127.0.0.1:6379&gt; llen list0
+(integer) 4
+</code></pre>
+<h4 id="345-redis常用命令讲解之set">3.4.5 Redis常用命令讲解之Set</h4>
+<ul>
+<li>SADD</li>
+<li>SREM</li>
+<li>SMEMBERS</li>
+<li>SISMEMBER</li>
+<li>SDIFF(差集)</li>
+<li>SINTER(并集)</li>
+<li>SUNION(交集)</li>
+<li>SCARD(元素个数)</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; sadd letters a b
+(integer) 2
+127.0.0.1:6379&gt; SMEMBERS letters
+1) &quot;b&quot;
+2) &quot;a&quot;
+127.0.0.1:6379&gt; SISMEMBER letters a
+(integer) 1
+127.0.0.1:6379&gt; sadd setA 1 2 3
+(integer) 3
+127.0.0.1:6379&gt; sadd setB 2 3 4
+(integer) 3
+127.0.0.1:6379&gt; sdiff setA setB
+1) &quot;1&quot;
+127.0.0.1:6379&gt; SINTER seta setb
+(empty list or set)
+127.0.0.1:6379&gt; SINTER setA setB
+1) &quot;2&quot;
+2) &quot;3&quot;
+127.0.0.1:6379&gt; SUNION setA setB
+1) &quot;1&quot;
+2) &quot;2&quot;
+3) &quot;3&quot;
+4) &quot;4&quot;
+127.0.0.1:6379&gt; scard setA
+(integer) 3
+</code></pre>
+<h4 id="346-redis常用命令讲解之sorted-set">3.4.6 Redis常用命令讲解之Sorted Set</h4>
+<ul>
+<li>ZADD(添加元素)</li>
+<li>ZSCORE(获得某个元素)</li>
+<li>ZRANGE(按照次序给出存在的元素)</li>
+<li>ZRANGEBYSCORE(给出给定range里的所有元素，左右都闭)</li>
+<li>ZINCRBY(增加一个元素分数)</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; ZADD scoreboard 10 x 20 y 30 z 15 a
+(integer) 4
+127.0.0.1:6379&gt; zscore scoreboard y
+&quot;20&quot;
+127.0.0.1:6379&gt; zrange scoreboard 2 3
+1) &quot;y&quot;
+2) &quot;z&quot;
+127.0.0.1:6379&gt; ZRANGEBYSCORE scoreboard 15 25
+1) &quot;a&quot;
+2) &quot;y&quot;
+127.0.0.1:6379&gt; ZINCRBY scoreboard 30 x
+&quot;40&quot;
+</code></pre>
+<h2 id="4-python与redis">4. Python与Redis</h2>
+<h3 id="41-redis-python客户端介绍">4.1 Redis Python客户端介绍</h3>
+<blockquote>
+<p><strong>推荐使用redis-py</strong></p>
+</blockquote>
+<ul>
+<li>
+<p>Getting Started</p>
+<pre><code class="language-shell">&gt;&gt;&gt; import redis
+&gt;&gt;&gt; r = redis.StrictRedis(host=&quot;localhost&quot;, port=6379,db=0)
+&gt;&gt;&gt; r.set('foo','bar')
+True
+&gt;&gt;&gt; r.get('foo')
+'bar'
+</code></pre>
+</li>
+</ul>
+<h3 id="42-消息队列的插入与取出">4.2 消息队列的插入与取出</h3>
+<h4 id="421-基于-redis-py-生产者开发">4.2.1 基于 redis-py 生产者开发</h4>
+<ul>
+<li>
+<p>每2秒随机生成一个用户名插入到队列中</p>
+</li>
+<li>
+<p>LPUSH</p>
+<pre><code class="language-python"># producer1.py
+import redis 
+import names
+import time
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+while True:
+  time.sleep(2)
+  name = names.get_full_name()
+  x = r.lpush('names',name)
+  print(x,name)
+</code></pre>
+</li>
+</ul>
+<h4 id="422-基于-redis-py-消费者开发">4.2.2 基于 redis-py 消费者开发</h4>
+<ul>
+<li>
+<p>将队列中的用户名按照插入顺序取出并打印到屏幕上</p>
+</li>
+<li>
+<p>BRPOP</p>
+<pre><code class="language-python"># consumer1.py
+import redis
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+def consume(key):
+  while(True):
+    value = r.brpop(key)
+    yield value
+
+for v in consume('names'):
+  print(v)
+</code></pre>
+</li>
+</ul>
+<h3 id="43-基于频道的发布与订阅">4.3 基于频道的发布与订阅</h3>
+<h4 id="431-基于-redis-py-生产者开发">4.3.1 基于 redis-py 生产者开发</h4>
+<ul>
+<li>
+<p>每2秒随机生成一个用户名发布到频道中</p>
+</li>
+<li>
+<p>PUBLISH</p>
+<pre><code class="language-python"># producer2.py
+import redis 
+import names
+import time
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+while True:
+  time.sleep(2)
+  name = names.get_full_name()
+  x = r.publish('names',name)
+  print(x,name)
+</code></pre>
+</li>
+</ul>
+<h4 id="432-基于-redis-py-消费者开发">4.3.2 基于 redis-py 消费者开发</h4>
+<ul>
+<li>
+<p>订阅发布用户名的频道，有新的消息时打印到屏幕上</p>
+</li>
+<li>
+<p>SUBSCRIBE</p>
+<pre><code class="language-python"># consumer2.py
+import redis
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+ps = r.pubsub()
+ps.subscribe('names')
+
+for item in ps.listen():
+  print(item)
+</code></pre>
+</li>
+</ul>
+<h2 id="5-kafka">5. Kafka</h2>
+<h3 id="51-kafka简介与应用场景">5.1 Kafka简介与应用场景</h3>
+<ol>
+<li>
+<p>Kafka简介-关键词</p>
+<ul>
+<li>磁盘消息队列</li>
+<li>高性能</li>
+<li>分布式</li>
+<li>Zookeeper</li>
+<li>实时流处理</li>
+<li>重复消费</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--API</p>
+<ul>
+<li>生产者API</li>
+<li>消费者API</li>
+<li>流处理器API</li>
+<li>连接器API</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--生产者</p>
+<ul>
+<li>异步通信，所有网路请求异步发送</li>
+<li>批量发送，通过设置batch size或者timeout一次发送多个消息</li>
+<li>线程安全，多个线程之间可以共享单个生产者实例</li>
+<li>负载均衡，采用内部默认机制或者自定义负载均衡策略</li>
+<li>返回结果，返回消息的topic，offset等元数据</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--消费者</p>
+<ul>
+<li>统一API，不在区分high-level consumer API和low-level consumer API</li>
+<li>多次消费，不会删除已消费的信息，允许重复消费</li>
+<li>负载均衡，基于partition和consumer group自动负载均衡</li>
+<li>流量控制，允许开发者控制每次请求返回消息的条数</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--安全</p>
+<ul>
+<li>连接认证，连接到服务器的生产者和消费者客户端使用SSL或者SASL进行验证</li>
+<li>权限管理，broker连接Zookeeper进行权限管理</li>
+<li>加密传输，数据传输进行加密</li>
+<li>授权管理，客户端读、写操作可以进行授权管理</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--连接器<br>
+<img src="https://Zu3zz.github.io/post-images/1571396233737.jpeg" alt=""></p>
+</li>
+</ol>
+<h3 id="52-kafka常见应用场景">5.2 Kafka常见应用场景</h3>
+<ul>
+<li>消息服务器</li>
+<li>网站活动跟踪</li>
+<li>实时数据流聚合</li>
+<li>日志聚合</li>
+</ul>
+<h3 id="53-kafka安装与简单用例">5.3 Kafka安装与简单用例</h3>
+<h4 id="531-安装">5.3.1 安装</h4>
+<ol>
+<li>
+<p>下载并且解压缩kafka安装包 这里选择当前最近的2.3.0版本</p>
+<pre><code class="language-shell">$ wget http://apache.website-solution.net/kafka/2.3.0/kafka-2.3.0-src.tgz
+$ tar -xzf kafka_2.12-2.3.0.tgz
+$ cd kafka_2.12-2.3.0
+</code></pre>
+</li>
+<li>
+<p>安装Gradle和Zookeeper，为了方便管理 这里统一使用</p>
+<pre><code class="language-shell">$ brew install gradle
+$ brew install zookeeper
+</code></pre>
+</li>
+</ol>
+<h4 id="532-启动服务">5.3.2 启动服务</h4>
+<ol>
+<li>
+<p>启动Zookeeper</p>
+<pre><code class="language-shell">$ bin/zookeeper-server-start.sh config/zookeeper.properties
+如果是使用homebrew 直接使用下面两条命令即可
+$ zkServer
+$ zkCli
+</code></pre>
+</li>
+<li>
+<p>启动kafka</p>
+<pre><code class="language-bash">$ bin/kafka-server-start.sh config/server.properties
+</code></pre>
+</li>
+</ol>
+<h4 id="533-创建一个topic">5.3.3 创建一个Topic</h4>
+<ol>
+<li>
+<p>创建一个测试用Topic</p>
+<pre><code class="language-shell">$ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+</code></pre>
+</li>
+<li>
+<p>查看当前已经创建的测试Topic</p>
+<pre><code class="language-shell">$ bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+test1
+</code></pre>
+<p>输出test1 说明创建成功</p>
+</li>
+</ol>
+<h4 id="534-消息的生产与消费">5.3.4 消息的生产与消费</h4>
+<ol>
+<li>
+<p>通过producer产生消息</p>
+<pre><code class="language-shell">$ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+&gt;this is message one
+&gt;this is message two
+</code></pre>
+</li>
+<li>
+<p>通过comsumer拿到所有当前消息</p>
+<pre><code class="language-shell">$ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+this is message one
+this is message two
+</code></pre>
+<p>成功输出输入的消息</p>
+</li>
+</ol>
+<h3 id="54-kafka的配置">5.4 Kafka的配置</h3>
+<h4 id="541-kafka服务器配置文件">5.4.1 Kafka服务器配置文件</h4>
+<ul>
+<li>
+<p>配置文件位于config/server.properties下</p>
+</li>
+<li>
+<p>通过如下命令将配置文件导出至broker.properties中</p>
+<pre><code class="language-shell">$ grep '^[^#]' server.properties &gt; broker.properties
+</code></pre>
+</li>
+<li>
+<p>查看broker.properties中去除了注释的内容</p>
+<pre><code class="language-shell">broker.id=0
+num.network.threads=3
+num.io.threads=8
+socket.send.buffer.bytes=102400
+socket.receive.buffer.bytes=102400
+socket.request.max.bytes=104857600
+log.dirs=/tmp/kafka-logs
+num.partitions=1
+num.recovery.threads.per.data.dir=1
+offsets.topic.replication.factor=1
+transaction.state.log.replication.factor=1
+transaction.state.log.min.isr=1
+log.retention.hours=168
+log.segment.bytes=1073741824
+log.retention.check.interval.ms=300000
+zookeeper.connect=localhost:2181
+zookeeper.connection.timeout.ms=6000
+group.initial.rebalance.delay.ms=0
+</code></pre>
+</li>
+</ul>
+<h4 id="542-kafka默认配置项">5.4.2 Kafka默认配置项</h4>
+<blockquote>
+<p>加粗的为重要配置</p>
+</blockquote>
+<ol>
+<li>
+<p>Disk IO</p>
+<ul>
+<li>num.io.threads = 8 设置broker处理磁盘IO的线程数</li>
+<li>num.partitions = 1 设置每个topic的分区个数</li>
+<li>num.recovery.threads.per.data.dir = 1 配置每个数据恢复时的线程数</li>
+<li><strong>log.dirs = /tmp/kafka-logs kafka数据的存放目录</strong></li>
+<li>log.retention.hours = 168 消息的存储时间 单位是小时</li>
+<li>log.segment.bytes = 1073741824 topic的partition是以segment的形式存储的</li>
+<li>log.retention.check.interval.ms=300000 定时检查文件大小</li>
+</ul>
+</li>
+<li>
+<p>Network</p>
+<ul>
+<li>num.network.threads = 3 设置broker处理网络请求的最大线程数 一般可设置为CPU的核数</li>
+<li>socket.send.buffer.bytes=102400 socket发送缓冲区的大小；-1即为操作系统默认值</li>
+<li>socket.receive.buffer.bytes=102400 接受缓冲区；-1为默认值</li>
+<li>socket.request.max.bytes=104857600 每一个socket的最大字节数</li>
+</ul>
+</li>
+<li>
+<p>Cluster</p>
+<ul>
+<li>
+<p>zookeeper.connect=localhost:2181 zookeeper的集群地址；值可以有多个，中间用逗号分隔</p>
+</li>
+<li>
+<p>zookeeper.connection.timeout.ms=6000 连接的超时时间</p>
+</li>
+<li>
+<p><strong>broker.id=0 broker在集群中的唯一标识；如果没有，zookeeper从1001开始递增</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="55-kafka相关概念">5.5 Kafka相关概念</h3>
+<h4 id="551-常见概念-集群">5.5.1 常见概念--集群</h4>
+<ul>
+<li>Cluster：集群</li>
+<li>Broker：每个服务器都是一个Broker</li>
+<li>Producer：生产者</li>
+<li>Consumer：消费者</li>
+<li>Consumer Group：实现topic广播的手段</li>
+</ul>
+<h4 id="552-常见概念-消息">5.5.2 常见概念--消息</h4>
+<ul>
+<li>Record：每一条消息</li>
+<li>Topic：每一个消息都会有一个Topic</li>
+<li>Partition：每个Topic包含一个或者多个Partition</li>
+<li>Segment：每个Partition包含一个或者多个Segment</li>
+<li>Offset：Partition中每个消息都有的序列号，可以唯一标识一条消息</li>
+<li>Replication：副本；kafka支持以Partition为单位对消息进行备份</li>
+<li>Leader：所有读写请求都由Leader来处理</li>
+</ul>
+<h4 id="553-常见概念-topic">5.5.3 常见概念--Topic</h4>
+<ul>
+<li>
+<p>Topic可以被看做是一个队列</p>
+<figure data-type="image" tabindex="5"><img src="https://Zu3zz.github.io/post-images/1571396270203.png" alt="topic"></figure>
+</li>
+</ul>
+<h4 id="554-常见概念-partition">5.5.4 常见概念--Partition</h4>
+<figure data-type="image" tabindex="6"><img src="https://Zu3zz.github.io/post-images/1571396287204.png" alt="partition"></figure>
+<h4 id="555-常见概念-segment">5.5.5 常见概念--Segment</h4>
+<figure data-type="image" tabindex="7"><img src="https://Zu3zz.github.io/post-images/1571396308603.png" alt="segment"></figure>
+<h4 id="556-常见概念-集群">5.5.6 常见概念--集群</h4>
+<figure data-type="image" tabindex="8"><img src="https://Zu3zz.github.io/post-images/1571396330337.png" alt="集群"></figure>
+<h2 id="6-python与kafka">6. Python与Kafka</h2>
+<ul>
+<li>由于有很多python库都可以使用kafka</li>
+<li>知名的有kafka-python；pykafka；faust；这里使用kafka-python</li>
+</ul>
+<blockquote>
+<p>使用pip安装</p>
+<p>pip install kafka-python</p>
+</blockquote>
+<ol>
+<li>
+<p>创建kafkaProducer.py</p>
+<pre><code class="language-python">from kafka import KafkaProducer
+import names
+
+producer = KafkaProducer()
+
+for _ in range(10):
+    name = names.get_full_name()
+    future = producer.send('test', bytes(name,'utf-8'))
+    result = future.get(60)
+    print(result)
+</code></pre>
+</li>
+<li>
+<p>创建kafkaConsumer.py</p>
+<pre><code class="language-python">from kafka import KafkaConsumer
+
+consumer = KafkaConsumer('test',group_id='test01')
+
+for msg in consumer:
+    print(msg)
+</code></pre>
+</li>
+<li>
+<p>进行数据的产生与消费</p>
+<pre><code class="language-shell">$ python kafkaProducer.py 
+RecordMetadata(topic='test', partition=0, topic_partition=TopicPartition(topic='test', partition=0), offset=14, timestamp=1571317704074, checksum=None, serialized_key_size=-1, serialized_value_size=15, serialized_header_size=-1)
+RecordMetadata(topic='test', partition=0, topic_partition=TopicPartition(topic='test', partition=0), offset=15, timestamp=1571317704182, checksum=None, serialized_key_size=-1, serialized_value_size=12, serialized_header_size=-1)
+...
+</code></pre>
+<pre><code class="language-shell">$ python kafkaConsumer.py 
+ConsumerRecord(topic='test', partition=0, offset=14, timestamp=1571317704074, timestamp_type=0, key=None, value=b'Margaret Medina', headers=[], checksum=None, serialized_key_size=-1, serialized_value_size=15, serialized_header_size=-1)
+ConsumerRecord(topic='test', partition=0, offset=15, timestamp=1571317704182, timestamp_type=0, key=None, value=b'Mark Mccarty', headers=[], checksum=None, serialized_key_size=-1, serialized_value_size=12, serialized_header_size=-1)
+...
+</code></pre>
+<p>可以看到，通过Producer产生的数据已经被Consumer成功拿到。</p>
+</li>
+</ol>
+<h2 id="7-框架整合">7. 框架整合</h2>
+<h3 id="71-采集日志">7.1 采集日志</h3>
+<h4 id="711-日志采集方案介绍">7.1.1 日志采集方案介绍</h4>
+<ul>
+<li>flume</li>
+<li>rsyslog</li>
+<li>heka</li>
+<li>logstash</li>
+</ul>
+<h4 id="712-nginx访问日志格式配置">7.1.2 nginx访问日志格式配置</h4>
+<ul>
+<li>
+<p>自定义日志格式</p>
+</li>
+<li>
+<p>直接输出json</p>
+<pre><code class="language-shell">log_format json '{&quot;@timestamp&quot;:&quot;$time_iso8601&quot;,'
+								'&quot;host&quot;:&quot;$server_addr&quot;,'
+								'&quot;clientip&quot;:&quot;$remote_addr&quot;,'
+								'&quot;size&quot;:$body_bytes_sent,'
+								'&quot;responsetime&quot;:$request_time,'
+								'&quot;upstreamtime&quot;:&quot;$upstream_response_time&quot;,'
+								'&quot;upstreamhost&quot;:&quot;$upstream_addr&quot;,'
+								'&quot;http_host&quot;:&quot;$host&quot;,'
+								'&quot;url&quot;:&quot;$url&quot;,'
+								'&quot;xff&quot;:&quot;$http_x_forwarded_for&quot;,'
+								'&quot;refer&quot;:&quot;$http_referer&quot;,'
+								'&quot;agent&quot;:&quot;$http_user_agent&quot;,'
+								'&quot;status&quot;:&quot;$status&quot;}';
+asscess_log /tmp/nginx/access.log json;
+</code></pre>
+</li>
+<li>
+<p>可以看到nginx的access日志就是json格式的了</p>
+</li>
+</ul>
+<h3 id="72-logstash配置">7.2 logstash配置</h3>
+<ul>
+<li>logstash配置主要分为以下三个部分
+<ol>
+<li>input</li>
+<li>filter</li>
+<li>output</li>
+</ol>
+</li>
+</ul>
+<h4 id="721-kafka插件">7.2.1 kafka插件</h4>
+<ul>
+<li>
+<p>配置logstash output kafka插件</p>
+<pre><code class="language-shell">input {
+    file {
+        path =&gt; &quot;/pot/openresty/nginx/logs/access.log&quot;
+        codec =&gt; json
+    }
+}
+filter {
+    # 对useragent进行预处理
+    useragent {
+        source =&gt; &quot;agent&quot;
+        target =&gt; &quot;user_agent&quot;
+        remove_field =&gt; &quot;agent&quot;
+    }
+    # 对ip地址的地区进行预处理
+    geoip {
+        source =&gt; &quot;clientip&quot;
+        target =&gt; &quot;geoip&quot;
+    }
+}
+output {
+    # debug用
+    stdout {
+        codec =&gt; rubydebug
+    }
+    # logstash output kafka插件
+    kafka {
+        codec =&gt; json
+        topic_id =&gt; &quot;nginx&quot;
+        # kafka对外地址
+        bootstrap_servers =&gt; &quot;localhost:9092&quot;
+    }
+}
+</code></pre>
+</li>
+</ul>
+<h3 id="73-启动日志">7.3 启动日志</h3>
+<p><strong>依次运行一下应用</strong></p>
+<ul>
+<li>nginx</li>
+<li>logstash</li>
+<li>kafka</li>
+<li>Zookeeper</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SpringBoot系列(2)----配置文件]]></title>
         <id>https://Zu3zz.github.io/post/springboot-2</id>
@@ -2057,125 +2989,6 @@ file1.tell()
 file1.seek(5,0)
 </code></pre>
 <h2 id="error处理">error处理</h2>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[leetcode-股票买卖问题(121,122,123,188,309,714)]]></title>
-        <id>https://Zu3zz.github.io/post/leetcode-stock</id>
-        <link href="https://Zu3zz.github.io/post/leetcode-stock">
-        </link>
-        <updated>2019-08-18T06:28:46.000Z</updated>
-        <summary type="html"><![CDATA[<p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
-<!-- more -->
-<p><strong>直接看题目188</strong></p>
-<h2 id="188-买卖股票的最佳时机-iv">188. 买卖股票的最佳时机 IV</h2>
-<p>给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。</p>
-<p>设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。</p>
-<p>注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
-<p>示例 1:</p>
-<pre><code>输入: [2,4,1], k = 2
-输出: 2
-解释: 在第 1 天 (股票价格 = 2) 的时候买入，在第 2 天 (股票价格 = 4) 的时候卖出，这笔交易所能获得利润 = 4-2 = 2 。
-</code></pre>
-<p>示例2：</p>
-<pre><code>输入: [3,2,6,5,0,3], k = 2
-输出: 7
-解释: 在第 2 天 (股票价格 = 2) 的时候买入，在第 3 天 (股票价格 = 6) 的时候卖出, 这笔交易所能获得利润 = 6-2 = 4 。
-     随后，在第 5 天 (股票价格 = 0) 的时候买入，在第 6 天 (股票价格 = 3) 的时候卖出, 这笔交易所能获得利润 = 3-0 = 3 。
-</code></pre>
-<p>对于这道题，最麻烦的无异于暴力，复杂度会变成O(2^n)。<br>
-使用动态规划(dp)，可以有效的解决</p>
-<p>对于一个常见的dp问题来说 通常分两步走</p>
-<ol>
-<li>定义状态方程</li>
-<li>转移公式</li>
-</ol>
-<p>对于这道题，可以定义一个状态方程max_profit[i]用来记录到第i天的最大利润</p>
-<pre><code class="language-c++">mp[i] = mp[i-1] + -a[i](如果买入) + a[i](如果卖出)
-</code></pre>
-<p>但是股票的买入需要当前手上没有股票买入<br>
-同样 股票的卖出需要手上已经持有了一股的股票<br>
-单纯的一维数组没有办法记录这些信息 所以需要增加一维度</p>
-<pre><code class="language-c++">使用mp[i][j]
-j=[0,1] // 0为可以买 1为可以卖
-</code></pre>
-<p>此时状态方程变为</p>
-<pre><code>mp[i][0] = max(mp[i-1][0] //不交易 ,mp[i-1][1] + a[i]// 前一天卖了一股)
-mp[i][1] = max(mp[i-1][1] // 不交易, mp[i-1][0] - a[i] //前一天买了一股)
-</code></pre>
-<p>由于188题有限制条件，即最多只能交易k次，还需要记录交易次数，还需要一维来记录交易了多少次<br>
-此时状态方程变成了</p>
-<pre><code>mp[i][h][k]
-i 表示天数
-j 表示是否持有股票
-k 表示之前交易了多少次
-</code></pre>
-<p>此时动态规划的转移方程变成了如下所示:</p>
-<pre><code class="language-c++">// 为了方便理解 把k放到了第二维
-
-//前一天 要么不操作 要么卖掉了一股
-mp[i][k][0] = max(mp[i-1][k][0], mp[i-1][k-1][1] + a[i])
-
-//  前一天 要么不操作 要么买入了一股
-mp[i][k][1] = max(mp[i-1][k][1], mp[i-1][k][0] - a[i)
-</code></pre>
-<p>想要求出最大的收益 只需要找到<br>
-<code>mp[n-1, {0...k},0]</code>的最大值即可</p>
-<h2 id="188买卖股票的最佳时机iv">188.买卖股票的最佳时机IV</h2>
-<h3 id="python-solution">python solution</h3>
-<pre><code class="language-python">class Solution:
-    def maxProfit(self, k: int, prices: List[int]) -&gt; int:
-        if not prices or not k:
-            return 0
-        n  = len(prices)
-        # 如果k大于数组长度的一半，则可以用贪心解决
-        if k &gt; n//2:
-            return self.greedy(prices)
-        # 动态规划
-        dp = [[[0] * 2 for _ in range(k+1)] for _ in range(n)]
-        res = []
-        # 设置初始状态
-        for i in range(k+1):
-            dp[0][i][0], dp[0][i][1] = 0, -prices[0]
-        # 开始两层循环
-        for i in range(1,n):
-            for j in range(k+1):
-                if not j:
-                    dp[i][j][0] = dp[i-1][j][0]
-                else:
-                    dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j-1][1] + prices[i])
-                dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j][0] - prices[i])
-        # 找到最大值
-        for m in range(k+1):
-            print(dp[n-1][m][0])
-            res.append(dp[n-1][m][0])
-        return max(res)
-    def greedy(self, prices):
-        res = 0
-        for i in range(1,len(prices)):
-            if prices[i] &gt; prices[i-1]:
-                res += prices[i] - prices[i-1]
-        return res
-</code></pre>
-<h2 id="309买卖股票的最佳时机含冻结期">309.买卖股票的最佳时机含冻结期</h2>
-<p>对于这道题目 dp状态可以相应减少，因为没有次数的限制了，只需要做一个二维的dp就可以了 一个维度i是用来存储天数，另外一个维度j用来存储当前股票买卖的状态 012分别表示没有买入 买入了 以及处于冻结期</p>
-<h3 id="python-solution-2">python solution</h3>
-<pre><code class="language-python">class Solution:
-    def maxProfit(self, prices: List[int]) -&gt; int:
-        if not prices:
-            return 0
-        n = len(prices)
-        dp = [[0] * 3 for _ in range(n)]
-        # 0表示今天未持有 1表示今天持有 2表示今天处于冻结状态
-        dp[0][0], dp[0][1], dp[0][2] = 0,-prices[0],0
-        for i in range(1,n):
-            dp[i][0] = max(dp[i-1][0], dp[i-1][2])
-            dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i])
-            dp[i][2] = dp[i-1][1] + prices[i]
-        return max(dp[n-1][0], dp[n-1][2])
-</code></pre>
 ]]></content>
     </entry>
 </feed>
