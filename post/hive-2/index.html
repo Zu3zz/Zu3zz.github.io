@@ -3,8 +3,8 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
-<meta name="description" content="Everyone Can (Not) Comprehend." />
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1571423337556">
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1571424063523">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://Zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1571423337556" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1571424063523" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -80,7 +80,7 @@
       
     
       
-        <a href="/projects" class="menu" style="animation-delay: 0.8s" target="_blank">
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
           项目
         </a>
       
@@ -100,12 +100,14 @@
         </div>
         
         <div class="post-content yue">
-          <center>这节咱们来点真实的</center>
-<center>hive如何创建表以及读取数据</center>
+          <p>🍑🍑这节咱们来点真实的Hive操作🍑🍑<br>
+🍒🍒讲讲hive如何创建表以及读取数据🍒🍒</p>
 <!-- more -->
 <h1 id="hive-外部表-内部表">Hive 外部表、内部表</h1>
 <h2 id="内部表">内部表</h2>
-<p>可以通过 formatted 查看表的属性</p>
+<ul>
+<li>可以通过 formatted 查看表的属性</li>
+</ul>
 <pre><code class="language-sql">desc formattede mp2
 
 可以看到一系列属性 其中有属性如下
@@ -117,9 +119,13 @@ MANAGED_TABLE就代emp2是一个内部表
 删除emp2
 drop table emp2;
 </code></pre>
-<p>删除表: HDFS 上的数据被删除 &amp; Meta 也被删除</p>
+<ul>
+<li>删除表: HDFS 上的数据被删除 &amp; Meta 也被删除</li>
+</ul>
 <h2 id="外部表">外部表</h2>
-<p>创建外部表</p>
+<ul>
+<li>创建外部表</li>
+</ul>
 <pre><code class="language-sql">CREATE EXTERNNAL TABLE emp_external(
 empno int,
 ename string,
@@ -141,10 +147,14 @@ Table Type: EXTERNAL_TABLE
 
 drop table emp_external
 </code></pre>
-<p>删除表: HDFS 上的数据不被删除 &amp; Meta 上被删除<br>
-安全性更好</p>
+<ul>
+<li>删除表: HDFS 上的数据不被删除 &amp; Meta 上被删除<br>
+安全性更好</li>
+</ul>
 <h2 id="分区表">分区表</h2>
-<p>使用分区表创建</p>
+<ul>
+<li>使用分区表创建</li>
+</ul>
 <pre><code class="language-sql">CREATE EXTERNAL TABLE track_info(
 ip string,
 country string,
@@ -157,8 +167,14 @@ page string
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 location '/project/trackinfo/';
 </code></pre>
+<ul>
+<li>
 <p>此时通过执行 jar 包生成 ETL 文件</p>
+</li>
+<li>
 <p>将这个文件存储到 hive 中</p>
+</li>
+</ul>
 <pre><code class="language-sql">LOAD DATA INPATH 'hdfs://localhost:8020/project/input/etl'
 OVERWRITE INTO TABLE track_info partition(day='2013-07-21');
 
@@ -191,16 +207,26 @@ row format delimited fields terminated by '\t';
 写入数据
 insert overwrite table track_info_page_stat partition(day='2013-07-21') select page, count(*) as cnt from track_info where day='2013-07-21' group by page;
 </code></pre>
-<p>到现在为止，我们统计的数据已经在 Hive 表 track_info_province_stat<br>
-而且这个表是一个分区表，后续统计报表的数据可以直接从这个表中查询<br>
-也可以将 hive 表的数据导出到 RDBMS（sqoop<br>
-总结一下所有的操作</p>
+<ul>
+<li>
+<p>到现在为止，我们统计的数据已经在 Hive 表 track_info_province_stat</p>
+</li>
+<li>
+<p>而且这个表是一个分区表，后续统计报表的数据可以直接从这个表中查询</p>
+</li>
+<li>
+<p>也可以将 hive 表的数据导出到 RDBMS（sqoop</p>
+</li>
+<li>
+<p>总结一下所有的操作</p>
 <ol>
 <li>ETL</li>
 <li>把 ETL 输出的数据加载到 track_info 分区表里</li>
 <li>各个维度统计结果的数据输出到各自维度的表里 （如 track_info_province_stat）</li>
 <li>将数据导出 (optional)</li>
 </ol>
+</li>
+</ul>
 
         </div>
 

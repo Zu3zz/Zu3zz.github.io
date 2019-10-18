@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>风袖</title>
-    <updated>2019-10-18T18:28:59.840Z</updated>
+    <updated>2019-10-18T18:41:40.334Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
-    <subtitle>Everyone Can (Not) Comprehend.</subtitle>
+    <subtitle>烟蛾敛略不胜态，风袖低昂如有情</subtitle>
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 风袖</rights>
@@ -31,10 +31,12 @@
         <link href="https://Zu3zz.github.io/post/springboot-2">
         </link>
         <updated>2019-10-10T09:11:01.000Z</updated>
-        <summary type="html"><![CDATA[<center>🎏那么又到了我们SpringBoot系列的第二篇！！</center>
-<center>🎀这一篇，我们来讲讲SpringBoot中的配置相关问题，依旧有源码级别的分析哦！</center>]]></summary>
-        <content type="html"><![CDATA[<center>🎏那么又到了我们SpringBoot系列的第二篇！！</center>
-<center>🎀这一篇，我们来讲讲SpringBoot中的配置相关问题，依旧有源码级别的分析哦！</center>]]></content>
+        <summary type="html"><![CDATA[<p>🎏那么又到了我们SpringBoot系列的第二篇！！<br>
+🎀这一篇，我们来讲讲SpringBoot中的配置相关问题，依旧有源码级别的分析哦！</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🎏那么又到了我们SpringBoot系列的第二篇！！<br>
+🎀这一篇，我们来讲讲SpringBoot中的配置相关问题，依旧有源码级别的分析哦！</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[SpringBoot系列(1)----SpringBoot入门]]></title>
@@ -42,10 +44,12 @@
         <link href="https://Zu3zz.github.io/post/springboot-1">
         </link>
         <updated>2019-10-07T08:53:18.000Z</updated>
-        <summary type="html"><![CDATA[<center>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉</center>
-<center>🎊🎊有源码级别的分析哦~~🎊🎊</center>]]></summary>
-        <content type="html"><![CDATA[<center>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉</center>
-<center>🎊🎊有源码级别的分析哦~~🎊🎊</center>]]></content>
+        <summary type="html"><![CDATA[<p>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉<br>
+🎊🎊有源码级别的分析哦~~🎊🎊</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉<br>
+🎊🎊有源码级别的分析哦~~🎊🎊</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[LeetCode-double-week-10]]></title>
@@ -53,12 +57,10 @@
         <link href="https://Zu3zz.github.io/post/leetcode-double-week-10">
         </link>
         <updated>2019-10-06T11:56:00.000Z</updated>
-        <summary type="html"><![CDATA[<center>又到了每周拼手速的时刻了！(大雾</center>
-<center>👏👏👏👏👏👏👏👏👏👏👏👏</center>
-<center>这周题目难度适中 冲！</center>]]></summary>
-        <content type="html"><![CDATA[<center>又到了每周拼手速的时刻了！(大雾</center>
-<center>👏👏👏👏👏👏👏👏👏👏👏👏</center>
-<center>这周题目难度适中 冲！</center>]]></content>
+        <summary type="html"><![CDATA[<p>👏👏👏又到了每周拼手速的时刻了！这周题目难度适中 冲！</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👏👏👏又到了每周拼手速的时刻了！这周题目难度适中 冲！</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[HDFS系列(1)----安装]]></title>
@@ -66,8 +68,10 @@
         <link href="https://Zu3zz.github.io/post/hdfs-3">
         </link>
         <updated>2019-09-13T10:54:04.000Z</updated>
-        <summary type="html"><![CDATA[<center>这篇文章咱们就来讲讲如何安装HDFS</center>]]></summary>
-        <content type="html"><![CDATA[<center>这篇文章咱们就来讲讲如何安装HDFS</center>]]></content>
+        <summary type="html"><![CDATA[<p>🛴这篇文章咱们就来讲讲如何安装HDFS</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🛴这篇文章咱们就来讲讲如何安装HDFS</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Yarn系列(1)----基础、介绍、流程]]></title>
@@ -75,10 +79,10 @@
         <link href="https://Zu3zz.github.io/post/yarn-1">
         </link>
         <updated>2019-09-10T07:31:48.000Z</updated>
-        <summary type="html"><![CDATA[<center>简单介绍一下资源调度工具YARN</center>
-<center>Yet Another Resource Negotiator</center>]]></summary>
-        <content type="html"><![CDATA[<center>简单介绍一下资源调度工具YARN</center>
-<center>Yet Another Resource Negotiator</center>]]></content>
+        <summary type="html"><![CDATA[<p>❣️这篇文章简单介绍一下资源调度工具YARN</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>❣️这篇文章简单介绍一下资源调度工具YARN</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hadoop系列(1)----多集群配置流程]]></title>
@@ -86,10 +90,12 @@
         <link href="https://Zu3zz.github.io/post/hadoop-1">
         </link>
         <updated>2019-09-09T13:12:27.000Z</updated>
-        <summary type="html"><![CDATA[<center>终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上</center>
-<center>这篇文章会详细告诉你~</center>]]></summary>
-        <content type="html"><![CDATA[<center>终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上</center>
-<center>这篇文章会详细告诉你~</center>]]></content>
+        <summary type="html"><![CDATA[<p>🥅终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上<br>
+这篇文章会详细告诉你~</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🥅终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上<br>
+这篇文章会详细告诉你~</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hive系列(2)----内部表、外部表、实战]]></title>
@@ -97,10 +103,12 @@
         <link href="https://Zu3zz.github.io/post/hive-2">
         </link>
         <updated>2019-09-09T07:48:10.000Z</updated>
-        <summary type="html"><![CDATA[<center>这节咱们来点真实的</center>
-<center>hive如何创建表以及读取数据</center>]]></summary>
-        <content type="html"><![CDATA[<center>这节咱们来点真实的</center>
-<center>hive如何创建表以及读取数据</center>]]></content>
+        <summary type="html"><![CDATA[<p>🍑🍑这节咱们来点真实的Hive操作🍑🍑<br>
+🍒🍒讲讲hive如何创建表以及读取数据🍒🍒</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🍑🍑这节咱们来点真实的Hive操作🍑🍑<br>
+🍒🍒讲讲hive如何创建表以及读取数据🍒🍒</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hive系列(1)----概念、部署、语法]]></title>
