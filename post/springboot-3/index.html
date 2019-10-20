@@ -1,0 +1,560 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1571594718404">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://Zu3zz.github.io/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://Zu3zz.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1571594718404" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%89-%E6%97%A5%E5%BF%97">三、日志</a>
+<ul>
+<li><a href="#1-%E6%97%A5%E5%BF%97">1、日志</a></li>
+<li><a href="#2-slf4j%E4%BD%BF%E7%94%A8">2、SLF4j使用</a>
+<ul>
+<li><a href="#1-%E5%A6%82%E4%BD%95%E5%9C%A8%E7%B3%BB%E7%BB%9F%E4%B8%AD%E4%BD%BF%E7%94%A8slf4j">1、如何在系统中使用SLF4j</a></li>
+<li><a href="#2-%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98">2、遗留问题</a></li>
+</ul>
+</li>
+<li><a href="#3-springboot%E6%97%A5%E5%BF%97%E5%85%B3%E7%B3%BB">3、SpringBoot日志关系</a></li>
+<li><a href="#4-%E6%97%A5%E5%BF%97%E4%BD%BF%E7%94%A8">4. 日志使用：</a>
+<ul>
+<li><a href="#1-%E9%BB%98%E8%AE%A4%E8%AE%BE%E7%BD%AE">1. 默认设置</a></li>
+<li><a href="#2-%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE">2. 指定配置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">SpringBoot系列(3)----日志</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-10-21 / 7 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>🐽铛铛~ 到了我们SpringBoot系列的第三篇了<br>
+🛠这一篇章，我们聊聊SpringBoot中的日志与配置</p>
+<!-- more -->
+<h1 id="三-日志">三、日志</h1>
+<h2 id="1-日志">1、日志</h2>
+<ul>
+<li>
+<p>小郑准备开发一个大型系统</p>
+<ol>
+<li>System.out.println(&quot;&quot;);将关键数据打印在控制台；or卸载一个文件里</li>
+<li>框架来记录系统一些运行时信息；日志框架；zhenglogging-beta.jar</li>
+<li>高大上的功能：异步模式、自动归档、xxxx；zhenglogging-alpha.jar</li>
+<li>将以前的框架卸载下来，换上新框架，重新修改之前相关的API；zhenglogging-better.jar</li>
+<li>JDBC---数据库驱动；
+<ul>
+<li>写一个统一的接口层；日志门面（日志的一个抽象层）；zhenglogging-abstract.jar;</li>
+<li>给项目导入具体的日志实现就行了；我们之前的日志框架都是实现的抽象层</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>市面上的日志框架</strong></p>
+<ul>
+<li>
+<p>JUL、JCL、Jboss-logging、logback、log4j、log4j2、slf4j....</p>
+<table>
+<thead>
+<tr>
+<th>日志门面  （日志的抽象层）</th>
+<th>日志实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><s>JCL（Jakarta  Commons Logging）</s>    SLF4j（Simple  Logging Facade for Java）    <strong><s>jboss-logging</s></strong></td>
+<td>Log4j  JUL（java.util.logging）  Log4j2  <strong>Logback</strong></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>左边选一个门面（抽象层）、右边来选一个实现；</p>
+</li>
+<li>
+<p>日志门面： SLF4J</p>
+</li>
+<li>
+<p>日志实现： Logback；</p>
+</li>
+</ul>
+</li>
+<li>
+<p>SpringBoot：底层是Spring框架，Spring默认使用的JCL</p>
+<ul>
+<li><strong>SpringBoot选用 SLF4J 和 logback</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="2-slf4j使用">2、SLF4j使用</h2>
+<h3 id="1-如何在系统中使用slf4j">1、如何在系统中使用SLF4j</h3>
+<ul>
+<li>
+<p><a href="https://www.slf4j.org">slf4j官网</a></p>
+</li>
+<li>
+<p>以后开发的时候，入职记录方法的调用，不应该来直接调用日志的实现类，而是调用日志抽象层里面的方法。</p>
+</li>
+<li>
+<p>给系统里面导入slf4j的jar和logback实现jar</p>
+<pre><code class="language-java">import org.slf4j.Logger;
+import oft.slf4j.LoggerFactory;
+
+public class HelloWorld {
+  public static void main(String[] args) {
+    Logger logger = LoggerFactory.getLogger(HelloWorld.class);
+    logger.info(&quot;Hello World&quot;);
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>图示：<br>
+<img src="https://Zu3zz.github.io/post-images/1571594379589.png" alt="create_bindings"></p>
+</li>
+<li>
+<p>每一个日志的实现框架都有自己的配置文件。使用slf4j以后，<strong>配置文件还是做成日志实现框架自己本身的配置文件；</strong></p>
+</li>
+</ul>
+<h3 id="2-遗留问题">2、遗留问题</h3>
+<ul>
+<li>
+<p>a（slf4j + logback）：Spring（commons-logging）、Hiernaate（jboss-logging）、MyBatis、xxxx</p>
+</li>
+<li>
+<p>统一日志记录，即让其他框架和我一起统一使用slf4j进行输出</p>
+<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io/post-images/1571594406039.png" alt="legacy"></figure>
+</li>
+<li>
+<p><strong>如何让系统中所有的日志都统一到slf4j</strong></p>
+<ol>
+<li>将系统中其他日志框架先排除出去</li>
+<li>用中间件来替换原有的日志框架</li>
+<li>我们导入slf4j的其他按时限</li>
+</ol>
+</li>
+</ul>
+<h2 id="3-springboot日志关系">3、SpringBoot日志关系</h2>
+<ul>
+<li>pom文件依赖如下</li>
+</ul>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframwork.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<ul>
+<li>SpringBoot使用它来做日志功能</li>
+</ul>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframwork.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-logging&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<ul>
+<li>
+<p>底层依赖关系</p>
+<figure data-type="image" tabindex="2"><img src="https://Zu3zz.github.io/post-images/1571594476838.png" alt="底层依赖"></figure>
+</li>
+<li>
+<p>总结：</p>
+<ol>
+<li>SpringBoot底层也是使用slf4j+logback的方式进行日志记录</li>
+<li>SpringBoot也把其他的日志都替换成了slf4j</li>
+<li>中间替换包</li>
+</ol>
+</li>
+<li>
+<p>查看jcl-over-slf4j的源码</p>
+<pre><code class="language-java">@SuppressWarnings(&quot;rawtypes&quot;)
+public abstract class LogFactory {
+
+    static String UNSUPPORTED_OPERATION_IN_JCL_OVER_SLF4J = &quot;http://www.slf4j.org/codes.html#unsupported_operation_in_jcl_over_slf4j&quot;;
+
+    static LogFactory logFactory = new SLF4JLogFactory();
+}
+</code></pre>
+</li>
+<li>
+<p>如果需要引入其他日志框架呢？</p>
+<ul>
+<li>
+<p>Spring框架使用的是commons-logging:</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-core&lt;/artifactId&gt;
+  &lt;exclusions&gt;
+    &lt;exclusion&gt;
+      &lt;groupId&gt;commons-logging&lt;/groupId&gt;
+      &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;
+    &lt;/exclusion&gt;
+  &lt;/exclusions&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>SpringBoot能自动适配所有的日志，并且底层使用slf4j和logback的方式记录日志，引入其他框架的时候，只需要吧这个额框架依赖的日志框架排除即可</strong></p>
+</li>
+</ul>
+<h2 id="4-日志使用">4. 日志使用：</h2>
+<h3 id="1-默认设置">1. 默认设置</h3>
+<ul>
+<li>
+<p>SpringBoot默认帮我们配置好了日志:</p>
+<pre><code class="language-java">//记录器
+Logger logger = LoggerFactory.getLogger(getClass());
+@Test
+public void contextLoads() {
+  //日志的级别；
+  //由低到高   trace&lt;debug&lt;info&lt;warn&lt;error
+  //可以调整输出的日志级别；日志就只会在这个级别以以后的高级别生效
+  logger.trace(&quot;这是trace日志...&quot;);
+  logger.debug(&quot;这是debug日志...&quot;);
+  //SpringBoot默认给我们使用的是info级别的，没有指定级别的就用SpringBoot默认规定的级别；root级别
+  logger.info(&quot;这是info日志...&quot;);
+  logger.warn(&quot;这是warn日志...&quot;);
+  logger.error(&quot;这是error日志...&quot;);
+}
+</code></pre>
+</li>
+<li>
+<p>可以在默认的配置文件中进行日志的配置</p>
+<pre><code class="language-properties"># 设置日志的默认级别
+logging.level.com.zth = trace 
+# logging.path=
+# 不指定路径在当前项目下生成springboot.log日志
+# 可以指定完整的路径；
+# logging.file=/Users/3zz/log/springboot.log
+# 在当前磁盘的根路径下创建spring文件夹和里面的log文件夹；使用 spring.log 作为默认文件
+logging.path=/spring/log
+
+#  在控制台输出的日志的格式 {日期-线程号-级别-全类名字符-logger消息}
+logging.pattern.console=%d{yyyy-MM-dd} [%thread] %-5level %logger{50} - %msg%n
+# 指定文件中日志输出的格式
+logging.pattern.file=%d{yyyy-MM-dd} === [%thread] === %-5level === %logger{50} ==== %msg%n
+</code></pre>
+</li>
+<li>
+<p>详细日志输出格式配置参照如下</p>
+<ol>
+<li>%d表示日期时间</li>
+<li>%thread表示线程名</li>
+<li>%-5level：级别从左显示5个字符宽度</li>
+<li>%logger{50} 表示logger名字最长50个字符，否则按照句点分割</li>
+<li>%msg：日志消息</li>
+<li>%n是换行符</li>
+</ol>
+</li>
+<li>
+<table>
+<thead>
+<tr>
+<th>logging.file</th>
+<th>logging.path</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(none)</td>
+<td>(none)</td>
+<td></td>
+<td>只在控制台输出</td>
+</tr>
+<tr>
+<td>指定文件名</td>
+<td>(none)</td>
+<td>my.log</td>
+<td>输出日志到my.log文件</td>
+</tr>
+<tr>
+<td>(none)</td>
+<td>指定目录</td>
+<td>/var/log</td>
+<td>输出到指定目录的 spring.log 文件中</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="2-指定配置">2. 指定配置</h3>
+<ul>
+<li>
+<p>给类路径下放上每个日志框架自己的配置文件即可，SpringBoot就不用自己的默认的了</p>
+<table>
+<thead>
+<tr>
+<th>Logging System</th>
+<th>Customization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logback</td>
+<td><code>logback-spring.xml</code>, <code>logback-spring.groovy</code>, <code>logback.xml</code> or <code>logback.groovy</code></td>
+</tr>
+<tr>
+<td>Log4j2</td>
+<td><code>log4j2-spring.xml</code> or <code>log4j2.xml</code></td>
+</tr>
+<tr>
+<td>JDK (Java Util Logging)</td>
+<td><code>logging.properties</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>如果直接配置logback.xml，那么直接就被日志框架识别到了</p>
+</li>
+<li>
+<p>如果配置<strong>logback-spring.xml</strong>,那么日志框架就不直接加载了，由SpringBoot自动加载，可以使用SpringBoot的高级Profile功能</p>
+<pre><code class="language-xml">&lt;springProfile name=&quot;staging&quot;&gt;
+  &lt;!-- configuration to be enabled when the &quot;staging&quot; profile is active --&gt;
+  可以指定某段配置只在某个环境下生效
+&lt;/springProfile&gt;
+</code></pre>
+</li>
+<li>
+<p>下面是一个例子</p>
+<pre><code class="language-xml">&lt;appender name=&quot;stdout&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
+  &lt;layout class=&quot;ch.qos.logback.classic.PatternLayout&quot;&gt;
+    &lt;springProfile name=&quot;dev&quot;&gt;
+      &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} ---&gt; %-5level %logger{50} - %msg%n&lt;/pattern&gt;
+    &lt;/springProfile&gt;
+    &lt;springProfile name=&quot;!dev&quot;&gt;
+      &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} ==== %-5level %logger{50} - %msg%n&lt;/pattern&gt;
+    &lt;/springProfile&gt;
+  &lt;/layout&gt;
+&lt;/appender&gt;
+</code></pre>
+<p>运行时可以看到，在dev环境下和非dev环境下，日志打印结果不相同</p>
+<hr>
+</li>
+</ul>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/VaOfOOWC5">
+            <span class="flex-auto">SpringBoot</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/tqQSAbU7V">
+            <span class="flex-auto">BackEnd</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/_el9BOoeY">
+            <span class="flex-auto">Java</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://Zu3zz.github.io/post/message-queue-python">
+                <h3 class="post-title">
+                  Python与常用消息中间件
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://Zu3zz.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

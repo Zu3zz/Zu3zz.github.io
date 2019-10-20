@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>风袖</title>
-    <updated>2019-10-18T18:41:40.334Z</updated>
+    <updated>2019-10-20T18:05:40.384Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -11,7 +11,20 @@
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 风袖</rights>
     <entry>
-        <title type="html"><![CDATA[Python与常用消息中间件(1)----概念篇]]></title>
+        <title type="html"><![CDATA[SpringBoot系列(3)----日志]]></title>
+        <id>https://Zu3zz.github.io/post/springboot-3</id>
+        <link href="https://Zu3zz.github.io/post/springboot-3">
+        </link>
+        <updated>2019-10-20T17:57:12.000Z</updated>
+        <summary type="html"><![CDATA[<p>🐽铛铛~ 到了我们SpringBoot系列的第三篇了<br>
+🛠这一篇章，我们聊聊SpringBoot中的日志与配置</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🐽铛铛~ 到了我们SpringBoot系列的第三篇了<br>
+🛠这一篇章，我们聊聊SpringBoot中的日志与配置</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python与常用消息中间件]]></title>
         <id>https://Zu3zz.github.io/post/message-queue-python</id>
         <link href="https://Zu3zz.github.io/post/message-queue-python">
         </link>
@@ -121,17 +134,6 @@
 ]]></summary>
         <content type="html"><![CDATA[<p>慢慢学习路 一步一脚印<br>
 今天带来hive学习笔记系列的第一篇</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[python基础操作]]></title>
-        <id>https://Zu3zz.github.io/post/python-basic</id>
-        <link href="https://Zu3zz.github.io/post/python-basic">
-        </link>
-        <updated>2019-09-04T13:23:26.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  分享Python的一些骚操作</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  分享Python的一些骚操作</p>
 ]]></content>
     </entry>
 </feed>
