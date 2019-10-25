@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>风袖</title>
-    <updated>2019-10-20T18:05:40.384Z</updated>
+    <updated>2019-10-25T12:13:38.978Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 风袖</rights>
+    <entry>
+        <title type="html"><![CDATA[MySQL系列(1) ---- 基础与概念]]></title>
+        <id>https://Zu3zz.github.io/post/mysql-1</id>
+        <link href="https://Zu3zz.github.io/post/mysql-1">
+        </link>
+        <updated>2019-10-25T12:12:12.000Z</updated>
+        <summary type="html"><![CDATA[<p>🍒MySQL笔记~</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🍒MySQL笔记~</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SpringBoot系列(3)----日志]]></title>
         <id>https://Zu3zz.github.io/post/springboot-3</id>
@@ -121,19 +132,6 @@
 ]]></summary>
         <content type="html"><![CDATA[<p>🍑🍑这节咱们来点真实的Hive操作🍑🍑<br>
 🍒🍒讲讲hive如何创建表以及读取数据🍒🍒</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hive系列(1)----概念、部署、语法]]></title>
-        <id>https://Zu3zz.github.io/post/hive-1</id>
-        <link href="https://Zu3zz.github.io/post/hive-1">
-        </link>
-        <updated>2019-09-07T12:35:32.000Z</updated>
-        <summary type="html"><![CDATA[<p>慢慢学习路 一步一脚印<br>
-今天带来hive学习笔记系列的第一篇</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>慢慢学习路 一步一脚印<br>
-今天带来hive学习笔记系列的第一篇</p>
 ]]></content>
     </entry>
 </feed>
