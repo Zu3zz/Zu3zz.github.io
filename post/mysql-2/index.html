@@ -37,7 +37,10 @@
             <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#1%E5%9F%BA%E6%9C%AC%E5%AD%98%E5%82%A8">1.基本存储</a></li>
+<li><a href="#1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">1 配置文件</a></li>
+<li><a href="#2-%E7%99%BB%E5%BD%95%E9%80%80%E5%87%BA-mysql">2. 登录/退出 MySQL</a></li>
+<li><a href="#3-sql%E8%AF%AD%E5%8F%A5%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83">3. SQL语句语法规范</a></li>
+<li><a href="#4-%E5%B8%B8%E7%94%A8sql%E8%AF%AD%E5%8F%A5">4. 常用SQL语句</a></li>
 </ul>
 </li>
 </ul>
@@ -92,66 +95,88 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">堆排序(Heap Sort)</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">深入浅出MySQL(2)-----数据库与数据表相关操作</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-08-17 / 2 min read
+          2019-10-26 / 2 min read
         </div>
         
         <div class="post-content yue">
-          <p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
+          <p>🍋MySQL第二篇， 关于MySQL相关的操作和命令</p>
 <!-- more -->
-<p>写这篇博客的原因是因为今天面试被问到了如何使用堆排序在一个百万数量级的数组中取出前k大的元素，可能是有点紧张，我大脑当场短路了，直接把二分搜索树和堆排序搞混了，真的是太丢人了，果不其然面试也挂了。</p>
-<p>痛定思痛，决定自己认真的再复习和回顾一下堆排序的所有操作。</p>
-<h2 id="1基本存储">1.基本存储</h2>
-<p>首先从堆这个数据结构说起，堆可以做到入堆和出堆都是O(logn)的复杂度，平均时间上比起O(1)+O(n)这种组合要快出去很多。</p>
-<p>首先从堆的基本形态说起，堆本质是就是一个数组，但是在存储的过程中，我们可以把它看做是一个完全二叉树:即索引为0的位置为根节点，索引为1、2的位置为根节点的子节点，下面就是一个二叉堆(Binary Heap)，对应的就是一个二叉树<br>
-<img src="https://Zu3zz.github.io/post-images/1566038321792.png" alt=""><br>
-可以看到，二叉堆满足性质如下，所有子节点均小于父亲节点，即<br>
-<code>41&lt;62 &amp;&amp; 30&lt;62</code></p>
-<p><strong>并且 二叉堆是一颗完全二叉树</strong><br>
-<img src="https://Zu3zz.github.io/post-images/1566038535528.png" alt=""></p>
-<p>所以上图所示的堆可以在cpp中如下所存储</p>
-<pre><code class="language-c++">int arr[] = {0,62,41,30,28,16,22,13,19,17,15}
+<h2 id="1-配置文件">1 配置文件</h2>
+<ul>
+<li>my.cnf是MySQL的配置文件</li>
+</ul>
+<h2 id="2-登录退出-mysql">2. 登录/退出 MySQL</h2>
+<ul>
+<li>
+<p>登录</p>
+<pre><code class="language-shell">$ mysql -uroot -p
+$ mysql -uroot -proot
 </code></pre>
-<p>可以注意到这里index为0的元素没有使用，这是为了方便堆排序进行左右节点的计算规则。<br>
-所以这样所有的子节点和父节点就满足如下的公式</p>
-<pre><code class="language-c++">parent i = i /2;
-left child i = 2 * i;
-right child i = 2 * i +1;
+<ul>
+<li>
+<p>得到版本号</p>
+<pre><code class="language-shell">$ mysql -V
+$ mysql --version
 </code></pre>
-<p>本节对应代码：<br>
-<strong><a href="https://github.com/Zu3zz/Learn_some_algorithm_and_data_structure/blob/master/heap-sort/01-MaxHeap/main.cpp">二叉堆的建立与基本操作</a></strong></p>
+</li>
+<li>
+<p>登录的同时打开指定数据库</p>
+<pre><code class="language-shell">$ mysql -uroot -p -D db_name
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>退出</p>
+<pre><code class="language-shell">$ exit
+$ quit
+</code></pre>
+</li>
+<li>
+<p>登录信息中需要掌握的</p>
+<ul>
+<li>命令行结束符默认使用;或者\g来结束</li>
+<li>可以通过help或者\h或者?加上相关关键词来查看手册</li>
+<li>\c可以取消当前命令的执行</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-sql语句语法规范">3. SQL语句语法规范</h2>
+<ul>
+<li>常用MySQL的关键字我们需要大写，库名、表名、字段名称等使用小写</li>
+<li>SQL语句支持拆行操作，拆分的时候不能吧完整单词拆开</li>
+<li>数据库名称、表名称、字段名称不要使用MySQL的保留字，如果要使用，需要用反引号将其括起来</li>
+</ul>
+<h2 id="4-常用sql语句">4. 常用SQL语句</h2>
+<pre><code class="language-mysql">SELECT USER() -- 得到登录的用户
+SELECT VERSION() -- 得到 MySQL的版本信息
+SELECT NOW() -- 得到当前的日期时间
+SELECT DATABASE() --得到当前打开的数据库
+</code></pre>
 
         </div>
 
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/2NVzvTKDE">
-            <span class="flex-auto">algorithm</span>
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/tqQSAbU7V">
+            <span class="flex-auto">BackEnd</span>
           </a>
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/We-dZJIaZ">
-            <span class="flex-auto">data structure</span>
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/7acBApeyq">
+            <span class="flex-auto">MySQL</span>
           </a>
         
 
 
         <div class="flex justify-between py-8">
           
-            <div class="prev-post">
-              <a href="https://Zu3zz.github.io/post/leetcode-weeklycontest-150">
-                <h3 class="post-title">
-                  <i class="remixicon-arrow-left-line"></i>
-                  Leetcode-weeklyContest-150
-                </h3>
-              </a>
-            </div>
-          
 
           
             <div class="next-post">
-              <a href="https://Zu3zz.github.io/post/react-ssr">
+              <a href="https://Zu3zz.github.io/post/mysql-1">
                 <h3 class="post-title">
-                  从头梳理服务器渲染原理(SSR)
+                  深入浅出MySQL(1) ---- 基础与概念
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>

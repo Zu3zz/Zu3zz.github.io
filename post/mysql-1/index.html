@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
 <meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1572005613727">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1572264956581">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://Zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1572005613727" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1572264956581" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -44,6 +44,10 @@
 <li><a href="#13-%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD">1.3 相关术语</a></li>
 </ul>
 </li>
+<li><a href="#2-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">2. 配置文件</a></li>
+<li><a href="#3-%E7%99%BB%E5%BD%95%E9%80%80%E5%87%BA-mysql">3. 登录/退出 MySQL</a></li>
+<li><a href="#4-sql%E8%AF%AD%E5%8F%A5%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83">4. SQL语句语法规范</a></li>
+<li><a href="#5-%E5%B8%B8%E7%94%A8sql%E8%AF%AD%E5%8F%A5">5. 常用SQL语句</a></li>
 </ul>
 </li>
 </ul>
@@ -98,13 +102,13 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">MySQL系列(1) ---- 基础与概念</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">深入浅出MySQL(1) ---- 基础与概念</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-10-25 / 1 min read
+          2019-10-25 / 2 min read
         </div>
         
         <div class="post-content yue">
-          <p>🍒MySQL笔记~</p>
+          <p>🍒MySQL笔记第一篇 相关概念~</p>
 <!-- more -->
 <h2 id="1什么是数据库">1.什么是数据库</h2>
 <h3 id="11-概念">1.1 概念</h3>
@@ -136,12 +140,66 @@
 <li>DDL: 数据定义语言</li>
 <li>DML:数据操作语言</li>
 <li>DQL:数据库查询语言</li>
-<li>DCL:数据控制语言</li>
+<li>DCL:数据控制语言<br>
+🍋MySQL第二篇， 关于MySQL相关的操作和命令</li>
 </ol>
 </li>
 </ul>
 </li>
 </ol>
+<!-- more -->
+<h2 id="2-配置文件">2. 配置文件</h2>
+<ul>
+<li>my.cnf是MySQL的配置文件</li>
+</ul>
+<h2 id="3-登录退出-mysql">3. 登录/退出 MySQL</h2>
+<ul>
+<li>
+<p>登录</p>
+<pre><code class="language-sh">$ mysql -uroot -p
+$ mysql -uroot -proot
+</code></pre>
+<ul>
+<li>
+<p>得到版本号</p>
+<pre><code class="language-sh">$ mysql -V
+$ mysql --version
+</code></pre>
+</li>
+<li>
+<p>登录的同时打开指定数据库</p>
+<pre><code class="language-sh">$ mysql -uroot -p -D db_name
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>退出</p>
+<pre><code class="language-sh">$ exit
+$ quit
+</code></pre>
+</li>
+<li>
+<p>登录信息中需要掌握的</p>
+<ul>
+<li>命令行结束符默认使用;或者\g来结束</li>
+<li>可以通过help或者\h或者?加上相关关键词来查看手册</li>
+<li>\c可以取消当前命令的执行</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-sql语句语法规范">4. SQL语句语法规范</h2>
+<ul>
+<li>常用MySQL的关键字我们需要大写，库名、表名、字段名称等使用小写</li>
+<li>SQL语句支持拆行操作，拆分的时候不能吧完整单词拆开</li>
+<li>数据库名称、表名称、字段名称不要使用MySQL的保留字，如果要使用，需要用反引号将其括起来</li>
+</ul>
+<h2 id="5-常用sql语句">5. 常用SQL语句</h2>
+<pre><code class="language-mysql">SELECT USER() -- 得到登录的用户
+SELECT VERSION() -- 得到 MySQL的版本信息
+SELECT NOW() -- 得到当前的日期时间
+SELECT DATABASE() --得到当前打开的数据库
+</code></pre>
 
         </div>
 
@@ -157,6 +215,15 @@
 
 
         <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://Zu3zz.github.io/post/mysql-2">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  深入浅出MySQL(2)-----数据库与数据表相关操作
+                </h3>
+              </a>
+            </div>
           
 
           
