@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
 <meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1572415597656">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1572415735920">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://Zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1572415597656" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1572415735920" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -134,17 +134,17 @@
 <ul>
 <li>
 <p>普通创建</p>
-<pre><code class="language-mysql">CREATE {DATABASE|SCHEMA} db_name;
+<pre><code class="language-sql">CREATE {DATABASE|SCHEMA} db_name;
 </code></pre>
 </li>
 <li>
 <p>检测数据库名称是否存在，不存在则创建</p>
-<pre><code class="language-mysql">CREATE DATABASE [IF NOT EXISTS] db_name;
+<pre><code class="language-sql">CREATE DATABASE [IF NOT EXISTS] db_name;
 </code></pre>
 </li>
 <li>
 <p>在创建数据库的同时指定编码方式</p>
-<pre><code class="language-mysql">CREATE DATABASE [IF NOT EXISTS] db_name [DEFAULT] CHARACTER SET [=] charset;
+<pre><code class="language-sql">CREATE DATABASE [IF NOT EXISTS] db_name [DEFAULT] CHARACTER SET [=] charset;
 </code></pre>
 </li>
 <li>
@@ -156,30 +156,30 @@
 </li>
 </ul>
 <h3 id="12-查看当前服务器下全部数据库">1.2 查看当前服务器下全部数据库</h3>
-<pre><code class="language-mysql">SHOW DATABASES|SCHEMAS;
+<pre><code class="language-sql">SHOW DATABASES|SCHEMAS;
 </code></pre>
 <h3 id="13-查看指定数据库的详细信息">1.3 查看指定数据库的详细信息</h3>
-<pre><code class="language-mysql">SHOW CREATE BATABASE db_name;
+<pre><code class="language-sql">SHOW CREATE BATABASE db_name;
 </code></pre>
 <h3 id="14-修改制定数据库的编码方式">1.4 修改制定数据库的编码方式</h3>
-<pre><code class="language-mysql">ALTER DATABASE db_name [DEFAULT] CHARACTER SET [=] charset;
+<pre><code class="language-sql">ALTER DATABASE db_name [DEFAULT] CHARACTER SET [=] charset;
 </code></pre>
 <h3 id="15-打开指定数据库">1.5 打开指定数据库</h3>
-<pre><code class="language-mysql">USE db_name;
+<pre><code class="language-sql">USE db_name;
 </code></pre>
 <h3 id="16-得到当前打开的数据库">1.6 得到当前打开的数据库</h3>
-<pre><code class="language-mysql">SELECT DATABASE()|SCHEMA();
+<pre><code class="language-sql">SELECT DATABASE()|SCHEMA();
 </code></pre>
 <h3 id="17-删除指定的数据库">1.7 删除指定的数据库</h3>
 <ul>
 <li>
 <p>直接删除</p>
-<pre><code class="language-mysql">DROP DATABASE db_name;
+<pre><code class="language-sql">DROP DATABASE db_name;
 </code></pre>
 </li>
 <li>
 <p>如果数据库存在则删除</p>
-<pre><code class="language-mysql">DROP DATABASE [IF EXISTS] db_name;
+<pre><code class="language-sql">DROP DATABASE [IF EXISTS] db_name;
 </code></pre>
 </li>
 </ul>
@@ -192,7 +192,7 @@
 <li>表名要求唯一，不要包含特殊字符，最好含义明确</li>
 </ul>
 <h3 id="22-创建表">2.2 创建表</h3>
-<pre><code class="language-mysql">CREATE TABLE [IF NOT EXISTS] tbl_name(
+<pre><code class="language-sql">CREATE TABLE [IF NOT EXISTS] tbl_name(
   字段名称 字段类型[完整性约束条件],
   字段名称 字段类型[完整性约束条件]
 )ENGINE = 存储引擎 CHARSET=编码方式
@@ -209,80 +209,80 @@
 <li>FOREIGN KEY: 外键约束</li>
 </ul>
 <h3 id="23-查看当前数据库下已有数据表">2.3 查看当前数据库下已有数据表</h3>
-<pre><code class="language-mysql">SHOW TABLES;
+<pre><code class="language-sql">SHOW TABLES;
 SHOW [FULL] TABLES [{FROM | IN} db_name]
 [LIKE 'pattern' | WHERE expr];
 </code></pre>
 <h3 id="24-查看指定数据表的详细信息">2.4 查看指定数据表的详细信息</h3>
-<pre><code class="language-mysql">SHOW CREATE TABLE tbl_name;
+<pre><code class="language-sql">SHOW CREATE TABLE tbl_name;
 </code></pre>
 <h3 id="25-查看表结构">2.5 查看表结构</h3>
-<pre><code class="language-mysql">DESC tbl_name;
+<pre><code class="language-sql">DESC tbl_name;
 DESCRIBE tbl_name;
 SHOW COLUMNS FROM tbl_name;
 </code></pre>
 <h3 id="26-删除指定的数据表">2.6 删除指定的数据表</h3>
-<pre><code class="language-mysql">DROP TABLE [IF EXISTS] tbl_name;
+<pre><code class="language-sql">DROP TABLE [IF EXISTS] tbl_name;
 </code></pre>
 <h3 id="27-表结构相关结构">2.7 表结构相关结构</h3>
 <ol>
 <li>
 <p>添加字段</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name;
+<pre><code class="language-sql">ALTER TABLE tbl_name;
 ADD 字段名称 字段属性 [完整性约束条件][FIRST|AFTER 字段名称]
 </code></pre>
 </li>
 <li>
 <p>删除字段</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name;
+<pre><code class="language-sql">ALTER TABLE tbl_name;
 DROP 字段名称
 </code></pre>
 </li>
 <li>
 <p>添加默认值</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name
+<pre><code class="language-sql">ALTER TABLE tbl_name
 ALTER 字段名称 SET DEFAULT 默认值;
 </code></pre>
 </li>
 <li>
 <p>删除默认值</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name
+<pre><code class="language-sql">ALTER TABLE tbl_name
 ALTER 字段名称 DROP DEFAULT;
 </code></pre>
 </li>
 <li>
 <p>修改字段类型、字段属性</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name
+<pre><code class="language-sql">ALTER TABLE tbl_name
 MODIFY 字段名称 字段类型 [字段属性] [FIRST | AFTER 字段名称];
 </code></pre>
 </li>
 <li>
 <p>修改字段名称、字段类型、字段属性</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name
+<pre><code class="language-sql">ALTER TABLE tbl_name
 CHANGE 原字段名称 新字段名称 字段类型 字段属性 [FIRST | AFTER 字段名称]
 </code></pre>
 </li>
 <li>
 <p>添加主键</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name
+<pre><code class="language-sql">ALTER TABLE tbl_name
 ADD PRIMARY KEY(字段名称);
 </code></pre>
 </li>
 <li>
 <p>删除主键</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name
+<pre><code class="language-sql">ALTER TABLE tbl_name
 DROP PRIMARY KEY;
 </code></pre>
 </li>
 <li>
 <p>添加唯一</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name
+<pre><code class="language-sql">ALTER TABLE tbl_name
 ADD QNIQUE KEY|INDEX [index_name](字段名称)
 </code></pre>
 </li>
 <li>
 <p>删除唯一</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name
+<pre><code class="language-sql">ALTER TABLE tbl_name
 DROP index_name;
 </code></pre>
 </li>
@@ -291,18 +291,18 @@ DROP index_name;
 <ul>
 <li>通过ALTER然后RENAME的格式</li>
 </ul>
-<pre><code class="language-mysql">ALTER TABLE tbl_name
+<pre><code class="language-sql">ALTER TABLE tbl_name
 RENAME [TO|AS] new_tbl_name;
 </code></pre>
 <ul>
 <li>直接RENAME</li>
 </ul>
-<pre><code class="language-mysql">RENAME TABLE tbl_name TO new_tbl_name;
+<pre><code class="language-sql">RENAME TABLE tbl_name TO new_tbl_name;
 </code></pre>
 </li>
 <li>
 <p>修改 AUTO_INCREMENT的值</p>
-<pre><code class="language-mysql">ALTER TABLE tbl_name AUTO_INCREMENT=值
+<pre><code class="language-sql">ALTER TABLE tbl_name AUTO_INCREMENT=值
 </code></pre>
 </li>
 </ol>
