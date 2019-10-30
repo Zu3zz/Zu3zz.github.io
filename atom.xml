@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>风袖</title>
-    <updated>2019-10-28T12:15:59.408Z</updated>
+    <updated>2019-10-30T06:06:41.341Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -16,9 +16,9 @@
         <link href="https://Zu3zz.github.io/post/mysql-2">
         </link>
         <updated>2019-10-25T17:18:05.000Z</updated>
-        <summary type="html"><![CDATA[<p>🍋MySQL第二篇， 关于MySQL相关的操作和命令</p>
+        <summary type="html"><![CDATA[<p>🏖这一篇 我们讨论一下数据库和数据表的相关操作..</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>🍋MySQL第二篇， 关于MySQL相关的操作和命令</p>
+        <content type="html"><![CDATA[<p>🏖这一篇 我们讨论一下数据库和数据表的相关操作..</p>
 ]]></content>
     </entry>
     <entry>
