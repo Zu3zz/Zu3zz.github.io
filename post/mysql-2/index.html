@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
 <meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1572516866240">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1574428406692">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://Zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1572516866240" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1574428406692" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -198,16 +198,57 @@
 )ENGINE = 存储引擎 CHARSET=编码方式
 </code></pre>
 <p><strong>完整性约束条件：</strong></p>
-<ul>
-<li>UNSIGNED: 无符号，没有负数，从0开始</li>
-<li>ZEROFILL: 零填充，当数据的显示长度不够的时候，可以使用前补0的效果填充至指定长度，字段会自动添加UNSIGNED</li>
-<li>NOT NULL: 非空约束，也就是插入值的时候这个字段必须要给值，值不能为空</li>
-<li>DEFAULT: 默认值，如果插入记录的时候没有给字段赋值，则使用默认值</li>
-<li>PRIMARY KEY: 主键，标识记录的唯一性，值不能重复，一个表只能有一个主键，自动禁止为空</li>
-<li>AUTO_INCREMENT: 自动增长，只能用于数值列，而且配合索引使用，默认起始值从1开始，每次增长1</li>
-<li>UNIQUE KEY: 唯一性，一个表中可以有多个字段是唯一索引，同样的值不能重复，但是NULL值除外</li>
-<li>FOREIGN KEY: 外键约束</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+<th style="text-align:center">具体细节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UNSIGNED</td>
+<td>无符号</td>
+<td style="text-align:center">没有负数，从0开始</td>
+</tr>
+<tr>
+<td>ZEROFILL</td>
+<td>零填充</td>
+<td style="text-align:center">当数据的显示长度不够的时候，可以使用前补0的效果填充至指定长度，字段会自动添加UNSIGNED</td>
+</tr>
+<tr>
+<td>NOT NULL</td>
+<td>非空约束</td>
+<td style="text-align:center">插入值的时候这个字段必须要给值，值不能为空</td>
+</tr>
+<tr>
+<td>DEFAULT</td>
+<td>默认值</td>
+<td style="text-align:center">如果插入记录的时候没有给字段赋值，则使用默认值</td>
+</tr>
+<tr>
+<td>PRIMARY KEY</td>
+<td>主键主键</td>
+<td style="text-align:center">标识记录的唯一性，值不能重复，一个表只能有一个主键，自动禁止为空</td>
+</tr>
+<tr>
+<td>AUTO_INCREMENT</td>
+<td>自动增长</td>
+<td style="text-align:center">只能用于数值列，而且配合索引使用，默认起始值从1开始，每次增长1</td>
+</tr>
+<tr>
+<td>UNIQUE KEY</td>
+<td>唯一性</td>
+<td style="text-align:center">一个表中可以有多个字段是唯一索引，同样的值不能重复，但是NULL值除外</td>
+</tr>
+<tr>
+<td>FOREIGN KEY</td>
+<td>外键</td>
+<td style="text-align:center">外键约束</td>
+</tr>
+</tbody>
+</table>
 <h3 id="23-查看当前数据库下已有数据表">2.3 查看当前数据库下已有数据表</h3>
 <pre><code class="language-sql">SHOW TABLES;
 SHOW [FULL] TABLES [{FROM | IN} db_name]
