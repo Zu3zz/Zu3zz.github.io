@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
 <meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1575205103918">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1575899773904">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://Zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1575205103918" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1575899773904" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -35,11 +35,12 @@
           </p>
           <div class="toc-container hidden lg:block">
             <ul class="markdownIt-TOC">
-<li><a href="#hive-%E5%A4%96%E9%83%A8%E8%A1%A8-%E5%86%85%E9%83%A8%E8%A1%A8">Hive 外部表、内部表</a>
+<li><a href="#hive-%E7%B3%BB%E5%88%972-%E5%A4%96%E9%83%A8%E8%A1%A8-%E5%86%85%E9%83%A8%E8%A1%A8">Hive 系列(2)----外部表、内部表</a>
 <ul>
-<li><a href="#%E5%86%85%E9%83%A8%E8%A1%A8">内部表</a></li>
-<li><a href="#%E5%A4%96%E9%83%A8%E8%A1%A8">外部表</a></li>
-<li><a href="#%E5%88%86%E5%8C%BA%E8%A1%A8">分区表</a></li>
+<li><a href="#1-%E6%9F%A5%E7%9C%8Bhive%E4%B8%AD%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%9A%84%E5%B1%9E%E6%80%A7">1. 查看Hive中创建表的属性</a></li>
+<li><a href="#2-%E5%A4%96%E9%83%A8%E8%A1%A8">2. 外部表</a></li>
+<li><a href="#3-%E5%88%86%E5%8C%BA%E8%A1%A8">3. 分区表</a></li>
+<li><a href="#4-%E6%80%BB%E7%BB%93">4. 总结</a></li>
 </ul>
 </li>
 </ul>
@@ -100,32 +101,35 @@
         </div>
         
         <div class="post-content yue">
-          <p>🍑🍑这节咱们来点真实的Hive操作🍑🍑<br>
-🍒🍒讲讲hive如何创建表以及读取数据🍒🍒</p>
-<!-- more -->
-<h1 id="hive-外部表-内部表">Hive 外部表、内部表</h1>
-<h2 id="内部表">内部表</h2>
+          <h1 id="hive-系列2-外部表-内部表">Hive 系列(2)----外部表、内部表</h1>
+<h2 id="1-查看hive中创建表的属性">1. 查看Hive中创建表的属性</h2>
 <ul>
-<li>可以通过 formatted 查看表的属性</li>
-</ul>
+<li>
+<p>使用sql语句查看mp2表的具体属性</p>
 <pre><code class="language-sql">desc formattede mp2
-
-可以看到一系列属性 其中有属性如下
-
-Table Type: MANAGED_TABLE
-
-MANAGED_TABLE就代emp2是一个内部表
-
-删除emp2
-drop table emp2;
 </code></pre>
-<ul>
-<li>删除表: HDFS 上的数据被删除 &amp; Meta 也被删除</li>
+</li>
+<li>
+<p>可以看到一系列属性 其中有属性如下</p>
+<pre><code class="language-sql">Table Type: MANAGED_TABLE
+</code></pre>
+</li>
+<li>
+<p>MANAGED_TABLE 就代 emp2 是一个内部表</p>
+</li>
+<li>
+<p>删除 emp2</p>
+<pre><code class="language-sql">drop table emp2;
+</code></pre>
+</li>
+<li>
+<p>如果删除表，那么HDFS 上的数据被删除 &amp; Meta 也被删除</p>
+</li>
 </ul>
-<h2 id="外部表">外部表</h2>
+<h2 id="2-外部表">2. 外部表</h2>
 <ul>
-<li>创建外部表</li>
-</ul>
+<li>
+<p>创建外部表</p>
 <pre><code class="language-sql">CREATE EXTERNNAL TABLE emp_external(
 empno int,
 ename string,
@@ -137,24 +141,37 @@ comm double,
 deptno int
 ) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 location '/external/emp/';
-
-此时表是空表 还需要加载数据
-LOAD DATA LOCAL INPATH '/home/hadoop/data/emp.txt' ONVERWRITE INTO TABLE emp_external
-
-此时通过desc查看表的属性
-Table Type: EXTERNAL_TABLE
-是一个外部表
-
-drop table emp_external
 </code></pre>
-<ul>
-<li>删除表: HDFS 上的数据不被删除 &amp; Meta 上被删除<br>
-安全性更好</li>
+</li>
+<li>
+<p>此时表是空表 还需要加载  数据</p>
+<pre><code class="language-sql">LOAD DATA LOCAL INPATH '/home/hadoop/data/emp.txt' ONVERWRITE INTO TABLE emp_external
+</code></pre>
+</li>
+<li>
+<p>此时通过 desc 查看表的属性</p>
+<pre><code class="language-sql">Table Type: EXTERNAL_TABLE
+</code></pre>
+</li>
+<li>
+<p>表明此表是一个外部表</p>
+</li>
+<li>
+<p>此时删除此表</p>
+<pre><code class="language-sql">drop table emp_external
+</code></pre>
+</li>
+<li>
+<p>删除表的时候，HDFS 上的数据不被删除，但是 Meta 上被删除</p>
+</li>
+<li>
+<p>安全性更好</p>
+</li>
 </ul>
-<h2 id="分区表">分区表</h2>
+<h2 id="3-分区表">3. 分区表</h2>
 <ul>
-<li>使用分区表创建</li>
-</ul>
+<li>
+<p>使用分区表创建数据表</p>
 <pre><code class="language-sql">CREATE EXTERNAL TABLE track_info(
 ip string,
 country string,
@@ -167,46 +184,61 @@ page string
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 location '/project/trackinfo/';
 </code></pre>
-<ul>
-<li>
-<p>此时通过执行 jar 包生成 ETL 文件</p>
 </li>
 <li>
-<p>将这个文件存储到 hive 中</p>
+<p>此时通过执行 JAR 包命令生成 ETL 文件</p>
 </li>
-</ul>
+<li>
+<p>并且将这个文件存储到 hive 中</p>
 <pre><code class="language-sql">LOAD DATA INPATH 'hdfs://localhost:8020/project/input/etl'
 OVERWRITE INTO TABLE track_info partition(day='2013-07-21');
-
-统计总数
-select count(*) from track_info where day='2013-07-21';
-
-统计省份的个数
-select province,count(*) from track_info where day='2013-07-21' group by province;
-
-为了方便展示 创建一张表用来存储省份的信息
-create table track_info_province_stat(
-province string,
-cnt bigint
-) partitioned by (day string)
-row format delimited fields terminated by '\t';
-
-通过sql语句直接写入数据
-insert overwrite table track_info_province_stat partition(day='2013-07-21') select province, count(*) as cnt from track_info where day='2013-07-21' group by province;
-
-统计页面访问情况
-select page,count(*) from track_info where day = '2013-07-21' group by page;
-
-创建一张表用来存储页面访问信息
-create table track_info_page_stat(
-province string,
-cnt bigint
-) partitioned by (day string)
-row format delimited fields terminated by '\t';
-
-写入数据
-insert overwrite table track_info_page_stat partition(day='2013-07-21') select page, count(*) as cnt from track_info where day='2013-07-21' group by page;
 </code></pre>
+</li>
+<li>
+<p>统计总数</p>
+<pre><code class="language-sql">select count(\*) from track_info where day='2013-07-21';
+</code></pre>
+</li>
+<li>
+<p>统计省份的个数</p>
+<pre><code class="language-sql">select province,count(\*) from track_info where day='2013-07-21' group by province;
+</code></pre>
+</li>
+<li>
+<p>为了方便展示 创建一张表用来存储省份的信息</p>
+<pre><code class="language-sql">create table track_info_province_stat(
+province string,
+cnt bigint
+) partitioned by (day string)
+row format delimited fields terminated by '\t';
+</code></pre>
+</li>
+<li>
+<p>通过 sql 语句直接写入数据</p>
+<pre><code class="language-sql">insert overwrite table track_info_province_stat partition(day='2013-07-21') select province, count(\*) as cnt from track_info where day='2013-07-21' group by province;
+</code></pre>
+</li>
+<li>
+<p>统计页面访问情况</p>
+<pre><code class="language-sql">select page,count(\*) from track_info where day = '2013-07-21' group by page;
+</code></pre>
+</li>
+<li>
+<p>创建一张表用来存储页面访问信息</p>
+<pre><code class="language-sql">create table track_info_page_stat(
+province string,
+cnt bigint
+) partitioned by (day string)
+row format delimited fields terminated by '\t';
+</code></pre>
+</li>
+<li>
+<p>写入数据</p>
+<pre><code class="language-sql">insert overwrite table track_info_page_stat partition(day='2013-07-21') select page, count(\*) as cnt from track_info where day='2013-07-21' group by page;
+</code></pre>
+</li>
+</ul>
+<h2 id="4-总结">4. 总结</h2>
 <ul>
 <li>
 <p>到现在为止，我们统计的数据已经在 Hive 表 track_info_province_stat</p>
@@ -249,7 +281,7 @@ insert overwrite table track_info_page_stat partition(day='2013-07-21') select p
             <div class="next-post">
               <a href="https://Zu3zz.github.io/post/hive-1">
                 <h3 class="post-title">
-                  Hive系列(1)----概念、部署、语法
+                  Hive系列(1)----常用操作
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>
