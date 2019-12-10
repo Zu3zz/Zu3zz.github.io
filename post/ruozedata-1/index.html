@@ -1,0 +1,491 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1575990744569">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://Zu3zz.github.io/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://Zu3zz.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1575990744569" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%A6%E4%B9%A01-linux%E5%9F%BA%E7%A1%801">大数据学习（1）---- Linux基础（1）</a>
+<ul>
+<li><a href="#1-%E6%8F%90%E5%89%8D%E5%87%86%E5%A4%87">1. 提前准备</a></li>
+<li><a href="#2-%E5%B8%B8%E7%94%A8linux%E5%91%BD%E4%BB%A4">2. 常用Linux命令</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">大数据学习（1）---- Linux基础（1）</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-12-10 / 6 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="大数据学习1-linux基础1">大数据学习（1）---- Linux基础（1）</h1>
+<h2 id="1-提前准备">1. 提前准备</h2>
+<ol>
+<li>
+<p>CentOS6.5 虚拟机 或者 CentOS7.x 云主机</p>
+</li>
+<li>
+<p>Xshell软件、CRT、PUTTY 进行远程登录（Mac用户使用自带命令行）</p>
+</li>
+<li>
+<p>使用ssh进行远程登录</p>
+<pre><code class="language-shel">ssh root@10.211.55.5
+登录linux虚拟机
+</code></pre>
+</li>
+</ol>
+<h2 id="2-常用linux命令">2. 常用Linux命令</h2>
+<ol>
+<li>
+<p>pwd</p>
+<pre><code class="language-shell">查看当前光标所在的目录
+显示从根目录/开始 绝对路径
+</code></pre>
+</li>
+<li>
+<p>用户窥探</p>
+<pre><code class="language-shell">root 超级管理员  123456      /root
+zth 普通用户  界面创建   			/home/zth
+lyj                        /home/lyj
+xxx                        /home/xxx
+默认系统是在/home目录下 除非指定用户的home目录为其他目录
+</code></pre>
+<ul>
+<li>Linux系统的目录是从根目录开始 /</li>
+</ul>
+</li>
+<li>
+<p>ls: 查看</p>
+<pre><code class="language-shell">ls / 只显示该目录下的文件或文件夹的名称
+ls -l / 显示该目录下的文件或文件夹的明细信息
+
+[root@hadoop001 zth]# ls -l /home
+总用量 20
+drwx------.  2 root root 16384 12月 10 17:28 lost+found
+drwx------. 28 zth  zth   4096 12月 10 17:40 zth
+权限          用户    用户组      时间         名称
+</code></pre>
+</li>
+<li>
+<p>cd: 切换目录</p>
+<pre><code class="language-shell">cd /home
+
+cd    		切家目录  
+cd ~  		切家目录 ~标识
+cd /root  用户的家目录的绝对路径
+
+cd -    	回到上一次目录
+cd ../  	回退上一层目录
+
+cd ../../ 回退2个目录
+</code></pre>
+</li>
+<li>
+<p>路径</p>
+<pre><code class="language-shell">绝对路径 /根目录开始
+相对路径 不以/开始
+[root@hadoop001 ~]# ls
+anaconda-ks.cfg  Downloads           Music     Templates
+Desktop          install.log         Pictures  Videos
+Documents        install.log.syslog  Public
+[root@hadoop001 ~]# cd Desktop/   相对
+[root@hadoop001 Desktop]# 
+
+[root@hadoop001 ~]# cd /root/Desktop/ 绝对
+[root@hadoop001 Desktop]# 
+</code></pre>
+</li>
+<li>
+<p>clear: 清空屏幕</p>
+</li>
+<li>
+<p>再讲 ls</p>
+<ul>
+<li>
+<p>ls 命令简写（只有在linux中才行）</p>
+<pre><code class="language-shell">ls -l ==&gt; ll
+</code></pre>
+</li>
+<li>
+<p>查看文件大小</p>
+<pre><code class="language-shell">ll -h
+</code></pre>
+</li>
+<li>
+<p>查看文件夹或者文件的大小</p>
+<pre><code class="language-shell">du -sh Desktop/
+du -sh install.log
+</code></pre>
+</li>
+<li>
+<p>找出最新的文件或者文件夹</p>
+<pre><code class="language-shell">ll -rt
+ll -rt == ls -l -r -t == ls -lrt
+</code></pre>
+</li>
+<li>
+<p>查看隐藏文件或文件夹（隐藏是以 . 开头的文件或文件夹）</p>
+<pre><code class="language-shell">ll -a
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>创建文件夹</p>
+<pre><code class="language-shell">mkdir bigdata 只能创建1个
+mkdir -p bigdata/1/2 级联创建文件夹 串行
+mkdir 4 5 6 并行
+</code></pre>
+</li>
+<li>
+<p>创建文件</p>
+<ul>
+<li>
+<p>touch的形式创建</p>
+<pre><code class="language-shell">touch zth.log 创建空文件
+</code></pre>
+</li>
+<li>
+<p>vi 的形式创建</p>
+<pre><code class="language-shell">vi zth.log 创建文件 重要！！
+1. 命令行模式 按 i 进入编辑模式
+2. esc 回退到命令行模式
+3. shift+:尾行模式  wq 保存退出
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>cp: 拷贝 2 份，原有的还在</p>
+<pre><code class="language-shell">cp zth.log bigdata/
+cp -r 7 6/         文件夹拷贝 需要-r参数
+</code></pre>
+</li>
+<li>
+<p>mv: 移动 1 份，即原有的移动到新位置</p>
+<pre><code class="language-shell">mv zth1.log 6                移动文件到新的地方 名称不变
+mv zth2.log  6/zth123.log    移动文件到新的地方 改变zth2.log名称为zth123.log   
+mv 8 6  移动文件夹
+</code></pre>
+</li>
+<li>
+<p>第一种命令帮助</p>
+<pre><code class="language-shell">[root@hadoop001 ~]# ls --help
+Usage: ls [OPTION]... [FILE]...
+[]代表可以省略
+ls
+ls jepson.log jepson.log可以省略
+ls -r -t			-r -t 就属于option
+</code></pre>
+</li>
+<li>
+<p>离线查看文件内容</p>
+<ul>
+<li>
+<p>cat</p>
+<pre><code class="language-shell">cat 文件内容一下子全部显示 适用字节内容较少
+</code></pre>
+</li>
+<li>
+<p>more</p>
+<pre><code class="language-shell">more 文件内容一页一页的往下翻 按空格键往下 
+回退不了 按q退出   适用字节内容稍多的 
+</code></pre>
+</li>
+<li>
+<p>less</p>
+<pre><code class="language-shell">less 文件内容 一行行 按箭头上下滚动  按q退出
+</code></pre>
+</li>
+<li>
+<p>| 管道符</p>
+<ul>
+<li>前面的shell脚本的输出 作为后面命令的输入</li>
+</ul>
+</li>
+<li>
+<p>grep过滤</p>
+<pre><code class="language-shell">grep -C 10 拿到前后上下文共 20 行
+
+&gt; 重定向输出到文件  如果文件中有内容则覆盖
+&gt; &gt; 追加
+</code></pre>
+</li>
+<li>
+<p>对文件的内容ERROR 定位错误</p>
+<pre><code class="language-shell">假如文件假如100m+
+cat install.log | grep -C 10 &quot;ERROR&quot;
+
+假如 ERROR赛选的结果 特多 将结果保存到 error.log 中
+cat install.log | grep -C 10 &quot;ERROR&quot; &gt; error.log
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>实时查看</p>
+<ol>
+<li>主要使用 tail 命令</li>
+</ol>
+<pre><code class="language-shell">打开实时窗口查看log日志
+tail -f tail1.log
+tail -F tail2.log
+-F = -f + retry
+</code></pre>
+<ul>
+<li>试验一下</li>
+</ul>
+<pre><code class="language-shell">[root@hadoop001 ~]# echo &quot;123&quot; &gt;&gt; tail1.log 
+[root@hadoop001 ~]# echo &quot;123&quot; &gt;&gt; tail2.log 
+[root@hadoop001 ~]# echo &quot;4&quot; &gt;&gt; tail1.log 
+[root@hadoop001 ~]# echo &quot;4&quot; &gt;&gt; tail2.log 
+此时tail1.log 与 tail2.log都可以正常输出
+</code></pre>
+<ul>
+<li>
+<p>生产上 xxxx.log日志大小 100m 一般保留10份</p>
+</li>
+<li>
+<p>如果将xxx.log 日志中内容移到xxx.log1中，此时 xxx.log 已经不存在</p>
+</li>
+<li>
+<p>而 -f 打开的tail1.log 并不能检测到 log 文件的发生的变化</p>
+</li>
+<li>
+<p>但是使用 -F 打开的tail2.log 文件 因为有 retry 可以检测文件发生的变化</p>
+<pre><code class="language-shell">tail: 'tail2.log' has become inaccessible: No such file or directory
+tail: 'tail2.log' has appeared;  following end of new file
+</code></pre>
+</li>
+<li>
+<p>说明-f 不够强大 文件只要被移走 就算新的一模一样 也不会实时监控<br>
+反之-F 强大 实时监控</p>
+</li>
+<li>
+<p>flume踩坑案例：tail -f<br>
+http://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html#exec-source</p>
+</li>
+<li>
+<p>特别需求： 查看倒数 50 行 只能用 f 不能用 F</p>
+<pre><code class="language-shell">tail -50f xxx.log
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/59RMnA_OG">
+            <span class="flex-auto">linux</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://Zu3zz.github.io/post/mysql-3">
+                <h3 class="post-title">
+                  深入浅出MySQL(3)-----存储引擎
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://Zu3zz.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>
