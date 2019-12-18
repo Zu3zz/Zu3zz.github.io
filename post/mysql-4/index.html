@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
 <meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1576669311226">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1576681233480">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://Zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1576669311226" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1576681233480" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -35,7 +35,7 @@
           </p>
           <div class="toc-container hidden lg:block">
             <ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAmysql4-%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">深入浅出MySQL(4)-----常见数据操作</a>
 <ul>
 <li><a href="#1-%E6%B7%BB%E5%8A%A0%E8%AE%B0%E5%BD%95">1. 添加记录</a></li>
 <li><a href="#2-%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95">2. 修改记录</a></li>
@@ -43,6 +43,7 @@
 <li><a href="#4%E6%9F%A5%E8%AF%A2%E8%AE%B0%E5%BD%95">4.查询记录</a></li>
 <li><a href="#5-%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2">5. 多表查询</a></li>
 <li><a href="#6-%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F">6. 外键约束</a></li>
+<li><a href="#7-%E7%89%B9%E6%AE%8A%E5%BD%A2%E5%BC%8F%E7%9A%84%E6%9F%A5%E8%AF%A2">7. 特殊形式的查询</a></li>
 </ul>
 </li>
 </ul>
@@ -99,11 +100,12 @@
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
         <h1 class="text-3xl font-bold lg:mt-16">深入浅出MySQL(4) ---- 常见数据操作</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-11-01 / 6 min read
+          2019-11-01 / 8 min read
         </div>
         
         <div class="post-content yue">
-          <h2 id="1-添加记录">1. 添加记录</h2>
+          <h1 id="深入浅出mysql4-常见数据操作">深入浅出MySQL(4)-----常见数据操作</h1>
+<h2 id="1-添加记录">1. 添加记录</h2>
 <ol>
 <li>指定字段名称</li>
 </ol>
@@ -429,6 +431,131 @@ DROP FOREIGN KEY fk_name;
 </ul>
 </li>
 </ul>
+<h2 id="7-特殊形式的查询">7. 特殊形式的查询</h2>
+<ol>
+<li>
+<p>子查询</p>
+<ul>
+<li>
+<p>通过<code>SELECT</code>字段</p>
+<pre><code class="language-sql">SELECT 字段名称 FROM tbl_name WHERE col_name = (SELECT col_name FROM tbl_name);
+</code></pre>
+</li>
+<li>
+<p>内层语句查询的结果可以作为外层语句查询的条件</p>
+</li>
+<li>
+<p>由<code>IN</code>引发的子查询</p>
+<pre><code class="language-sql">SELECT * FROM emp
+WHERE depId IN (SELECT id FROM dep);
+</code></pre>
+</li>
+<li>
+<p>由比较运算符引出子查询</p>
+<pre><code class="language-sql">-- 查询出成绩最优
+SELECT id,username,score FROM stu
+WHERE score &gt;= (SELECT score FROM level where id = 1);
+</code></pre>
+</li>
+<li>
+<p>由<code>EXIST</code>引发的子查询:返回<code>bool</code>类型的结果,子查询为<code>true</code>才执行前面的语句</p>
+<pre><code class="language-sql">SELECT depName from del
+WHERE EXISTS (SELECT depName FROM dep WHERE id=10);
+</code></pre>
+</li>
+<li>
+<p>三个关键字<code>ANY</code> <code>SOME</code> <code>ALL</code></p>
+<table>
+<thead>
+<tr>
+<th>运算符\关键字</th>
+<th>ANY</th>
+<th>SOME</th>
+<th>ALL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt;、&gt;=</td>
+<td>最小值</td>
+<td>最小值</td>
+<td>最大值</td>
+</tr>
+<tr>
+<td>&lt;、&lt;=</td>
+<td>最大值</td>
+<td>最大值</td>
+<td>最小值</td>
+</tr>
+<tr>
+<td>=</td>
+<td>任意值</td>
+<td>任意值</td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;&gt;、!=</td>
+<td></td>
+<td></td>
+<td>任意值</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-sql">SELECT * FROM stu
+WHERE score &gt;= ANY(SELECT score FROM level);
+or
+WHERE score &gt;= SOME(SELECT score FROM level);
+or
+WHERE score &gt;= ALL(SELECT score FROM level);
+</code></pre>
+</li>
+<li>
+<p><code>INSERT ... SELECT</code> 的形式</p>
+<pre><code class="language-sql">INSERT user2 SELECT id,username FROM user1;
+</code></pre>
+</li>
+<li>
+<p><code>CREATE ... SELECT</code> 的形式</p>
+<pre><code class="language-sql">CREATE TABLE user1(
+	id int UNSIGNED AUTO_INCREMENT KEY,
+  username VARCHAR(20)
+)SELECT id,username FROM emp;
+</code></pre>
+</li>
+<li>
+<p><code>CREATE TABLE tbl_name LIKE tbl_name</code> 的形式创建一个表(新表中没有数据)</p>
+</li>
+</ul>
+</li>
+<li>
+<p>联合查询</p>
+<ul>
+<li>
+<p><code>UNION</code></p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2... FROM tbl_name1
+UNION
+SELECT 字段名称3,字段名称4... FROM tbl_name2;
+</code></pre>
+</li>
+<li>
+<p><code>UNION ALL</code></p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2... FROM tbl_name1 
+UNION ALL
+SELECT 字段名称3,字段名称4... FROM tbl_name2;
+</code></pre>
+</li>
+<li>
+<p><code>UNION ALL</code> 是简单的合并，<code>UNION</code> 会去掉表中重复记录</p>
+</li>
+</ul>
+</li>
+<li>
+<p>自身连接查询</p>
+<ul>
+<li><strong>无限级分类的实现形式</strong></li>
+</ul>
+</li>
+</ol>
 
         </div>
 
