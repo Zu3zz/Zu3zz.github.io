@@ -1,0 +1,570 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1576665776164">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://Zu3zz.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://Zu3zz.github.io/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://Zu3zz.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1576665776164" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-%E6%B7%BB%E5%8A%A0%E8%AE%B0%E5%BD%95">1. 添加记录</a></li>
+<li><a href="#2-%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95">2. 修改记录</a></li>
+<li><a href="#3-%E5%88%A0%E9%99%A4%E8%AE%B0%E5%BD%95">3. 删除记录</a></li>
+<li><a href="#4%E6%9F%A5%E8%AF%A2%E8%AE%B0%E5%BD%95">4.查询记录</a></li>
+<li><a href="#5-%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2">5. 多表查询</a></li>
+<li><a href="#6-%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F">6. 外键约束</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://Zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">深入浅出MySQL(4)-----常见数据操作</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-12-18 / 6 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h2 id="1-添加记录">1. 添加记录</h2>
+<ol>
+<li>指定字段名称</li>
+</ol>
+<pre><code class="language-sql">INSERT [INTO] tbl_name [(col_name1,col_name2,...)] {VALUE|VALUES}(VALUES...);
+</code></pre>
+<ol start="2">
+<li>不指定字段名称</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name VALUE(value1,value2,...);
+</code></pre>
+<p>需要按照建表时的字段顺序给每一个字段赋值</p>
+<ol start="3">
+<li>列出指定字段</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name(字段名称1,字段名称2,...) VALUES(值1,值2,...);
+</code></pre>
+<ol start="4">
+<li>INSERT ... SET的形式</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name SET 字段名称1=值1,字段名称2=值2,...;
+</code></pre>
+<ol start="5">
+<li>INSERT ... SELECT</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name[(字段名称...)] SELECT 字段名称1,字段名称2,... FROM tbl_name [WHERE 条件];
+</code></pre>
+<ol start="6">
+<li>一次添加多条记录</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name[(字段名称...)] VALUES(值1,值2,...),
+(值1,值2,...),
+(值1,值2,...)
+</code></pre>
+<h2 id="2-修改记录">2. 修改记录</h2>
+<pre><code class="language-sql">UPDATE tbl_name SET 字段名称1=值1,字段名称2=值2 [WHERE 条件];
+</code></pre>
+<p>如果不加条件，整个表中的记录都会被更新</p>
+<h2 id="3-删除记录">3. 删除记录</h2>
+<ol>
+<li>
+<p>普通删除</p>
+<pre><code class="language-sql">DELETE FROM tbl_name [WHERE 条件];
+</code></pre>
+</li>
+<li>
+<p>如果不添加条件，表中所有记录都会被删除</p>
+</li>
+<li>
+<p>DELETE清空数据表的时候不会重置AUTO_INCREMENT的值，但是可以通过ALTER语句将其置为1</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name AUTO_INCREMENT = 值x;
+</code></pre>
+</li>
+<li>
+<p>彻底清空数据表</p>
+<pre><code class="language-sql">TRUNCATE [TABLE] tbl_name;
+</code></pre>
+<ul>
+<li>清空表中所有记录</li>
+<li>会重置AUTO_INCREMENT的值</li>
+</ul>
+</li>
+</ol>
+<h2 id="4查询记录">4.查询记录</h2>
+<pre><code class="language-sql">SELECT select_expr,... FROM tbl_name
+[WHERE 条件]
+[GROUP BY {col_name|position} HAVING 二次筛选]
+[ORDER BY {col_name|position|expr} [ASC|DESC]]
+[LIMIT 限制结果集的显示条数]
+</code></pre>
+<ol>
+<li>
+<p>查询表中所有记录</p>
+<pre><code class="language-sql">SELECT * FROM tbl_name;
+</code></pre>
+<p>*<strong>表示所有字段</strong></p>
+</li>
+<li>
+<p>指定字段的信息</p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2,... FROM tbl_name;
+</code></pre>
+</li>
+<li>
+<p>使用库名.表名的形式，不用打开此数据库</p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2,... FROM db_name.tbl_name;
+</code></pre>
+</li>
+<li>
+<p>给字段起别名，建议写上 AS</p>
+<pre><code class="language-sql">SELECT 字段名称 [AS] 别名名称,... FROM db_name.tbl_name;
+</code></pre>
+</li>
+<li>
+<p>给数据表起别名</p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2,... FROM tbl_name [AS] 别名;
+</code></pre>
+</li>
+<li>
+<p>表名.字段名的形式</p>
+<pre><code class="language-sql">SELECT tbl_name.col_name,... FROM tbl_name;
+</code></pre>
+</li>
+<li>
+<p>WHERE 条件</p>
+<p>会筛选出所有符合条件的记录</p>
+<ul>
+<li>
+<p>比较运算符：</p>
+<pre><code class="language-txt">&gt; &gt;= &lt;= != &lt;&gt; &lt;=&gt;
+注意 &lt;=&gt; 和 = 的区别
+&lt;=&gt; 可以检测出NULL值
+</code></pre>
+</li>
+<li>
+<p>IS [NOT] NULL：检测值是否为NULL 或者 NOT NULL</p>
+</li>
+<li>
+<p>指定范围</p>
+<pre><code class="language-sql">[NOT] BETWEEN ... AND
+</code></pre>
+</li>
+<li>
+<p>指定集合</p>
+<pre><code class="language-sql">[NOT] IN (值1,值2,...)
+</code></pre>
+</li>
+<li>
+<p>逻辑运算符</p>
+<pre><code class="language-shell">AND 逻辑与
+OR  逻辑或
+</code></pre>
+</li>
+<li>
+<p>匹配字符</p>
+<pre><code class="language-sql">[NOT] LIKE
+% 任意长度的字符串
+_ 任意一个字符
+</code></pre>
+<pre><code class="language-sql">SELECT id,username,age FROM user1
+WHERE username like '%in%';
+id|username|age
+1 |king    |23
+</code></pre>
+<p>查询出叫张xx的人，使用'_'</p>
+<pre><code class="language-sql">SELECT id,username,age FROM user1
+WHERE username like '张__';
+id|username|age
+1 |张三丰   |23
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>GROUP BY 分组</p>
+<ol>
+<li>
+<p>把值相同放到一个组中，最终查询出的结果只会显示组中一条记录</p>
+</li>
+<li>
+<p>分组配合GROUP_CONCAT()查看组中某个字段的详细信息</p>
+<pre><code class="language-sql">SELECT GROUP_CONCAT(username),age,sex FROM user1 GROUP BY sex;
+GROUP_CONCAAT(username)|age|sex
+吴亦凡,张三,张四,王五,赵六 |23 |男
+章子怡,刘嘉玲,奶茶妹      |18 |女
+</code></pre>
+</li>
+<li>
+<p>配合聚合函数使用</p>
+<table>
+<thead>
+<tr>
+<th>聚合函数名</th>
+<th>统计记录总数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>COUNT()</td>
+<td>统计记录总数</td>
+</tr>
+<tr>
+<td>COUNT(字段名称)</td>
+<td>字段中为NULL的值，不会被统计进来</td>
+</tr>
+<tr>
+<td>COUNT（*）</td>
+<td>会同时统计NULL值</td>
+</tr>
+<tr>
+<td>SUM（）</td>
+<td>求和</td>
+</tr>
+<tr>
+<td>MAX（）</td>
+<td>求最大值</td>
+</tr>
+<tr>
+<td>MIN（）</td>
+<td>求最小值</td>
+</tr>
+<tr>
+<td>AVG（）</td>
+<td>求平均值</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>配合WITH ROLLUP 关键词使用：会在记录末尾添加一条记录，是上面所有记录的总和</p>
+</li>
+<li>
+<p>HAVING字句对分组结果进行二次筛选（WHERE是一次筛选）</p>
+</li>
+</ol>
+</li>
+<li>
+<p>ORDER BY 排序：ORDER BY 字段名称 ASC|DESC / ORDER BY rand() 随机排序</p>
+<pre><code class="language-sql">按照多个字段排序
+SELECT id,username,age
+FROM user1
+ORDER BY age ASC, id ASC;
+</code></pre>
+</li>
+<li>
+<p>LIMIT 限制结果集合显示条数</p>
+<ol>
+<li>LIMIT值：显示结果集的前几条记录</li>
+<li>LIMIT offset,row_count：从offset开始，显示几条记录，offset从0开始。</li>
+</ol>
+</li>
+</ol>
+<h2 id="5-多表查询">5. 多表查询</h2>
+<ol>
+<li>
+<p>笛卡尔积的形式</p>
+<p>表1：4条 / 表2：6条 / total：24条</p>
+</li>
+<li>
+<p>内连接的形式：用的比较多</p>
+<ul>
+<li>
+<p>相当于两个集合取交集，只取都符合条件的</p>
+</li>
+<li>
+<p>查询两个表中符合连接条件的记录</p>
+<pre><code class="language-sql">SELECT 字段名称1,... FROM tbl_name1
+INNER JOIN tbl_name2
+ON 条件
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>外连接</p>
+<ul>
+<li>
+<p>左外连接：以左表为主</p>
+<pre><code class="language-sql">SELECT 字段名称1,... FROM tbl_name1
+LEFT [OUTER] JOIN tbl_name2
+ON 条件;
+</code></pre>
+<p><strong>先显示左表中的全部记录，再去右表中查询符合条件的记录，不符合的以NULL代替</strong></p>
+</li>
+<li>
+<p>右外连接：以右表为主</p>
+<pre><code class="language-sql">SELECT 字段名称1,... FROM tbl_name1
+RIGHT [OUTER] JOIN tbl_name2
+ON 条件;
+</code></pre>
+<p><strong>先显示右表中的全部记录，再去左表中查询复合条件的记录，不符合的以NULL代替</strong></p>
+</li>
+<li>
+<p>全外连接：full outer join 全部都取出来</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="6-外键约束">6. 外键约束</h2>
+<p><strong>只有InnoDB存储引擎支持外键</strong></p>
+<ol>
+<li>创建外键</li>
+</ol>
+<ul>
+<li>
+<p>建表时候指定外键</p>
+<pre><code class="language-sql">[CONSTRAINT 外键名称]FOREIGN KEY(字段名称) REFERENCES 主表(字段名称)
+</code></pre>
+<ul>
+<li>子表的外键字段和主表的外键字段类型要相似;
+<ul>
+<li>如果是数值型要求一致,并且无符号也要一致</li>
+<li>如果是字符型，要求类型一致，长度可以不同</li>
+</ul>
+</li>
+<li>如果外键字段没有创建索引，MySQL会自动帮我们添加索引</li>
+<li>子表的外键关联的必须是父表的主键</li>
+<li>外键约束的参照操作
+<ol>
+<li><code>CASCADE</code>：从附表删除或更新，子表也跟着删除或者更新</li>
+<li><code>SET NULL</code>：从附表删除或者更新记录，并且设置子表的外键列为NULL</li>
+<li><code>NO ACTION | RESTRICT</code>：拒绝对父表做更新或者删除操作</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>动态添加外键</p>
+<ul>
+<li>
+<p>动态添加外键</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+ADD [CONSTRAINT 外键名称] FOREIGN KEY(外键字段) REFERENCES 主表(主键字段);
+</code></pre>
+<ul>
+<li>动态添加外键之前表中的记录一定都是合法的记录，没有脏值，否则外键添加不成功</li>
+</ul>
+</li>
+<li>
+<p>动态删除外键</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+DROP FOREIGN KEY fk_name;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/tqQSAbU7V">
+            <span class="flex-auto">BackEnd</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/7acBApeyq">
+            <span class="flex-auto">MySQL</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://Zu3zz.github.io/post/ruozedata-1">
+                <h3 class="post-title">
+                  大数据学习（1）---- Linux基础（1）
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://Zu3zz.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>
