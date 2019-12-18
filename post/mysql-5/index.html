@@ -35,9 +35,12 @@
           </p>
           <div class="toc-container hidden lg:block">
             <ul class="markdownIt-TOC">
-<li><a href="#hadoop-%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92">Hadoop 集群规划</a>
+<li><a href="#%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAmysql5-mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0">深入浅出MySQL(5)-----MySQL常用函数</a>
 <ul>
-<li><a href="#%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4">详细步骤</a></li>
+<li><a href="#1-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0">1. 数学函数</a></li>
+<li><a href="#2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0">2. 字符串函数</a></li>
+<li><a href="#3-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%87%BD%E6%95%B0">3. 日期时间函数</a></li>
+<li><a href="#4-%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0">4. 其他常用函数</a></li>
 </ul>
 </li>
 </ul>
@@ -92,165 +95,195 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">Hadoop系列(1)----多集群配置流程</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">深入浅出MySQL(5)-----MySQL常用函数</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-09-09 / 3 min read
+          2019-11-05 / 3 min read
         </div>
         
         <div class="post-content yue">
-          <p>🥅终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上<br>
-这篇文章会详细告诉你~</p>
-<!-- more -->
-<h1 id="hadoop-集群规划">Hadoop 集群规划</h1>
-<ul>
-<li>
-<p>HDFS: NN DN</p>
-</li>
-<li>
-<p>YARN: RM NM</p>
-</li>
-<li>
-<p>hadoop000 192.168.199.234</p>
-<ul>
-<li>NN RM</li>
-<li>DN NM</li>
-</ul>
-</li>
-<li>
-<p>hadoop001 192.168.199.235</p>
-<ul>
-<li>DN NM</li>
-</ul>
-</li>
-<li>
-<p>hadoop002 192.168.199.236</p>
-<ul>
-<li>DN NM</li>
-</ul>
-</li>
-</ul>
-<h2 id="详细步骤">详细步骤</h2>
-<ul>
-<li>
-<p>对每台机器</p>
-<ul>
-<li>
-<p>修改 host 配置</p>
-<ul>
-<li>
-<p>在/etc/hostname 下修改 hostname(hadoop000/hadoop001/hadoop002)</p>
-</li>
-<li>
-<p>在/etc/hosts 下修改 ip 和 hostname 的映射关系</p>
+          <h1 id="深入浅出mysql5-mysql常用函数">深入浅出MySQL(5)-----MySQL常用函数</h1>
+<h2 id="1-数学函数">1. 数学函数</h2>
 <ol>
-<li>192.168.199.234 hadoop000</li>
-<li>192.168.199.235 hadoop001</li>
-<li>192.168.199.236 hadoop002</li>
-<li>192.168.199.23x localhost(试机器而定)</li>
+<li><code>CEIL()</code>:进一取整</li>
+<li><code>FLOOR()</code> : 舍掉小数部分</li>
+<li><code>ROUND()</code> : 四舍五入</li>
+<li><code>TRUNCATE()</code> ： 截取小数点后几位</li>
+<li><code>MOD()</code> ： 取余数</li>
+<li><code>ABS()</code> ： 取绝对值</li>
+<li><code>POWER()</code>： 幂运算</li>
+<li><code>PI()</code>： 圆周率</li>
+<li><code>RAND()</code>或者<code>RAND(X)</code>: 0-1之间的随机数</li>
+<li><code>SIGN(X)</code>： 得到数字符号</li>
+<li><code>EXP(X)</code>： 计算 e 的 x 次方</li>
 </ol>
-</li>
-</ul>
-</li>
+<h2 id="2-字符串函数">2. 字符串函数</h2>
+<ol>
+<li><code>CHAR_LENGTH('ABCD')</code>: 计算字符的长短</li>
+</ol>
+<p><em>-- 测试字符串函数</em></p>
+<ol>
 <li>
-<p>前置安装 ssh 进行免密码登录操作</p>
-</li>
-</ul>
-<pre><code class="language-shell">ssh-keygen -t rsa
-</code></pre>
-<p>在每台 hadoop 机器上进行操作</p>
-<pre><code class="language-shell">ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop000
-ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop001
-ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop002
-</code></pre>
-<ul>
-<li>
-<p>安装 java jkd</p>
-<ul>
-<li>首先在每台 hadoop 集群机器上部署 jdk</li>
-<li>将 jkd bin 配置到系统环境变量(~/.bash_profile)</li>
-<li>将 jdk 以及环境变量配置拷贝到其他节点上去(start with hadoop000)</li>
-</ul>
-<pre><code class="language-shell">scp -r jdk1.8.0_91 hadoop@hadoop001:~/app/
-scp -r jdk1.8.0_91 hadoop@hadoop002:~/app/
-
-scp ~/.bash_profile hadoop@hadoop001:~/
-scp ~/.bash_profile hadoop@hadoop002:~/
+<p><code>CHAR_LENGTH()</code>:得到字符串的字符数</p>
+<pre><code class="language-sql">SELECT CHAR_LENGTH('abc');
+-- 返回3
 </code></pre>
 </li>
 <li>
-<p>Hadoop 部署</p>
-<ul>
-<li>hadoop-env.sh 配置: JAVA_HOME</li>
-<li>hdfs-site.xml 配置:</li>
-</ul>
-<pre><code class="language-xml">&lt;property&gt;
-  &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
-  &lt;value&gt;/home/hadoop/app/tmp/dfs/name&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-  &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
-  &lt;value&gt;/home/hadoop/app/tmp/dfs/data&lt;/value&gt;
-&lt;/property&gt;
+<p><code>LENGTH()</code>:返回字符串的长度</p>
+<pre><code class="language-sql">SELECT LENGTH('abc');
+-- 返回3
 </code></pre>
 <ul>
-<li>yarn-site.xml</li>
-</ul>
-<pre><code class="language-xml">&lt;!--只在hadoop000机器中进行配置--&gt;
-&lt;property&gt;
-  &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
-  &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
-&lt;/property&gt;
-
-&lt;property&gt;
-    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
-    &lt;value&gt;hadoop000&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-<ul>
-<li>mapred-site.xml: 这个文件只有模板 需要自己创建</li>
-</ul>
-<pre><code class="language-xml">&lt;property&gt;
-  &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
-  &lt;value&gt;yarn&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-<ul>
-<li>配置 slaves</li>
-<li>分发 hadoop 到其他机器</li>
-</ul>
-<pre><code class="language-shell">scp -r hadoop-2.6.0-cdh5.15.1 hadoop@hadoop001:~/app/
-scp -r hadoop-2.6.0-cdh5.15.1 hadoop@hadoop002:~/app/
-
-scp ~/.bash_profile hadoop@hadoop001:~/
-scp ~/.bash_profile hadoop@hadoop002:~/
-</code></pre>
-<ul>
-<li>NN 格式化</li>
-</ul>
-<pre><code class="language-shell">hadoop namenode -format
-</code></pre>
-<ul>
-<li>在每个机器上启动 HDFS</li>
-<li>在每个机器上启动 YRAN</li>
+<li>如果是中文，则返回原来ASCII码的长度</li>
 </ul>
 </li>
-</ul>
+<li>
+<p><code>CONCAT(s1,s2,....)</code>:将字符串合并成一个字符串</p>
+<pre><code class="language-sql">SELECT CONCAT('a','b','c');
+-- 如果字符串中包含NULL，返回拼接结果就是NULL
+-- 返回'abc'
+SELECT CONCAT('a','b','c',null);
+-- 返回 NULL
+</code></pre>
 </li>
-</ul>
+<li>
+<p><code>CONCAT_WS(x,s1,s2,s2....)</code>：以指定分隔符拼接字符串</p>
+<pre><code class="language-sql">SELECT CONCAT_WS('-','a','b','c');
+-- 如果null在拼接的内容中，则转化成空字符串
+SELECT CONCAT_WS('-','a','b','c',null);
+-- 如果分隔符为null，拼接的结果为null
+SELECT CONCAT_WS(null,'a','b','c');
+</code></pre>
+</li>
+<li>
+<p>将字符串转换成大写或者小写 <code>UPPER() | UCASE() | LOWER() | LCASE()</code></p>
+<pre><code class="language-sql">SELECT UPPER('hello king'),UCASE('hello imooc'),LOWER('HELLO ADMIN'),LCASE('HELLO EVERYBODY');
+</code></pre>
+</li>
+<li>
+<p>字符串的反转<code>REVERSE()</code></p>
+<pre><code class="language-sql">SELECT REVERSE('abc');
+</code></pre>
+</li>
+<li>
+<p><code>LEFT()|RIGHT()</code>:返回字符串的前几个字符或者后几个字符</p>
+<pre><code class="language-sql">SELECT LEFT('hello',2),RIGHT('hello',2);
+</code></pre>
+</li>
+<li>
+<p><code>LPAD()|RPAD():</code>用字符串填充到指定长度</p>
+<pre><code class="language-sql">SELECT LPAD('abc',10,'?');
+-- 返回'abc???????'
+SELECT RPAD('abc',10,'!');
+-- 返回'acb!!!!!!!'
+</code></pre>
+</li>
+<li>
+<p>去掉字符串两端的空格<code>TRIM() | LTRIM() | RTRIM():</code></p>
+<pre><code class="language-sql">SELECT CONCAT('*',TRIM(' abc '),'*'),
+CONCAT('*',LTRIM(' abc '),'*'),
+CONCAT('*',RTRIM(' abc '),'*');
+</code></pre>
+</li>
+<li>
+<p><code>REPEAT()</code>:重复指定的次数</p>
+<pre><code class="language-sql">SELECT REPEAT('hello',3);
+</code></pre>
+</li>
+<li>
+<p><code>REPLACE()</code>:字符串</p>
+<pre><code class="language-sql">SELECT REPLACE('hello king','king','queen');
+</code></pre>
+</li>
+<li>
+<p>截取字符串<code>SUBSTRING()</code></p>
+<pre><code class="language-sql">SELECT SUBSTRING('abcdef',1,3);
+</code></pre>
+</li>
+<li>
+<p>比较字符串<code>STRCMP()</code></p>
+<pre><code class="language-sql">SELECT STRCMP('a','b');
+</code></pre>
+</li>
+</ol>
+<h2 id="3-日期时间函数">3. 日期时间函数</h2>
+<ol>
+<li>
+<p>测试日期时间函数 &amp; 返回当前日期</p>
+<pre><code class="language-sql">SELECT CURDATE(),CURRENT_DATE();
+</code></pre>
+</li>
+<li>
+<p>返回当前时间</p>
+<pre><code class="language-sql">SELECT CURTIME(),CURRENT_TIME();
+</code></pre>
+</li>
+<li>
+<p>返回当前的日期时间</p>
+<pre><code class="language-sql">SELECT NOW(),CURRENT_TIMESTAMP(),SYSDATE();
+</code></pre>
+</li>
+<li>
+<p>返回日期中的月份和月份的名称</p>
+<pre><code class="language-sql">SELECT MONTH('2017-02-19');
+
+SELECT MONTH(CURDATE()),MONTHNAME(CURDATE());
+</code></pre>
+</li>
+<li>
+<p>返回星期几</p>
+<pre><code class="language-sql">SELECT DAYNAME(NOW());
+</code></pre>
+</li>
+<li>
+<p>返回一周内的第几天,0代表星期一</p>
+<pre><code class="language-sql">SELECT DAYOFWEEK(NOW());
+
+SELECT WEEK(NOW());
+
+SELECT YEAR(NOW()),MONTH(NOW()),DAY(NOW()),HOUR(NOW()),MINUTE(NOW()),SECOND(NOW());
+</code></pre>
+</li>
+<li>
+<p><code>DATEDIFF()</code>计算两个日期相差的天数</p>
+<pre><code class="language-sql">SELECT DATEDIFF('2017-03-06','2017-03-02');
+</code></pre>
+</li>
+</ol>
+<h2 id="4-其他常用函数">4. 其他常用函数</h2>
+<ol>
+<li>
+<p>测试其它常用函数</p>
+<pre><code class="language-sql">SELECT VERSION(),CONNECTION_ID();
+SELECT USER(),CURRENT_USER(),SYSTEM_USER(),SESSION_USER();
+</code></pre>
+</li>
+<li>
+<p>得到上一步插入操作产生AUTO_INCREMENT的值*</p>
+<pre><code class="language-sql">SELECT LAST_INSERT_ID();
+</code></pre>
+</li>
+<li>
+<p><code>PASSWORD()</code>:密码加密算法</p>
+<pre><code class="language-sql">SELECT MD5('king');
+SELECT PASSWORD('root');
+</code></pre>
+</li>
+</ol>
 
         </div>
 
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/tqQSAbU7V">
+            <span class="flex-auto">BackEnd</span>
+          </a>
         
           <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/8yVVJSLYY">
             <span class="flex-auto">big data</span>
           </a>
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/egbOn_Rcj">
-            <span class="flex-auto">MapReduce</span>
-          </a>
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/fxWruECqJ">
-            <span class="flex-auto">Hive</span>
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/7acBApeyq">
+            <span class="flex-auto">MySQL</span>
           </a>
         
 
@@ -258,10 +291,10 @@ scp ~/.bash_profile hadoop@hadoop002:~/
         <div class="flex justify-between py-8">
           
             <div class="prev-post">
-              <a href="https://Zu3zz.github.io/post/yarn-1">
+              <a href="https://Zu3zz.github.io/post/ruozedata-1">
                 <h3 class="post-title">
                   <i class="remixicon-arrow-left-line"></i>
-                  Yarn系列(1)----基础、介绍、流程
+                  大数据学习(1) ---- Linux基础(1)
                 </h3>
               </a>
             </div>
@@ -269,9 +302,9 @@ scp ~/.bash_profile hadoop@hadoop002:~/
 
           
             <div class="next-post">
-              <a href="https://Zu3zz.github.io/post/hive-2">
+              <a href="https://Zu3zz.github.io/post/mysql-4">
                 <h3 class="post-title">
-                  Hive系列(2)----内部表、外部表、实战
+                  深入浅出MySQL(4) ---- 常见数据操作
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>
