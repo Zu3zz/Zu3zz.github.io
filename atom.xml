@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://Zu3zz.github.io</id>
+    <id>https://zu3zz.coding.me</id>
     <title>风袖</title>
-    <updated>2020-01-02T16:12:16.010Z</updated>
+    <updated>2020-01-02T16:32:45.205Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://Zu3zz.github.io"/>
-    <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
+    <link rel="alternate" href="https://zu3zz.coding.me"/>
+    <link rel="self" href="https://zu3zz.coding.me/atom.xml"/>
     <subtitle>烟蛾敛略不胜态，风袖低昂如有情</subtitle>
-    <logo>https://Zu3zz.github.io/images/avatar.png</logo>
-    <icon>https://Zu3zz.github.io/favicon.ico</icon>
+    <logo>https://zu3zz.coding.me/images/avatar.png</logo>
+    <icon>https://zu3zz.coding.me/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（2） ---- Scala函数]]></title>
-        <id>https://Zu3zz.github.io/post/scala-2</id>
-        <link href="https://Zu3zz.github.io/post/scala-2">
+        <id>https://zu3zz.coding.me/post/scala-2</id>
+        <link href="https://zu3zz.coding.me/post/scala-2">
         </link>
         <updated>2020-01-02T16:10:37.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（1）---- Scala基础]]></title>
-        <id>https://Zu3zz.github.io/post/scala-1</id>
-        <link href="https://Zu3zz.github.io/post/scala-1">
+        <id>https://zu3zz.coding.me/post/scala-1</id>
+        <link href="https://zu3zz.coding.me/post/scala-1">
         </link>
         <updated>2020-01-02T16:08:53.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[大数据学习(1) ---- Linux基础(1)]]></title>
-        <id>https://Zu3zz.github.io/post/ruozedata-1</id>
-        <link href="https://Zu3zz.github.io/post/ruozedata-1">
+        <id>https://zu3zz.coding.me/post/ruozedata-1</id>
+        <link href="https://zu3zz.coding.me/post/ruozedata-1">
         </link>
         <updated>2019-12-10T15:11:25.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[深入浅出MySQL(5) ---- MySQL常用函数]]></title>
-        <id>https://Zu3zz.github.io/post/mysql-5</id>
-        <link href="https://Zu3zz.github.io/post/mysql-5">
+        <id>https://zu3zz.coding.me/post/mysql-5</id>
+        <link href="https://zu3zz.coding.me/post/mysql-5">
         </link>
         <updated>2019-11-04T16:21:19.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[深入浅出MySQL(4) ---- 常见数据操作]]></title>
-        <id>https://Zu3zz.github.io/post/mysql-4</id>
-        <link href="https://Zu3zz.github.io/post/mysql-4">
+        <id>https://zu3zz.coding.me/post/mysql-4</id>
+        <link href="https://zu3zz.coding.me/post/mysql-4">
         </link>
         <updated>2019-11-01T10:41:53.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[深入浅出MySQL(3) ---- 存储引擎]]></title>
-        <id>https://Zu3zz.github.io/post/mysql-3</id>
-        <link href="https://Zu3zz.github.io/post/mysql-3">
+        <id>https://zu3zz.coding.me/post/mysql-3</id>
+        <link href="https://zu3zz.coding.me/post/mysql-3">
         </link>
         <updated>2019-10-28T12:57:15.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[深入浅出MySQL(2) ---- 数据库、数据表、数据类型]]></title>
-        <id>https://Zu3zz.github.io/post/mysql-2</id>
-        <link href="https://Zu3zz.github.io/post/mysql-2">
+        <id>https://zu3zz.coding.me/post/mysql-2</id>
+        <link href="https://zu3zz.coding.me/post/mysql-2">
         </link>
         <updated>2019-10-25T17:18:05.000Z</updated>
         <summary type="html"><![CDATA[<p>🏖这一篇 我们讨论一下数据库和数据表的相关操作..</p>
@@ -65,8 +65,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[深入浅出MySQL(1) ---- 基础与概念]]></title>
-        <id>https://Zu3zz.github.io/post/mysql-1</id>
-        <link href="https://Zu3zz.github.io/post/mysql-1">
+        <id>https://zu3zz.coding.me/post/mysql-1</id>
+        <link href="https://zu3zz.coding.me/post/mysql-1">
         </link>
         <updated>2019-10-25T12:12:12.000Z</updated>
         <summary type="html"><![CDATA[<p>🍒MySQL笔记第一篇 相关概念~</p>
@@ -76,8 +76,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Python与常用消息中间件]]></title>
-        <id>https://Zu3zz.github.io/post/message-queue-python</id>
-        <link href="https://Zu3zz.github.io/post/message-queue-python">
+        <id>https://zu3zz.coding.me/post/message-queue-python</id>
+        <link href="https://zu3zz.coding.me/post/message-queue-python">
         </link>
         <updated>2019-10-18T10:51:28.000Z</updated>
         <summary type="html"><![CDATA[<p>🌈最近在学习消息中间件，由于大数据端天生靠近数据，所以在很多场景下，会需要对日志等文件进行分析<br>
@@ -91,8 +91,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[SpringBoot系列(3) ---- 日志]]></title>
-        <id>https://Zu3zz.github.io/post/springboot-3</id>
-        <link href="https://Zu3zz.github.io/post/springboot-3">
+        <id>https://zu3zz.coding.me/post/springboot-3</id>
+        <link href="https://zu3zz.coding.me/post/springboot-3">
         </link>
         <updated>2019-10-12T17:57:12.000Z</updated>
         <summary type="html"><![CDATA[<p>🐽铛铛~ 到了我们SpringBoot系列的第三篇了<br>
