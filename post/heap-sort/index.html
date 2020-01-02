@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
 <meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1576686133356">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1577981532132">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://Zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1576686133356" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1577981532132" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -105,11 +105,11 @@
 <h2 id="1基本存储">1.基本存储</h2>
 <p>首先从堆这个数据结构说起，堆可以做到入堆和出堆都是O(logn)的复杂度，平均时间上比起O(1)+O(n)这种组合要快出去很多。</p>
 <p>首先从堆的基本形态说起，堆本质是就是一个数组，但是在存储的过程中，我们可以把它看做是一个完全二叉树:即索引为0的位置为根节点，索引为1、2的位置为根节点的子节点，下面就是一个二叉堆(Binary Heap)，对应的就是一个二叉树<br>
-<img src="https://Zu3zz.github.io/post-images/1566038321792.png" alt=""><br>
+<img src="https://Zu3zz.github.io/post-images/1566038321792.png" alt="" loading="lazy"><br>
 可以看到，二叉堆满足性质如下，所有子节点均小于父亲节点，即<br>
 <code>41&lt;62 &amp;&amp; 30&lt;62</code></p>
 <p><strong>并且 二叉堆是一颗完全二叉树</strong><br>
-<img src="https://Zu3zz.github.io/post-images/1566038535528.png" alt=""></p>
+<img src="https://Zu3zz.github.io/post-images/1566038535528.png" alt="" loading="lazy"></p>
 <p>所以上图所示的堆可以在cpp中如下所存储</p>
 <pre><code class="language-c++">int arr[] = {0,62,41,30,28,16,22,13,19,17,15}
 </code></pre>

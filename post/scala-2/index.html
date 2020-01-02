@@ -34,7 +34,19 @@
             文章目录
           </p>
           <div class="toc-container hidden lg:block">
-            
+            <ul class="markdownIt-TOC">
+<li><a href="#scala%E5%87%BD%E6%95%B0">Scala函数</a><br>
+*
+<ul>
+<li><a href="#1-%E6%96%B9%E6%B3%95%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E4%BD%BF%E7%94%A8">1. 方法的定义和使用</a></li>
+<li><a href="#2-%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0-%E5%91%BD%E5%90%8D%E5%8F%82%E6%95%B0">2. 默认参数、命名参数</a></li>
+<li><a href="#3-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0">3. 可变参数</a></li>
+<li><a href="#4-%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F">4. 条件表达式</a></li>
+<li><a href="#5-%E5%BE%AA%E7%8E%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F">5. 循环表达式</a></li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -85,95 +97,230 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">关于我的几件小事</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">Scala学习笔记（2） ---- Scala函数</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-01-25 / 2 min read
+          2020-01-03 / 4 min read
         </div>
         
         <div class="post-content yue">
-          <ul>
+          <h1 id="scala函数">Scala函数</h1>
+<h3 id="1-方法的定义和使用">1. 方法的定义和使用</h3>
+<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io/post-images/1577981513974.png" alt="" loading="lazy"></figure>
+<ol>
 <li>
-<p>个人经历<br>
-1996.7.31-2001.5 新疆喀什<br>
-2001.6-2004.1 洛杉矶<br>
-2004.2-2008.7 无锡市外国语小学<br>
-2008.9-2011.7 无锡市大桥中学<br>
-2011.9-2014.7 北京大学附属中学<br>
-2014.9-2018.7 哈尔滨工业大学 信息安全 B.S.<br>
-2018.8-2019.8 无业游民(字节跳动实习)<br>
-2019.9-2020.7 香港城市大学 电子商务 M.S.</p>
+<p>不需要<code>return</code></p>
 </li>
 <li>
-<p><strong>Honer</strong></p>
+<p>没有参数的时候可以不用括号</p>
+<pre><code class="language-scala">def 方法名(参数名：参数类型): 返回值类型 = {
+  // 括号内的叫做方法体
+  
+  // 方法体内的最后一行为返回值， 不需要使用return
+}
+</code></pre>
 </li>
-</ul>
-<ol>
-<li>2016 ACM-ICPC亚洲区域赛沈阳站团体赛Silver Medal</li>
-<li>2017 强网杯全国信息安全大赛团队赛亚军</li>
-<li>2018 中国高校计算机大赛——大数据挑战赛 Top20</li>
-<li>2018 腾讯社交算法大赛Top15</li>
-</ol>
-<ul>
-<li><strong>个人技能点</strong></li>
-</ul>
-<ol>
-<li>语言:
-<ul>
-<li>Cpp(熟练)</li>
-<li>JavaScript(熟练)</li>
-<li>Python(熟练)</li>
-<li>Java(熟悉)</li>
-<li>Scala(熟悉)</li>
-<li>TypeScript(熟悉)</li>
-<li>Go(了解)</li>
-</ul>
-</li>
-<li>前端:
-<ul>
-<li>Vue.js(vuex/vue-router...)</li>
-<li>React.js(redux/react-router/redux-saga/redux-thunk...)</li>
-</ul>
-</li>
-<li>后端:
-<ul>
-<li>Node.js(express/koa2)</li>
-<li>Java(Spring/Spring MVC/MyBatis/SpringBoot)</li>
-<li>Python(Flask/Django)</li>
-</ul>
-</li>
-<li>大数据:
-<ul>
-<li>MapReduce、Spark</li>
-<li>Flink、Beam</li>
-<li>Hive、Storm、Hbase</li>
-</ul>
-</li>
-<li>机器学习:
-<ul>
-<li>LR/SVM/Random Forest/Decision Tree/Ada Boosting/XGbost</li>
-<li>TensorFlow(官方contributor，commit50+)/MXNet/PyTorch</li>
-</ul>
-</li>
-<li>深度学习:
-<ul>
-<li>CNN/RNN/GAN...</li>
-</ul>
-</li>
-<li>推荐算法:
-<ul>
-<li>CF/LFM</li>
-</ul>
+<li>
+<p>一个例子</p>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/2 10:30 下午
+ */
+object FunctionApp {
+  def main(args: Array[String]): Unit = {
+    println(add(2, 3))
+    println(three())
+    println(three) // 没有入参的函数 调用的时候 括号是可以省略的
+    sayHello(&quot;zhangsan&quot;)
+    sayHello
+  }
+  def add(x: Int, y: Int): Int = {
+    x + y // 最后一行就是返回值
+  }
+  def three() = 1+2
+  def sayHello(): Unit ={
+    println(&quot;say hello&quot;)
+  }
+  def sayHello(name:String): Unit ={
+    println(&quot;say hello &quot;+name)
+  }
+}
+
+// 返回的结果如下
+5
+3
+3
+say hello zhangsan
+say hello
+</code></pre>
 </li>
 </ol>
+<h3 id="2-默认参数-命名参数">2. 默认参数、命名参数</h3>
+<ol>
+<li>
+<p>在函数定义时，允许指定参数的默认值</p>
+</li>
+<li>
+<p>在参数调用的时候，可以指定名字改变参数的顺序</p>
+</li>
+<li>
+<p>一个例子</p>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/2 10:30 下午
+ */
+object FunctionApp {
+  def main(args: Array[String]): Unit = {
+    sayName()// 这里括号不能省略
+    sayName(&quot;2yy&quot;)
+    println(speed(100,10))
+    println(speed(time = 5,distance = 100)) // 命名参数 可以将参数的顺序调换
+  }
+
+  def sayName(name:String=&quot;3zz&quot;): Unit ={
+    println(name)
+  }
+  def speed(distance:Float, time:Float): Float ={
+    distance / time
+  }
+}
+// 返回的结果
+3zz
+2yy
+10.0
+20.0
+</code></pre>
+</li>
+</ol>
+<h3 id="3-可变参数">3. 可变参数</h3>
+<ol>
+<li>
+<p><code>JDK5+</code>：可变参数</p>
+</li>
+<li>
+<p>Spark-sql中源码</p>
+<pre><code class="language-scala">// Dataset.scala文件中的select方法
+@scala.annotation.varargs
+def select(cols: Column*): DataFrame = withPlan {
+  Project(cols.map(_.named), logicalPlan)
+}
+
+@scala.annotation.varargs
+def select(col: String, cols: String*): DataFrame = select((col +: cols).map(Column(_)) : _*)
+</code></pre>
+</li>
+<li>
+<p>一个小例子</p>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/2 10:30 下午
+ */
+object FunctionApp {
+  def main(args: Array[String]): Unit = {
+    println(sum2(1,3,5))
+  }
+  def sum2(numbers:Int*) = {
+    var result = 0
+    for(number &lt;- numbers){
+      result+=number
+    }
+    result
+  }
+}
+// 返回的结果
+9
+</code></pre>
+</li>
+</ol>
+<h3 id="4-条件表达式">4. 条件表达式</h3>
+<ul>
+<li>和<code>Java</code>用法基本相同</li>
+</ul>
+<pre><code class="language-scala">val x = 1
+if(x &gt; 0){
+  true
+} else {
+  false
+}
+</code></pre>
+<h3 id="5-循环表达式">5. 循环表达式</h3>
+<ul>
+<li>
+<p><code>to</code>关键字：范围包含两边</p>
+<pre><code class="language-scala">1 to 10
+res0: scala.collection.immutable.Range.Inclusive = Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+// 包含了 1 和 10
+// 另外一种写法
+1.to(10)
+res2: scala.collection.immutable.Range.Inclusive = Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+</code></pre>
+</li>
+<li>
+<p><code>Range</code>关键字：左闭右开</p>
+<pre><code class="language-scala">Range(1,10)
+res1: scala.collection.immutable.Range = Range(1, 2, 3, 4, 5, 6, 7, 8, 9)
+// 没有10
+Range(1,10,2)
+res3: scala.collection.immutable.Range = Range(1, 3, 5, 7, 9)
+</code></pre>
+</li>
+<li>
+<p><code>until</code>关键字：左闭右开</p>
+<pre><code class="language-scala">1 until 10
+res4: scala.collection.immutable.Range = Range(1, 2, 3, 4, 5, 6, 7, 8, 9)
+</code></pre>
+</li>
+<li>
+<p><code>for</code>循环 / <code>foreach</code>方法</p>
+<pre><code class="language-scala">// 第一种方法 使用for循环
+val courses = Array(&quot;1a&quot;,&quot;2b&quot;,&quot;3c&quot;,&quot;4d&quot;)
+for(course &lt;- sources) {
+  println(course)
+}
+// 输出 1a,2b,3c,4d
+// 第二种方法 使用foreach
+courses.foreach(course =&gt; println(course))
+// =&gt; : 相当于将course作用上右边的函数 变成另外一个结果
+// 输出 1a,2b,3c,4d
+</code></pre>
+</li>
+<li>
+<p><code>while</code>循环</p>
+<pre><code class="language-scala">var (num, sum) = (100,0)
+while(num &gt; 0){
+  sum= sum + num
+  num= num - 1
+}
+println(sum)
+// 输出5050
+</code></pre>
+</li>
+</ul>
 
         </div>
 
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/K58cfvIBJ">
+            <span class="flex-auto">scala</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
+          </a>
         
 
 
         <div class="flex justify-between py-8">
           
 
+          
+            <div class="next-post">
+              <a href="https://Zu3zz.github.io/post/scala-1">
+                <h3 class="post-title">
+                  Scala学习笔记（1）---- Scala基础
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
           
         </div>
 

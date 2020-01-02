@@ -2,14 +2,28 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io</id>
     <title>风袖</title>
-    <updated>2019-12-18T16:22:15.771Z</updated>
+    <updated>2020-01-02T16:12:16.010Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
     <subtitle>烟蛾敛略不胜态，风袖低昂如有情</subtitle>
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2019, 风袖</rights>
+    <rights>All rights reserved 2020, 风袖</rights>
+    <entry>
+        <title type="html"><![CDATA[Scala学习笔记（2） ---- Scala函数]]></title>
+        <id>https://Zu3zz.github.io/post/scala-2</id>
+        <link href="https://Zu3zz.github.io/post/scala-2">
+        </link>
+        <updated>2020-01-02T16:10:37.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Scala学习笔记（1）---- Scala基础]]></title>
+        <id>https://Zu3zz.github.io/post/scala-1</id>
+        <link href="https://Zu3zz.github.io/post/scala-1">
+        </link>
+        <updated>2020-01-02T16:08:53.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[大数据学习(1) ---- Linux基础(1)]]></title>
         <id>https://Zu3zz.github.io/post/ruozedata-1</id>
@@ -86,32 +100,6 @@
 ]]></summary>
         <content type="html"><![CDATA[<p>🐽铛铛~ 到了我们SpringBoot系列的第三篇了<br>
 🛠这一篇章，我们聊聊SpringBoot中的日志与配置</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringBoot系列(2) ---- 配置文件]]></title>
-        <id>https://Zu3zz.github.io/post/springboot-2</id>
-        <link href="https://Zu3zz.github.io/post/springboot-2">
-        </link>
-        <updated>2019-10-10T09:11:01.000Z</updated>
-        <summary type="html"><![CDATA[<p>🎏那么又到了我们SpringBoot系列的第二篇！！<br>
-🎀这一篇，我们来讲讲SpringBoot中的配置相关问题，依旧有源码级别的分析哦！</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>🎏那么又到了我们SpringBoot系列的第二篇！！<br>
-🎀这一篇，我们来讲讲SpringBoot中的配置相关问题，依旧有源码级别的分析哦！</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringBoot系列(1) ---- SpringBoot入门]]></title>
-        <id>https://Zu3zz.github.io/post/springboot-1</id>
-        <link href="https://Zu3zz.github.io/post/springboot-1">
-        </link>
-        <updated>2019-10-07T08:53:18.000Z</updated>
-        <summary type="html"><![CDATA[<p>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉<br>
-🎊🎊有源码级别的分析哦~~🎊🎊</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉<br>
-🎊🎊有源码级别的分析哦~~🎊🎊</p>
 ]]></content>
     </entry>
 </feed>

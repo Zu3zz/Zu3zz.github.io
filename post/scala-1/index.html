@@ -31,34 +31,25 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            烟蛾敛略不胜态，风袖低昂如有情
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/zu3zz" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#scala%E7%AC%94%E8%AE%B0">Scala笔记</a>
+<ul>
+<li><a href="#1-%E5%AD%A6%E4%B9%A0scala%E7%9A%84%E6%84%8F%E4%B9%89">1.  学习Scala的意义：</a></li>
+<li><a href="#2-scala%E5%AE%89%E8%A3%85">2. Scala安装</a></li>
+<li><a href="#3-scala%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8">3. Scala使用入门</a>
+<ul>
+<li><a href="#31-scala-vs-java">3.1 Scala vs Java</a></li>
+<li><a href="#32-val-vs-var">3.2 val vs var</a></li>
+<li><a href="#33-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">3.3 基本数据类型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -108,95 +99,160 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-line"></i> MySQL
-        </h2>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Scala学习笔记（1）---- Scala基础</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-01-03 / 2 min read
+        </div>
         
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/mysql-5">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">深入浅出MySQL(5) ---- MySQL常用函数</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
+        <div class="post-content yue">
+          <h1 id="scala笔记">Scala笔记</h1>
+<h2 id="1-学习scala的意义">1.  学习Scala的意义：</h2>
+<ol>
+<li>钱</li>
+<li>做东西：Spark、Kafka、Flink 生态系统
+<ul>
+<li>优雅</li>
+<li>开发速度</li>
+<li>生态融合</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-scala安装">2. Scala安装</h2>
+<ol>
+<li>Java 8</li>
+<li>下载scala-2.11.8</li>
+<li>解压scala</li>
+<li>【可选】配置到环境变量</li>
+<li>执行<code>scala</code></li>
+</ol>
+<h2 id="3-scala使用入门">3. Scala使用入门</h2>
+<h3 id="31-scala-vs-java">3.1 Scala vs Java</h3>
+<ol>
+<li>
+<p>Java HelloWorld</p>
+<pre><code class="language-java">public class HelloWorld{
+  public static void main(String[] args){
+    System.out.println(&quot;Hello World&quot;);
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>Scala HelloWorld</p>
+<ul>
+<li>scala每行代码并不强求使用<code>;</code>结束，但是Java是必须的</li>
+</ul>
+<pre><code class="language-scala">object HelloWorld{
+  def main(args : Array[String]){
+    println(&quot;Hello World&quot;)
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="32-val-vs-var">3.2 val vs var</h3>
+<ol>
+<li>val：值（不可变）（优先使用）
+<ul>
+<li>Java 中的<code>final</code></li>
+<li><code>val 值名称：类型 = xxx</code></li>
+<li><code>val age:Int = 20</code></li>
+</ul>
+</li>
+<li>var：变量（可变）
+<ul>
+<li><code>var name = &quot;zhangsi&quot;</code></li>
+<li>可以修改name<code>name = &quot;zhangwu&quot;</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="33-基本数据类型">3.3 基本数据类型</h3>
+<ol>
+<li>
+<p>Byte / Char</p>
+</li>
+<li>
+<p>Short / Int / Long / Float / Double</p>
+</li>
+<li>
+<p>Boolean</p>
+</li>
+<li>
+<p>类型转换</p>
+<pre><code class="language-scala">val d:Float = 1.2f
+val g:Double = 10.asInstanceOf[Double]
+scala&gt; g
+res0: Double = 10.0
+</code></pre>
+</li>
+<li>
+<p>判断类型是否一致</p>
+<pre><code class="language-scala">val h = 10.isInstanceOf[Int]
+h: Boolean = true
+val h = 10.isInstanceOf[Double]
+h: Boolean = false
+</code></pre>
+</li>
+<li>
+<p><code>lazy</code>关键字的使用</p>
+<ul>
+<li>可以延迟加载避免直接报错</li>
+</ul>
+<pre><code class="language-scala">scala&gt; lazy val a = 1
+a: Int = &lt;lazy&gt;
+scala&gt; a
+res0: Int = 1
+</code></pre>
+</li>
+<li>
+<p>常用IDE</p>
+<ul>
+<li>IDEA</li>
+<li>Eclipse ide scala</li>
+<li>NetBeans（不常用）</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
         
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-11-05 / 3 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/mysql-4">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">深入浅出MySQL(4) ---- 常见数据操作</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/K58cfvIBJ">
+            <span class="flex-auto">scala</span>
+          </a>
         
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-11-01 / 8 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/mysql-3">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">深入浅出MySQL(3) ---- 存储引擎</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
+          </a>
         
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-10-28 / 2 min read</div>
-    </div>
-  </section>
 
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/mysql-2">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">深入浅出MySQL(2) ---- 数据库、数据表、数据类型</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p>🏖这一篇 我们讨论一下数据库和数据表的相关操作..</p>
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-10-26 / 6 min read</div>
-    </div>
-  </section>
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://Zu3zz.github.io/post/scala-2">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  Scala学习笔记（2） ---- Scala函数
+                </h3>
+              </a>
+            </div>
+          
 
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${4 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/mysql-1">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">深入浅出MySQL(1) ---- 基础与概念</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p>🍒MySQL笔记第一篇 相关概念~</p>
+          
+            <div class="next-post">
+              <a href="https://Zu3zz.github.io/post/ruozedata-1">
+                <h3 class="post-title">
+                  大数据学习(1) ---- Linux基础(1)
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-10-25 / 2 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${5 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://Zu3zz.github.io/post/hive-1">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Hive系列(1)----常用操作</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
         
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-09-07 / 6 min read</div>
-    </div>
-  </section>
-
-        <div class="pagination-container animated fadeIn">
-  
-  
-</div>
 
       </div>
     </div>

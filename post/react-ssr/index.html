@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
 <meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1576686133356">
+<link rel="shortcut icon" href="https://Zu3zz.github.io/favicon.ico?v=1577981532132">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://Zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1576686133356" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io/images/avatar.png?v=1577981532132" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -134,19 +134,19 @@ app.listen(3001, () =&gt; {
 })
 </code></pre>
 <p>启动之后打开localhost:3001可以看到页面显示了hello world。而且打开网页源代码如下：<br>
-<img src="https://Zu3zz.github.io/post-images/1565794815666.jpg" alt=""><br>
+<img src="https://Zu3zz.github.io/post-images/1565794815666.jpg" alt="" loading="lazy"><br>
 也能够完成显示。<br>
 这就是服务端渲染。其实非常好理解，就是服务器返回一堆html字符串，然后让浏览器显示。<br>
 与服务端渲染相对的是客户端渲染(Client Side Render)。那什么是客户端渲染？<br>
 现在创建一个新的React项目，用脚手架生成项目，然后run起来。<br>
 这里你可以看到React脚手架自动生成的首页。</p>
-<p><img src="https://Zu3zz.github.io/post-images/1565794890546.jpg" alt=""><br>
+<p><img src="https://Zu3zz.github.io/post-images/1565794890546.jpg" alt="" loading="lazy"><br>
 然而打开网页源代码,我们会发现网页并没有任何DOM结构<br>
-<img src="https://Zu3zz.github.io/post-images/1565794896346.jpg" alt=""><br>
+<img src="https://Zu3zz.github.io/post-images/1565794896346.jpg" alt="" loading="lazy"><br>
 body中除了兼容处理的noscript标签之外，只有一个id为root的标签。那首页的内容是从哪来的呢？很明显，是下面的script中拉取的JS代码控制的。<br>
 因此，CSR和SSR最大的区别在于前者的页面渲染是JS负责进行的，而后者是服务器端直接返回HTML让浏览器直接渲染。<br>
 为什么要使用服务端渲染呢？<br>
-<img src="https://Zu3zz.github.io/post-images/1565795001030.jpeg" alt=""><br>
+<img src="https://Zu3zz.github.io/post-images/1565795001030.jpeg" alt="" loading="lazy"><br>
 传统CSR的弊端：</p>
 <ol>
 <li>由于页面显示过程要进行JS文件拉取和React代码执行，首屏加载时间会比较慢。</li>
