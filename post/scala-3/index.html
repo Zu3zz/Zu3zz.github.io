@@ -1,0 +1,570 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1578066203431">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://zu3zz.coding.me/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.coding.me/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.coding.me">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1578066203431" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#scala%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1">Scala面向对象</a>
+<ul>
+<li><a href="#1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%A6%82%E8%BF%B0">1. 面向对象概述</a></li>
+<li><a href="#2-%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E4%BD%BF%E7%94%A8">2. 类的定义与使用</a></li>
+<li><a href="#3-%E6%9E%84%E9%80%A0%E5%99%A8">3. 构造器</a></li>
+<li><a href="#4-%E7%BB%A7%E6%89%BF%E4%B8%8E%E9%87%8D%E5%86%99">4. 继承与重写</a></li>
+<li><a href="#5-%E6%8A%BD%E8%B1%A1%E7%B1%BB">5. 抽象类</a></li>
+<li><a href="#6-%E4%BC%B4%E7%94%9F%E7%B1%BB%E4%B8%8Eapply">6. 伴生类与Apply</a></li>
+<li><a href="#7-case-class">7. Case Class</a></li>
+<li><a href="#8-trait">8. Trait</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.coding.me/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Scala学习笔记（3） ---- Scala对象</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-01-03 / 7 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="scala面向对象">Scala面向对象</h1>
+<h2 id="1-面向对象概述">1. 面向对象概述</h2>
+<ol>
+<li>Java / Scala OO(Objecet Orientaed)
+<ul>
+<li>封装：属性、方法封装到类中</li>
+<li>继承：父类和子类之间的关系</li>
+<li>多态：父类引用指向子类对象（重要）</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-类的定义与使用">2. 类的定义与使用</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 4:55 下午
+ */
+object SimpleObjectApp {
+  def main(args: Array[String]): Unit = {
+    val person = new People()
+    person.name = &quot;messi&quot;
+//    person.age = 30
+    println(person.name + &quot;..&quot; + person.age)
+    println(&quot;invoke eat method:&quot;+person.eat())
+    person.watchTv(&quot;basailuona&quot;)
+    person.sex()
+  }
+}
+class People{
+  // 定义属性
+  // var可以自动生成 getter 和 setter
+  // _ 是占位符
+  var name:String = _
+  // val只能自动生成 getter
+  val age:Int = 10
+  private [this] val gender = &quot;male&quot;
+  // 定义方法
+  def eat():String = {
+    name+ &quot;eat...&quot;
+  }
+  def sex(): Unit ={
+    println(&quot;gender is &quot; + gender)
+  }
+  def watchTv(teamName:String): Unit ={
+    println(name + &quot;is watching &quot; + teamName)
+  }
+}
+// 返回
+messi..10
+invoke eat method:messieat...
+messiis watching basailuona
+gender is male
+</code></pre>
+<ul>
+<li>占位符<code>_</code>
+<ul>
+<li>定义占位符必须使用<code>var</code></li>
+<li>定义之前必须先确定变量的类型</li>
+</ul>
+</li>
+<li><code>private [this]</code>关键字的变量
+<ul>
+<li>只能在类的内部被拿到</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-构造器">3. 构造器</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 6:23 下午
+ */
+object ConstructorApp {
+  def main(args: Array[String]): Unit = {
+    val person = new Person(&quot;zhangsan&quot;, 30)
+    println(person.school + &quot;: &quot;+person.name+&quot; : &quot;+ person.age)
+    val person2 = new Person(&quot;3zz&quot;, 18,&quot;M&quot;)
+    println(person2.school + &quot;: &quot;+person2.name+&quot; : &quot;+ person2.age+&quot;:&quot;+person2.gender)
+  }
+}
+// 主构造器
+class Person(val name:String, val age:Int){
+  println(&quot;Constructor enter..&quot;)
+  val school = &quot;ustc&quot;
+  var gender:String = _
+  // 附属构造器
+  def this(name:String, age:Int, gender:String){
+    this(name, age)// 附属构造器的第一行代码必须要调用主构造器或者其他附属构造器
+    this.gender = gender
+  }
+  println(&quot;Constructor leave..&quot;)
+}
+// 返回结果
+Constructor enter..
+Constructor leave..
+ustc: zhangsan : 30
+Constructor enter..
+Constructor leave..
+ustc: 3zz : 18:M
+</code></pre>
+<ul>
+<li>主构造器
+<ul>
+<li>class关键字后面括号内的内容</li>
+</ul>
+</li>
+<li>附属构造器
+<ul>
+<li>类内部的<code>this()</code>方法，需要在第一行调用主构造器或者其他附属构造器</li>
+</ul>
+</li>
+<li>需要注意的是，如果主构造器中的属性没有<code>val</code>或者<code>var</code>，类外部无法调用该属性</li>
+</ul>
+<h2 id="4-继承与重写">4. 继承与重写</h2>
+<ol>
+<li>继承</li>
+</ol>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 6:23 下午
+ */
+object ConstructorApp {
+  def main(args: Array[String]): Unit = {
+    val student = new Student(&quot;3z&quot;,18,&quot;CS&quot;)
+    println(student.name+&quot; : &quot; + student.major)
+  }
+}
+// 主构造器
+class Person(val name:String, val age:Int){
+  println(&quot;Constructor person enter..&quot;)
+  val school = &quot;ustc&quot;
+  var gender:String = _
+  // 附属构造器
+  def this(name:String, age:Int, gender:String){
+    this(name, age)// 附属构造器的第一行代码必须要调用主构造器或者其他附属构造器
+    this.gender = gender
+  }
+  println(&quot;Constructor person leave..&quot;)
+}
+class Student(name:String, age:Int,val major:String) extends Person(name, age){
+  println(&quot;Constructor student enter..&quot;)
+  println(&quot;Constructor student leave..&quot;)
+}
+</code></pre>
+<ul>
+<li>继承的时候还是属性需要注意
+<ul>
+<li>父类已经有的前面可以没有关键字</li>
+<li>父类没有的需要添加<code>val</code>或者<code>var</code></li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>重写：使用<code>override</code>关键字</li>
+</ol>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 6:23 下午
+ */
+object ConstructorApp {
+  def main(args: Array[String]): Unit = {
+    val student = new Student(&quot;3z&quot;,18,&quot;CS&quot;)
+    println(student.name+&quot; : &quot; + student.major)
+    println(student.toString)
+  }
+}
+// 主构造器
+class Person(val name:String, val age:Int){
+  println(&quot;Constructor person enter..&quot;)
+  val school = &quot;ustc&quot;
+  println(&quot;Constructor person leave..&quot;)
+}
+class Student(name:String, age:Int,val major:String) extends Person(name, age){
+  println(&quot;Constructor student enter..&quot;)
+  // 重写父类中的school属性
+  override val school = &quot;tsing&quot;
+  // 重写Object类中的toString()方法
+  override def toString: String = {
+    &quot;name: &quot; + name +&quot;age :&quot;+age+&quot;school: &quot; + school
+  }
+  println(&quot;Constructor student leave..&quot;)
+}
+// 返回结果
+Constructor person enter..
+Constructor person leave..
+Constructor student enter..
+Constructor student leave..
+3z : CS
+name: 3zage :18school: tsing
+</code></pre>
+<h2 id="5-抽象类">5. 抽象类</h2>
+<ol>
+<li>类的一个或者多个方法没有完整的实现（只有定义，没有实现）</li>
+</ol>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 10:01 下午
+ */
+object AbstractApp {
+  def main(args: Array[String]): Unit = {
+    val student = new Student2()
+    println(student.name)
+    student.speak
+  }
+}
+abstract class Person2{
+  def speak
+  val name:String
+  val age:Int
+}
+// 需要重写抽象类中的方法和属性
+class Student2 extends Person2 {
+  override def speak: Unit = {
+    println(&quot;speak&quot;)
+  }
+  override val name: String = &quot;3z&quot;
+  override val age: Int = 18
+}
+</code></pre>
+<h2 id="6-伴生类与apply">6. 伴生类与Apply</h2>
+<ol>
+<li>伴生类与伴生对象</li>
+</ol>
+<pre><code class="language-scala">/**
+ * 如果有一个class， 还有一个与class同名的object
+ * 那么就称这个object是class的伴生对象，class是object的伴生类
+ */
+// 伴生类
+class ApplyTest{
+
+}
+// 伴生对象
+object ApplyTest{
+
+}
+</code></pre>
+<ol start="2">
+<li>
+<p><code>apply</code>方法</p>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 10:33 下午
+ */
+object ApplyApp {
+  def main(args: Array[String]): Unit = {
+    for (i &lt;- 1 to 10) {
+      ApplyTest.incr
+    }
+    println(ApplyTest.count) // 说明object本身是一个单例对象
+    val b = ApplyTest() // ==&gt; 默认调用 Object.apply 方法
+    println(&quot;---------------------------&quot;)
+    val c = new ApplyTest()// 类名() ====&gt; Class.apply()
+    println(c) // com.zth.fun.ApplyTest@68c4039c
+    c()// 对象() ====&gt; Object.apply()
+    // class applytest apply...
+  }
+}
+
+/**
+ * 如果有一个class， 还有一个与class同名的object
+ * 那么就称这个object是class的伴生对象，class是object的伴生类
+ */
+// 伴生类
+class ApplyTest {
+  def apply() = {
+    println(&quot;class applytest apply...&quot;)
+  }
+}
+// 伴生对象
+object ApplyTest {
+  println(&quot;object applytest enter..&quot;)
+  var count = 0
+  def incr = {
+    count += 1
+  }
+  // 最佳实践：在Object的apply方法中去new Class
+  def apply() = {
+    println(&quot;object applytest apply&quot;)
+    // 在object中的apply中new class
+    new ApplyTest
+  }
+  println(&quot;object applytest leave..&quot;)
+}
+// 返回结果
+object applytest enter..
+object applytest leave..
+object applytest apply
+---------------------------
+com.zth.fun.ApplyTest@68c4039c
+class applytest apply...
+</code></pre>
+<ul>
+<li>伴生对象<code>object</code>本身是一个单例对象，只会被调用一次</li>
+<li><code>类名()</code> ====&gt; <code>Class.apply()</code></li>
+<li><code>对象()</code> ====&gt; <code>Object.apply()</code></li>
+<li><code>apply</code>方法的最佳实践是在伴生对象的<code>apply</code>方法中<code>new</code> 一个伴生类</li>
+</ul>
+</li>
+</ol>
+<h2 id="7-case-class">7. Case Class</h2>
+<ol>
+<li>通常用在模式匹配里面</li>
+</ol>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 11:23 下午
+ */
+// 通常用在模式匹配里面
+object CaseClassApp {
+  def main(args: Array[String]): Unit = {
+    println(Dog(&quot;wangcai&quot;).name)
+  }
+}
+// case class不用new
+case class Dog(name:String)
+</code></pre>
+<h2 id="8-trait">8. Trait</h2>
+<ol>
+<li>
+<p>相当于<code>Java</code>中的<code>interface</code></p>
+</li>
+<li>
+<p><code>Scala</code>中如何实现多个接口的实现？</p>
+<pre><code class="language-scala">trait xxx extends aTrait with BTrait
+// 实际例子
+class SparkConf(loadDefaults: Boolean)
+	extends Cloneable with Logging with Serializable
+</code></pre>
+</li>
+</ol>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/K58cfvIBJ">
+            <span class="flex-auto">scala</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.coding.me/post/scala-2">
+                <h3 class="post-title">
+                  Scala学习笔记（2） ---- Scala函数
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://zu3zz.coding.me/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

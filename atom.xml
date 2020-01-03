@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zu3zz.coding.me</id>
     <title>风袖</title>
-    <updated>2020-01-02T16:37:42.550Z</updated>
+    <updated>2020-01-03T15:43:40.040Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zu3zz.coding.me"/>
     <link rel="self" href="https://zu3zz.coding.me/atom.xml"/>
@@ -11,11 +11,540 @@
     <icon>https://zu3zz.coding.me/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
     <entry>
+        <title type="html"><![CDATA[Scala学习笔记（3） ---- Scala对象]]></title>
+        <id>https://zu3zz.coding.me/post/scala-3</id>
+        <link href="https://zu3zz.coding.me/post/scala-3">
+        </link>
+        <updated>2020-01-03T15:42:39.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="scala面向对象">Scala面向对象</h1>
+<h2 id="1-面向对象概述">1. 面向对象概述</h2>
+<ol>
+<li>Java / Scala OO(Objecet Orientaed)
+<ul>
+<li>封装：属性、方法封装到类中</li>
+<li>继承：父类和子类之间的关系</li>
+<li>多态：父类引用指向子类对象（重要）</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-类的定义与使用">2. 类的定义与使用</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 4:55 下午
+ */
+object SimpleObjectApp {
+  def main(args: Array[String]): Unit = {
+    val person = new People()
+    person.name = &quot;messi&quot;
+//    person.age = 30
+    println(person.name + &quot;..&quot; + person.age)
+    println(&quot;invoke eat method:&quot;+person.eat())
+    person.watchTv(&quot;basailuona&quot;)
+    person.sex()
+  }
+}
+class People{
+  // 定义属性
+  // var可以自动生成 getter 和 setter
+  // _ 是占位符
+  var name:String = _
+  // val只能自动生成 getter
+  val age:Int = 10
+  private [this] val gender = &quot;male&quot;
+  // 定义方法
+  def eat():String = {
+    name+ &quot;eat...&quot;
+  }
+  def sex(): Unit ={
+    println(&quot;gender is &quot; + gender)
+  }
+  def watchTv(teamName:String): Unit ={
+    println(name + &quot;is watching &quot; + teamName)
+  }
+}
+// 返回
+messi..10
+invoke eat method:messieat...
+messiis watching basailuona
+gender is male
+</code></pre>
+<ul>
+<li>占位符<code>_</code>
+<ul>
+<li>定义占位符必须使用<code>var</code></li>
+<li>定义之前必须先确定变量的类型</li>
+</ul>
+</li>
+<li><code>private [this]</code>关键字的变量
+<ul>
+<li>只能在类的内部被拿到</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-构造器">3. 构造器</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 6:23 下午
+ */
+object ConstructorApp {
+  def main(args: Array[String]): Unit = {
+    val person = new Person(&quot;zhangsan&quot;, 30)
+    println(person.school + &quot;: &quot;+person.name+&quot; : &quot;+ person.age)
+    val person2 = new Person(&quot;3zz&quot;, 18,&quot;M&quot;)
+    println(person2.school + &quot;: &quot;+person2.name+&quot; : &quot;+ person2.age+&quot;:&quot;+person2.gender)
+  }
+}
+// 主构造器
+class Person(val name:String, val age:Int){
+  println(&quot;Constructor enter..&quot;)
+  val school = &quot;ustc&quot;
+  var gender:String = _
+  // 附属构造器
+  def this(name:String, age:Int, gender:String){
+    this(name, age)// 附属构造器的第一行代码必须要调用主构造器或者其他附属构造器
+    this.gender = gender
+  }
+  println(&quot;Constructor leave..&quot;)
+}
+// 返回结果
+Constructor enter..
+Constructor leave..
+ustc: zhangsan : 30
+Constructor enter..
+Constructor leave..
+ustc: 3zz : 18:M
+</code></pre>
+<ul>
+<li>主构造器
+<ul>
+<li>class关键字后面括号内的内容</li>
+</ul>
+</li>
+<li>附属构造器
+<ul>
+<li>类内部的<code>this()</code>方法，需要在第一行调用主构造器或者其他附属构造器</li>
+</ul>
+</li>
+<li>需要注意的是，如果主构造器中的属性没有<code>val</code>或者<code>var</code>，类外部无法调用该属性</li>
+</ul>
+<h2 id="4-继承与重写">4. 继承与重写</h2>
+<ol>
+<li>继承</li>
+</ol>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 6:23 下午
+ */
+object ConstructorApp {
+  def main(args: Array[String]): Unit = {
+    val student = new Student(&quot;3z&quot;,18,&quot;CS&quot;)
+    println(student.name+&quot; : &quot; + student.major)
+  }
+}
+// 主构造器
+class Person(val name:String, val age:Int){
+  println(&quot;Constructor person enter..&quot;)
+  val school = &quot;ustc&quot;
+  var gender:String = _
+  // 附属构造器
+  def this(name:String, age:Int, gender:String){
+    this(name, age)// 附属构造器的第一行代码必须要调用主构造器或者其他附属构造器
+    this.gender = gender
+  }
+  println(&quot;Constructor person leave..&quot;)
+}
+class Student(name:String, age:Int,val major:String) extends Person(name, age){
+  println(&quot;Constructor student enter..&quot;)
+  println(&quot;Constructor student leave..&quot;)
+}
+</code></pre>
+<ul>
+<li>继承的时候还是属性需要注意
+<ul>
+<li>父类已经有的前面可以没有关键字</li>
+<li>父类没有的需要添加<code>val</code>或者<code>var</code></li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>重写：使用<code>override</code>关键字</li>
+</ol>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 6:23 下午
+ */
+object ConstructorApp {
+  def main(args: Array[String]): Unit = {
+    val student = new Student(&quot;3z&quot;,18,&quot;CS&quot;)
+    println(student.name+&quot; : &quot; + student.major)
+    println(student.toString)
+  }
+}
+// 主构造器
+class Person(val name:String, val age:Int){
+  println(&quot;Constructor person enter..&quot;)
+  val school = &quot;ustc&quot;
+  println(&quot;Constructor person leave..&quot;)
+}
+class Student(name:String, age:Int,val major:String) extends Person(name, age){
+  println(&quot;Constructor student enter..&quot;)
+  // 重写父类中的school属性
+  override val school = &quot;tsing&quot;
+  // 重写Object类中的toString()方法
+  override def toString: String = {
+    &quot;name: &quot; + name +&quot;age :&quot;+age+&quot;school: &quot; + school
+  }
+  println(&quot;Constructor student leave..&quot;)
+}
+// 返回结果
+Constructor person enter..
+Constructor person leave..
+Constructor student enter..
+Constructor student leave..
+3z : CS
+name: 3zage :18school: tsing
+</code></pre>
+<h2 id="5-抽象类">5. 抽象类</h2>
+<ol>
+<li>类的一个或者多个方法没有完整的实现（只有定义，没有实现）</li>
+</ol>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 10:01 下午
+ */
+object AbstractApp {
+  def main(args: Array[String]): Unit = {
+    val student = new Student2()
+    println(student.name)
+    student.speak
+  }
+}
+abstract class Person2{
+  def speak
+  val name:String
+  val age:Int
+}
+// 需要重写抽象类中的方法和属性
+class Student2 extends Person2 {
+  override def speak: Unit = {
+    println(&quot;speak&quot;)
+  }
+  override val name: String = &quot;3z&quot;
+  override val age: Int = 18
+}
+</code></pre>
+<h2 id="6-伴生类与apply">6. 伴生类与Apply</h2>
+<ol>
+<li>伴生类与伴生对象</li>
+</ol>
+<pre><code class="language-scala">/**
+ * 如果有一个class， 还有一个与class同名的object
+ * 那么就称这个object是class的伴生对象，class是object的伴生类
+ */
+// 伴生类
+class ApplyTest{
+
+}
+// 伴生对象
+object ApplyTest{
+
+}
+</code></pre>
+<ol start="2">
+<li>
+<p><code>apply</code>方法</p>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 10:33 下午
+ */
+object ApplyApp {
+  def main(args: Array[String]): Unit = {
+    for (i &lt;- 1 to 10) {
+      ApplyTest.incr
+    }
+    println(ApplyTest.count) // 说明object本身是一个单例对象
+    val b = ApplyTest() // ==&gt; 默认调用 Object.apply 方法
+    println(&quot;---------------------------&quot;)
+    val c = new ApplyTest()// 类名() ====&gt; Class.apply()
+    println(c) // com.zth.fun.ApplyTest@68c4039c
+    c()// 对象() ====&gt; Object.apply()
+    // class applytest apply...
+  }
+}
+
+/**
+ * 如果有一个class， 还有一个与class同名的object
+ * 那么就称这个object是class的伴生对象，class是object的伴生类
+ */
+// 伴生类
+class ApplyTest {
+  def apply() = {
+    println(&quot;class applytest apply...&quot;)
+  }
+}
+// 伴生对象
+object ApplyTest {
+  println(&quot;object applytest enter..&quot;)
+  var count = 0
+  def incr = {
+    count += 1
+  }
+  // 最佳实践：在Object的apply方法中去new Class
+  def apply() = {
+    println(&quot;object applytest apply&quot;)
+    // 在object中的apply中new class
+    new ApplyTest
+  }
+  println(&quot;object applytest leave..&quot;)
+}
+// 返回结果
+object applytest enter..
+object applytest leave..
+object applytest apply
+---------------------------
+com.zth.fun.ApplyTest@68c4039c
+class applytest apply...
+</code></pre>
+<ul>
+<li>伴生对象<code>object</code>本身是一个单例对象，只会被调用一次</li>
+<li><code>类名()</code> ====&gt; <code>Class.apply()</code></li>
+<li><code>对象()</code> ====&gt; <code>Object.apply()</code></li>
+<li><code>apply</code>方法的最佳实践是在伴生对象的<code>apply</code>方法中<code>new</code> 一个伴生类</li>
+</ul>
+</li>
+</ol>
+<h2 id="7-case-class">7. Case Class</h2>
+<ol>
+<li>通常用在模式匹配里面</li>
+</ol>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/3 11:23 下午
+ */
+// 通常用在模式匹配里面
+object CaseClassApp {
+  def main(args: Array[String]): Unit = {
+    println(Dog(&quot;wangcai&quot;).name)
+  }
+}
+// case class不用new
+case class Dog(name:String)
+</code></pre>
+<h2 id="8-trait">8. Trait</h2>
+<ol>
+<li>
+<p>相当于<code>Java</code>中的<code>interface</code></p>
+</li>
+<li>
+<p><code>Scala</code>中如何实现多个接口的实现？</p>
+<pre><code class="language-scala">trait xxx extends aTrait with BTrait
+// 实际例子
+class SparkConf(loadDefaults: Boolean)
+	extends Cloneable with Logging with Serializable
+</code></pre>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Scala学习笔记（2） ---- Scala函数]]></title>
         <id>https://zu3zz.coding.me/post/scala-2</id>
         <link href="https://zu3zz.coding.me/post/scala-2">
         </link>
         <updated>2020-01-02T16:10:37.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="scala函数">Scala函数</h1>
+<h3 id="1-方法的定义和使用">1. 方法的定义和使用</h3>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1577981513974.png" alt="" loading="lazy"></figure>
+<ol>
+<li>
+<p>不需要<code>return</code></p>
+</li>
+<li>
+<p>没有参数的时候可以不用括号</p>
+<pre><code class="language-scala">def 方法名(参数名：参数类型): 返回值类型 = {
+  // 括号内的叫做方法体
+  
+  // 方法体内的最后一行为返回值， 不需要使用return
+}
+</code></pre>
+</li>
+<li>
+<p>一个例子</p>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/2 10:30 下午
+ */
+object FunctionApp {
+  def main(args: Array[String]): Unit = {
+    println(add(2, 3))
+    println(three())
+    println(three) // 没有入参的函数 调用的时候 括号是可以省略的
+    sayHello(&quot;zhangsan&quot;)
+    sayHello
+  }
+  def add(x: Int, y: Int): Int = {
+    x + y // 最后一行就是返回值
+  }
+  def three() = 1+2
+  def sayHello(): Unit ={
+    println(&quot;say hello&quot;)
+  }
+  def sayHello(name:String): Unit ={
+    println(&quot;say hello &quot;+name)
+  }
+}
+
+// 返回的结果如下
+5
+3
+3
+say hello zhangsan
+say hello
+</code></pre>
+</li>
+</ol>
+<h3 id="2-默认参数-命名参数">2. 默认参数、命名参数</h3>
+<ol>
+<li>
+<p>在函数定义时，允许指定参数的默认值</p>
+</li>
+<li>
+<p>在参数调用的时候，可以指定名字改变参数的顺序</p>
+</li>
+<li>
+<p>一个例子</p>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/2 10:30 下午
+ */
+object FunctionApp {
+  def main(args: Array[String]): Unit = {
+    sayName()// 这里括号不能省略
+    sayName(&quot;2yy&quot;)
+    println(speed(100,10))
+    println(speed(time = 5,distance = 100)) // 命名参数 可以将参数的顺序调换
+  }
+
+  def sayName(name:String=&quot;3zz&quot;): Unit ={
+    println(name)
+  }
+  def speed(distance:Float, time:Float): Float ={
+    distance / time
+  }
+}
+// 返回的结果
+3zz
+2yy
+10.0
+20.0
+</code></pre>
+</li>
+</ol>
+<h3 id="3-可变参数">3. 可变参数</h3>
+<ol>
+<li>
+<p><code>JDK5+</code>：可变参数</p>
+</li>
+<li>
+<p>Spark-sql中源码</p>
+<pre><code class="language-scala">// Dataset.scala文件中的select方法
+@scala.annotation.varargs
+def select(cols: Column*): DataFrame = withPlan {
+  Project(cols.map(_.named), logicalPlan)
+}
+
+@scala.annotation.varargs
+def select(col: String, cols: String*): DataFrame = select((col +: cols).map(Column(_)) : _*)
+</code></pre>
+</li>
+<li>
+<p>一个小例子</p>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/2 10:30 下午
+ */
+object FunctionApp {
+  def main(args: Array[String]): Unit = {
+    println(sum2(1,3,5))
+  }
+  def sum2(numbers:Int*) = {
+    var result = 0
+    for(number &lt;- numbers){
+      result+=number
+    }
+    result
+  }
+}
+// 返回的结果
+9
+</code></pre>
+</li>
+</ol>
+<h3 id="4-条件表达式">4. 条件表达式</h3>
+<ul>
+<li>和<code>Java</code>用法基本相同</li>
+</ul>
+<pre><code class="language-scala">val x = 1
+if(x &gt; 0){
+  true
+} else {
+  false
+}
+</code></pre>
+<h3 id="5-循环表达式">5. 循环表达式</h3>
+<ul>
+<li>
+<p><code>to</code>关键字：范围包含两边</p>
+<pre><code class="language-scala">1 to 10
+res0: scala.collection.immutable.Range.Inclusive = Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+// 包含了 1 和 10
+// 另外一种写法
+1.to(10)
+res2: scala.collection.immutable.Range.Inclusive = Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+</code></pre>
+</li>
+<li>
+<p><code>Range</code>关键字：左闭右开</p>
+<pre><code class="language-scala">Range(1,10)
+res1: scala.collection.immutable.Range = Range(1, 2, 3, 4, 5, 6, 7, 8, 9)
+// 没有10
+Range(1,10,2)
+res3: scala.collection.immutable.Range = Range(1, 3, 5, 7, 9)
+</code></pre>
+</li>
+<li>
+<p><code>until</code>关键字：左闭右开</p>
+<pre><code class="language-scala">1 until 10
+res4: scala.collection.immutable.Range = Range(1, 2, 3, 4, 5, 6, 7, 8, 9)
+</code></pre>
+</li>
+<li>
+<p><code>for</code>循环 / <code>foreach</code>方法</p>
+<pre><code class="language-scala">// 第一种方法 使用for循环
+val courses = Array(&quot;1a&quot;,&quot;2b&quot;,&quot;3c&quot;,&quot;4d&quot;)
+for(course &lt;- sources) {
+  println(course)
+}
+// 输出 1a,2b,3c,4d
+// 第二种方法 使用foreach
+courses.foreach(course =&gt; println(course))
+// =&gt; : 相当于将course作用上右边的函数 变成另外一个结果
+// 输出 1a,2b,3c,4d
+</code></pre>
+</li>
+<li>
+<p><code>while</code>循环</p>
+<pre><code class="language-scala">var (num, sum) = (100,0)
+while(num &gt; 0){
+  sum= sum + num
+  num= num - 1
+}
+println(sum)
+// 输出5050
+</code></pre>
+</li>
+</ul>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（1）---- Scala基础]]></title>
@@ -23,6 +552,115 @@
         <link href="https://zu3zz.coding.me/post/scala-1">
         </link>
         <updated>2020-01-02T16:08:53.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="scala笔记">Scala笔记</h1>
+<h2 id="1-学习scala的意义">1.  学习Scala的意义：</h2>
+<ol>
+<li>钱</li>
+<li>做东西：Spark、Kafka、Flink 生态系统
+<ul>
+<li>优雅</li>
+<li>开发速度</li>
+<li>生态融合</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-scala安装">2. Scala安装</h2>
+<ol>
+<li>Java 8</li>
+<li>下载scala-2.11.8</li>
+<li>解压scala</li>
+<li>【可选】配置到环境变量</li>
+<li>执行<code>scala</code></li>
+</ol>
+<h2 id="3-scala使用入门">3. Scala使用入门</h2>
+<h3 id="31-scala-vs-java">3.1 Scala vs Java</h3>
+<ol>
+<li>
+<p>Java HelloWorld</p>
+<pre><code class="language-java">public class HelloWorld{
+  public static void main(String[] args){
+    System.out.println(&quot;Hello World&quot;);
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>Scala HelloWorld</p>
+<ul>
+<li>scala每行代码并不强求使用<code>;</code>结束，但是Java是必须的</li>
+</ul>
+<pre><code class="language-scala">object HelloWorld{
+  def main(args : Array[String]){
+    println(&quot;Hello World&quot;)
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="32-val-vs-var">3.2 val vs var</h3>
+<ol>
+<li>val：值（不可变）（优先使用）
+<ul>
+<li>Java 中的<code>final</code></li>
+<li><code>val 值名称：类型 = xxx</code></li>
+<li><code>val age:Int = 20</code></li>
+</ul>
+</li>
+<li>var：变量（可变）
+<ul>
+<li><code>var name = &quot;zhangsi&quot;</code></li>
+<li>可以修改name<code>name = &quot;zhangwu&quot;</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="33-基本数据类型">3.3 基本数据类型</h3>
+<ol>
+<li>
+<p>Byte / Char</p>
+</li>
+<li>
+<p>Short / Int / Long / Float / Double</p>
+</li>
+<li>
+<p>Boolean</p>
+</li>
+<li>
+<p>类型转换</p>
+<pre><code class="language-scala">val d:Float = 1.2f
+val g:Double = 10.asInstanceOf[Double]
+scala&gt; g
+res0: Double = 10.0
+</code></pre>
+</li>
+<li>
+<p>判断类型是否一致</p>
+<pre><code class="language-scala">val h = 10.isInstanceOf[Int]
+h: Boolean = true
+val h = 10.isInstanceOf[Double]
+h: Boolean = false
+</code></pre>
+</li>
+<li>
+<p><code>lazy</code>关键字的使用</p>
+<ul>
+<li>可以延迟加载避免直接报错</li>
+</ul>
+<pre><code class="language-scala">scala&gt; lazy val a = 1
+a: Int = &lt;lazy&gt;
+scala&gt; a
+res0: Int = 1
+</code></pre>
+</li>
+<li>
+<p>常用IDE</p>
+<ul>
+<li>IDEA</li>
+<li>Eclipse ide scala</li>
+<li>NetBeans（不常用）</li>
+</ul>
+</li>
+</ol>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[大数据学习(1) ---- Linux基础(1)]]></title>
@@ -30,6 +668,262 @@
         <link href="https://zu3zz.coding.me/post/ruozedata-1">
         </link>
         <updated>2019-12-10T15:11:25.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="大数据学习1-linux基础1">大数据学习（1）---- Linux基础（1）</h1>
+<h2 id="1-提前准备">1. 提前准备</h2>
+<ol>
+<li>
+<p>CentOS6.5 虚拟机 或者 CentOS7.x 云主机</p>
+</li>
+<li>
+<p>Xshell软件、CRT、PUTTY 进行远程登录（Mac用户使用自带命令行）</p>
+</li>
+<li>
+<p>使用ssh进行远程登录</p>
+<pre><code class="language-shel">ssh root@10.211.55.5
+登录linux虚拟机
+</code></pre>
+</li>
+</ol>
+<h2 id="2-常用linux命令">2. 常用Linux命令</h2>
+<ol>
+<li>
+<p>pwd</p>
+<pre><code class="language-shell">查看当前光标所在的目录
+显示从根目录/开始 绝对路径
+</code></pre>
+</li>
+<li>
+<p>用户窥探</p>
+<pre><code class="language-shell">root 超级管理员  123456      /root
+zth 普通用户  界面创建   			/home/zth
+lyj                        /home/lyj
+xxx                        /home/xxx
+默认系统是在/home目录下 除非指定用户的home目录为其他目录
+</code></pre>
+<ul>
+<li>Linux系统的目录是从根目录开始 /</li>
+</ul>
+</li>
+<li>
+<p>ls: 查看</p>
+<pre><code class="language-shell">ls / 只显示该目录下的文件或文件夹的名称
+ls -l / 显示该目录下的文件或文件夹的明细信息
+
+[root@hadoop001 zth]# ls -l /home
+总用量 20
+drwx------.  2 root root 16384 12月 10 17:28 lost+found
+drwx------. 28 zth  zth   4096 12月 10 17:40 zth
+权限          用户    用户组      时间         名称
+</code></pre>
+</li>
+<li>
+<p>cd: 切换目录</p>
+<pre><code class="language-shell">cd /home
+
+cd    		切家目录  
+cd ~  		切家目录 ~标识
+cd /root  用户的家目录的绝对路径
+
+cd -    	回到上一次目录
+cd ../  	回退上一层目录
+
+cd ../../ 回退2个目录
+</code></pre>
+</li>
+<li>
+<p>路径</p>
+<pre><code class="language-shell">绝对路径 /根目录开始
+相对路径 不以/开始
+[root@hadoop001 ~]# ls
+anaconda-ks.cfg  Downloads           Music     Templates
+Desktop          install.log         Pictures  Videos
+Documents        install.log.syslog  Public
+[root@hadoop001 ~]# cd Desktop/   相对
+[root@hadoop001 Desktop]# 
+
+[root@hadoop001 ~]# cd /root/Desktop/ 绝对
+[root@hadoop001 Desktop]# 
+</code></pre>
+</li>
+<li>
+<p>clear: 清空屏幕</p>
+</li>
+<li>
+<p>再讲 ls</p>
+<ul>
+<li>
+<p>ls 命令简写（只有在linux中才行）</p>
+<pre><code class="language-shell">ls -l ==&gt; ll
+</code></pre>
+</li>
+<li>
+<p>查看文件大小</p>
+<pre><code class="language-shell">ll -h
+</code></pre>
+</li>
+<li>
+<p>查看文件夹或者文件的大小</p>
+<pre><code class="language-shell">du -sh Desktop/
+du -sh install.log
+</code></pre>
+</li>
+<li>
+<p>找出最新的文件或者文件夹</p>
+<pre><code class="language-shell">ll -rt
+ll -rt == ls -l -r -t == ls -lrt
+</code></pre>
+</li>
+<li>
+<p>查看隐藏文件或文件夹（隐藏是以 . 开头的文件或文件夹）</p>
+<pre><code class="language-shell">ll -a
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>创建文件夹</p>
+<pre><code class="language-shell">mkdir bigdata 只能创建1个
+mkdir -p bigdata/1/2 级联创建文件夹 串行
+mkdir 4 5 6 并行
+</code></pre>
+</li>
+<li>
+<p>创建文件</p>
+<ul>
+<li>
+<p>touch的形式创建</p>
+<pre><code class="language-shell">touch zth.log 创建空文件
+</code></pre>
+</li>
+<li>
+<p>vi 的形式创建</p>
+<pre><code class="language-shell">vi zth.log 创建文件 重要！！
+1. 命令行模式 按 i 进入编辑模式
+2. esc 回退到命令行模式
+3. shift+:尾行模式  wq 保存退出
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>cp: 拷贝 2 份，原有的还在</p>
+<pre><code class="language-shell">cp zth.log bigdata/
+cp -r 7 6/         文件夹拷贝 需要-r参数
+</code></pre>
+</li>
+<li>
+<p>mv: 移动 1 份，即原有的移动到新位置</p>
+<pre><code class="language-shell">mv zth1.log 6                移动文件到新的地方 名称不变
+mv zth2.log  6/zth123.log    移动文件到新的地方 改变zth2.log名称为zth123.log   
+mv 8 6  移动文件夹
+</code></pre>
+</li>
+<li>
+<p>第一种命令帮助</p>
+<pre><code class="language-shell">[root@hadoop001 ~]# ls --help
+Usage: ls [OPTION]... [FILE]...
+[]代表可以省略
+ls
+ls jepson.log jepson.log可以省略
+ls -r -t			-r -t 就属于option
+</code></pre>
+</li>
+<li>
+<p>离线查看文件内容</p>
+<ul>
+<li>
+<p>cat</p>
+<pre><code class="language-shell">cat 文件内容一下子全部显示 适用字节内容较少
+</code></pre>
+</li>
+<li>
+<p>more</p>
+<pre><code class="language-shell">more 文件内容一页一页的往下翻 按空格键往下 
+回退不了 按q退出   适用字节内容稍多的 
+</code></pre>
+</li>
+<li>
+<p>less</p>
+<pre><code class="language-shell">less 文件内容 一行行 按箭头上下滚动  按q退出
+</code></pre>
+</li>
+<li>
+<p>| 管道符</p>
+<ul>
+<li>前面的shell脚本的输出 作为后面命令的输入</li>
+</ul>
+</li>
+<li>
+<p>grep过滤</p>
+<pre><code class="language-shell">grep -C 10 拿到前后上下文共 20 行
+
+&gt; 重定向输出到文件  如果文件中有内容则覆盖
+&gt; &gt; 追加
+</code></pre>
+</li>
+<li>
+<p>对文件的内容ERROR 定位错误</p>
+<pre><code class="language-shell">假如文件假如100m+
+cat install.log | grep -C 10 &quot;ERROR&quot;
+
+假如 ERROR赛选的结果 特多 将结果保存到 error.log 中
+cat install.log | grep -C 10 &quot;ERROR&quot; &gt; error.log
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>实时查看</p>
+<ol>
+<li>主要使用 tail 命令</li>
+</ol>
+<pre><code class="language-shell">打开实时窗口查看log日志
+tail -f tail1.log
+tail -F tail2.log
+-F = -f + retry
+</code></pre>
+<ul>
+<li>试验一下</li>
+</ul>
+<pre><code class="language-shell">[root@hadoop001 ~]# echo &quot;123&quot; &gt;&gt; tail1.log 
+[root@hadoop001 ~]# echo &quot;123&quot; &gt;&gt; tail2.log 
+[root@hadoop001 ~]# echo &quot;4&quot; &gt;&gt; tail1.log 
+[root@hadoop001 ~]# echo &quot;4&quot; &gt;&gt; tail2.log 
+此时tail1.log 与 tail2.log都可以正常输出
+</code></pre>
+<ul>
+<li>
+<p>生产上 xxxx.log日志大小 100m 一般保留10份</p>
+</li>
+<li>
+<p>如果将xxx.log 日志中内容移到xxx.log1中，此时 xxx.log 已经不存在</p>
+</li>
+<li>
+<p>而 -f 打开的tail1.log 并不能检测到 log 文件的发生的变化</p>
+</li>
+<li>
+<p>但是使用 -F 打开的tail2.log 文件 因为有 retry 可以检测文件发生的变化</p>
+<pre><code class="language-shell">tail: 'tail2.log' has become inaccessible: No such file or directory
+tail: 'tail2.log' has appeared;  following end of new file
+</code></pre>
+</li>
+<li>
+<p>说明-f 不够强大 文件只要被移走 就算新的一模一样 也不会实时监控<br>
+反之-F 强大 实时监控</p>
+</li>
+<li>
+<p>flume踩坑案例：tail -f<br>
+http://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html#exec-source</p>
+</li>
+<li>
+<p>特别需求： 查看倒数 50 行 只能用 f 不能用 F</p>
+<pre><code class="language-shell">tail -50f xxx.log
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[深入浅出MySQL(5) ---- MySQL常用函数]]></title>
@@ -37,6 +931,176 @@
         <link href="https://zu3zz.coding.me/post/mysql-5">
         </link>
         <updated>2019-11-04T16:21:19.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="深入浅出mysql5-mysql常用函数">深入浅出MySQL(5)-----MySQL常用函数</h1>
+<h2 id="1-数学函数">1. 数学函数</h2>
+<ol>
+<li><code>CEIL()</code>:进一取整</li>
+<li><code>FLOOR()</code> : 舍掉小数部分</li>
+<li><code>ROUND()</code> : 四舍五入</li>
+<li><code>TRUNCATE()</code> ： 截取小数点后几位</li>
+<li><code>MOD()</code> ： 取余数</li>
+<li><code>ABS()</code> ： 取绝对值</li>
+<li><code>POWER()</code>： 幂运算</li>
+<li><code>PI()</code>： 圆周率</li>
+<li><code>RAND()</code>或者<code>RAND(X)</code>: 0-1之间的随机数</li>
+<li><code>SIGN(X)</code>： 得到数字符号</li>
+<li><code>EXP(X)</code>： 计算 e 的 x 次方</li>
+</ol>
+<h2 id="2-字符串函数">2. 字符串函数</h2>
+<ol>
+<li><code>CHAR_LENGTH('ABCD')</code>: 计算字符的长短</li>
+</ol>
+<p><em>-- 测试字符串函数</em></p>
+<ol>
+<li>
+<p><code>CHAR_LENGTH()</code>:得到字符串的字符数</p>
+<pre><code class="language-sql">SELECT CHAR_LENGTH('abc');
+-- 返回3
+</code></pre>
+</li>
+<li>
+<p><code>LENGTH()</code>:返回字符串的长度</p>
+<pre><code class="language-sql">SELECT LENGTH('abc');
+-- 返回3
+</code></pre>
+<ul>
+<li>如果是中文，则返回原来ASCII码的长度</li>
+</ul>
+</li>
+<li>
+<p><code>CONCAT(s1,s2,....)</code>:将字符串合并成一个字符串</p>
+<pre><code class="language-sql">SELECT CONCAT('a','b','c');
+-- 如果字符串中包含NULL，返回拼接结果就是NULL
+-- 返回'abc'
+SELECT CONCAT('a','b','c',null);
+-- 返回 NULL
+</code></pre>
+</li>
+<li>
+<p><code>CONCAT_WS(x,s1,s2,s2....)</code>：以指定分隔符拼接字符串</p>
+<pre><code class="language-sql">SELECT CONCAT_WS('-','a','b','c');
+-- 如果null在拼接的内容中，则转化成空字符串
+SELECT CONCAT_WS('-','a','b','c',null);
+-- 如果分隔符为null，拼接的结果为null
+SELECT CONCAT_WS(null,'a','b','c');
+</code></pre>
+</li>
+<li>
+<p>将字符串转换成大写或者小写 <code>UPPER() | UCASE() | LOWER() | LCASE()</code></p>
+<pre><code class="language-sql">SELECT UPPER('hello king'),UCASE('hello imooc'),LOWER('HELLO ADMIN'),LCASE('HELLO EVERYBODY');
+</code></pre>
+</li>
+<li>
+<p>字符串的反转<code>REVERSE()</code></p>
+<pre><code class="language-sql">SELECT REVERSE('abc');
+</code></pre>
+</li>
+<li>
+<p><code>LEFT()|RIGHT()</code>:返回字符串的前几个字符或者后几个字符</p>
+<pre><code class="language-sql">SELECT LEFT('hello',2),RIGHT('hello',2);
+</code></pre>
+</li>
+<li>
+<p><code>LPAD()|RPAD():</code>用字符串填充到指定长度</p>
+<pre><code class="language-sql">SELECT LPAD('abc',10,'?');
+-- 返回'abc???????'
+SELECT RPAD('abc',10,'!');
+-- 返回'acb!!!!!!!'
+</code></pre>
+</li>
+<li>
+<p>去掉字符串两端的空格<code>TRIM() | LTRIM() | RTRIM():</code></p>
+<pre><code class="language-sql">SELECT CONCAT('*',TRIM(' abc '),'*'),
+CONCAT('*',LTRIM(' abc '),'*'),
+CONCAT('*',RTRIM(' abc '),'*');
+</code></pre>
+</li>
+<li>
+<p><code>REPEAT()</code>:重复指定的次数</p>
+<pre><code class="language-sql">SELECT REPEAT('hello',3);
+</code></pre>
+</li>
+<li>
+<p><code>REPLACE()</code>:字符串</p>
+<pre><code class="language-sql">SELECT REPLACE('hello king','king','queen');
+</code></pre>
+</li>
+<li>
+<p>截取字符串<code>SUBSTRING()</code></p>
+<pre><code class="language-sql">SELECT SUBSTRING('abcdef',1,3);
+</code></pre>
+</li>
+<li>
+<p>比较字符串<code>STRCMP()</code></p>
+<pre><code class="language-sql">SELECT STRCMP('a','b');
+</code></pre>
+</li>
+</ol>
+<h2 id="3-日期时间函数">3. 日期时间函数</h2>
+<ol>
+<li>
+<p>测试日期时间函数 &amp; 返回当前日期</p>
+<pre><code class="language-sql">SELECT CURDATE(),CURRENT_DATE();
+</code></pre>
+</li>
+<li>
+<p>返回当前时间</p>
+<pre><code class="language-sql">SELECT CURTIME(),CURRENT_TIME();
+</code></pre>
+</li>
+<li>
+<p>返回当前的日期时间</p>
+<pre><code class="language-sql">SELECT NOW(),CURRENT_TIMESTAMP(),SYSDATE();
+</code></pre>
+</li>
+<li>
+<p>返回日期中的月份和月份的名称</p>
+<pre><code class="language-sql">SELECT MONTH('2017-02-19');
+
+SELECT MONTH(CURDATE()),MONTHNAME(CURDATE());
+</code></pre>
+</li>
+<li>
+<p>返回星期几</p>
+<pre><code class="language-sql">SELECT DAYNAME(NOW());
+</code></pre>
+</li>
+<li>
+<p>返回一周内的第几天,0代表星期一</p>
+<pre><code class="language-sql">SELECT DAYOFWEEK(NOW());
+
+SELECT WEEK(NOW());
+
+SELECT YEAR(NOW()),MONTH(NOW()),DAY(NOW()),HOUR(NOW()),MINUTE(NOW()),SECOND(NOW());
+</code></pre>
+</li>
+<li>
+<p><code>DATEDIFF()</code>计算两个日期相差的天数</p>
+<pre><code class="language-sql">SELECT DATEDIFF('2017-03-06','2017-03-02');
+</code></pre>
+</li>
+</ol>
+<h2 id="4-其他常用函数">4. 其他常用函数</h2>
+<ol>
+<li>
+<p>测试其它常用函数</p>
+<pre><code class="language-sql">SELECT VERSION(),CONNECTION_ID();
+SELECT USER(),CURRENT_USER(),SYSTEM_USER(),SESSION_USER();
+</code></pre>
+</li>
+<li>
+<p>得到上一步插入操作产生AUTO_INCREMENT的值*</p>
+<pre><code class="language-sql">SELECT LAST_INSERT_ID();
+</code></pre>
+</li>
+<li>
+<p><code>PASSWORD()</code>:密码加密算法</p>
+<pre><code class="language-sql">SELECT MD5('king');
+SELECT PASSWORD('root');
+</code></pre>
+</li>
+</ol>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[深入浅出MySQL(4) ---- 常见数据操作]]></title>
@@ -44,6 +1108,459 @@
         <link href="https://zu3zz.coding.me/post/mysql-4">
         </link>
         <updated>2019-11-01T10:41:53.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="深入浅出mysql4-常见数据操作">深入浅出MySQL(4)-----常见数据操作</h1>
+<h2 id="1-添加记录">1. 添加记录</h2>
+<ol>
+<li>指定字段名称</li>
+</ol>
+<pre><code class="language-sql">INSERT [INTO] tbl_name [(col_name1,col_name2,...)] {VALUE|VALUES}(VALUES...);
+</code></pre>
+<ol start="2">
+<li>不指定字段名称</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name VALUE(value1,value2,...);
+</code></pre>
+<p>需要按照建表时的字段顺序给每一个字段赋值</p>
+<ol start="3">
+<li>列出指定字段</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name(字段名称1,字段名称2,...) VALUES(值1,值2,...);
+</code></pre>
+<ol start="4">
+<li>INSERT ... SET的形式</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name SET 字段名称1=值1,字段名称2=值2,...;
+</code></pre>
+<ol start="5">
+<li>INSERT ... SELECT</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name[(字段名称...)] SELECT 字段名称1,字段名称2,... FROM tbl_name [WHERE 条件];
+</code></pre>
+<ol start="6">
+<li>一次添加多条记录</li>
+</ol>
+<pre><code class="language-sql">INSERT tbl_name[(字段名称...)] VALUES(值1,值2,...),
+(值1,值2,...),
+(值1,值2,...)
+</code></pre>
+<h2 id="2-修改记录">2. 修改记录</h2>
+<pre><code class="language-sql">UPDATE tbl_name SET 字段名称1=值1,字段名称2=值2 [WHERE 条件];
+</code></pre>
+<p>如果不加条件，整个表中的记录都会被更新</p>
+<h2 id="3-删除记录">3. 删除记录</h2>
+<ol>
+<li>
+<p>普通删除</p>
+<pre><code class="language-sql">DELETE FROM tbl_name [WHERE 条件];
+</code></pre>
+</li>
+<li>
+<p>如果不添加条件，表中所有记录都会被删除</p>
+</li>
+<li>
+<p>DELETE清空数据表的时候不会重置AUTO_INCREMENT的值，但是可以通过ALTER语句将其置为1</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name AUTO_INCREMENT = 值x;
+</code></pre>
+</li>
+<li>
+<p>彻底清空数据表</p>
+<pre><code class="language-sql">TRUNCATE [TABLE] tbl_name;
+</code></pre>
+<ul>
+<li>清空表中所有记录</li>
+<li>会重置AUTO_INCREMENT的值</li>
+</ul>
+</li>
+</ol>
+<h2 id="4查询记录">4.查询记录</h2>
+<pre><code class="language-sql">SELECT select_expr,... FROM tbl_name
+[WHERE 条件]
+[GROUP BY {col_name|position} HAVING 二次筛选]
+[ORDER BY {col_name|position|expr} [ASC|DESC]]
+[LIMIT 限制结果集的显示条数]
+</code></pre>
+<ol>
+<li>
+<p>查询表中所有记录</p>
+<pre><code class="language-sql">SELECT * FROM tbl_name;
+</code></pre>
+<p>*<strong>表示所有字段</strong></p>
+</li>
+<li>
+<p>指定字段的信息</p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2,... FROM tbl_name;
+</code></pre>
+</li>
+<li>
+<p>使用库名.表名的形式，不用打开此数据库</p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2,... FROM db_name.tbl_name;
+</code></pre>
+</li>
+<li>
+<p>给字段起别名，建议写上 AS</p>
+<pre><code class="language-sql">SELECT 字段名称 [AS] 别名名称,... FROM db_name.tbl_name;
+</code></pre>
+</li>
+<li>
+<p>给数据表起别名</p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2,... FROM tbl_name [AS] 别名;
+</code></pre>
+</li>
+<li>
+<p>表名.字段名的形式</p>
+<pre><code class="language-sql">SELECT tbl_name.col_name,... FROM tbl_name;
+</code></pre>
+</li>
+<li>
+<p>WHERE 条件</p>
+<p>会筛选出所有符合条件的记录</p>
+<ul>
+<li>
+<p>比较运算符：</p>
+<pre><code class="language-txt">&gt; &gt;= &lt;= != &lt;&gt; &lt;=&gt;
+注意 &lt;=&gt; 和 = 的区别
+&lt;=&gt; 可以检测出NULL值
+</code></pre>
+</li>
+<li>
+<p>IS [NOT] NULL：检测值是否为NULL 或者 NOT NULL</p>
+</li>
+<li>
+<p>指定范围</p>
+<pre><code class="language-sql">[NOT] BETWEEN ... AND
+</code></pre>
+</li>
+<li>
+<p>指定集合</p>
+<pre><code class="language-sql">[NOT] IN (值1,值2,...)
+</code></pre>
+</li>
+<li>
+<p>逻辑运算符</p>
+<pre><code class="language-shell">AND 逻辑与
+OR  逻辑或
+</code></pre>
+</li>
+<li>
+<p>匹配字符</p>
+<pre><code class="language-sql">[NOT] LIKE
+% 任意长度的字符串
+_ 任意一个字符
+</code></pre>
+<pre><code class="language-sql">SELECT id,username,age FROM user1
+WHERE username like '%in%';
+id|username|age
+1 |king    |23
+</code></pre>
+<p>查询出叫张xx的人，使用'_'</p>
+<pre><code class="language-sql">SELECT id,username,age FROM user1
+WHERE username like '张__';
+id|username|age
+1 |张三丰   |23
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>GROUP BY 分组</p>
+<ol>
+<li>
+<p>把值相同放到一个组中，最终查询出的结果只会显示组中一条记录</p>
+</li>
+<li>
+<p>分组配合GROUP_CONCAT()查看组中某个字段的详细信息</p>
+<pre><code class="language-sql">SELECT GROUP_CONCAT(username),age,sex FROM user1 GROUP BY sex;
+GROUP_CONCAAT(username)|age|sex
+吴亦凡,张三,张四,王五,赵六 |23 |男
+章子怡,刘嘉玲,奶茶妹      |18 |女
+</code></pre>
+</li>
+<li>
+<p>配合聚合函数使用</p>
+<table>
+<thead>
+<tr>
+<th>聚合函数名</th>
+<th>统计记录总数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>COUNT()</td>
+<td>统计记录总数</td>
+</tr>
+<tr>
+<td>COUNT(字段名称)</td>
+<td>字段中为NULL的值，不会被统计进来</td>
+</tr>
+<tr>
+<td>COUNT（*）</td>
+<td>会同时统计NULL值</td>
+</tr>
+<tr>
+<td>SUM（）</td>
+<td>求和</td>
+</tr>
+<tr>
+<td>MAX（）</td>
+<td>求最大值</td>
+</tr>
+<tr>
+<td>MIN（）</td>
+<td>求最小值</td>
+</tr>
+<tr>
+<td>AVG（）</td>
+<td>求平均值</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>配合WITH ROLLUP 关键词使用：会在记录末尾添加一条记录，是上面所有记录的总和</p>
+</li>
+<li>
+<p>HAVING字句对分组结果进行二次筛选（WHERE是一次筛选）</p>
+</li>
+</ol>
+</li>
+<li>
+<p>ORDER BY 排序：ORDER BY 字段名称 ASC|DESC / ORDER BY rand() 随机排序</p>
+<pre><code class="language-sql">按照多个字段排序
+SELECT id,username,age
+FROM user1
+ORDER BY age ASC, id ASC;
+</code></pre>
+</li>
+<li>
+<p>LIMIT 限制结果集合显示条数</p>
+<ol>
+<li>LIMIT值：显示结果集的前几条记录</li>
+<li>LIMIT offset,row_count：从offset开始，显示几条记录，offset从0开始。</li>
+</ol>
+</li>
+</ol>
+<h2 id="5-多表查询">5. 多表查询</h2>
+<ol>
+<li>
+<p>笛卡尔积的形式</p>
+<p>表1：4条 / 表2：6条 / total：24条</p>
+</li>
+<li>
+<p>内连接的形式：用的比较多</p>
+<ul>
+<li>
+<p>相当于两个集合取交集，只取都符合条件的</p>
+</li>
+<li>
+<p>查询两个表中符合连接条件的记录</p>
+<pre><code class="language-sql">SELECT 字段名称1,... FROM tbl_name1
+INNER JOIN tbl_name2
+ON 条件
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>外连接</p>
+<ul>
+<li>
+<p>左外连接：以左表为主</p>
+<pre><code class="language-sql">SELECT 字段名称1,... FROM tbl_name1
+LEFT [OUTER] JOIN tbl_name2
+ON 条件;
+</code></pre>
+<p><strong>先显示左表中的全部记录，再去右表中查询符合条件的记录，不符合的以NULL代替</strong></p>
+</li>
+<li>
+<p>右外连接：以右表为主</p>
+<pre><code class="language-sql">SELECT 字段名称1,... FROM tbl_name1
+RIGHT [OUTER] JOIN tbl_name2
+ON 条件;
+</code></pre>
+<p><strong>先显示右表中的全部记录，再去左表中查询复合条件的记录，不符合的以NULL代替</strong></p>
+</li>
+<li>
+<p>全外连接：full outer join 全部都取出来</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="6-外键约束">6. 外键约束</h2>
+<p><strong>只有InnoDB存储引擎支持外键</strong></p>
+<ol>
+<li>创建外键</li>
+</ol>
+<ul>
+<li>
+<p>建表时候指定外键</p>
+<pre><code class="language-sql">[CONSTRAINT 外键名称]FOREIGN KEY(字段名称) REFERENCES 主表(字段名称)
+</code></pre>
+<ul>
+<li>子表的外键字段和主表的外键字段类型要相似;
+<ul>
+<li>如果是数值型要求一致,并且无符号也要一致</li>
+<li>如果是字符型，要求类型一致，长度可以不同</li>
+</ul>
+</li>
+<li>如果外键字段没有创建索引，MySQL会自动帮我们添加索引</li>
+<li>子表的外键关联的必须是父表的主键</li>
+<li>外键约束的参照操作
+<ol>
+<li><code>CASCADE</code>：从附表删除或更新，子表也跟着删除或者更新，级联的操作</li>
+<li><code>SET NULL</code>：从附表删除或者更新记录，并且设置子表的外键列为NULL</li>
+<li><code>NO ACTION | RESTRICT</code>：拒绝对父表做更新或者删除操作</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>动态添加外键</p>
+<ul>
+<li>
+<p>动态添加外键</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+ADD [CONSTRAINT 外键名称] FOREIGN KEY(外键字段) REFERENCES 主表(主键字段);
+</code></pre>
+<ul>
+<li>动态添加外键之前表中的记录一定都是合法的记录，没有脏值，否则外键添加不成功</li>
+</ul>
+</li>
+<li>
+<p>动态删除外键</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+DROP FOREIGN KEY fk_name;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-特殊形式的查询">7. 特殊形式的查询</h2>
+<ol>
+<li>
+<p>子查询</p>
+<ul>
+<li>
+<p>通过<code>SELECT</code>字段</p>
+<pre><code class="language-sql">SELECT 字段名称 FROM tbl_name WHERE col_name = (SELECT col_name FROM tbl_name);
+</code></pre>
+</li>
+<li>
+<p>内层语句查询的结果可以作为外层语句查询的条件</p>
+</li>
+<li>
+<p>由<code>IN</code>引发的子查询</p>
+<pre><code class="language-sql">SELECT * FROM emp
+WHERE depId IN (SELECT id FROM dep);
+</code></pre>
+</li>
+<li>
+<p>由比较运算符引出子查询</p>
+<pre><code class="language-sql">-- 查询出成绩最优
+SELECT id,username,score FROM stu
+WHERE score &gt;= (SELECT score FROM level where id = 1);
+</code></pre>
+</li>
+<li>
+<p>由<code>EXIST</code>引发的子查询:返回<code>bool</code>类型的结果,子查询为<code>true</code>才执行前面的语句</p>
+<pre><code class="language-sql">SELECT depName from del
+WHERE EXISTS (SELECT depName FROM dep WHERE id=10);
+</code></pre>
+</li>
+<li>
+<p>三个关键字<code>ANY</code> <code>SOME</code> <code>ALL</code></p>
+<table>
+<thead>
+<tr>
+<th>运算符\关键字</th>
+<th>ANY</th>
+<th>SOME</th>
+<th>ALL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt;、&gt;=</td>
+<td>最小值</td>
+<td>最小值</td>
+<td>最大值</td>
+</tr>
+<tr>
+<td>&lt;、&lt;=</td>
+<td>最大值</td>
+<td>最大值</td>
+<td>最小值</td>
+</tr>
+<tr>
+<td>=</td>
+<td>任意值</td>
+<td>任意值</td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;&gt;、!=</td>
+<td></td>
+<td></td>
+<td>任意值</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-sql">SELECT * FROM stu
+WHERE score &gt;= ANY(SELECT score FROM level);
+or
+WHERE score &gt;= SOME(SELECT score FROM level);
+or
+WHERE score &gt;= ALL(SELECT score FROM level);
+</code></pre>
+</li>
+<li>
+<p><code>INSERT ... SELECT</code> 的形式</p>
+<pre><code class="language-sql">INSERT user2 SELECT id,username FROM user1;
+</code></pre>
+</li>
+<li>
+<p><code>CREATE ... SELECT</code> 的形式</p>
+<pre><code class="language-sql">CREATE TABLE user1(
+	id int UNSIGNED AUTO_INCREMENT KEY,
+  username VARCHAR(20)
+)SELECT id,username FROM emp;
+</code></pre>
+</li>
+<li>
+<p><code>CREATE TABLE tbl_name LIKE tbl_name</code> 的形式创建一个表(新表中没有数据)</p>
+</li>
+</ul>
+</li>
+<li>
+<p>联合查询</p>
+<ul>
+<li>
+<p><code>UNION</code></p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2... FROM tbl_name1
+UNION
+SELECT 字段名称3,字段名称4... FROM tbl_name2;
+</code></pre>
+</li>
+<li>
+<p><code>UNION ALL</code></p>
+<pre><code class="language-sql">SELECT 字段名称1,字段名称2... FROM tbl_name1 
+UNION ALL
+SELECT 字段名称3,字段名称4... FROM tbl_name2;
+</code></pre>
+</li>
+<li>
+<p><code>UNION ALL</code> 是简单的合并，<code>UNION</code> 会去掉表中重复记录</p>
+</li>
+</ul>
+</li>
+<li>
+<p>自身连接查询</p>
+<ul>
+<li><strong>无限级分类的实现形式</strong></li>
+</ul>
+</li>
+</ol>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[深入浅出MySQL(3) ---- 存储引擎]]></title>
@@ -51,6 +1568,64 @@
         <link href="https://zu3zz.coding.me/post/mysql-3">
         </link>
         <updated>2019-10-28T12:57:15.000Z</updated>
+        <content type="html"><![CDATA[<p>🥉MySQL第三篇 存储引擎~🥉</p>
+<h2 id="1-myisam存储引擎">1. MyISAM存储引擎</h2>
+<ol>
+<li>
+<p>默认MyISAM的表会在磁盘中产生三个文件</p>
+<ul>
+<li>.frm：表结构文件</li>
+<li>.MYD：数据文件</li>
+<li>.MYI：索引文件</li>
+</ul>
+</li>
+<li>
+<p>可以在创建的时候指定数据文件和索引文件的存储位置，只有MyISAM表支持</p>
+<pre><code class="language-sql">DATA DIRECORY[=] 数据保存的绝对路径
+INDEX DIRECTORY[=] 索引文件保存的绝对路径
+</code></pre>
+</li>
+<li>
+<p>MyISAM单表最大支持的数据量是2^64次方条记录</p>
+</li>
+<li>
+<p>每个表最多可以建立64个索引</p>
+</li>
+<li>
+<p>如果是符合索引，每个符合索引最多包含16个列，索引值最大长度是1000B</p>
+</li>
+<li>
+<p>MyISAM引擎的存储格式</p>
+<ul>
+<li>定长（FIXED静态）：是指字段中不包含VARCHAR/TEXT/BLOB</li>
+<li>动态（DYNAMIC）：是指字段中包含了VARCHAR/TEXT/BLOB</li>
+<li>压缩（COMPRESSED）：myisampack创建</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-innodb存储引擎">2. InnoDB存储引擎</h2>
+<ol>
+<li>设计遵循ACID模型，支持事务，具有从服务崩溃中恢复的能力，能够最大限度保护用户的数据
+<ul>
+<li>原子性（Atomiocity）</li>
+<li>一致性（Consistency）</li>
+<li>隔离性（Isolation）</li>
+<li>持久性（Durability）</li>
+</ul>
+</li>
+<li>支持行级锁，可以提升多用户并发时的读写能力</li>
+<li>支持外键，保证数据的一致性和完整性</li>
+<li>InnoDB拥有自己独立的缓冲池，常用的数据和索引都在缓存中</li>
+<li>对于INSERT、UPDATE、DELETE操作，InnoDB会使用一种change buffering的机制来自动优化，还可以提供一致性的读，并且能够缓存变更的数据，减少磁盘I/O，提高性能。</li>
+<li>创建InnoDB表之后会产生两个文件
+<ol>
+<li>.frm表结构文件</li>
+<li>.idb，数据和索引存储表空间中</li>
+</ol>
+</li>
+<li>所有的表都需要创建主键，最好是配合上AUTO_INCREMENT,也可以放到经常查询的列作为主键</li>
+</ol>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[深入浅出MySQL(2) ---- 数据库、数据表、数据类型]]></title>
@@ -61,6 +1636,373 @@
         <summary type="html"><![CDATA[<p>🏖这一篇 我们讨论一下数据库和数据表的相关操作..</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>🏖这一篇 我们讨论一下数据库和数据表的相关操作..</p>
+<!-- more -->
+<h2 id="1-数据库相关操作">1. 数据库相关操作</h2>
+<h3 id="11创建数据库">1.1创建数据库</h3>
+<ul>
+<li>
+<p>普通创建</p>
+<pre><code class="language-sql">CREATE {DATABASE|SCHEMA} db_name;
+</code></pre>
+</li>
+<li>
+<p>检测数据库名称是否存在，不存在则创建</p>
+<pre><code class="language-sql">CREATE DATABASE [IF NOT EXISTS] db_name;
+</code></pre>
+</li>
+<li>
+<p>在创建数据库的同时指定编码方式</p>
+<pre><code class="language-sql">CREATE DATABASE [IF NOT EXISTS] db_name [DEFAULT] CHARACTER SET [=] charset;
+</code></pre>
+</li>
+<li>
+<p><strong>注意!</strong></p>
+<ol>
+<li>数据库名称最好有意义</li>
+<li>名称不要包含特殊字符或者是MySQL关键字</li>
+</ol>
+</li>
+</ul>
+<h3 id="12-查看当前服务器下全部数据库">1.2 查看当前服务器下全部数据库</h3>
+<pre><code class="language-sql">SHOW DATABASES|SCHEMAS;
+</code></pre>
+<h3 id="13-查看指定数据库的详细信息">1.3 查看指定数据库的详细信息</h3>
+<pre><code class="language-sql">SHOW CREATE BATABASE db_name;
+</code></pre>
+<h3 id="14-修改制定数据库的编码方式">1.4 修改制定数据库的编码方式</h3>
+<pre><code class="language-sql">ALTER DATABASE db_name [DEFAULT] CHARACTER SET [=] charset;
+</code></pre>
+<h3 id="15-打开指定数据库">1.5 打开指定数据库</h3>
+<pre><code class="language-sql">USE db_name;
+</code></pre>
+<h3 id="16-得到当前打开的数据库">1.6 得到当前打开的数据库</h3>
+<pre><code class="language-sql">SELECT DATABASE()|SCHEMA();
+</code></pre>
+<h3 id="17-删除指定的数据库">1.7 删除指定的数据库</h3>
+<ul>
+<li>
+<p>直接删除</p>
+<pre><code class="language-sql">DROP DATABASE db_name;
+</code></pre>
+</li>
+<li>
+<p>如果数据库存在则删除</p>
+<pre><code class="language-sql">DROP DATABASE [IF EXISTS] db_name;
+</code></pre>
+</li>
+</ul>
+<h2 id="2-数据表操作">2. 数据表操作</h2>
+<h3 id="21-数据表">2.1 数据表</h3>
+<ul>
+<li>是数据库最重要的组成部分之一，数据是保存在数据表中</li>
+<li>数据表由行（row）和列（column）来组成</li>
+<li>每个数据表中至少有一列，行可以有零行一行或者多行组成</li>
+<li>表名要求唯一，不要包含特殊字符，最好含义明确</li>
+</ul>
+<h3 id="22-创建表">2.2 创建表</h3>
+<pre><code class="language-sql">CREATE TABLE [IF NOT EXISTS] tbl_name(
+  字段名称 字段类型[完整性约束条件],
+  字段名称 字段类型[完整性约束条件]
+)ENGINE = 存储引擎 CHARSET=编码方式
+</code></pre>
+<p><strong>完整性约束条件：</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+<th style="text-align:center">具体细节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UNSIGNED</td>
+<td>无符号</td>
+<td style="text-align:center">没有负数，从0开始</td>
+</tr>
+<tr>
+<td>ZEROFILL</td>
+<td>零填充</td>
+<td style="text-align:center">当数据的显示长度不够的时候，可以使用前补0的效果填充至指定长度，字段会自动添加UNSIGNED</td>
+</tr>
+<tr>
+<td>NOT NULL</td>
+<td>非空约束</td>
+<td style="text-align:center">插入值的时候这个字段必须要给值，值不能为空</td>
+</tr>
+<tr>
+<td>DEFAULT</td>
+<td>默认值</td>
+<td style="text-align:center">如果插入记录的时候没有给字段赋值，则使用默认值</td>
+</tr>
+<tr>
+<td>PRIMARY KEY</td>
+<td>主键主键</td>
+<td style="text-align:center">标识记录的唯一性，值不能重复，一个表只能有一个主键，自动禁止为空</td>
+</tr>
+<tr>
+<td>AUTO_INCREMENT</td>
+<td>自动增长</td>
+<td style="text-align:center">只能用于数值列，而且配合索引使用，默认起始值从1开始，每次增长1</td>
+</tr>
+<tr>
+<td>UNIQUE KEY</td>
+<td>唯一性</td>
+<td style="text-align:center">一个表中可以有多个字段是唯一索引，同样的值不能重复，但是NULL值除外</td>
+</tr>
+<tr>
+<td>FOREIGN KEY</td>
+<td>外键</td>
+<td style="text-align:center">外键约束</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23-查看当前数据库下已有数据表">2.3 查看当前数据库下已有数据表</h3>
+<pre><code class="language-sql">SHOW TABLES;
+SHOW [FULL] TABLES [{FROM | IN} db_name]
+[LIKE 'pattern' | WHERE expr];
+</code></pre>
+<h3 id="24-查看指定数据表的详细信息">2.4 查看指定数据表的详细信息</h3>
+<pre><code class="language-sql">SHOW CREATE TABLE tbl_name;
+</code></pre>
+<h3 id="25-查看表结构">2.5 查看表结构</h3>
+<pre><code class="language-sql">DESC tbl_name;
+DESCRIBE tbl_name;
+SHOW COLUMNS FROM tbl_name;
+</code></pre>
+<h3 id="26-删除指定的数据表">2.6 删除指定的数据表</h3>
+<pre><code class="language-sql">DROP TABLE [IF EXISTS] tbl_name;
+</code></pre>
+<h3 id="27-表结构相关结构">2.7 表结构相关结构</h3>
+<ol>
+<li>
+<p>添加字段</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name;
+ADD 字段名称 字段属性 [完整性约束条件][FIRST|AFTER 字段名称]
+</code></pre>
+</li>
+<li>
+<p>删除字段</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name;
+DROP 字段名称
+</code></pre>
+</li>
+<li>
+<p>添加默认值</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+ALTER 字段名称 SET DEFAULT 默认值;
+</code></pre>
+</li>
+<li>
+<p>删除默认值</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+ALTER 字段名称 DROP DEFAULT;
+</code></pre>
+</li>
+<li>
+<p>修改字段类型、字段属性</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+MODIFY 字段名称 字段类型 [字段属性] [FIRST | AFTER 字段名称];
+</code></pre>
+</li>
+<li>
+<p>修改字段名称、字段类型、字段属性</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+CHANGE 原字段名称 新字段名称 字段类型 字段属性 [FIRST | AFTER 字段名称]
+</code></pre>
+</li>
+<li>
+<p>添加主键</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+ADD PRIMARY KEY(字段名称);
+</code></pre>
+</li>
+<li>
+<p>删除主键</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+DROP PRIMARY KEY;
+</code></pre>
+</li>
+<li>
+<p>添加唯一</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+ADD QNIQUE KEY|INDEX [index_name](字段名称)
+</code></pre>
+</li>
+<li>
+<p>删除唯一</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+DROP index_name;
+</code></pre>
+</li>
+<li>
+<p>修改数据表名称</p>
+<ul>
+<li>通过ALTER然后RENAME的格式</li>
+</ul>
+<pre><code class="language-sql">ALTER TABLE tbl_name
+RENAME [TO|AS] new_tbl_name;
+</code></pre>
+<ul>
+<li>直接RENAME</li>
+</ul>
+<pre><code class="language-sql">RENAME TABLE tbl_name TO new_tbl_name;
+</code></pre>
+</li>
+<li>
+<p>修改 AUTO_INCREMENT的值</p>
+<pre><code class="language-sql">ALTER TABLE tbl_name AUTO_INCREMENT=值
+</code></pre>
+</li>
+</ol>
+<h2 id="3-mysql中的数据类型">3. MYSQL中的数据类型</h2>
+<h3 id="31-数值型">3.1 数值型</h3>
+<ol>
+<li>整数型
+<ul>
+<li>TINYINT：字节1
+<ul>
+<li>有符号值： -128 到 127（-2<sup>7到2</sup>7-1）</li>
+<li>无符号值：0到255（0到2^8-1）</li>
+</ul>
+</li>
+<li>SMALLINT：字节2
+<ul>
+<li>有符号值：-32768到32767（-2<sup>15到2</sup>15-1）</li>
+<li>无符号值：0到65535（0到2^16-1）</li>
+</ul>
+</li>
+<li>MEDIUMINT：字节3
+<ul>
+<li>有符号值：-8388608到8388607（-2<sup>31到2</sup>31-1）</li>
+<li>无符号值：0到16777215（0到2^32-1）</li>
+</ul>
+</li>
+<li>INT：字节4
+<ul>
+<li>有符号值：-2<sup>31到2</sup>31-1</li>
+<li>无符号值：0到2^32-1</li>
+</ul>
+</li>
+<li>BIGINT：字节8
+<ul>
+<li>有符号值：-2<sup>63到2</sup>63-1</li>
+<li>无符号值：0到2^64-1</li>
+</ul>
+</li>
+<li>BOOL/BOOLEAN：字节1
+<ul>
+<li>等价于TINYINT（1）</li>
+<li>0为false，其余为true</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>浮点型
+<ul>
+<li>FLOAT[(M,D)]: 字节4
+<ul>
+<li>M是总位数，D是小数点后的位置</li>
+</ul>
+</li>
+<li>DOUBLE[(M,D)]: 字节8</li>
+<li>DECIMAL[(M,D)]: M+2</li>
+</ul>
+</li>
+</ol>
+<h3 id="32-字符串类型">3.2 字符串类型</h3>
+<ul>
+<li>类型综述</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>列类型</th>
+<th>存储需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CHAR(M)</td>
+<td>M个字节，0&lt;=M&lt;=255</td>
+</tr>
+<tr>
+<td>VARCHAR(M)</td>
+<td>L+1字节，其中L&lt;=M且0&lt;=M&lt;=65535</td>
+</tr>
+<tr>
+<td></td>
+<td>L+1个字节，其中L&lt;2^8</td>
+</tr>
+<tr>
+<td>TEXT</td>
+<td>L+2个字节，其中L&lt;2^16</td>
+</tr>
+<tr>
+<td></td>
+<td>L+3个字节，其中L&lt;2^24</td>
+</tr>
+<tr>
+<td>LONGTEXT</td>
+<td>L+4个字节，其中L&lt;2^32</td>
+</tr>
+<tr>
+<td>ENUM('value1','value2')</td>
+<td>1或2个字节，取决于枚举值的个数(最多65535个值)</td>
+</tr>
+<tr>
+<td>SET('value1','value2')</td>
+<td>1、2、3、4或者8个字节，取决于set成员的数目(最多64个)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>一些tips
+<ul>
+<li>CHAR效率高于VARCHAR,CHAR相当于拿空间换时间，VARCHAR拿时间换空间</li>
+<li>CHAR默认存储数据的时候，后面会用空格填充到指定长度；而在检索的时候会去掉后面空格；VARCHAR在保存的时候不进行填充，尾部的空格会留下</li>
+<li>TEXT列不能有默认值，检索的时候不存在大小写转换</li>
+</ul>
+</li>
+</ul>
+<h3 id="33-日期时间类型">3.3 日期时间类型</h3>
+<table>
+<thead>
+<tr>
+<th>列类型</th>
+<th>存储范围</th>
+<th>存储需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>-838:59:59 ~ 838:59:59</td>
+<td>3</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>1000-01-01 ~ 9999-12-31</td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>1000-01-01 00:00:00 ~ 9999-12-31 23:59:59</td>
+<td></td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>1970-01-01 00:00:01 UTC ~ 2038-01-19 03:14:07</td>
+<td>4</td>
+</tr>
+<tr>
+<td>YEAR</td>
+<td>1901-2155</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="34-二进制类型">3.4 二进制类型</h3>
 ]]></content>
     </entry>
     <entry>
@@ -72,6 +2014,97 @@
         <summary type="html"><![CDATA[<p>🍒MySQL笔记第一篇 相关概念~</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>🍒MySQL笔记第一篇 相关概念~</p>
+<!-- more -->
+<h2 id="1什么是数据库">1.什么是数据库</h2>
+<h3 id="11-概念">1.1 概念</h3>
+<ul>
+<li>数据库是按照数据结构来组织、存储和管理数据的仓库</li>
+</ul>
+<h3 id="12-常见数据库">1.2 常见数据库</h3>
+<ol>
+<li>Oracle</li>
+<li>DB2</li>
+<li>SQL Server</li>
+<li>Postgre SQL</li>
+<li>My SQL</li>
+</ol>
+<h3 id="13-相关术语">1.3 相关术语</h3>
+<ol>
+<li>数据库系统(Datebase System):DBS
+<ul>
+<li>数据库</li>
+<li>数据库管理系统</li>
+<li>应用开发工具</li>
+<li>管理员及用户</li>
+</ul>
+</li>
+<li>SQL语言
+<ul>
+<li>Structured Query Language: 结构化查询语言
+<ol>
+<li>DDL: 数据定义语言</li>
+<li>DML:数据操作语言</li>
+<li>DQL:数据库查询语言</li>
+<li>DCL:数据控制语言<br>
+🍋MySQL第二篇， 关于MySQL相关的操作和命令</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<!-- more -->
+<h2 id="2-配置文件">2. 配置文件</h2>
+<ul>
+<li>my.cnf是MySQL的配置文件</li>
+</ul>
+<h2 id="3-登录退出-mysql">3. 登录/退出 MySQL</h2>
+<ul>
+<li>
+<p>登录</p>
+<pre><code class="language-sh">$ mysql -uroot -p
+$ mysql -uroot -proot
+</code></pre>
+<ul>
+<li>
+<p>得到版本号</p>
+<pre><code class="language-sh">$ mysql -V
+$ mysql --version
+</code></pre>
+</li>
+<li>
+<p>登录的同时打开指定数据库</p>
+<pre><code class="language-sh">$ mysql -uroot -p -D db_name
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>退出</p>
+<pre><code class="language-sh">$ exit
+$ quit
+</code></pre>
+</li>
+<li>
+<p>登录信息中需要掌握的</p>
+<ul>
+<li>命令行结束符默认使用;或者\g来结束</li>
+<li>可以通过help或者\h或者?加上相关关键词来查看手册</li>
+<li>\c可以取消当前命令的执行</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-sql语句语法规范">4. SQL语句语法规范</h2>
+<ul>
+<li>常用MySQL的关键字我们需要大写，库名、表名、字段名称等使用小写</li>
+<li>SQL语句支持拆行操作，拆分的时候不能吧完整单词拆开</li>
+<li>数据库名称、表名称、字段名称不要使用MySQL的保留字，如果要使用，需要用反引号将其括起来</li>
+</ul>
+<h2 id="5-常用sql语句">5. 常用SQL语句</h2>
+<pre><code class="language-mysql">SELECT USER() -- 得到登录的用户
+SELECT VERSION() -- 得到 MySQL的版本信息
+SELECT NOW() -- 得到当前的日期时间
+SELECT DATABASE() --得到当前打开的数据库
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -87,19 +2120,923 @@
         <content type="html"><![CDATA[<p>🌈最近在学习消息中间件，由于大数据端天生靠近数据，所以在很多场景下，会需要对日志等文件进行分析<br>
 🎊那么这一系列，我们使用Python语言对常用的消息中间件进行一次整合<br>
 🎉看看如何将nginx、kafka、zookeeper、redis、logstash一起，使用python语言搭建一个日志报警系统吧</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringBoot系列(3) ---- 日志]]></title>
-        <id>https://zu3zz.coding.me/post/springboot-3</id>
-        <link href="https://zu3zz.coding.me/post/springboot-3">
-        </link>
-        <updated>2019-10-12T17:57:12.000Z</updated>
-        <summary type="html"><![CDATA[<p>🐽铛铛~ 到了我们SpringBoot系列的第三篇了<br>
-🛠这一篇章，我们聊聊SpringBoot中的日志与配置</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>🐽铛铛~ 到了我们SpringBoot系列的第三篇了<br>
-🛠这一篇章，我们聊聊SpringBoot中的日志与配置</p>
+<!-- more -->
+<h2 id="1-常用消息中间件比较">1. 常用消息中间件比较</h2>
+<h3 id="11-常用消息中间件介绍">1.1 常用消息中间件介绍</h3>
+<ul>
+<li>Redis</li>
+<li>RabbitMQ</li>
+<li>RocketMQ</li>
+<li>ZeroMQ</li>
+<li>Kafka</li>
+</ul>
+<h3 id="12-常用消息中间件对比">1.2 常用消息中间件对比</h3>
+<ul>
+<li>实现语言</li>
+<li>对外接口</li>
+<li>持久化策略</li>
+<li>消息处理模式</li>
+<li>时序保证</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>消息中间件</th>
+<th>实现语言</th>
+<th>持久化</th>
+<th>消息处理模式</th>
+<th>时序保证</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Redis</td>
+<td>C</td>
+<td>支持磁盘</td>
+<td>Push-Pull Pub-Sub</td>
+<td>有序</td>
+</tr>
+<tr>
+<td>RabbitMQ</td>
+<td>Erlang</td>
+<td>磁盘</td>
+<td>Push</td>
+<td>单消费者有序</td>
+</tr>
+<tr>
+<td>RocketMQ</td>
+<td>Java</td>
+<td>磁盘</td>
+<td>Puch-Pull</td>
+<td>同队列有序</td>
+</tr>
+<tr>
+<td>Kafka</td>
+<td>Scala</td>
+<td>磁盘</td>
+<td>Pull</td>
+<td>单Paritition有序</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-消息中间件常见概念">2. 消息中间件常见概念</h2>
+<h3 id="21-消息中间件中的各种概念和角色">2.1 消息中间件中的各种概念和角色</h3>
+<ul>
+<li>Producer/borker/cunsumer</li>
+<li>Queue/channel/topic</li>
+<li>Partition</li>
+<li>Publish/subscribe</li>
+<li>Acknowledge</li>
+</ul>
+<h3 id="22-生产者">2.2 生产者</h3>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1571396146907.png" alt="producer" loading="lazy"></figure>
+<h3 id="23-partition">2.3 Partition</h3>
+<ul>
+<li>一个topic可以分为多个partition</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://zu3zz.coding.me/post-images/1571396164758.png" alt="" loading="lazy"></figure>
+<h3 id="24-订阅">2.4 订阅</h3>
+<figure data-type="image" tabindex="3"><img src="https://zu3zz.coding.me/post-images/1571396178821.png" alt="" loading="lazy"></figure>
+<h3 id="25-消息确认机制">2.5 消息确认机制</h3>
+<ul>
+<li>只有经过用户确认的消息才会从queue中去除</li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://zu3zz.coding.me/post-images/1571396204405.png" alt="" loading="lazy"></figure>
+<h2 id="3-redis">3. Redis</h2>
+<h3 id="31-redis简介">3.1 Redis简介</h3>
+<p><strong>Redis关键词</strong></p>
+<ul>
+<li>Key-value</li>
+<li>高性能</li>
+<li>缓存</li>
+<li>C开发</li>
+<li>五大数据结构</li>
+<li>lua扩展</li>
+</ul>
+<h3 id="32-redis常见应用场景">3.2 Redis常见应用场景</h3>
+<ol>
+<li>
+<p>String</p>
+<ul>
+<li>缓存二进制对象，比如图片、序列化对象等</li>
+<li>计数器，比如文章访问量统计</li>
+<li>位运算，节约内存</li>
+</ul>
+</li>
+<li>
+<p>List</p>
+<ul>
+<li>获取最新的N条数据</li>
+<li>消息队列</li>
+<li>实时分析系统，比如服务器监控程序</li>
+</ul>
+</li>
+<li>
+<p>Hash</p>
+<ul>
+<li>
+<p>类似Python中的Dict</p>
+</li>
+<li>
+<p>存储具有多个属性的对象</p>
+</li>
+<li>
+<p>比如用户的年龄、姓名、性别、积分</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Set</p>
+<ul>
+<li>集合操作，比如通过交集实现共同关注，共同好友</li>
+<li>存储无序不重复数据，比如存储文章标签</li>
+</ul>
+</li>
+<li>
+<p>Sorted Set</p>
+<ul>
+<li>TopN排序，比如排行榜</li>
+<li>范围查找，比如判断ip地址所在地</li>
+<li>优先级队列</li>
+<li>过期项目处理</li>
+</ul>
+</li>
+<li>
+<p>Pub Sub</p>
+<ul>
+<li>实时消息系统</li>
+<li>比如即时聊天，群聊</li>
+</ul>
+</li>
+</ol>
+<h3 id="33-redis安装与默认配置">3.3 Redis安装与默认配置</h3>
+<h4 id="331redis服务器默认配置">3.3.1Redis服务器默认配置</h4>
+<ul>
+<li>端口号：port=6379</li>
+<li>IP地址 bind=0.0.0.0</li>
+<li>数据库存放位置 dir=./</li>
+<li>数据库名字 dbfilename=dump.rdb</li>
+<li>守护进程模式 daemonize=no</li>
+</ul>
+<h4 id="332-redis服务器配置文件">3.3.2 Redis服务器配置文件</h4>
+<ul>
+<li>
+<p>Redis服务器启用配置文件：运行</p>
+<pre><code class="language-shell">redis-server name.conf
+</code></pre>
+</li>
+<li>
+<p>查看redis服务器所有选项配置：运行</p>
+<pre><code class="language-shell">redis-cli config get '*'
+</code></pre>
+</li>
+<li>
+<p>查看redis服务器某个配置选项：运行</p>
+<pre><code class="language-shell">redis-cli config get xxx(e.g: bind)
+</code></pre>
+</li>
+</ul>
+<h4 id="333-常见参数">3.3.3 常见参数</h4>
+<ol>
+<li>--daemonize
+<ul>
+<li>含义：是否以守护进程的形式启动(后台启动)</li>
+<li>用法：daemonize yes|no</li>
+<li>默认值：no</li>
+<li>实例：daemonize yes</li>
+</ul>
+</li>
+<li>--bind
+<ul>
+<li>含义：redis监听的ip地址</li>
+<li>用法：bind ip地址</li>
+<li>默认值：127.0.0.1</li>
+<li>实例：bind 0.0.0.0(监听所有)</li>
+</ul>
+</li>
+<li>--port(一般不改)
+<ul>
+<li>含义：redis监听的端口号</li>
+<li>用法：port 端口号</li>
+<li>默认值：6379</li>
+<li>实例：port 6380</li>
+</ul>
+</li>
+<li>--dir
+<ul>
+<li>含义：redis持久化文件存放目录</li>
+<li>用法：dir 文件路径</li>
+<li>默认值：./</li>
+<li>实例：dir /mnt/redis/data/</li>
+</ul>
+</li>
+<li>--dbfilename
+<ul>
+<li>含义：redis持久化文件文件名</li>
+<li>用法：dbfilename 文件名</li>
+<li>默认值：dump.rdb</li>
+<li>实例：dbfilename xxxx.rdb(e.g. user.rdb)</li>
+</ul>
+</li>
+<li>--unixsocket(效率高于socket套接字)
+<ul>
+<li>含义：redis监听的unix套接字地址</li>
+<li>用法：unixsocket文件地址</li>
+<li>默认值：空</li>
+<li>实例：unixsocket /tmp/redis.sock</li>
+</ul>
+</li>
+</ol>
+<h3 id="34-redis常见操作和命令">3.4 Redis常见操作和命令</h3>
+<p><strong>首先使用redis-server启动redis服务，然后使用redis-cli进入命令行界面</strong></p>
+<h4 id="341-redis常用命令讲解">3.4.1 Redis常用命令讲解</h4>
+<ul>
+<li>测试客户端与服务器连接是否正常：PING</li>
+<li>获得符合规则的键名列表：KEYS pattern</li>
+<li>判断一个键是否存在：EXISTS key</li>
+<li>删除一个键：DEL key</li>
+<li>获取键的类型：TYPE key</li>
+<li>清空当前数据库所有数据：FLUSHDB</li>
+<li>设置一个键的生育生存时间：EXPIRE key seconds</li>
+<li>返回一个键的生育生存时间：TTL key</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; ping
+PONG
+127.0.0.1:6379&gt; keys *
+ 1) &quot;1558695101775_0.7258740928094547&quot;
+ 2) &quot;1558693978601_0.21519364815403463&quot;
+ 3) &quot;1558695158141_0.8666190807031027&quot;
+127.0.0.1:6379&gt; flushdb
+OK
+127.0.0.1:6379&gt; keys *
+(empty list or set)
+127.0.0.1:6379&gt; set foo bar
+OK
+127.0.0.1:6379&gt; keys foo
+1) &quot;foo&quot;
+127.0.0.1:6379&gt; type foo
+string
+127.0.0.1:6379&gt; exists foo
+(integer) 1
+127.0.0.1:6379&gt; del foo
+(integer) 1
+127.0.0.1:6379&gt; keys *
+(empty list or set)
+127.0.0.1:6379&gt; set foo bar
+OK
+127.0.0.1:6379&gt; expire foo 60
+(integer) 1
+127.0.0.1:6379&gt; ttl foo
+(integer) 58
+127.0.0.1:6379&gt; ttl foo
+(integer) -2
+</code></pre>
+<h4 id="342-redis常用命令之string">3.4.2 Redis常用命令之String</h4>
+<ul>
+<li>SET</li>
+<li>GET</li>
+<li>INCR(递增一个值为整数的string)</li>
+<li>MSET(批量设置)</li>
+<li>MGET(批量获取)</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; set foo barstring
+OK
+127.0.0.1:6379&gt; get foo
+&quot;barstring&quot;
+127.0.0.1:6379&gt; get ffo
+(nil)
+127.0.0.1:6379&gt; mset foo1 bar1 foo2 bar2 foo3 bar3
+OK
+127.0.0.1:6379&gt; mget foo1 foo2 foo3
+1) &quot;bar1&quot;
+2) &quot;bar2&quot;
+3) &quot;bar3&quot;
+127.0.0.1:6379&gt; set num 1
+OK
+127.0.0.1:6379&gt; incr num
+(integer) 2
+127.0.0.1:6379&gt; get num
+&quot;2&quot;
+</code></pre>
+<h4 id="343-redis常用命令讲解之hash">3.4.3 Redis常用命令讲解之Hash</h4>
+<ul>
+<li>HSET</li>
+<li>HGET</li>
+<li>HMSET</li>
+<li>HMGET</li>
+<li>HGETALL</li>
+<li>HDEL</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; hset user name 3zz
+(integer) 1
+127.0.0.1:6379&gt; hset user sex man
+(integer) 1
+127.0.0.1:6379&gt; hget user name
+&quot;3zz&quot;
+127.0.0.1:6379&gt; hgetall user
+1) &quot;name&quot;
+2) &quot;3zz&quot;
+3) &quot;sex&quot;
+4) &quot;man&quot;
+127.0.0.1:6379&gt; hdel user name
+(integer) 1
+127.0.0.1:6379&gt; hgetall user
+1) &quot;sex&quot;
+2) &quot;man&quot;
+127.0.0.1:6379&gt; del user
+(integer) 1
+127.0.0.1:6379&gt; exists user
+(integer) 0
+</code></pre>
+<h4 id="344-redis常用命令讲解之list">3.4.4 Redis常用命令讲解之List</h4>
+<ul>
+<li>LPUSH(从左侧放入)</li>
+<li>RPUSH(从右侧放入)</li>
+<li>LPOP(从左侧拿出)</li>
+<li>RPOP(从右侧拿出)</li>
+<li>BRPOP(有数据则返回，没有就一直等待直到有数据)</li>
+<li>LLEN(返回长度)</li>
+<li>LRANGE(返回从索引start到end两端的元素，左右都闭)</li>
+<li>RPOPLPUSH(先右拿出 左放入)</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; lpush list0 a
+(integer) 1
+127.0.0.1:6379&gt; lpush list0 b c 
+(integer) 4
+127.0.0.1:6379&gt; lrange list0 0 -1
+1) &quot;c&quot;
+2) &quot;b&quot;
+3) &quot;a&quot;
+127.0.0.1:6379&gt; rpush list0 d e
+(integer) 5
+127.0.0.1:6379&gt; lrange list0 0 -1
+1) &quot;c&quot;
+2) &quot;b&quot;
+3) &quot;a&quot;
+4) &quot;d&quot;
+5) &quot;e&quot;
+127.0.0.1:6379&gt; llen list0
+(integer) 5
+127.0.0.1:6379&gt; rpoplpush list0 list1
+&quot;e&quot;
+127.0.0.1:6379&gt; lrange list1 0 -1
+1) &quot;e&quot;
+127.0.0.1:6379&gt; lrange list0 0 -1
+1) &quot;c&quot;
+2) &quot;b&quot;
+3) &quot;a&quot;
+4) &quot;d&quot;
+127.0.0.1:6379&gt; rpoplpush list0 list0 
+&quot;d&quot;
+127.0.0.1:6379&gt; lrange list0 0 -1
+1) &quot;d&quot;
+2) &quot;c&quot;
+3) &quot;b&quot;
+4) &quot;a&quot;
+127.0.0.1:6379&gt; llen list0
+(integer) 4
+</code></pre>
+<h4 id="345-redis常用命令讲解之set">3.4.5 Redis常用命令讲解之Set</h4>
+<ul>
+<li>SADD</li>
+<li>SREM</li>
+<li>SMEMBERS</li>
+<li>SISMEMBER</li>
+<li>SDIFF(差集)</li>
+<li>SINTER(并集)</li>
+<li>SUNION(交集)</li>
+<li>SCARD(元素个数)</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; sadd letters a b
+(integer) 2
+127.0.0.1:6379&gt; SMEMBERS letters
+1) &quot;b&quot;
+2) &quot;a&quot;
+127.0.0.1:6379&gt; SISMEMBER letters a
+(integer) 1
+127.0.0.1:6379&gt; sadd setA 1 2 3
+(integer) 3
+127.0.0.1:6379&gt; sadd setB 2 3 4
+(integer) 3
+127.0.0.1:6379&gt; sdiff setA setB
+1) &quot;1&quot;
+127.0.0.1:6379&gt; SINTER seta setb
+(empty list or set)
+127.0.0.1:6379&gt; SINTER setA setB
+1) &quot;2&quot;
+2) &quot;3&quot;
+127.0.0.1:6379&gt; SUNION setA setB
+1) &quot;1&quot;
+2) &quot;2&quot;
+3) &quot;3&quot;
+4) &quot;4&quot;
+127.0.0.1:6379&gt; scard setA
+(integer) 3
+</code></pre>
+<h4 id="346-redis常用命令讲解之sorted-set">3.4.6 Redis常用命令讲解之Sorted Set</h4>
+<ul>
+<li>ZADD(添加元素)</li>
+<li>ZSCORE(获得某个元素)</li>
+<li>ZRANGE(按照次序给出存在的元素)</li>
+<li>ZRANGEBYSCORE(给出给定range里的所有元素，左右都闭)</li>
+<li>ZINCRBY(增加一个元素分数)</li>
+</ul>
+<pre><code class="language-shell">127.0.0.1:6379&gt; ZADD scoreboard 10 x 20 y 30 z 15 a
+(integer) 4
+127.0.0.1:6379&gt; zscore scoreboard y
+&quot;20&quot;
+127.0.0.1:6379&gt; zrange scoreboard 2 3
+1) &quot;y&quot;
+2) &quot;z&quot;
+127.0.0.1:6379&gt; ZRANGEBYSCORE scoreboard 15 25
+1) &quot;a&quot;
+2) &quot;y&quot;
+127.0.0.1:6379&gt; ZINCRBY scoreboard 30 x
+&quot;40&quot;
+</code></pre>
+<h2 id="4-python与redis">4. Python与Redis</h2>
+<h3 id="41-redis-python客户端介绍">4.1 Redis Python客户端介绍</h3>
+<blockquote>
+<p><strong>推荐使用redis-py</strong></p>
+</blockquote>
+<ul>
+<li>
+<p>Getting Started</p>
+<pre><code class="language-shell">&gt;&gt;&gt; import redis
+&gt;&gt;&gt; r = redis.StrictRedis(host=&quot;localhost&quot;, port=6379,db=0)
+&gt;&gt;&gt; r.set('foo','bar')
+True
+&gt;&gt;&gt; r.get('foo')
+'bar'
+</code></pre>
+</li>
+</ul>
+<h3 id="42-消息队列的插入与取出">4.2 消息队列的插入与取出</h3>
+<h4 id="421-基于-redis-py-生产者开发">4.2.1 基于 redis-py 生产者开发</h4>
+<ul>
+<li>
+<p>每2秒随机生成一个用户名插入到队列中</p>
+</li>
+<li>
+<p>LPUSH</p>
+<pre><code class="language-python"># producer1.py
+import redis 
+import names
+import time
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+while True:
+  time.sleep(2)
+  name = names.get_full_name()
+  x = r.lpush('names',name)
+  print(x,name)
+</code></pre>
+</li>
+</ul>
+<h4 id="422-基于-redis-py-消费者开发">4.2.2 基于 redis-py 消费者开发</h4>
+<ul>
+<li>
+<p>将队列中的用户名按照插入顺序取出并打印到屏幕上</p>
+</li>
+<li>
+<p>BRPOP</p>
+<pre><code class="language-python"># consumer1.py
+import redis
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+def consume(key):
+  while(True):
+    value = r.brpop(key)
+    yield value
+
+for v in consume('names'):
+  print(v)
+</code></pre>
+</li>
+</ul>
+<h3 id="43-基于频道的发布与订阅">4.3 基于频道的发布与订阅</h3>
+<h4 id="431-基于-redis-py-生产者开发">4.3.1 基于 redis-py 生产者开发</h4>
+<ul>
+<li>
+<p>每2秒随机生成一个用户名发布到频道中</p>
+</li>
+<li>
+<p>PUBLISH</p>
+<pre><code class="language-python"># producer2.py
+import redis 
+import names
+import time
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+while True:
+  time.sleep(2)
+  name = names.get_full_name()
+  x = r.publish('names',name)
+  print(x,name)
+</code></pre>
+</li>
+</ul>
+<h4 id="432-基于-redis-py-消费者开发">4.3.2 基于 redis-py 消费者开发</h4>
+<ul>
+<li>
+<p>订阅发布用户名的频道，有新的消息时打印到屏幕上</p>
+</li>
+<li>
+<p>SUBSCRIBE</p>
+<pre><code class="language-python"># consumer2.py
+import redis
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+ps = r.pubsub()
+ps.subscribe('names')
+
+for item in ps.listen():
+  print(item)
+</code></pre>
+</li>
+</ul>
+<h2 id="5-kafka">5. Kafka</h2>
+<h3 id="51-kafka简介与应用场景">5.1 Kafka简介与应用场景</h3>
+<ol>
+<li>
+<p>Kafka简介-关键词</p>
+<ul>
+<li>磁盘消息队列</li>
+<li>高性能</li>
+<li>分布式</li>
+<li>Zookeeper</li>
+<li>实时流处理</li>
+<li>重复消费</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--API</p>
+<ul>
+<li>生产者API</li>
+<li>消费者API</li>
+<li>流处理器API</li>
+<li>连接器API</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--生产者</p>
+<ul>
+<li>异步通信，所有网路请求异步发送</li>
+<li>批量发送，通过设置batch size或者timeout一次发送多个消息</li>
+<li>线程安全，多个线程之间可以共享单个生产者实例</li>
+<li>负载均衡，采用内部默认机制或者自定义负载均衡策略</li>
+<li>返回结果，返回消息的topic，offset等元数据</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--消费者</p>
+<ul>
+<li>统一API，不在区分high-level consumer API和low-level consumer API</li>
+<li>多次消费，不会删除已消费的信息，允许重复消费</li>
+<li>负载均衡，基于partition和consumer group自动负载均衡</li>
+<li>流量控制，允许开发者控制每次请求返回消息的条数</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--安全</p>
+<ul>
+<li>连接认证，连接到服务器的生产者和消费者客户端使用SSL或者SASL进行验证</li>
+<li>权限管理，broker连接Zookeeper进行权限管理</li>
+<li>加密传输，数据传输进行加密</li>
+<li>授权管理，客户端读、写操作可以进行授权管理</li>
+</ul>
+</li>
+<li>
+<p>Kafka简介--连接器<br>
+<img src="https://zu3zz.coding.me/post-images/1571396233737.jpeg" alt="" loading="lazy"></p>
+</li>
+</ol>
+<h3 id="52-kafka常见应用场景">5.2 Kafka常见应用场景</h3>
+<ul>
+<li>消息服务器</li>
+<li>网站活动跟踪</li>
+<li>实时数据流聚合</li>
+<li>日志聚合</li>
+</ul>
+<h3 id="53-kafka安装与简单用例">5.3 Kafka安装与简单用例</h3>
+<h4 id="531-安装">5.3.1 安装</h4>
+<ol>
+<li>
+<p>下载并且解压缩kafka安装包 这里选择当前最近的2.3.0版本</p>
+<pre><code class="language-shell">$ wget http://apache.website-solution.net/kafka/2.3.0/kafka-2.3.0-src.tgz
+$ tar -xzf kafka_2.12-2.3.0.tgz
+$ cd kafka_2.12-2.3.0
+</code></pre>
+</li>
+<li>
+<p>安装Gradle和Zookeeper，为了方便管理 这里统一使用</p>
+<pre><code class="language-shell">$ brew install gradle
+$ brew install zookeeper
+</code></pre>
+</li>
+</ol>
+<h4 id="532-启动服务">5.3.2 启动服务</h4>
+<ol>
+<li>
+<p>启动Zookeeper</p>
+<pre><code class="language-shell">$ bin/zookeeper-server-start.sh config/zookeeper.properties
+如果是使用homebrew 直接使用下面两条命令即可
+$ zkServer
+$ zkCli
+</code></pre>
+</li>
+<li>
+<p>启动kafka</p>
+<pre><code class="language-bash">$ bin/kafka-server-start.sh config/server.properties
+</code></pre>
+</li>
+</ol>
+<h4 id="533-创建一个topic">5.3.3 创建一个Topic</h4>
+<ol>
+<li>
+<p>创建一个测试用Topic</p>
+<pre><code class="language-shell">$ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+</code></pre>
+</li>
+<li>
+<p>查看当前已经创建的测试Topic</p>
+<pre><code class="language-shell">$ bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+test1
+</code></pre>
+<p>输出test1 说明创建成功</p>
+</li>
+</ol>
+<h4 id="534-消息的生产与消费">5.3.4 消息的生产与消费</h4>
+<ol>
+<li>
+<p>通过producer产生消息</p>
+<pre><code class="language-shell">$ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+&gt;this is message one
+&gt;this is message two
+</code></pre>
+</li>
+<li>
+<p>通过comsumer拿到所有当前消息</p>
+<pre><code class="language-shell">$ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+this is message one
+this is message two
+</code></pre>
+<p>成功输出输入的消息</p>
+</li>
+</ol>
+<h3 id="54-kafka的配置">5.4 Kafka的配置</h3>
+<h4 id="541-kafka服务器配置文件">5.4.1 Kafka服务器配置文件</h4>
+<ul>
+<li>
+<p>配置文件位于config/server.properties下</p>
+</li>
+<li>
+<p>通过如下命令将配置文件导出至broker.properties中</p>
+<pre><code class="language-shell">$ grep '^[^#]' server.properties &gt; broker.properties
+</code></pre>
+</li>
+<li>
+<p>查看broker.properties中去除了注释的内容</p>
+<pre><code class="language-shell">broker.id=0
+num.network.threads=3
+num.io.threads=8
+socket.send.buffer.bytes=102400
+socket.receive.buffer.bytes=102400
+socket.request.max.bytes=104857600
+log.dirs=/tmp/kafka-logs
+num.partitions=1
+num.recovery.threads.per.data.dir=1
+offsets.topic.replication.factor=1
+transaction.state.log.replication.factor=1
+transaction.state.log.min.isr=1
+log.retention.hours=168
+log.segment.bytes=1073741824
+log.retention.check.interval.ms=300000
+zookeeper.connect=localhost:2181
+zookeeper.connection.timeout.ms=6000
+group.initial.rebalance.delay.ms=0
+</code></pre>
+</li>
+</ul>
+<h4 id="542-kafka默认配置项">5.4.2 Kafka默认配置项</h4>
+<blockquote>
+<p>加粗的为重要配置</p>
+</blockquote>
+<ol>
+<li>
+<p>Disk IO</p>
+<ul>
+<li>num.io.threads = 8 设置broker处理磁盘IO的线程数</li>
+<li>num.partitions = 1 设置每个topic的分区个数</li>
+<li>num.recovery.threads.per.data.dir = 1 配置每个数据恢复时的线程数</li>
+<li><strong>log.dirs = /tmp/kafka-logs kafka数据的存放目录</strong></li>
+<li>log.retention.hours = 168 消息的存储时间 单位是小时</li>
+<li>log.segment.bytes = 1073741824 topic的partition是以segment的形式存储的</li>
+<li>log.retention.check.interval.ms=300000 定时检查文件大小</li>
+</ul>
+</li>
+<li>
+<p>Network</p>
+<ul>
+<li>num.network.threads = 3 设置broker处理网络请求的最大线程数 一般可设置为CPU的核数</li>
+<li>socket.send.buffer.bytes=102400 socket发送缓冲区的大小；-1即为操作系统默认值</li>
+<li>socket.receive.buffer.bytes=102400 接受缓冲区；-1为默认值</li>
+<li>socket.request.max.bytes=104857600 每一个socket的最大字节数</li>
+</ul>
+</li>
+<li>
+<p>Cluster</p>
+<ul>
+<li>
+<p>zookeeper.connect=localhost:2181 zookeeper的集群地址；值可以有多个，中间用逗号分隔</p>
+</li>
+<li>
+<p>zookeeper.connection.timeout.ms=6000 连接的超时时间</p>
+</li>
+<li>
+<p><strong>broker.id=0 broker在集群中的唯一标识；如果没有，zookeeper从1001开始递增</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="55-kafka相关概念">5.5 Kafka相关概念</h3>
+<h4 id="551-常见概念-集群">5.5.1 常见概念--集群</h4>
+<ul>
+<li>Cluster：集群</li>
+<li>Broker：每个服务器都是一个Broker</li>
+<li>Producer：生产者</li>
+<li>Consumer：消费者</li>
+<li>Consumer Group：实现topic广播的手段</li>
+</ul>
+<h4 id="552-常见概念-消息">5.5.2 常见概念--消息</h4>
+<ul>
+<li>Record：每一条消息</li>
+<li>Topic：每一个消息都会有一个Topic</li>
+<li>Partition：每个Topic包含一个或者多个Partition</li>
+<li>Segment：每个Partition包含一个或者多个Segment</li>
+<li>Offset：Partition中每个消息都有的序列号，可以唯一标识一条消息</li>
+<li>Replication：副本；kafka支持以Partition为单位对消息进行备份</li>
+<li>Leader：所有读写请求都由Leader来处理</li>
+</ul>
+<h4 id="553-常见概念-topic">5.5.3 常见概念--Topic</h4>
+<ul>
+<li>
+<p>Topic可以被看做是一个队列</p>
+<figure data-type="image" tabindex="5"><img src="https://zu3zz.coding.me/post-images/1571396270203.png" alt="topic" loading="lazy"></figure>
+</li>
+</ul>
+<h4 id="554-常见概念-partition">5.5.4 常见概念--Partition</h4>
+<figure data-type="image" tabindex="6"><img src="https://zu3zz.coding.me/post-images/1571396287204.png" alt="partition" loading="lazy"></figure>
+<h4 id="555-常见概念-segment">5.5.5 常见概念--Segment</h4>
+<figure data-type="image" tabindex="7"><img src="https://zu3zz.coding.me/post-images/1571396308603.png" alt="segment" loading="lazy"></figure>
+<h4 id="556-常见概念-集群">5.5.6 常见概念--集群</h4>
+<figure data-type="image" tabindex="8"><img src="https://zu3zz.coding.me/post-images/1571396330337.png" alt="集群" loading="lazy"></figure>
+<h2 id="6-python与kafka">6. Python与Kafka</h2>
+<ul>
+<li>由于有很多python库都可以使用kafka</li>
+<li>知名的有kafka-python；pykafka；faust；这里使用kafka-python</li>
+</ul>
+<blockquote>
+<p>使用pip安装</p>
+<p>pip install kafka-python</p>
+</blockquote>
+<ol>
+<li>
+<p>创建kafkaProducer.py</p>
+<pre><code class="language-python">from kafka import KafkaProducer
+import names
+
+producer = KafkaProducer()
+
+for _ in range(10):
+    name = names.get_full_name()
+    future = producer.send('test', bytes(name,'utf-8'))
+    result = future.get(60)
+    print(result)
+</code></pre>
+</li>
+<li>
+<p>创建kafkaConsumer.py</p>
+<pre><code class="language-python">from kafka import KafkaConsumer
+
+consumer = KafkaConsumer('test',group_id='test01')
+
+for msg in consumer:
+    print(msg)
+</code></pre>
+</li>
+<li>
+<p>进行数据的产生与消费</p>
+<pre><code class="language-shell">$ python kafkaProducer.py 
+RecordMetadata(topic='test', partition=0, topic_partition=TopicPartition(topic='test', partition=0), offset=14, timestamp=1571317704074, checksum=None, serialized_key_size=-1, serialized_value_size=15, serialized_header_size=-1)
+RecordMetadata(topic='test', partition=0, topic_partition=TopicPartition(topic='test', partition=0), offset=15, timestamp=1571317704182, checksum=None, serialized_key_size=-1, serialized_value_size=12, serialized_header_size=-1)
+...
+</code></pre>
+<pre><code class="language-shell">$ python kafkaConsumer.py 
+ConsumerRecord(topic='test', partition=0, offset=14, timestamp=1571317704074, timestamp_type=0, key=None, value=b'Margaret Medina', headers=[], checksum=None, serialized_key_size=-1, serialized_value_size=15, serialized_header_size=-1)
+ConsumerRecord(topic='test', partition=0, offset=15, timestamp=1571317704182, timestamp_type=0, key=None, value=b'Mark Mccarty', headers=[], checksum=None, serialized_key_size=-1, serialized_value_size=12, serialized_header_size=-1)
+...
+</code></pre>
+<p>可以看到，通过Producer产生的数据已经被Consumer成功拿到。</p>
+</li>
+</ol>
+<h2 id="7-框架整合">7. 框架整合</h2>
+<h3 id="71-采集日志">7.1 采集日志</h3>
+<h4 id="711-日志采集方案介绍">7.1.1 日志采集方案介绍</h4>
+<ul>
+<li>flume</li>
+<li>rsyslog</li>
+<li>heka</li>
+<li>logstash</li>
+</ul>
+<h4 id="712-nginx访问日志格式配置">7.1.2 nginx访问日志格式配置</h4>
+<ul>
+<li>
+<p>自定义日志格式</p>
+</li>
+<li>
+<p>直接输出json</p>
+<pre><code class="language-shell">log_format json '{&quot;@timestamp&quot;:&quot;$time_iso8601&quot;,'
+								'&quot;host&quot;:&quot;$server_addr&quot;,'
+								'&quot;clientip&quot;:&quot;$remote_addr&quot;,'
+								'&quot;size&quot;:$body_bytes_sent,'
+								'&quot;responsetime&quot;:$request_time,'
+								'&quot;upstreamtime&quot;:&quot;$upstream_response_time&quot;,'
+								'&quot;upstreamhost&quot;:&quot;$upstream_addr&quot;,'
+								'&quot;http_host&quot;:&quot;$host&quot;,'
+								'&quot;url&quot;:&quot;$url&quot;,'
+								'&quot;xff&quot;:&quot;$http_x_forwarded_for&quot;,'
+								'&quot;refer&quot;:&quot;$http_referer&quot;,'
+								'&quot;agent&quot;:&quot;$http_user_agent&quot;,'
+								'&quot;status&quot;:&quot;$status&quot;}';
+asscess_log /tmp/nginx/access.log json;
+</code></pre>
+</li>
+<li>
+<p>可以看到nginx的access日志就是json格式的了</p>
+</li>
+</ul>
+<h3 id="72-logstash配置">7.2 logstash配置</h3>
+<ul>
+<li>logstash配置主要分为以下三个部分
+<ol>
+<li>input</li>
+<li>filter</li>
+<li>output</li>
+</ol>
+</li>
+</ul>
+<h4 id="721-kafka插件">7.2.1 kafka插件</h4>
+<ul>
+<li>
+<p>配置logstash output kafka插件</p>
+<pre><code class="language-shell">input {
+    file {
+        path =&gt; &quot;/pot/openresty/nginx/logs/access.log&quot;
+        codec =&gt; json
+    }
+}
+filter {
+    # 对useragent进行预处理
+    useragent {
+        source =&gt; &quot;agent&quot;
+        target =&gt; &quot;user_agent&quot;
+        remove_field =&gt; &quot;agent&quot;
+    }
+    # 对ip地址的地区进行预处理
+    geoip {
+        source =&gt; &quot;clientip&quot;
+        target =&gt; &quot;geoip&quot;
+    }
+}
+output {
+    # debug用
+    stdout {
+        codec =&gt; rubydebug
+    }
+    # logstash output kafka插件
+    kafka {
+        codec =&gt; json
+        topic_id =&gt; &quot;nginx&quot;
+        # kafka对外地址
+        bootstrap_servers =&gt; &quot;localhost:9092&quot;
+    }
+}
+</code></pre>
+</li>
+</ul>
+<h3 id="73-启动日志">7.3 启动日志</h3>
+<p><strong>依次运行一下应用</strong></p>
+<ul>
+<li>nginx</li>
+<li>logstash</li>
+<li>kafka</li>
+<li>Zookeeper</li>
+</ul>
 ]]></content>
     </entry>
 </feed>
