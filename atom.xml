@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zu3zz.coding.me</id>
     <title>风袖</title>
-    <updated>2020-01-10T16:37:06.949Z</updated>
+    <updated>2020-01-10T16:46:58.598Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zu3zz.coding.me"/>
     <link rel="self" href="https://zu3zz.coding.me/atom.xml"/>
@@ -1117,7 +1117,7 @@ println(sum)
         <id>https://zu3zz.coding.me/post/scala-1</id>
         <link href="https://zu3zz.coding.me/post/scala-1">
         </link>
-        <updated>2020-01-02T16:08:53.000Z</updated>
+        <updated>2020-01-01T16:08:53.000Z</updated>
         <content type="html"><![CDATA[<h1 id="scala笔记">Scala笔记</h1>
 <h2 id="1-学习scala的意义">1.  学习Scala的意义：</h2>
 <ol>
