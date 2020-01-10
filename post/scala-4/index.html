@@ -35,17 +35,15 @@
           </p>
           <div class="toc-container hidden lg:block">
             <ul class="markdownIt-TOC">
-<li><a href="#scala%E7%AC%94%E8%AE%B0">Scala笔记</a>
+<li><a href="#scala-%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D">Scala 模式匹配</a>
 <ul>
-<li><a href="#1-%E5%AD%A6%E4%B9%A0scala%E7%9A%84%E6%84%8F%E4%B9%89">1.  学习Scala的意义：</a></li>
-<li><a href="#2-scala%E5%AE%89%E8%A3%85">2. Scala安装</a></li>
-<li><a href="#3-scala%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8">3. Scala使用入门</a>
-<ul>
-<li><a href="#31-scala-vs-java">3.1 Scala vs Java</a></li>
-<li><a href="#32-val-vs-var">3.2 val vs var</a></li>
-<li><a href="#33-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">3.3 基本数据类型</a></li>
-</ul>
-</li>
+<li><a href="#1-%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D">1. 基本模式匹配</a></li>
+<li><a href="#2-%E5%8A%A0%E6%9D%A1%E4%BB%B6">2. 加条件</a></li>
+<li><a href="#3-%E6%95%B0%E7%BB%84array%E4%B8%AD%E7%9A%84%E8%BF%87%E6%BB%A4">3. 数组(Array)中的过滤</a></li>
+<li><a href="#4-list%E4%B8%AD%E7%9A%84%E8%BF%87%E6%BB%A4">4. List中的过滤</a></li>
+<li><a href="#5-%E7%B1%BB%E5%9E%8B%E5%8C%B9%E9%85%8D">5. 类型匹配</a></li>
+<li><a href="#6-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">6. 异常处理</a></li>
+<li><a href="#7-case-class%E4%B8%AD%E7%9A%84%E5%8C%B9%E9%85%8D">7. Case Class中的匹配</a></li>
 </ul>
 </li>
 </ul>
@@ -100,120 +98,210 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">Scala学习笔记（1）---- Scala基础</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">Scala学习笔记（4）---- Scala模式匹配</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2020-01-03 / 2 min read
+          2020-01-04 / 5 min read
         </div>
         
         <div class="post-content yue">
-          <h1 id="scala笔记">Scala笔记</h1>
-<h2 id="1-学习scala的意义">1.  学习Scala的意义：</h2>
-<ol>
-<li>钱</li>
-<li>做东西：Spark、Kafka、Flink 生态系统
-<ul>
-<li>优雅</li>
-<li>开发速度</li>
-<li>生态融合</li>
-</ul>
-</li>
-</ol>
-<h2 id="2-scala安装">2. Scala安装</h2>
-<ol>
-<li>Java 8</li>
-<li>下载scala-2.11.8</li>
-<li>解压scala</li>
-<li>【可选】配置到环境变量</li>
-<li>执行<code>scala</code></li>
-</ol>
-<h2 id="3-scala使用入门">3. Scala使用入门</h2>
-<h3 id="31-scala-vs-java">3.1 Scala vs Java</h3>
+          <h1 id="scala-模式匹配">Scala 模式匹配</h1>
+<h2 id="1-基本模式匹配">1. 基本模式匹配</h2>
 <ol>
 <li>
-<p>Java HelloWorld</p>
-<pre><code class="language-java">public class HelloWorld{
-  public static void main(String[] args){
-    System.out.println(&quot;Hello World&quot;);
-  }
+<p><code>Java</code>中： 对一个值进行条件判断，返回针对不同的条件进行不同的处理：<code>switch case</code></p>
+</li>
+<li>
+<p><code>scala</code>中：</p>
+<pre><code class="language-scala">变量 match {
+  case value1 ==&gt; 代码1
+  case value2 ==&gt; 代码2
+  ....
+  case _ =&gt; 代码N
 }
 </code></pre>
 </li>
 <li>
-<p>Scala HelloWorld</p>
+<p>一个栗子</p>
+<pre><code class="language-scala">import scala.util.Random
+/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 12:10 上午
+ */
+object MatchApp extends App {
+  val names = Array(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+  val name = names(Random.nextInt(names.length))
+  name match{
+    case &quot;a&quot; =&gt; println(1)
+    case &quot;b&quot; =&gt; println(2)
+    case _ =&gt; println(&quot;不知道&quot;)
+  }
+  def judgeGrade(grade: String): Unit ={
+    grade match{
+      case &quot;A&quot; =&gt; println(&quot;Excellent..&quot;)
+      case &quot;B&quot; =&gt; println(&quot;Good..&quot;)
+      case &quot;C&quot; =&gt; println(&quot;Just so so..&quot;)
+      case _ =&gt; println(&quot;u need worker harder&quot;)
+    }
+  }
+  judgeGrade(&quot;A&quot;)
+  judgeGrade(&quot;C&quot;)
+  judgeGrade(&quot;G&quot;)
+}
+// 输出结果
+1
+Excellent..
+Just so so..
+u need worker harder
+</code></pre>
+</li>
+</ol>
+<h2 id="2-加条件">2. 加条件</h2>
 <ul>
-<li>scala每行代码并不强求使用<code>;</code>结束，但是Java是必须的</li>
+<li>
+<p>双重过滤</p>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 12:10 上午
+ */
+object MatchApp extends App {
+  def judgeGrade(name:String, grade: String): Unit ={
+    grade match{
+      case &quot;A&quot; =&gt; println(&quot;Excellent..&quot;)
+      case &quot;B&quot; =&gt; println(&quot;Good..&quot;)
+      case &quot;C&quot; =&gt; println(&quot;Just so so..&quot;)
+      case _ if(name == &quot;lisi&quot;) =&gt; println(name + &quot; u need worker harder&quot;)
+      case _  =&gt; println(&quot;u need worker harder&quot;)
+    }
+  }
+  judgeGrade(&quot;zhangsan&quot;,&quot;D&quot;)
+  judgeGrade(&quot;lisi&quot;,&quot;D&quot;)// 双重过滤
+}
+// 输出
+u need worker harder
+lisi u need worker harder
+</code></pre>
+</li>
 </ul>
-<pre><code class="language-scala">object HelloWorld{
-  def main(args : Array[String]){
-    println(&quot;Hello World&quot;)
+<h2 id="3-数组array中的过滤">3. 数组(Array)中的过滤</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 12:10 上午
+ */
+object MatchApp extends App {
+  def greeting(array: Array[String]): Unit = {
+    array match {
+      case Array(&quot;zhangsan&quot;) =&gt; println(&quot;hello zhangsan&quot;)
+      case Array(x, y) =&gt; println(&quot;hi: &quot; + x +&quot; and &quot; + y)
+      case Array(&quot;zhangsan&quot;, _*) =&gt; println(&quot;hi: zhangsan and other&quot;)
+      case _ =&gt; println(&quot;hi everybody&quot;)
+    }
+  }
+  greeting(Array(&quot;zhangsan&quot;))
+  greeting(Array(&quot;zhangsan&quot;, &quot;lisi&quot;))
+  greeting(Array(&quot;zhangsan&quot;, &quot;lisi&quot;, &quot;wangwu&quot;))
+}
+// 返回结果
+hello zhangsan
+hi: zhangsan and lisi
+hi: zhangsan and other
+</code></pre>
+<h2 id="4-list中的过滤">4. List中的过滤</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 12:10 上午
+ */
+object MatchApp extends App {
+  def greeting(list: List[String]): Unit = {
+    list match {
+      case &quot;zhangsan&quot; :: Nil =&gt; println(&quot;Hi: zhangsan&quot;)
+      case x :: y :: Nil =&gt; println(&quot;Hi:&quot; + x + &quot; , &quot; + y)
+      case &quot;zhangsan&quot;::tail =&gt; println(&quot;Hi: zhangsan and others&quot;)
+      case _ =&gt; println(&quot;hi: everyone&quot;)
+    }
+  }
+  greeting(List(&quot;zhangsan&quot;))
+  greeting(List(&quot;zhangsan&quot;,&quot;lisi&quot;))
+  greeting(List(&quot;zhangsan&quot;,&quot;lisi&quot;,&quot;wangwu&quot;))
+  greeting(List(&quot;wangwu&quot;,&quot;zhangsan&quot;,&quot;lisi&quot;))
+}
+// 返回
+Hi: zhangsan
+Hi: zhangsan , lisi
+Hi: zhangsan and others
+hi: everyone
+</code></pre>
+<h2 id="5-类型匹配">5. 类型匹配</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 12:10 上午
+ */
+object MatchApp extends App {
+  def matchType(obj: Any): Unit = {
+    obj match {
+      case x: Int =&gt; println(&quot;Int&quot;)
+      case s:String =&gt; println(&quot;String&quot;)
+      case m:Map[_,_] =&gt; m.foreach(println)
+      case _ =&gt; println(&quot;other type&quot;)
+    }
+  }
+  matchType(1)
+  matchType(&quot;1&quot;)
+  matchType(Map(&quot;name&quot; -&gt; &quot;a&quot;))
+  matchType(1f)
+}
+// 返回
+Int
+String
+(name,a)
+other type
+</code></pre>
+<h2 id="6-异常处理">6. 异常处理</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 1:26 上午
+ */
+object ExceptionApp extends App {
+  try {
+    val i = 10 / 0
+    println(i)
+  } catch {
+    case e: ArithmeticException =&gt; println(&quot;除数不能为0&quot;)
+    case e: Exception =&gt; println(e.getMessage)
+  } finally {
+    // 释放资源
   }
 }
 </code></pre>
-</li>
-</ol>
-<h3 id="32-val-vs-var">3.2 val vs var</h3>
-<ol>
-<li>val：值（不可变）（优先使用）
 <ul>
-<li>Java 中的<code>final</code></li>
-<li><code>val 值名称：类型 = xxx</code></li>
-<li><code>val age:Int = 20</code></li>
+<li>在catch中判断异常</li>
+<li>在finally中释放资源</li>
 </ul>
-</li>
-<li>var：变量（可变）
-<ul>
-<li><code>var name = &quot;zhangsi&quot;</code></li>
-<li>可以修改name<code>name = &quot;zhangwu&quot;</code></li>
-</ul>
-</li>
-</ol>
-<h3 id="33-基本数据类型">3.3 基本数据类型</h3>
-<ol>
-<li>
-<p>Byte / Char</p>
-</li>
-<li>
-<p>Short / Int / Long / Float / Double</p>
-</li>
-<li>
-<p>Boolean</p>
-</li>
-<li>
-<p>类型转换</p>
-<pre><code class="language-scala">val d:Float = 1.2f
-val g:Double = 10.asInstanceOf[Double]
-scala&gt; g
-res0: Double = 10.0
+<h2 id="7-case-class中的匹配">7. Case Class中的匹配</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 1:26 上午
+ */
+object ExceptionApp extends App {
+  def caseclassMatch(person: Person): Unit ={
+    person match{
+      case CTO(name, floor) =&gt; println(&quot;CTO name is &quot;+name+&quot; ,floor: &quot;+ floor)
+      case Employee(name, floor) =&gt; println(&quot;Employee name is &quot;+name+&quot; ,floor: &quot;+ floor)
+      case _ =&gt; println(&quot;other&quot;)
+    }
+  }
+  class Person
+  case class CTO(name:String, floor:String) extends Person
+  case class Employee(name:String, floor:String) extends Person
+  case class Other(name:String) extends Person
+  caseclassMatch(CTO(&quot;3zz&quot;,&quot;22&quot;))
+  caseclassMatch(Employee(&quot;zhangsan&quot;, &quot;2&quot;))
+  caseclassMatch(Other(&quot;lisi&quot;))
+}
+// 返回
+CTO name is 3zz ,floor: 22
+Employee name is zhangsan ,floor: 2
+other
 </code></pre>
-</li>
-<li>
-<p>判断类型是否一致</p>
-<pre><code class="language-scala">val h = 10.isInstanceOf[Int]
-h: Boolean = true
-val h = 10.isInstanceOf[Double]
-h: Boolean = false
-</code></pre>
-</li>
-<li>
-<p><code>lazy</code>关键字的使用</p>
-<ul>
-<li>可以延迟加载避免直接报错</li>
-</ul>
-<pre><code class="language-scala">scala&gt; lazy val a = 1
-a: Int = &lt;lazy&gt;
-scala&gt; a
-res0: Int = 1
-</code></pre>
-</li>
-<li>
-<p>常用IDE</p>
-<ul>
-<li>IDEA</li>
-<li>Eclipse ide scala</li>
-<li>NetBeans（不常用）</li>
-</ul>
-</li>
-</ol>
 
         </div>
 
@@ -231,10 +319,10 @@ res0: Int = 1
         <div class="flex justify-between py-8">
           
             <div class="prev-post">
-              <a href="https://zu3zz.coding.me/post/scala-2">
+              <a href="https://zu3zz.coding.me/post/scala-5">
                 <h3 class="post-title">
                   <i class="remixicon-arrow-left-line"></i>
-                  Scala学习笔记（2） ---- Scala函数
+                  Scala学习笔记（5）---- Scala集合
                 </h3>
               </a>
             </div>
@@ -242,9 +330,9 @@ res0: Int = 1
 
           
             <div class="next-post">
-              <a href="https://zu3zz.coding.me/post/ruozedata-1">
+              <a href="https://zu3zz.coding.me/post/scala-3">
                 <h3 class="post-title">
-                  大数据学习(1) ---- Linux基础(1)
+                  Scala学习笔记（3） ---- Scala对象
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>

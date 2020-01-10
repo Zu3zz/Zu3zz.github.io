@@ -31,38 +31,20 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            烟蛾敛略不胜态，风袖低昂如有情
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/zu3zz" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-                <a href="https://www.zhihu.com/people/ga-me-35/activities" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-zhihu-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2">Scala隐式转换</a>
+<ul>
+<li><a href="#1-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E6%A6%82%E5%BF%B5">1. 隐式转换概念</a></li>
+<li><a href="#2-%E4%BE%8B%E5%AD%90">2. 例子</a></li>
+<li><a href="#3-%E9%9A%90%E5%BC%8F%E5%8F%82%E6%95%B0%E4%BE%8B%E5%AD%90">3. 隐式参数例子</a></li>
+<li><a href="#4-%E9%9A%90%E5%BC%8F%E7%B1%BB%E4%BE%8B%E5%AD%90">4. 隐式类例子</a></li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -112,57 +94,134 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-line"></i> algorithm
-        </h2>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Scala学习笔记（7）---- Scala隐式转换</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-01-11 / 3 min read
+        </div>
         
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://zu3zz.coding.me/post/leetcode-double-week-10">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">LeetCode-double-week-10</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p>👏👏👏又到了每周拼手速的时刻了！这周题目难度适中 冲！</p>
+        <div class="post-content yue">
+          <h1 id="scala隐式转换">Scala隐式转换</h1>
+<h2 id="1-隐式转换概念">1. 隐式转换概念</h2>
+<ul>
+<li>隐式转换就是将一个类赋予另外一个类中的属性和能力</li>
+</ul>
+<h2 id="2-例子">2. 例子</h2>
+<ul>
+<li>将所有隐式转换的方法单独放到一个文件中</li>
+</ul>
+<pre><code class="language-scala">// ImplicitApp.scala
+import java.io.File
+/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 11:15 下午
+ */
+object ImplicitAspect {
+  // 定义隐式转换函数即可
+  // 案例1 将只有eat方法的普通人变成有fly方法的超人
+  implicit def man2superman(man:Man): Superman = new Superman(man.name)
+  // 案例2 为File对象添加直接读的方法
+  implicit def file2Richfile(file: File): Richfile = new Richfile(file)
+}
+</code></pre>
+<ul>
+<li>在需要使用的文件进行引入</li>
+</ul>
+<pre><code class="language-scala">import java.io.File
+import ImplicitAspect._
+/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 11:00 下午
+ */
+object ImplicitApp extends App {
+  // 定义隐式转换函数即可
+  // 案例1
+  val man = new Man(&quot;3z&quot;)
+  man.fly() // 能够成功飞行
+  // 案例2 为File对象添加直接读的方法
+  val file = new File(&quot;/Users/3zz/Desktop/test.txt&quot;)
+  file.read() // 能够正常读出文件
+}
+class Man(val name: String) {
+  def eat(): Unit = {
+    println(s&quot;man $name is eating&quot;)
+  }
+}
+class Superman(val name: String) {
+  def fly(): Unit = {
+    println(s&quot;superman $name is flying&quot;)
+  }
+}
+class Richfile(val file:File){
+  def read() ={
+    scala.io.Source.fromFile(file.getPath).mkString
+  }
+}
+</code></pre>
+<h2 id="3-隐式参数例子">3. 隐式参数例子</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 11:00 下午
+ */
+object ImplicitApp extends App {
+  implicit val test = &quot;test&quot;
+  def testParam(implicit name:String ): Unit ={
+    println(name)
+  }
+//  testParam 什么都不填会报错 (如果在上面定义了test 就不会报错)
+//  testParam(&quot;123&quot;) 正常输出 123
+  implicit val name1: String = &quot;implicit_name&quot;
+  testParam // 此时有了implicit 就不会报错 正常输出 implicit_name
+  testParam(&quot;3z&quot;) // 输出 3z
+  implicit val s1 = &quot;s1&quot;
+  implicit val s2 = &quot;s3&quot;
+  testParam // 此时会报错 因为有两个不确定
+}
+</code></pre>
+<h2 id="4-隐式类例子">4. 隐式类例子</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 11:32 下午
+ */
+object ImplicitClassApp extends App {
+  implicit class Cal(x:Int){
+    def add(a:Int) = a + x
+  }
+  // 1本身是没有add方法的
+  // 上面的隐式类为所有的Int类型添加了add方法
+  println(1.add(3)) // 4
+}
+</code></pre>
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-10-06 / 6 min read</div>
-    </div>
-  </section>
+        </div>
 
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://zu3zz.coding.me/post/leetcode-stock">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">leetcode-股票买卖问题(121,122,123,188,309,714)</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/K58cfvIBJ">
+            <span class="flex-auto">scala</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
+          </a>
+        
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-08-18 / 6 min read</div>
-    </div>
-  </section>
 
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://zu3zz.coding.me/post/heap-sort">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">堆排序(Heap Sort)</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
+        <div class="flex justify-between py-8">
+          
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-08-17 / 2 min read</div>
-    </div>
-  </section>
+          
+            <div class="next-post">
+              <a href="https://zu3zz.coding.me/post/scala-6">
+                <h3 class="post-title">
+                  Scala学习笔记（6）---- Scala函数高级操作
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
 
-        <div class="pagination-container animated fadeIn">
-  
-  
-</div>
+        
 
       </div>
     </div>

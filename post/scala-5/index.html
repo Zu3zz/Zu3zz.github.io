@@ -35,19 +35,24 @@
           </p>
           <div class="toc-container hidden lg:block">
             <ul class="markdownIt-TOC">
-<li>
+<li><a href="#scala%E9%9B%86%E5%90%88">Scala集合</a>
 <ul>
-<li><a href="#188-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-iv">188. 买卖股票的最佳时机 IV</a></li>
-<li><a href="#188%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAiv">188.买卖股票的最佳时机IV</a>
+<li><a href="#1-%E6%95%B0%E7%BB%84">1. 数组</a>
 <ul>
-<li><a href="#python-solution">python solution</a></li>
+<li><a href="#11-%E5%AE%9A%E9%95%BF%E6%95%B0%E7%BB%84array">1.1 定长数组<code>Array</code></a></li>
+<li><a href="#12-%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84arraybuffer">1.2 变长数组<code>ArrayBuffer</code></a></li>
 </ul>
 </li>
-<li><a href="#309%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%E5%90%AB%E5%86%BB%E7%BB%93%E6%9C%9F">309.买卖股票的最佳时机含冻结期</a>
+<li><a href="#2-list">2. List</a>
 <ul>
-<li><a href="#python-solution-2">python solution</a></li>
+<li><a href="#21-nil%E6%98%AF%E4%BB%80%E4%B9%88">2.1 Nil是什么</a></li>
+<li><a href="#22-list%E4%BD%BF%E7%94%A8">2.2 List使用</a></li>
 </ul>
 </li>
+<li><a href="#3-set">3. Set</a></li>
+<li><a href="#4-map">4. Map</a></li>
+<li><a href="#5-option-some-none">5. Option &amp; Some &amp; None</a></li>
+<li><a href="#6-tuple">6. Tuple</a></li>
 </ul>
 </li>
 </ul>
@@ -102,135 +107,140 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">leetcode-股票买卖问题(121,122,123,188,309,714)</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">Scala学习笔记（5）---- Scala集合</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-08-18 / 6 min read
+          2020-01-05 / 4 min read
         </div>
         
         <div class="post-content yue">
-          <p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
-<!-- more -->
-<p><strong>直接看题目188</strong></p>
-<h2 id="188-买卖股票的最佳时机-iv">188. 买卖股票的最佳时机 IV</h2>
-<p>给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。</p>
-<p>设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。</p>
-<p>注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
-<p>示例 1:</p>
-<pre><code>输入: [2,4,1], k = 2
-输出: 2
-解释: 在第 1 天 (股票价格 = 2) 的时候买入，在第 2 天 (股票价格 = 4) 的时候卖出，这笔交易所能获得利润 = 4-2 = 2 。
+          <h1 id="scala集合">Scala集合</h1>
+<h2 id="1-数组">1. 数组</h2>
+<h3 id="11-定长数组array">1.1 定长数组<code>Array</code></h3>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/8 7:56 下午
+ */
+object ArrayApp extends App {
+  val a = new Array[String](5) // Array(null,...null)
+  a.length // 5
+  a(1) = &quot;hello&quot;
+  a(1) // String = &quot;hello&quot;
+  val b = Array(&quot;hadoop&quot;, &quot;spark&quot;, &quot;storm&quot;)
+  b(1) = &quot;flink&quot;
+  b // Array(hadoop, flink, storm)
+  val c = Array(2,3,4,5,6,7,8,9)
+  c.sum // Int = 44
+  c.min // Int = 9
+  c.max // Int = 2
+  c.mkString // String = 23456789
+  c.mkString(&quot;,&quot;) //String = 2,3,4,5,6,7,8,9
+  c.mkString(&quot;&lt;&quot;,&quot;,&quot;,&quot;&gt;&quot;) // String = &lt;2,3,4,5,6,7,8,9&gt;
+  c.toString // String = [I@44e3760b
+}
 </code></pre>
-<p>示例2：</p>
-<pre><code>输入: [3,2,6,5,0,3], k = 2
-输出: 7
-解释: 在第 2 天 (股票价格 = 2) 的时候买入，在第 3 天 (股票价格 = 6) 的时候卖出, 这笔交易所能获得利润 = 6-2 = 4 。
-     随后，在第 5 天 (股票价格 = 0) 的时候买入，在第 6 天 (股票价格 = 3) 的时候卖出, 这笔交易所能获得利润 = 3-0 = 3 。
+<h3 id="12-变长数组arraybuffer">1.2 变长数组<code>ArrayBuffer</code></h3>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/8 7:56 下午
+ */
+object ArrayApp extends App {
+  val c = scala.collection.mutable.ArrayBuffer[Int]()
+  c += 1 // ArrayBuffer(1)
+  c += (2,3,4,5) // ArrayBuffer(1, 2, 3, 4, 5)
+  c ++= Array(6,7,8) // ArrayBuffer(1, 2, 3, 4, 5, 6, 7, 8)
+  c.insert(0,0) // ArrayBuffer(0, 1, 2, 3, 4, 5, 6, 7, 8)
+  c.remove(1) // ArrayBuffer(0, 2, 3, 4, 5, 6, 7, 8)
+  c.remove(0,3) // ArrayBuffer(4, 5, 6, 7, 8)
+  c.trimEnd(2) // ArrayBuffer(4, 5, 6)
+  c.toArray.mkString // 456(Array类型)
+  for(ele &lt;- c){
+    println(ele) // 遍历 4 5 6
+  }
+  for(i &lt;- (0 until c.length).reverse) {
+    println(c(i)) // 逆序 6 5 4
+  }
+}
 </code></pre>
-<p>对于这道题，最麻烦的无异于暴力，复杂度会变成O(2^n)。<br>
-使用动态规划(dp)，可以有效的解决</p>
-<p>对于一个常见的dp问题来说 通常分两步走</p>
-<ol>
-<li>定义状态方程</li>
-<li>转移公式</li>
-</ol>
-<p>对于这道题，可以定义一个状态方程max_profit[i]用来记录到第i天的最大利润</p>
-<pre><code class="language-c++">mp[i] = mp[i-1] + -a[i](如果买入) + a[i](如果卖出)
+<h2 id="2-list">2. List</h2>
+<ul>
+<li>有序的</li>
+<li>可以重复的</li>
+</ul>
+<h3 id="21-nil是什么">2.1 Nil是什么</h3>
+<pre><code class="language-scala">scala&gt; Nil
+scala.collection.immutable.Nil.type = List()
 </code></pre>
-<p>但是股票的买入需要当前手上没有股票买入<br>
-同样 股票的卖出需要手上已经持有了一股的股票<br>
-单纯的一维数组没有办法记录这些信息 所以需要增加一维度</p>
-<pre><code class="language-c++">使用mp[i][j]
-j=[0,1] // 0为可以买 1为可以卖
+<ul>
+<li><code>Nil</code>就是一个空的<code>List</code></li>
+</ul>
+<h3 id="22-list使用">2.2 List使用</h3>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/9 4:57 下午
+ */
+object ListApp extends App {
+  val l = List(1,2,3,4,5) // l: List[Int] = List(1, 2, 3, 4, 5)
+  l.head // Int = 1
+  l.tail // List[Int] = List(2, 3, 4, 5)
+  val l2 = 1 :: Nil // l2: List[Int] = List(1)
+  val l3 = 2 :: l2 //  l3: List[Int] = List(2, 1)
+  val l4 = 1 :: 2 :: 3 :: Nil // l4: List[Int] = List(1, 2, 3)
+  val l5 = scala.collection.mutable.ListBuffer[Int]()
+  l5 +=  2 // ListBuffer(2)
+  l5 += (3,4,5) // ListBuffer(2, 3, 4, 5)
+  l5 ++= List(6,7,8) // ListBuffer(2, 3, 4, 5, 6, 7, 8)
+  l5 -= 2 // ListBuffer(3, 4, 5, 6, 7, 8)
+  l5 -= (1,4) // ListBuffer(2, 3, 5, 6, 7, 8)
+  l5 --= List(2,3,5,6) // ListBuffer(7, 8)
+  l5.toList // List[Int] = List(7, 8)
+  l5.toArray // Array[Int] = Array(1, 3, 4, 5)
+  l5.head // Int = 1
+  l5.isEmpty // Boolean = false
+  l5.tail // scala.collection.mutable.ListBuffer[Int] = ListBuffer(3, 4, 5)
+  l5.tail.head // Int = 3
+  
+  def sum(nums:Int*):Int = {
+    if(nums.length == 0){
+      0
+    } else{
+      nums.head + sum(nums.tail:_*) // 自动把Seq转换为Int*
+    }
+  }
+  sum(1,2,3,4) // Int = 10
+}
 </code></pre>
-<p>此时状态方程变为</p>
-<pre><code>mp[i][0] = max(mp[i-1][0] //不交易 ,mp[i-1][1] + a[i]// 前一天卖了一股)
-mp[i][1] = max(mp[i-1][1] // 不交易, mp[i-1][0] - a[i] //前一天买了一股)
-</code></pre>
-<p>由于188题有限制条件，即最多只能交易k次，还需要记录交易次数，还需要一维来记录交易了多少次<br>
-此时状态方程变成了</p>
-<pre><code>mp[i][h][k]
-i 表示天数
-j 表示是否持有股票
-k 表示之前交易了多少次
-</code></pre>
-<p>此时动态规划的转移方程变成了如下所示:</p>
-<pre><code class="language-c++">// 为了方便理解 把k放到了第二维
+<h2 id="3-set">3. Set</h2>
+<ul>
+<li>无序的</li>
+<li>不可重复的</li>
+</ul>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/9 6:24 下午
+ */
+object SetApp extends App{
+  val set = scala.collection.mutable.Set[Int]()
+  set += 1 // set.type = Set(1)
+  set += (2,1) // set.type = Set(1,2)
+}
 
-//前一天 要么不操作 要么卖掉了一股
-mp[i][k][0] = max(mp[i-1][k][0], mp[i-1][k-1][1] + a[i])
-
-//  前一天 要么不操作 要么买入了一股
-mp[i][k][1] = max(mp[i-1][k][1], mp[i-1][k][0] - a[i)
 </code></pre>
-<p>想要求出最大的收益 只需要找到<br>
-<code>mp[n-1, {0...k},0]</code>的最大值即可</p>
-<h2 id="188买卖股票的最佳时机iv">188.买卖股票的最佳时机IV</h2>
-<h3 id="python-solution">python solution</h3>
-<pre><code class="language-python">class Solution:
-    def maxProfit(self, k: int, prices: List[int]) -&gt; int:
-        if not prices or not k:
-            return 0
-        n  = len(prices)
-        # 如果k大于数组长度的一半，则可以用贪心解决
-        if k &gt; n//2:
-            return self.greedy(prices)
-        # 动态规划
-        dp = [[[0] * 2 for _ in range(k+1)] for _ in range(n)]
-        res = []
-        # 设置初始状态
-        for i in range(k+1):
-            dp[0][i][0], dp[0][i][1] = 0, -prices[0]
-        # 开始两层循环
-        for i in range(1,n):
-            for j in range(k+1):
-                if not j:
-                    dp[i][j][0] = dp[i-1][j][0]
-                else:
-                    dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j-1][1] + prices[i])
-                dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j][0] - prices[i])
-        # 找到最大值
-        for m in range(k+1):
-            print(dp[n-1][m][0])
-            res.append(dp[n-1][m][0])
-        return max(res)
-    def greedy(self, prices):
-        res = 0
-        for i in range(1,len(prices)):
-            if prices[i] &gt; prices[i-1]:
-                res += prices[i] - prices[i-1]
-        return res
-</code></pre>
-<h2 id="309买卖股票的最佳时机含冻结期">309.买卖股票的最佳时机含冻结期</h2>
-<p>对于这道题目 dp状态可以相应减少，因为没有次数的限制了，只需要做一个二维的dp就可以了 一个维度i是用来存储天数，另外一个维度j用来存储当前股票买卖的状态 012分别表示没有买入 买入了 以及处于冻结期</p>
-<h3 id="python-solution-2">python solution</h3>
-<pre><code class="language-python">class Solution:
-    def maxProfit(self, prices: List[int]) -&gt; int:
-        if not prices:
-            return 0
-        n = len(prices)
-        dp = [[0] * 3 for _ in range(n)]
-        # 0表示今天未持有 1表示今天持有 2表示今天处于冻结状态
-        dp[0][0], dp[0][1], dp[0][2] = 0,-prices[0],0
-        for i in range(1,n):
-            dp[i][0] = max(dp[i-1][0], dp[i-1][2])
-            dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i])
-            dp[i][2] = dp[i-1][1] + prices[i]
-        return max(dp[n-1][0], dp[n-1][2])
-</code></pre>
+<ul>
+<li>其他用法基本与<code>List</code>相同</li>
+</ul>
+<h2 id="4-map">4. Map</h2>
+<h2 id="5-option-some-none">5. Option &amp; Some &amp; None</h2>
+<h2 id="6-tuple">6. Tuple</h2>
 
         </div>
 
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/M7yGdMp3y">
-            <span class="flex-auto">python</span>
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/K58cfvIBJ">
+            <span class="flex-auto">scala</span>
           </a>
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/2NVzvTKDE">
-            <span class="flex-auto">algorithm</span>
-          </a>
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/We-dZJIaZ">
-            <span class="flex-auto">data structure</span>
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
           </a>
         
 
@@ -238,10 +248,10 @@ mp[i][k][1] = max(mp[i-1][k][1], mp[i-1][k][0] - a[i)
         <div class="flex justify-between py-8">
           
             <div class="prev-post">
-              <a href="https://zu3zz.coding.me/post/hive-1">
+              <a href="https://zu3zz.coding.me/post/scala-6">
                 <h3 class="post-title">
                   <i class="remixicon-arrow-left-line"></i>
-                  Hive系列(1)----常用操作
+                  Scala学习笔记（6）---- Scala函数高级操作
                 </h3>
               </a>
             </div>
@@ -249,9 +259,9 @@ mp[i][k][1] = max(mp[i-1][k][1], mp[i-1][k][0] - a[i)
 
           
             <div class="next-post">
-              <a href="https://zu3zz.coding.me/post/leetcode-weeklycontest-150">
+              <a href="https://zu3zz.coding.me/post/scala-4">
                 <h3 class="post-title">
-                  Leetcode-weeklyContest-150
+                  Scala学习笔记（4）---- Scala模式匹配
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>

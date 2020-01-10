@@ -31,38 +31,22 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            烟蛾敛略不胜态，风袖低昂如有情
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/zu3zz" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-                <a href="https://www.zhihu.com/people/ga-me-35/activities" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-zhihu-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#scala-%E5%87%BD%E6%95%B0%E9%AB%98%E7%BA%A7%E6%93%8D%E4%BD%9C">Scala 函数高级操作</a></li>
+<li><a href="#1-%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%AB%98%E7%BA%A7%E6%93%8D%E4%BD%9C">1. 字符串高级操作</a></li>
+<li><a href="#2-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">2. 匿名函数</a></li>
+<li><a href="#3-curry%E5%87%BD%E6%95%B0">3. <code>Curry</code>函数</a></li>
+<li><a href="#4-%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">4. 高阶函数</a></li>
+<li><a href="#5-%E5%81%8F%E5%87%BD%E6%95%B0">5. 偏函数</a></li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -112,57 +96,179 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-line"></i> algorithm
-        </h2>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Scala学习笔记（6）---- Scala函数高级操作</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-01-07 / 4 min read
+        </div>
         
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://zu3zz.coding.me/post/leetcode-double-week-10">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">LeetCode-double-week-10</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p>👏👏👏又到了每周拼手速的时刻了！这周题目难度适中 冲！</p>
+        <div class="post-content yue">
+          <h2 id="scala-函数高级操作">Scala 函数高级操作</h2>
+<h2 id="1-字符串高级操作">1. 字符串高级操作</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 6:59 下午
+ */
+object StringApp extends App{
+  val s = &quot;Hello:&quot;
+  val name = &quot;3z&quot;
+  println(s&quot;Hello:${name}&quot;) // 插值表达式
+  val b =
+    &quot;&quot;&quot;
+      |这是一个多行字符串
+      |hello
+      |world
+      |&quot;&quot;&quot;.stripMargin
+  println(b)
+}
+// 输出
+Hello:3z
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-10-06 / 6 min read</div>
-    </div>
-  </section>
+这是一个多行字符串
+hello
+world
+</code></pre>
+<h2 id="2-匿名函数">2. 匿名函数</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/2 10:30 下午
+ * 匿名函数：函数是可以命名的，也可以不命名
+ * (参数名：参数类型...) =&gt; 函数体
+ */
+object FunctionApp extends App {
+  val m1 = (x:Int) =&gt; x+1
+  println(m1(10)) // 11
+  def add = (x:Int, y:Int) =&gt; {x+y}
+  println(add(1,2)) // 3
+}
+</code></pre>
+<h2 id="3-curry函数">3. <code>Curry</code>函数</h2>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/2 10:30 下午
+ */
+object FunctionApp extends App {
+  def sum(a:Int, b:Int) = a+b
+  println(sum(1,2))
+  // 将原来接收两个参数的一个函数，转换成2个
+  def sum2(a:Int)(b:Int) = a + b
+  println(sum(1,2))
+}
+</code></pre>
+<h2 id="4-高阶函数">4. 高阶函数</h2>
+<ol>
+<li><code>map</code></li>
+<li><code>filter</code></li>
+<li><code>flatmap</code></li>
+<li><code>foreach</code></li>
+<li><code>reduce</code></li>
+</ol>
+<pre><code class="language-scala">/**
+ * Author: 3zZ.
+ * Date: 2020/1/2 10:30 下午
+ */
+object FunctionApp extends App {
+  val l = List(1,2,3,4,5,6,7,8)
+  // map: 逐个去操作集合中的每个元素
+  l.map((x:Int) =&gt; x+1)
+  l.map(x =&gt; x - 1) // 如果只有一个参数 括号可以省略
+  l.map(_*2).filter(_ &gt; 8).foreach(println)// 每一个元素 * 2
+  l.take(4) // 取前4个
+  l.reduce(_+_) // 1 + 2 = 3 + 3 = 6 + 4 = 10...
+  l.reduceLeft(_-_) // ((((1-2)-3)-4)-5)
+  l.reduceRight(_-_) // (1-(2-(3-(4-5))))
+  l.fold(0)(_-_)
+  l.foldLeft(0)(_-_)
+  l.foldRight(0)(_-_)
+  val f = List(List(1,2),List(3,4),List(5,6))
+  f.flatten // List(1, 2, 3, 4, 5, 6)
+  f.map(_.map(_*2)) // List(List(2,4),List(6,8),List(10,12))
+  f.flatMap(_.map(_*2)) // List(2, 4, 6, 8, 10, 12) == flatten + map
+}
 
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://zu3zz.coding.me/post/leetcode-stock">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">leetcode-股票买卖问题(121,122,123,188,309,714)</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p>如何用一个动态规划方程解决leetcode上所有的股票买卖问题，且听我道来</p>
+</code></pre>
+<ul>
+<li>
+<p>一个简单wordcount的案例</p>
+<pre><code class="language-scala">val txt = scala.io.Source.fromFile(&quot;wordcount.txt&quot;).mkString
+val txts = List(txt)
+txts.flatMap(_.split(&quot;,&quot;)).map(x =&gt; (x,1)).groupBy(_._1).mapValues(_.size)
+// scala.collection.immutable.Map[String,Int] = Map(world -&gt; 1, hello -&gt; 2)
+</code></pre>
+</li>
+</ul>
+<h2 id="5-偏函数">5. 偏函数</h2>
+<ul>
+<li>偏函数的定义：被包在花括号类内没有match的一组case语句</li>
+</ul>
+<pre><code class="language-scala">package com.zth.fun
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-08-18 / 6 min read</div>
-    </div>
-  </section>
+import scala.util.Random
 
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://zu3zz.coding.me/post/heap-sort">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">堆排序(Heap Sort)</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p>堆排序真的是面试非常容易考到的一个问题了，今天就来聊聊Heap Sort。</p>
+/**
+ * Author: 3zZ.
+ * Date: 2020/1/10 10:49 下午
+ * 偏函数：被包在花括号类内没有match的一组case语句
+ */
+object PartitalFunctionApp extends App {
+  // 普通match函数
+  val names = Array(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+  val name = names(Random.nextInt(names.length))
+  name match {
+    case &quot;a&quot; =&gt; println(&quot;1&quot;)
+    case &quot;b&quot; =&gt; println(&quot;2&quot;)
+    case _ =&gt; println(&quot;others&quot;)
+  }
+  // 偏函数
+  // A: 输入参数类型 B: 输出参数类型
+  def sayChinese:PartialFunction[String, String] = {
+    case &quot;a&quot; =&gt; &quot;1&quot;
+    case &quot;b&quot; =&gt; &quot;2&quot;
+    case _ =&gt; &quot;others&quot;
+  }
+  println(sayChinese(&quot;a&quot;))
+}
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-08-17 / 2 min read</div>
-    </div>
-  </section>
+</code></pre>
 
-        <div class="pagination-container animated fadeIn">
-  
-  
-</div>
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/K58cfvIBJ">
+            <span class="flex-auto">scala</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://zu3zz.coding.me/post/scala-7">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  Scala学习笔记（7）---- Scala隐式转换
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.coding.me/post/scala-5">
+                <h3 class="post-title">
+                  Scala学习笔记（5）---- Scala集合
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
 
       </div>
     </div>
