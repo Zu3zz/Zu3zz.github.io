@@ -1,0 +1,928 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1578758181651">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://zu3zz.coding.me/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.coding.me/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.coding.me">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1578758181651" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#hbase">Hbase</a>
+<ul>
+<li><a href="#1-%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8">1. 数据存储</a>
+<ul>
+<li><a href="#11-rdbms">1.1 RDBMS:</a></li>
+<li><a href="#12-hbase%E5%9C%A8hadoop%E7%94%9F%E6%80%81%E5%9C%88%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE">1.2 Hbase在Hadoop生态圈中的位置</a></li>
+<li><a href="#13-%E8%A1%8C%E5%BC%8Fvs%E5%88%97%E5%BC%8F">1.3 行式VS列式</a></li>
+<li><a href="#14-hbase%E7%89%B9%E7%82%B9">1.4 HBase特点</a></li>
+<li><a href="#15-hbase-vs-mysql">1.5 HBase VS MySQL</a></li>
+<li><a href="#hbase-vs-hdfs">HBase vs HDFS</a></li>
+<li><a href="#hbase%E4%BC%98%E5%8A%BF">HBase优势</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B">数据模型</a></li>
+</ul>
+</li>
+<li><a href="#2-hbase%E5%AE%89%E8%A3%85">2. HBase安装</a>
+<ul>
+<li><a href="#21-%E5%89%8D%E7%BD%AE%E9%9C%80%E8%A6%81">2.1 前置需要</a></li>
+<li><a href="#22hbase%E5%AE%89%E8%A3%85">2.2HBase安装：</a></li>
+<li><a href="#23-%E5%90%AF%E5%8A%A8hbase">2.3 启动HBase</a></li>
+<li><a href="#24-hbase-shell%E4%BD%BF%E7%94%A8">2.4 HBase shell使用</a></li>
+</ul>
+</li>
+<li><a href="#3-hbase%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C">3. HBase相关操作</a>
+<ul>
+<li><a href="#31-ddl%E6%93%8D%E4%BD%9C">3.1 DDL操作</a></li>
+<li><a href="#32-dml%E6%93%8D%E4%BD%9C">3.2 DML操作</a></li>
+</ul>
+</li>
+<li><a href="#4-hbase-api%E5%BC%80%E5%8F%91javascala">4. HBase API开发：Java/Scala</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.coding.me/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">HBase学习笔记 ---- 整合篇</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-01-11 / 12 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="hbase">Hbase</h1>
+<h2 id="1-数据存储">1. 数据存储</h2>
+<h3 id="11-rdbms">1.1 RDBMS:</h3>
+<ol>
+<li>
+<p>Data is typed structured before stored</p>
+</li>
+<li>
+<p>传统SQL</p>
+<table>
+<thead>
+<tr>
+<th>data</th>
+<th>location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>entity</td>
+<td>table</td>
+</tr>
+<tr>
+<td>record</td>
+<td>row</td>
+</tr>
+<tr>
+<td>query</td>
+<td>group by 、join</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>大数据时代，如何做实时查询？</p>
+</li>
+<li>
+<p>hadoop/HDFS：能存 没法进行实时查询，随机读写</p>
+</li>
+<li>
+<p>NoSQL（NOT only SQL）：HBase、Redis</p>
+</li>
+</ol>
+<h3 id="12-hbase在hadoop生态圈中的位置">1.2 Hbase在Hadoop生态圈中的位置</h3>
+<ol>
+<li>HBase是Hadoop生态圈中的一个重要组成部分</li>
+<li>HBase是构建在HDFS纸上，也就是说HBase的数据可以存储在HDFS上面</li>
+<li>可以通过MapReduce/Spark来处理Hbase中的数据</li>
+<li>HBase也提供了shell、API的方式进行数据的访问</li>
+</ol>
+<h3 id="13-行式vs列式">1.3 行式VS列式</h3>
+<ol>
+<li>
+<p>行式</p>
+<ul>
+<li>
+<p>按行存储</p>
+</li>
+<li>
+<p>没有索引查询的时候需要耗费大量的IO</p>
+</li>
+<li>
+<p>可以通过建立索引或者视图来提速</p>
+</li>
+<li>
+<p>1,3zz,23</p>
+</li>
+</ul>
+</li>
+<li>
+<p>列式</p>
+<ul>
+<li>压缩、并行处理</li>
+<li>数据就是索引，大大降低IO</li>
+</ul>
+</li>
+</ol>
+<h3 id="14-hbase特点">1.4 HBase特点</h3>
+<ol>
+<li>
+<p>大：数据量大</p>
+</li>
+<li>
+<p>面向列：列族（可以存放很多列），列族/列独立索引</p>
+</li>
+<li>
+<p>稀疏：</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>age</th>
+<th>...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3zz</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>4xx</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>5yy</td>
+<td>0</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>数据类型单一：byte/string</p>
+</li>
+<li>
+<p>无模式：每一行的数据所对应的列不一定相同，每行的列是可以动态添加的</p>
+<pre><code class="language-shell">3zz age/birthday/company
+4xx company/province/city
+</code></pre>
+</li>
+<li>
+<p>数据多版本：比如company可以存放不同的版本的值</p>
+<p>默认情况下版本号是自动分配的，是列的值插入时的时间戳</p>
+</li>
+</ol>
+<h3 id="15-hbase-vs-mysql">1.5 HBase VS MySQL</h3>
+<ol>
+<li>
+<p>数据类型不同</p>
+</li>
+<li>
+<p>数据操作：</p>
+<ol>
+<li>关联查询：MapReduce/Spark/Phoenix</li>
+<li>get/put/scan...</li>
+</ol>
+</li>
+<li>
+<p>存储模式</p>
+<ol>
+<li>
+<p>MySQL</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>age</th>
+<th>tel</th>
+<th>Address</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>a</td>
+<td>11</td>
+<td>123</td>
+<td>...</td>
+</tr>
+<tr>
+<td>2</td>
+<td>b</td>
+<td>22</td>
+<td>456</td>
+<td>...</td>
+</tr>
+<tr>
+<td>3</td>
+<td>c</td>
+<td>33</td>
+<td>789</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>在HBase中</p>
+<pre><code class="language-shell">basic_info: id	name 
+private_info: age	tel		address
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>transaction事务性：单行</p>
+</li>
+<li>
+<p>数据量：HBase大</p>
+</li>
+<li>
+<p>吞吐量：Million级别</p>
+</li>
+</ol>
+<h3 id="hbase-vs-hdfs">HBase vs HDFS</h3>
+<ol>
+<li>write pattern（写模式）</li>
+<li>read pattern（读模式）</li>
+<li>SQL</li>
+<li>data size（数据量）</li>
+</ol>
+<h3 id="hbase优势">HBase优势</h3>
+<ol>
+<li>成熟</li>
+<li>高效</li>
+<li>分布式</li>
+</ol>
+<h3 id="数据模型">数据模型</h3>
+<ol>
+<li>
+<p>rowkey</p>
+<ul>
+<li>
+<p>主键</p>
+</li>
+<li>
+<p>字符串，按字典顺序存储，在HBase内部保存的是字节数组</p>
+</li>
+</ul>
+</li>
+<li>
+<p>列族：Column Family （CF）</p>
+<ul>
+<li>
+<p>是在创建表的时候就要指定的</p>
+</li>
+<li>
+<p>列族是一系列列的集合</p>
+</li>
+<li>
+<p>一个列族所有列有着相同的前缀</p>
+<pre><code class="language-shell">basic_info: id
+basic_info: name
+private_info: age
+private_info: tel
+private_info: address
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>列：Column / Qualifier</p>
+<ul>
+<li>属于某一个列族</li>
+</ul>
+</li>
+<li>
+<p>每条记录被划分到若干个CF中，每条记录对应一个rowkey，每个CF由一个或者多个Column构成</p>
+</li>
+<li>
+<p>存储单元：Cell</p>
+<ul>
+<li>HBase中ROW和Column确定的一个存储单元</li>
+<li>每个Cell都保存这同一份数据的多个版本</li>
+<li>在写入数据时，时间戳可以由HBase自动赋值，也可以显示赋值</li>
+<li>每个Cell中，不同版本的数据按照时间戳的倒序排列</li>
+</ul>
+<pre><code class="language-shell">{rowkey, column, version} ==&gt; HBase 中的一个Cell
+</code></pre>
+</li>
+</ol>
+<h2 id="2-hbase安装">2. HBase安装</h2>
+<h3 id="21-前置需要">2.1 前置需要</h3>
+<ol>
+<li>JDK（略过）</li>
+<li>ZooKeeper安装（brew）</li>
+<li>Hadoop安装（使用cdh版本，详细配置参照前面博客）</li>
+</ol>
+<h3 id="22hbase安装">2.2HBase安装：</h3>
+<ol>
+<li>
+<p>在.bash_profile中添加HBASE_HOME</p>
+</li>
+<li>
+<p>在HBase的<code>conf</code>目录中修改两个文件</p>
+<ol>
+<li>
+<p>在<code>hbase-env.sh</code>文件中</p>
+<pre><code class="language-shell"># 1.修改java的路径
+# The java implementation to use.  Java 1.7+ required.
+# export JAVA_HOME=/usr/java/jdk1.6.0/
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home
+# 注意 这里一定要是用1.8的版本！ 上面使用java12是要出大问题的
+
+
+# 2.修改zookeeper配置
+# Tell HBase whether it should manage it's own instance of Zookeeper or not.
+export HBASE_MANAGES_ZK=false
+</code></pre>
+</li>
+<li>
+<p>在<code>hbase-site.xml</code>中配置</p>
+<pre><code class="language-xml">&lt;configuration&gt;
+&lt;!--hbase的数据存放地址（本机）--&gt;
+&lt;property&gt;
+  &lt;name&gt;hbase.rootdir&lt;/name&gt;
+  &lt;value&gt;hdfs://localhost:8020/hbase&lt;/value&gt;
+&lt;/property&gt;
+&lt;!--分布式配置--&gt;
+&lt;property&gt;
+  &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;
+  &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+&lt;!--本机zookeeper地址--&gt;
+&lt;property&gt;
+  &lt;name&gt;hbase.zookeeper.quorum&lt;/name&gt;
+  &lt;value&gt;localhost:2181&lt;/value&gt;
+&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="23-启动hbase">2.3 启动HBase</h3>
+<ol>
+<li>先启动hadoop目录下<code>sbin/start-dfs.sh</code></li>
+<li>启动zookeeper<code>zKserver start</code></li>
+<li>启动HBase目录下的<code>bin/start-hbase.sh</code></li>
+<li>打开本机60010端口，有界面 则成功</li>
+</ol>
+<h3 id="24-hbase-shell使用">2.4 HBase shell使用</h3>
+<ol>
+<li>在<code>bin</code>目录下输入<code>hbase shell</code>即可进入shell脚本
+<ol>
+<li>查看版本<code>version</code></li>
+<li>查看服务器的状态<code>status</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="3-hbase相关操作">3. HBase相关操作</h2>
+<h3 id="31-ddl操作">3.1 DDL操作</h3>
+<ul>
+<li>创建、查询</li>
+</ul>
+<pre><code class="language-sql"># 创建
+create 'member','member_id','address','info'
+# 查询详细信息
+desc 'member'
+</code></pre>
+<ul>
+<li>返回信息如下：</li>
+</ul>
+<pre><code class="language-shell">{NAME =&gt; 'address', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENCOD
+ING =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLICA
+TION_SCOPE =&gt; '0'}                                                                                                              
+{NAME =&gt; 'info', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENCODING
+ =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLICATIO
+N_SCOPE =&gt; '0'}                                                                                                                 
+{NAME =&gt; 'member_id', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENC
+ODING =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLI
+CATION_SCOPE =&gt; '0'} 
+</code></pre>
+<ul>
+<li>也可以在图形化界面，即60010端口上查看,点击最上面的<code>Table Details</code></li>
+</ul>
+<pre><code class="language-shell"># 查看有哪些表
+hbase(main):007:0&gt; list
+=&gt; [&quot;member&quot;]
+# 删除列族中的一列
+hbase(main):008:0&gt; alter 'member' ,'delete'=&gt;'member_id'
+1/1 regions updated.
+Done.
+</code></pre>
+<ul>
+<li>此时在查看<code>member</code>表的结构</li>
+</ul>
+<pre><code class="language-shell">hbase(main):009:0&gt; desc 'member'
+
+COLUMN FAMILIES DESCRIPTION                                                                                                     
+{NAME =&gt; 'address', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENCOD
+ING =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLICA
+TION_SCOPE =&gt; '0'}                                                                                                              
+{NAME =&gt; 'info', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENCODING
+ =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLICATIO
+N_SCOPE =&gt; '0'} 
+</code></pre>
+<ul>
+<li>
+<p>可以发现<code>member_id</code>已经被我们删掉了</p>
+</li>
+<li>
+<p>删除表</p>
+</li>
+</ul>
+<pre><code class="language-shell"># 先disable
+hbase(main):011:0&gt; disable 'member'
+# 再drop
+hbase(main):012:0&gt; drop 'member'
+# 此时再查看所有表
+hbase(main):013:0&gt; list
+=&gt; []
+</code></pre>
+<h3 id="32-dml操作">3.2 DML操作</h3>
+<ol>
+<li>
+<p>为了方便，重新创建一张表</p>
+<pre><code class="language-shell"># 表名为member，列族为address、info
+create 'member','address','info'
+</code></pre>
+</li>
+<li>
+<p>创建/修改/删除表</p>
+<pre><code class="language-shell"># rowkey为行名（表名） cf为列族 column为列族中的一列
+插入数据： put 表名,rowkey,cf:column,key
+</code></pre>
+</li>
+<li>
+<p>实际语句如下</p>
+<pre><code class="language-shell">put 'member','3z','info:age','23'
+put 'member','3z','info:birthday','1996-07-31'
+</code></pre>
+</li>
+<li>
+<p>查看member中数据</p>
+<pre><code class="language-shell">scan 'member'
+# 返回结果
+ROW					COLUMN+CELL
+3z					column=info:age, timestamp=12341241212, value=23
+3z					column=info:birthday, timestamp=12341241213, value=1996-07-31
+</code></pre>
+</li>
+<li>
+<p>获取某一行的数据</p>
+<pre><code class="language-shell"># 获取所有3z的数据
+get 'member','3z'
+# 返回结果
+COLUMN                            CELL                                                                                          
+ info:age                         timestamp=1577955149575, value=23
+ info:birthday                    timestamp=1577955128970, value=1996-07-31
+</code></pre>
+</li>
+<li>
+<p>修改某一列</p>
+<pre><code class="language-shell">put 'member','3z','info:age','18'
+# 获取当前年龄
+get 'member','3z','info:age'
+# 返回结果
+COLUMN                            CELL
+ info:age                         timestamp=1577955321212, value=18
+# age已经被更新
+</code></pre>
+</li>
+<li>
+<p>删除某一列</p>
+<pre><code class="language-shell">delete 'member','3z','info:birthday'
+# 再查看3z的信息
+get 'member','3z'
+# 返回结果
+COLUMN                            CELL
+ info:age                         timestamp=1577955321212, value=18
+# 删除成功
+</code></pre>
+</li>
+<li>
+<p>统计一下几行</p>
+<pre><code class="language-shell">count 'member'
+# 返回结果
+==&gt; 1
+</code></pre>
+</li>
+<li>
+<p>删除某个一整行</p>
+<pre><code class="language-shell">deleteall 'member','3z'
+</code></pre>
+</li>
+<li>
+<p>清空一张表</p>
+<pre><code class="language-shell">truncate 'member'
+# 会先自己disable 在truncate
+Truncating 'member' table (it may take a while):
+ - Disabling table...
+ - Truncating table...
+0 row(s) in 3.4130 seconds
+</code></pre>
+</li>
+</ol>
+<h2 id="4-hbase-api开发javascala">4. HBase API开发：Java/Scala</h2>
+<ol>
+<li>
+<p><code>maven:pom.xml</code>：良好的网络支持</p>
+<pre><code class="language-java">package com.zth.bigdata.hbase;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.*;
+import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.util.Bytes;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.IOException;
+
+/**
+ * Author: 3zZ.
+ * Date: 2020/1/11 6:14 下午
+ */
+public class HbaseApp {
+    Connection connection = null;
+    Table table = null;
+    Admin admin = null;
+
+    String tableName = &quot;3z_hbase_java_api&quot;;
+
+    @Before
+    public void setUp() {
+        Configuration configuration = new Configuration();
+        configuration.set(&quot;hbase.rootdir&quot;, &quot;hdfs://localhost:8020/hbase&quot;);
+        configuration.set(&quot;hbase.zookeeper.quorum&quot;, &quot;localhost:2181&quot;);
+        try {
+            connection = ConnectionFactory.createConnection(configuration);
+            admin = connection.getAdmin();
+
+            Assert.assertNotNull(connection);
+            Assert.assertNotNull(admin);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getConnection() {
+    }
+
+    @Test
+    public void createTable() throws Exception {
+        TableName table = TableName.valueOf(tableName);
+        if (admin.tableExists(table)) {
+            System.out.println(tableName + &quot;已经存在&quot;);
+        } else {
+            HTableDescriptor descriptor = new HTableDescriptor(table);
+            descriptor.addFamily(new HColumnDescriptor(&quot;info&quot;));
+            descriptor.addFamily(new HColumnDescriptor(&quot;address&quot;));
+            admin.createTable(descriptor);
+            System.out.println(tableName + &quot;创建成功&quot;);
+        }
+    }
+
+    @Test
+    public void queryTableInfos() throws Exception {
+        HTableDescriptor[] tables = admin.listTables();
+        if (tables.length &gt; 0) {
+            for (HTableDescriptor table : tables) {
+                System.out.println(table.getNameAsString());
+                HColumnDescriptor[] columnDescriptors = table.getColumnFamilies();
+                for (HColumnDescriptor hColumnDescriptor : columnDescriptors) {
+                    System.out.println(&quot;\t&quot; + hColumnDescriptor.getNameAsString());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testPut() throws Exception {
+        table = connection.getTable(TableName.valueOf(tableName));
+        Put put = new Put(Bytes.toBytes(&quot;3z&quot;));
+        // 通过PUT设置要添加数据的CF、qualifier、value
+        put.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;age&quot;), Bytes.toBytes(&quot;24&quot;));
+        put.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;birthday&quot;), Bytes.toBytes(&quot;731&quot;));
+        put.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;company&quot;), Bytes.toBytes(&quot;HIT&quot;));
+
+        put.addColumn(Bytes.toBytes(&quot;address&quot;), Bytes.toBytes(&quot;country&quot;), Bytes.toBytes(&quot;CN&quot;));
+        put.addColumn(Bytes.toBytes(&quot;address&quot;), Bytes.toBytes(&quot;province&quot;), Bytes.toBytes(&quot;BJ&quot;));
+        put.addColumn(Bytes.toBytes(&quot;address&quot;), Bytes.toBytes(&quot;city&quot;), Bytes.toBytes(&quot;BJ&quot;));
+        //  将数据put到hbase中去
+        table.put(put);
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        table = connection.getTable(TableName.valueOf(tableName));
+        Put put = new Put(Bytes.toBytes(&quot;2z&quot;));
+        put.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;age&quot;), Bytes.toBytes(&quot;25&quot;));
+        table.put(put);
+    }
+
+    @Test
+    public void testGet01() throws Exception {
+        table = connection.getTable(TableName.valueOf(tableName));
+        Get get = new Get(&quot;3z&quot;.getBytes());
+        get.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;age&quot;));
+        Result result = table.get(get);
+        printResult(result);
+    }
+    @Test
+    public void testScan01() throws Exception{
+        table = connection.getTable(TableName.valueOf(tableName));
+        Scan scan = new Scan();
+        ResultScanner rs = table.getScanner(scan);
+        for (Result result: rs){
+            printResult(result);
+        }
+    }
+
+    public void printResult(Result result) {
+        for (Cell cell : result.rawCells()) {
+            System.out.println(Bytes.toString(result.getRow()) + &quot;\t&quot; +
+                    Bytes.toString(CellUtil.cloneFamily(cell)) + &quot;\t&quot; +
+                    Bytes.toString(CellUtil.cloneQualifier(cell)) + &quot;\t&quot; +
+                    Bytes.toString(CellUtil.cloneValue(cell)) + &quot;\t&quot; +
+                    cell.getTimestamp()
+            );
+        }
+    }
+
+    @After
+    public void tearDown() {
+        try {
+            connection.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>小结</p>
+<ul>
+<li>
+<p><code>Connection</code></p>
+</li>
+<li>
+<p><code>Admin</code></p>
+</li>
+<li>
+<p><code>HTableDescriptor</code></p>
+</li>
+<li>
+<p><code>HcolumnDescriptor</code></p>
+</li>
+<li>
+<p>创建表</p>
+</li>
+<li>
+<p>删除表</p>
+</li>
+<li>
+<p>添加记录：单挑、多条</p>
+</li>
+<li>
+<p>修改记录</p>
+</li>
+<li>
+<p>根据<code>RowKey</code>获取单挑记录</p>
+</li>
+<li>
+<p><code>Scan</code>：空、起始、起始结尾、<code>Get</code></p>
+</li>
+<li>
+<p><code>Filter</code> : <code>RowFilter</code>、<code>PrefixFilter</code>、<code>FilterList</code></p>
+</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/fAzDxdx7A">
+            <span class="flex-auto">HBase</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/8yVVJSLYY">
+            <span class="flex-auto">big data</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/_el9BOoeY">
+            <span class="flex-auto">Java</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.coding.me/post/scala-7">
+                <h3 class="post-title">
+                  Scala学习笔记（7）---- Scala隐式转换
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://zu3zz.coding.me/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

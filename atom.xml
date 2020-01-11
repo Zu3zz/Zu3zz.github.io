@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zu3zz.coding.me</id>
     <title>风袖</title>
-    <updated>2020-01-10T16:46:58.598Z</updated>
+    <updated>2020-01-11T15:56:25.621Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zu3zz.coding.me"/>
     <link rel="self" href="https://zu3zz.coding.me/atom.xml"/>
@@ -10,6 +10,677 @@
     <logo>https://zu3zz.coding.me/images/avatar.png</logo>
     <icon>https://zu3zz.coding.me/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
+    <entry>
+        <title type="html"><![CDATA[HBase学习笔记 ---- 整合篇]]></title>
+        <id>https://zu3zz.coding.me/post/hbase-1</id>
+        <link href="https://zu3zz.coding.me/post/hbase-1">
+        </link>
+        <updated>2020-01-11T15:54:39.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="hbase">Hbase</h1>
+<h2 id="1-数据存储">1. 数据存储</h2>
+<h3 id="11-rdbms">1.1 RDBMS:</h3>
+<ol>
+<li>
+<p>Data is typed structured before stored</p>
+</li>
+<li>
+<p>传统SQL</p>
+<table>
+<thead>
+<tr>
+<th>data</th>
+<th>location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>entity</td>
+<td>table</td>
+</tr>
+<tr>
+<td>record</td>
+<td>row</td>
+</tr>
+<tr>
+<td>query</td>
+<td>group by 、join</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>大数据时代，如何做实时查询？</p>
+</li>
+<li>
+<p>hadoop/HDFS：能存 没法进行实时查询，随机读写</p>
+</li>
+<li>
+<p>NoSQL（NOT only SQL）：HBase、Redis</p>
+</li>
+</ol>
+<h3 id="12-hbase在hadoop生态圈中的位置">1.2 Hbase在Hadoop生态圈中的位置</h3>
+<ol>
+<li>HBase是Hadoop生态圈中的一个重要组成部分</li>
+<li>HBase是构建在HDFS纸上，也就是说HBase的数据可以存储在HDFS上面</li>
+<li>可以通过MapReduce/Spark来处理Hbase中的数据</li>
+<li>HBase也提供了shell、API的方式进行数据的访问</li>
+</ol>
+<h3 id="13-行式vs列式">1.3 行式VS列式</h3>
+<ol>
+<li>
+<p>行式</p>
+<ul>
+<li>
+<p>按行存储</p>
+</li>
+<li>
+<p>没有索引查询的时候需要耗费大量的IO</p>
+</li>
+<li>
+<p>可以通过建立索引或者视图来提速</p>
+</li>
+<li>
+<p>1,3zz,23</p>
+</li>
+</ul>
+</li>
+<li>
+<p>列式</p>
+<ul>
+<li>压缩、并行处理</li>
+<li>数据就是索引，大大降低IO</li>
+</ul>
+</li>
+</ol>
+<h3 id="14-hbase特点">1.4 HBase特点</h3>
+<ol>
+<li>
+<p>大：数据量大</p>
+</li>
+<li>
+<p>面向列：列族（可以存放很多列），列族/列独立索引</p>
+</li>
+<li>
+<p>稀疏：</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>age</th>
+<th>...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3zz</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>4xx</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>5yy</td>
+<td>0</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>数据类型单一：byte/string</p>
+</li>
+<li>
+<p>无模式：每一行的数据所对应的列不一定相同，每行的列是可以动态添加的</p>
+<pre><code class="language-shell">3zz age/birthday/company
+4xx company/province/city
+</code></pre>
+</li>
+<li>
+<p>数据多版本：比如company可以存放不同的版本的值</p>
+<p>默认情况下版本号是自动分配的，是列的值插入时的时间戳</p>
+</li>
+</ol>
+<h3 id="15-hbase-vs-mysql">1.5 HBase VS MySQL</h3>
+<ol>
+<li>
+<p>数据类型不同</p>
+</li>
+<li>
+<p>数据操作：</p>
+<ol>
+<li>关联查询：MapReduce/Spark/Phoenix</li>
+<li>get/put/scan...</li>
+</ol>
+</li>
+<li>
+<p>存储模式</p>
+<ol>
+<li>
+<p>MySQL</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>age</th>
+<th>tel</th>
+<th>Address</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>a</td>
+<td>11</td>
+<td>123</td>
+<td>...</td>
+</tr>
+<tr>
+<td>2</td>
+<td>b</td>
+<td>22</td>
+<td>456</td>
+<td>...</td>
+</tr>
+<tr>
+<td>3</td>
+<td>c</td>
+<td>33</td>
+<td>789</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>在HBase中</p>
+<pre><code class="language-shell">basic_info: id	name 
+private_info: age	tel		address
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>transaction事务性：单行</p>
+</li>
+<li>
+<p>数据量：HBase大</p>
+</li>
+<li>
+<p>吞吐量：Million级别</p>
+</li>
+</ol>
+<h3 id="hbase-vs-hdfs">HBase vs HDFS</h3>
+<ol>
+<li>write pattern（写模式）</li>
+<li>read pattern（读模式）</li>
+<li>SQL</li>
+<li>data size（数据量）</li>
+</ol>
+<h3 id="hbase优势">HBase优势</h3>
+<ol>
+<li>成熟</li>
+<li>高效</li>
+<li>分布式</li>
+</ol>
+<h3 id="数据模型">数据模型</h3>
+<ol>
+<li>
+<p>rowkey</p>
+<ul>
+<li>
+<p>主键</p>
+</li>
+<li>
+<p>字符串，按字典顺序存储，在HBase内部保存的是字节数组</p>
+</li>
+</ul>
+</li>
+<li>
+<p>列族：Column Family （CF）</p>
+<ul>
+<li>
+<p>是在创建表的时候就要指定的</p>
+</li>
+<li>
+<p>列族是一系列列的集合</p>
+</li>
+<li>
+<p>一个列族所有列有着相同的前缀</p>
+<pre><code class="language-shell">basic_info: id
+basic_info: name
+private_info: age
+private_info: tel
+private_info: address
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>列：Column / Qualifier</p>
+<ul>
+<li>属于某一个列族</li>
+</ul>
+</li>
+<li>
+<p>每条记录被划分到若干个CF中，每条记录对应一个rowkey，每个CF由一个或者多个Column构成</p>
+</li>
+<li>
+<p>存储单元：Cell</p>
+<ul>
+<li>HBase中ROW和Column确定的一个存储单元</li>
+<li>每个Cell都保存这同一份数据的多个版本</li>
+<li>在写入数据时，时间戳可以由HBase自动赋值，也可以显示赋值</li>
+<li>每个Cell中，不同版本的数据按照时间戳的倒序排列</li>
+</ul>
+<pre><code class="language-shell">{rowkey, column, version} ==&gt; HBase 中的一个Cell
+</code></pre>
+</li>
+</ol>
+<h2 id="2-hbase安装">2. HBase安装</h2>
+<h3 id="21-前置需要">2.1 前置需要</h3>
+<ol>
+<li>JDK（略过）</li>
+<li>ZooKeeper安装（brew）</li>
+<li>Hadoop安装（使用cdh版本，详细配置参照前面博客）</li>
+</ol>
+<h3 id="22hbase安装">2.2HBase安装：</h3>
+<ol>
+<li>
+<p>在.bash_profile中添加HBASE_HOME</p>
+</li>
+<li>
+<p>在HBase的<code>conf</code>目录中修改两个文件</p>
+<ol>
+<li>
+<p>在<code>hbase-env.sh</code>文件中</p>
+<pre><code class="language-shell"># 1.修改java的路径
+# The java implementation to use.  Java 1.7+ required.
+# export JAVA_HOME=/usr/java/jdk1.6.0/
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home
+# 注意 这里一定要是用1.8的版本！ 上面使用java12是要出大问题的
+
+
+# 2.修改zookeeper配置
+# Tell HBase whether it should manage it's own instance of Zookeeper or not.
+export HBASE_MANAGES_ZK=false
+</code></pre>
+</li>
+<li>
+<p>在<code>hbase-site.xml</code>中配置</p>
+<pre><code class="language-xml">&lt;configuration&gt;
+&lt;!--hbase的数据存放地址（本机）--&gt;
+&lt;property&gt;
+  &lt;name&gt;hbase.rootdir&lt;/name&gt;
+  &lt;value&gt;hdfs://localhost:8020/hbase&lt;/value&gt;
+&lt;/property&gt;
+&lt;!--分布式配置--&gt;
+&lt;property&gt;
+  &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;
+  &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+&lt;!--本机zookeeper地址--&gt;
+&lt;property&gt;
+  &lt;name&gt;hbase.zookeeper.quorum&lt;/name&gt;
+  &lt;value&gt;localhost:2181&lt;/value&gt;
+&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="23-启动hbase">2.3 启动HBase</h3>
+<ol>
+<li>先启动hadoop目录下<code>sbin/start-dfs.sh</code></li>
+<li>启动zookeeper<code>zKserver start</code></li>
+<li>启动HBase目录下的<code>bin/start-hbase.sh</code></li>
+<li>打开本机60010端口，有界面 则成功</li>
+</ol>
+<h3 id="24-hbase-shell使用">2.4 HBase shell使用</h3>
+<ol>
+<li>在<code>bin</code>目录下输入<code>hbase shell</code>即可进入shell脚本
+<ol>
+<li>查看版本<code>version</code></li>
+<li>查看服务器的状态<code>status</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="3-hbase相关操作">3. HBase相关操作</h2>
+<h3 id="31-ddl操作">3.1 DDL操作</h3>
+<ul>
+<li>创建、查询</li>
+</ul>
+<pre><code class="language-sql"># 创建
+create 'member','member_id','address','info'
+# 查询详细信息
+desc 'member'
+</code></pre>
+<ul>
+<li>返回信息如下：</li>
+</ul>
+<pre><code class="language-shell">{NAME =&gt; 'address', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENCOD
+ING =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLICA
+TION_SCOPE =&gt; '0'}                                                                                                              
+{NAME =&gt; 'info', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENCODING
+ =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLICATIO
+N_SCOPE =&gt; '0'}                                                                                                                 
+{NAME =&gt; 'member_id', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENC
+ODING =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLI
+CATION_SCOPE =&gt; '0'} 
+</code></pre>
+<ul>
+<li>也可以在图形化界面，即60010端口上查看,点击最上面的<code>Table Details</code></li>
+</ul>
+<pre><code class="language-shell"># 查看有哪些表
+hbase(main):007:0&gt; list
+=&gt; [&quot;member&quot;]
+# 删除列族中的一列
+hbase(main):008:0&gt; alter 'member' ,'delete'=&gt;'member_id'
+1/1 regions updated.
+Done.
+</code></pre>
+<ul>
+<li>此时在查看<code>member</code>表的结构</li>
+</ul>
+<pre><code class="language-shell">hbase(main):009:0&gt; desc 'member'
+
+COLUMN FAMILIES DESCRIPTION                                                                                                     
+{NAME =&gt; 'address', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENCOD
+ING =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLICA
+TION_SCOPE =&gt; '0'}                                                                                                              
+{NAME =&gt; 'info', BLOOMFILTER =&gt; 'ROW', VERSIONS =&gt; '1', IN_MEMORY =&gt; 'false', KEEP_DELETED_CELLS =&gt; 'FALSE', DATA_BLOCK_ENCODING
+ =&gt; 'NONE', TTL =&gt; 'FOREVER', COMPRESSION =&gt; 'NONE', MIN_VERSIONS =&gt; '0', BLOCKCACHE =&gt; 'true', BLOCKSIZE =&gt; '65536', REPLICATIO
+N_SCOPE =&gt; '0'} 
+</code></pre>
+<ul>
+<li>
+<p>可以发现<code>member_id</code>已经被我们删掉了</p>
+</li>
+<li>
+<p>删除表</p>
+</li>
+</ul>
+<pre><code class="language-shell"># 先disable
+hbase(main):011:0&gt; disable 'member'
+# 再drop
+hbase(main):012:0&gt; drop 'member'
+# 此时再查看所有表
+hbase(main):013:0&gt; list
+=&gt; []
+</code></pre>
+<h3 id="32-dml操作">3.2 DML操作</h3>
+<ol>
+<li>
+<p>为了方便，重新创建一张表</p>
+<pre><code class="language-shell"># 表名为member，列族为address、info
+create 'member','address','info'
+</code></pre>
+</li>
+<li>
+<p>创建/修改/删除表</p>
+<pre><code class="language-shell"># rowkey为行名（表名） cf为列族 column为列族中的一列
+插入数据： put 表名,rowkey,cf:column,key
+</code></pre>
+</li>
+<li>
+<p>实际语句如下</p>
+<pre><code class="language-shell">put 'member','3z','info:age','23'
+put 'member','3z','info:birthday','1996-07-31'
+</code></pre>
+</li>
+<li>
+<p>查看member中数据</p>
+<pre><code class="language-shell">scan 'member'
+# 返回结果
+ROW					COLUMN+CELL
+3z					column=info:age, timestamp=12341241212, value=23
+3z					column=info:birthday, timestamp=12341241213, value=1996-07-31
+</code></pre>
+</li>
+<li>
+<p>获取某一行的数据</p>
+<pre><code class="language-shell"># 获取所有3z的数据
+get 'member','3z'
+# 返回结果
+COLUMN                            CELL                                                                                          
+ info:age                         timestamp=1577955149575, value=23
+ info:birthday                    timestamp=1577955128970, value=1996-07-31
+</code></pre>
+</li>
+<li>
+<p>修改某一列</p>
+<pre><code class="language-shell">put 'member','3z','info:age','18'
+# 获取当前年龄
+get 'member','3z','info:age'
+# 返回结果
+COLUMN                            CELL
+ info:age                         timestamp=1577955321212, value=18
+# age已经被更新
+</code></pre>
+</li>
+<li>
+<p>删除某一列</p>
+<pre><code class="language-shell">delete 'member','3z','info:birthday'
+# 再查看3z的信息
+get 'member','3z'
+# 返回结果
+COLUMN                            CELL
+ info:age                         timestamp=1577955321212, value=18
+# 删除成功
+</code></pre>
+</li>
+<li>
+<p>统计一下几行</p>
+<pre><code class="language-shell">count 'member'
+# 返回结果
+==&gt; 1
+</code></pre>
+</li>
+<li>
+<p>删除某个一整行</p>
+<pre><code class="language-shell">deleteall 'member','3z'
+</code></pre>
+</li>
+<li>
+<p>清空一张表</p>
+<pre><code class="language-shell">truncate 'member'
+# 会先自己disable 在truncate
+Truncating 'member' table (it may take a while):
+ - Disabling table...
+ - Truncating table...
+0 row(s) in 3.4130 seconds
+</code></pre>
+</li>
+</ol>
+<h2 id="4-hbase-api开发javascala">4. HBase API开发：Java/Scala</h2>
+<ol>
+<li>
+<p><code>maven:pom.xml</code>：良好的网络支持</p>
+<pre><code class="language-java">package com.zth.bigdata.hbase;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.*;
+import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.util.Bytes;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.IOException;
+
+/**
+ * Author: 3zZ.
+ * Date: 2020/1/11 6:14 下午
+ */
+public class HbaseApp {
+    Connection connection = null;
+    Table table = null;
+    Admin admin = null;
+
+    String tableName = &quot;3z_hbase_java_api&quot;;
+
+    @Before
+    public void setUp() {
+        Configuration configuration = new Configuration();
+        configuration.set(&quot;hbase.rootdir&quot;, &quot;hdfs://localhost:8020/hbase&quot;);
+        configuration.set(&quot;hbase.zookeeper.quorum&quot;, &quot;localhost:2181&quot;);
+        try {
+            connection = ConnectionFactory.createConnection(configuration);
+            admin = connection.getAdmin();
+
+            Assert.assertNotNull(connection);
+            Assert.assertNotNull(admin);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getConnection() {
+    }
+
+    @Test
+    public void createTable() throws Exception {
+        TableName table = TableName.valueOf(tableName);
+        if (admin.tableExists(table)) {
+            System.out.println(tableName + &quot;已经存在&quot;);
+        } else {
+            HTableDescriptor descriptor = new HTableDescriptor(table);
+            descriptor.addFamily(new HColumnDescriptor(&quot;info&quot;));
+            descriptor.addFamily(new HColumnDescriptor(&quot;address&quot;));
+            admin.createTable(descriptor);
+            System.out.println(tableName + &quot;创建成功&quot;);
+        }
+    }
+
+    @Test
+    public void queryTableInfos() throws Exception {
+        HTableDescriptor[] tables = admin.listTables();
+        if (tables.length &gt; 0) {
+            for (HTableDescriptor table : tables) {
+                System.out.println(table.getNameAsString());
+                HColumnDescriptor[] columnDescriptors = table.getColumnFamilies();
+                for (HColumnDescriptor hColumnDescriptor : columnDescriptors) {
+                    System.out.println(&quot;\t&quot; + hColumnDescriptor.getNameAsString());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testPut() throws Exception {
+        table = connection.getTable(TableName.valueOf(tableName));
+        Put put = new Put(Bytes.toBytes(&quot;3z&quot;));
+        // 通过PUT设置要添加数据的CF、qualifier、value
+        put.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;age&quot;), Bytes.toBytes(&quot;24&quot;));
+        put.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;birthday&quot;), Bytes.toBytes(&quot;731&quot;));
+        put.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;company&quot;), Bytes.toBytes(&quot;HIT&quot;));
+
+        put.addColumn(Bytes.toBytes(&quot;address&quot;), Bytes.toBytes(&quot;country&quot;), Bytes.toBytes(&quot;CN&quot;));
+        put.addColumn(Bytes.toBytes(&quot;address&quot;), Bytes.toBytes(&quot;province&quot;), Bytes.toBytes(&quot;BJ&quot;));
+        put.addColumn(Bytes.toBytes(&quot;address&quot;), Bytes.toBytes(&quot;city&quot;), Bytes.toBytes(&quot;BJ&quot;));
+        //  将数据put到hbase中去
+        table.put(put);
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        table = connection.getTable(TableName.valueOf(tableName));
+        Put put = new Put(Bytes.toBytes(&quot;2z&quot;));
+        put.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;age&quot;), Bytes.toBytes(&quot;25&quot;));
+        table.put(put);
+    }
+
+    @Test
+    public void testGet01() throws Exception {
+        table = connection.getTable(TableName.valueOf(tableName));
+        Get get = new Get(&quot;3z&quot;.getBytes());
+        get.addColumn(Bytes.toBytes(&quot;info&quot;), Bytes.toBytes(&quot;age&quot;));
+        Result result = table.get(get);
+        printResult(result);
+    }
+    @Test
+    public void testScan01() throws Exception{
+        table = connection.getTable(TableName.valueOf(tableName));
+        Scan scan = new Scan();
+        ResultScanner rs = table.getScanner(scan);
+        for (Result result: rs){
+            printResult(result);
+        }
+    }
+
+    public void printResult(Result result) {
+        for (Cell cell : result.rawCells()) {
+            System.out.println(Bytes.toString(result.getRow()) + &quot;\t&quot; +
+                    Bytes.toString(CellUtil.cloneFamily(cell)) + &quot;\t&quot; +
+                    Bytes.toString(CellUtil.cloneQualifier(cell)) + &quot;\t&quot; +
+                    Bytes.toString(CellUtil.cloneValue(cell)) + &quot;\t&quot; +
+                    cell.getTimestamp()
+            );
+        }
+    }
+
+    @After
+    public void tearDown() {
+        try {
+            connection.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>小结</p>
+<ul>
+<li>
+<p><code>Connection</code></p>
+</li>
+<li>
+<p><code>Admin</code></p>
+</li>
+<li>
+<p><code>HTableDescriptor</code></p>
+</li>
+<li>
+<p><code>HcolumnDescriptor</code></p>
+</li>
+<li>
+<p>创建表</p>
+</li>
+<li>
+<p>删除表</p>
+</li>
+<li>
+<p>添加记录：单挑、多条</p>
+</li>
+<li>
+<p>修改记录</p>
+</li>
+<li>
+<p>根据<code>RowKey</code>获取单挑记录</p>
+</li>
+<li>
+<p><code>Scan</code>：空、起始、起始结尾、<code>Get</code></p>
+</li>
+<li>
+<p><code>Filter</code> : <code>RowFilter</code>、<code>PrefixFilter</code>、<code>FilterList</code></p>
+</li>
+</ul>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（7）---- Scala隐式转换]]></title>
         <id>https://zu3zz.coding.me/post/scala-7</id>
@@ -1664,466 +2335,6 @@ SELECT USER(),CURRENT_USER(),SYSTEM_USER(),SESSION_USER();
 <pre><code class="language-sql">SELECT MD5('king');
 SELECT PASSWORD('root');
 </code></pre>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[深入浅出MySQL(4) ---- 常见数据操作]]></title>
-        <id>https://zu3zz.coding.me/post/mysql-4</id>
-        <link href="https://zu3zz.coding.me/post/mysql-4">
-        </link>
-        <updated>2019-11-01T10:41:53.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="深入浅出mysql4-常见数据操作">深入浅出MySQL(4)-----常见数据操作</h1>
-<h2 id="1-添加记录">1. 添加记录</h2>
-<ol>
-<li>指定字段名称</li>
-</ol>
-<pre><code class="language-sql">INSERT [INTO] tbl_name [(col_name1,col_name2,...)] {VALUE|VALUES}(VALUES...);
-</code></pre>
-<ol start="2">
-<li>不指定字段名称</li>
-</ol>
-<pre><code class="language-sql">INSERT tbl_name VALUE(value1,value2,...);
-</code></pre>
-<p>需要按照建表时的字段顺序给每一个字段赋值</p>
-<ol start="3">
-<li>列出指定字段</li>
-</ol>
-<pre><code class="language-sql">INSERT tbl_name(字段名称1,字段名称2,...) VALUES(值1,值2,...);
-</code></pre>
-<ol start="4">
-<li>INSERT ... SET的形式</li>
-</ol>
-<pre><code class="language-sql">INSERT tbl_name SET 字段名称1=值1,字段名称2=值2,...;
-</code></pre>
-<ol start="5">
-<li>INSERT ... SELECT</li>
-</ol>
-<pre><code class="language-sql">INSERT tbl_name[(字段名称...)] SELECT 字段名称1,字段名称2,... FROM tbl_name [WHERE 条件];
-</code></pre>
-<ol start="6">
-<li>一次添加多条记录</li>
-</ol>
-<pre><code class="language-sql">INSERT tbl_name[(字段名称...)] VALUES(值1,值2,...),
-(值1,值2,...),
-(值1,值2,...)
-</code></pre>
-<h2 id="2-修改记录">2. 修改记录</h2>
-<pre><code class="language-sql">UPDATE tbl_name SET 字段名称1=值1,字段名称2=值2 [WHERE 条件];
-</code></pre>
-<p>如果不加条件，整个表中的记录都会被更新</p>
-<h2 id="3-删除记录">3. 删除记录</h2>
-<ol>
-<li>
-<p>普通删除</p>
-<pre><code class="language-sql">DELETE FROM tbl_name [WHERE 条件];
-</code></pre>
-</li>
-<li>
-<p>如果不添加条件，表中所有记录都会被删除</p>
-</li>
-<li>
-<p>DELETE清空数据表的时候不会重置AUTO_INCREMENT的值，但是可以通过ALTER语句将其置为1</p>
-<pre><code class="language-sql">ALTER TABLE tbl_name AUTO_INCREMENT = 值x;
-</code></pre>
-</li>
-<li>
-<p>彻底清空数据表</p>
-<pre><code class="language-sql">TRUNCATE [TABLE] tbl_name;
-</code></pre>
-<ul>
-<li>清空表中所有记录</li>
-<li>会重置AUTO_INCREMENT的值</li>
-</ul>
-</li>
-</ol>
-<h2 id="4查询记录">4.查询记录</h2>
-<pre><code class="language-sql">SELECT select_expr,... FROM tbl_name
-[WHERE 条件]
-[GROUP BY {col_name|position} HAVING 二次筛选]
-[ORDER BY {col_name|position|expr} [ASC|DESC]]
-[LIMIT 限制结果集的显示条数]
-</code></pre>
-<ol>
-<li>
-<p>查询表中所有记录</p>
-<pre><code class="language-sql">SELECT * FROM tbl_name;
-</code></pre>
-<p>*<strong>表示所有字段</strong></p>
-</li>
-<li>
-<p>指定字段的信息</p>
-<pre><code class="language-sql">SELECT 字段名称1,字段名称2,... FROM tbl_name;
-</code></pre>
-</li>
-<li>
-<p>使用库名.表名的形式，不用打开此数据库</p>
-<pre><code class="language-sql">SELECT 字段名称1,字段名称2,... FROM db_name.tbl_name;
-</code></pre>
-</li>
-<li>
-<p>给字段起别名，建议写上 AS</p>
-<pre><code class="language-sql">SELECT 字段名称 [AS] 别名名称,... FROM db_name.tbl_name;
-</code></pre>
-</li>
-<li>
-<p>给数据表起别名</p>
-<pre><code class="language-sql">SELECT 字段名称1,字段名称2,... FROM tbl_name [AS] 别名;
-</code></pre>
-</li>
-<li>
-<p>表名.字段名的形式</p>
-<pre><code class="language-sql">SELECT tbl_name.col_name,... FROM tbl_name;
-</code></pre>
-</li>
-<li>
-<p>WHERE 条件</p>
-<p>会筛选出所有符合条件的记录</p>
-<ul>
-<li>
-<p>比较运算符：</p>
-<pre><code class="language-txt">&gt; &gt;= &lt;= != &lt;&gt; &lt;=&gt;
-注意 &lt;=&gt; 和 = 的区别
-&lt;=&gt; 可以检测出NULL值
-</code></pre>
-</li>
-<li>
-<p>IS [NOT] NULL：检测值是否为NULL 或者 NOT NULL</p>
-</li>
-<li>
-<p>指定范围</p>
-<pre><code class="language-sql">[NOT] BETWEEN ... AND
-</code></pre>
-</li>
-<li>
-<p>指定集合</p>
-<pre><code class="language-sql">[NOT] IN (值1,值2,...)
-</code></pre>
-</li>
-<li>
-<p>逻辑运算符</p>
-<pre><code class="language-shell">AND 逻辑与
-OR  逻辑或
-</code></pre>
-</li>
-<li>
-<p>匹配字符</p>
-<pre><code class="language-sql">[NOT] LIKE
-% 任意长度的字符串
-_ 任意一个字符
-</code></pre>
-<pre><code class="language-sql">SELECT id,username,age FROM user1
-WHERE username like '%in%';
-id|username|age
-1 |king    |23
-</code></pre>
-<p>查询出叫张xx的人，使用'_'</p>
-<pre><code class="language-sql">SELECT id,username,age FROM user1
-WHERE username like '张__';
-id|username|age
-1 |张三丰   |23
-</code></pre>
-</li>
-</ul>
-</li>
-<li>
-<p>GROUP BY 分组</p>
-<ol>
-<li>
-<p>把值相同放到一个组中，最终查询出的结果只会显示组中一条记录</p>
-</li>
-<li>
-<p>分组配合GROUP_CONCAT()查看组中某个字段的详细信息</p>
-<pre><code class="language-sql">SELECT GROUP_CONCAT(username),age,sex FROM user1 GROUP BY sex;
-GROUP_CONCAAT(username)|age|sex
-吴亦凡,张三,张四,王五,赵六 |23 |男
-章子怡,刘嘉玲,奶茶妹      |18 |女
-</code></pre>
-</li>
-<li>
-<p>配合聚合函数使用</p>
-<table>
-<thead>
-<tr>
-<th>聚合函数名</th>
-<th>统计记录总数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>COUNT()</td>
-<td>统计记录总数</td>
-</tr>
-<tr>
-<td>COUNT(字段名称)</td>
-<td>字段中为NULL的值，不会被统计进来</td>
-</tr>
-<tr>
-<td>COUNT（*）</td>
-<td>会同时统计NULL值</td>
-</tr>
-<tr>
-<td>SUM（）</td>
-<td>求和</td>
-</tr>
-<tr>
-<td>MAX（）</td>
-<td>求最大值</td>
-</tr>
-<tr>
-<td>MIN（）</td>
-<td>求最小值</td>
-</tr>
-<tr>
-<td>AVG（）</td>
-<td>求平均值</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>配合WITH ROLLUP 关键词使用：会在记录末尾添加一条记录，是上面所有记录的总和</p>
-</li>
-<li>
-<p>HAVING字句对分组结果进行二次筛选（WHERE是一次筛选）</p>
-</li>
-</ol>
-</li>
-<li>
-<p>ORDER BY 排序：ORDER BY 字段名称 ASC|DESC / ORDER BY rand() 随机排序</p>
-<pre><code class="language-sql">按照多个字段排序
-SELECT id,username,age
-FROM user1
-ORDER BY age ASC, id ASC;
-</code></pre>
-</li>
-<li>
-<p>LIMIT 限制结果集合显示条数</p>
-<ol>
-<li>LIMIT值：显示结果集的前几条记录</li>
-<li>LIMIT offset,row_count：从offset开始，显示几条记录，offset从0开始。</li>
-</ol>
-</li>
-</ol>
-<h2 id="5-多表查询">5. 多表查询</h2>
-<ol>
-<li>
-<p>笛卡尔积的形式</p>
-<p>表1：4条 / 表2：6条 / total：24条</p>
-</li>
-<li>
-<p>内连接的形式：用的比较多</p>
-<ul>
-<li>
-<p>相当于两个集合取交集，只取都符合条件的</p>
-</li>
-<li>
-<p>查询两个表中符合连接条件的记录</p>
-<pre><code class="language-sql">SELECT 字段名称1,... FROM tbl_name1
-INNER JOIN tbl_name2
-ON 条件
-</code></pre>
-</li>
-</ul>
-</li>
-<li>
-<p>外连接</p>
-<ul>
-<li>
-<p>左外连接：以左表为主</p>
-<pre><code class="language-sql">SELECT 字段名称1,... FROM tbl_name1
-LEFT [OUTER] JOIN tbl_name2
-ON 条件;
-</code></pre>
-<p><strong>先显示左表中的全部记录，再去右表中查询符合条件的记录，不符合的以NULL代替</strong></p>
-</li>
-<li>
-<p>右外连接：以右表为主</p>
-<pre><code class="language-sql">SELECT 字段名称1,... FROM tbl_name1
-RIGHT [OUTER] JOIN tbl_name2
-ON 条件;
-</code></pre>
-<p><strong>先显示右表中的全部记录，再去左表中查询复合条件的记录，不符合的以NULL代替</strong></p>
-</li>
-<li>
-<p>全外连接：full outer join 全部都取出来</p>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="6-外键约束">6. 外键约束</h2>
-<p><strong>只有InnoDB存储引擎支持外键</strong></p>
-<ol>
-<li>创建外键</li>
-</ol>
-<ul>
-<li>
-<p>建表时候指定外键</p>
-<pre><code class="language-sql">[CONSTRAINT 外键名称]FOREIGN KEY(字段名称) REFERENCES 主表(字段名称)
-</code></pre>
-<ul>
-<li>子表的外键字段和主表的外键字段类型要相似;
-<ul>
-<li>如果是数值型要求一致,并且无符号也要一致</li>
-<li>如果是字符型，要求类型一致，长度可以不同</li>
-</ul>
-</li>
-<li>如果外键字段没有创建索引，MySQL会自动帮我们添加索引</li>
-<li>子表的外键关联的必须是父表的主键</li>
-<li>外键约束的参照操作
-<ol>
-<li><code>CASCADE</code>：从附表删除或更新，子表也跟着删除或者更新，级联的操作</li>
-<li><code>SET NULL</code>：从附表删除或者更新记录，并且设置子表的外键列为NULL</li>
-<li><code>NO ACTION | RESTRICT</code>：拒绝对父表做更新或者删除操作</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>
-<p>动态添加外键</p>
-<ul>
-<li>
-<p>动态添加外键</p>
-<pre><code class="language-sql">ALTER TABLE tbl_name
-ADD [CONSTRAINT 外键名称] FOREIGN KEY(外键字段) REFERENCES 主表(主键字段);
-</code></pre>
-<ul>
-<li>动态添加外键之前表中的记录一定都是合法的记录，没有脏值，否则外键添加不成功</li>
-</ul>
-</li>
-<li>
-<p>动态删除外键</p>
-<pre><code class="language-sql">ALTER TABLE tbl_name
-DROP FOREIGN KEY fk_name;
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="7-特殊形式的查询">7. 特殊形式的查询</h2>
-<ol>
-<li>
-<p>子查询</p>
-<ul>
-<li>
-<p>通过<code>SELECT</code>字段</p>
-<pre><code class="language-sql">SELECT 字段名称 FROM tbl_name WHERE col_name = (SELECT col_name FROM tbl_name);
-</code></pre>
-</li>
-<li>
-<p>内层语句查询的结果可以作为外层语句查询的条件</p>
-</li>
-<li>
-<p>由<code>IN</code>引发的子查询</p>
-<pre><code class="language-sql">SELECT * FROM emp
-WHERE depId IN (SELECT id FROM dep);
-</code></pre>
-</li>
-<li>
-<p>由比较运算符引出子查询</p>
-<pre><code class="language-sql">-- 查询出成绩最优
-SELECT id,username,score FROM stu
-WHERE score &gt;= (SELECT score FROM level where id = 1);
-</code></pre>
-</li>
-<li>
-<p>由<code>EXIST</code>引发的子查询:返回<code>bool</code>类型的结果,子查询为<code>true</code>才执行前面的语句</p>
-<pre><code class="language-sql">SELECT depName from del
-WHERE EXISTS (SELECT depName FROM dep WHERE id=10);
-</code></pre>
-</li>
-<li>
-<p>三个关键字<code>ANY</code> <code>SOME</code> <code>ALL</code></p>
-<table>
-<thead>
-<tr>
-<th>运算符\关键字</th>
-<th>ANY</th>
-<th>SOME</th>
-<th>ALL</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>&gt;、&gt;=</td>
-<td>最小值</td>
-<td>最小值</td>
-<td>最大值</td>
-</tr>
-<tr>
-<td>&lt;、&lt;=</td>
-<td>最大值</td>
-<td>最大值</td>
-<td>最小值</td>
-</tr>
-<tr>
-<td>=</td>
-<td>任意值</td>
-<td>任意值</td>
-<td></td>
-</tr>
-<tr>
-<td>&lt;&gt;、!=</td>
-<td></td>
-<td></td>
-<td>任意值</td>
-</tr>
-</tbody>
-</table>
-<pre><code class="language-sql">SELECT * FROM stu
-WHERE score &gt;= ANY(SELECT score FROM level);
-or
-WHERE score &gt;= SOME(SELECT score FROM level);
-or
-WHERE score &gt;= ALL(SELECT score FROM level);
-</code></pre>
-</li>
-<li>
-<p><code>INSERT ... SELECT</code> 的形式</p>
-<pre><code class="language-sql">INSERT user2 SELECT id,username FROM user1;
-</code></pre>
-</li>
-<li>
-<p><code>CREATE ... SELECT</code> 的形式</p>
-<pre><code class="language-sql">CREATE TABLE user1(
-	id int UNSIGNED AUTO_INCREMENT KEY,
-  username VARCHAR(20)
-)SELECT id,username FROM emp;
-</code></pre>
-</li>
-<li>
-<p><code>CREATE TABLE tbl_name LIKE tbl_name</code> 的形式创建一个表(新表中没有数据)</p>
-</li>
-</ul>
-</li>
-<li>
-<p>联合查询</p>
-<ul>
-<li>
-<p><code>UNION</code></p>
-<pre><code class="language-sql">SELECT 字段名称1,字段名称2... FROM tbl_name1
-UNION
-SELECT 字段名称3,字段名称4... FROM tbl_name2;
-</code></pre>
-</li>
-<li>
-<p><code>UNION ALL</code></p>
-<pre><code class="language-sql">SELECT 字段名称1,字段名称2... FROM tbl_name1 
-UNION ALL
-SELECT 字段名称3,字段名称4... FROM tbl_name2;
-</code></pre>
-</li>
-<li>
-<p><code>UNION ALL</code> 是简单的合并，<code>UNION</code> 会去掉表中重复记录</p>
-</li>
-</ul>
-</li>
-<li>
-<p>自身连接查询</p>
-<ul>
-<li><strong>无限级分类的实现形式</strong></li>
-</ul>
 </li>
 </ol>
 ]]></content>
