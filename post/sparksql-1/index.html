@@ -1,0 +1,795 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1578906108525">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://zu3zz.coding.me/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.coding.me/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.coding.me">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1578906108525" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#sparksql%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B01-%E9%83%A8%E7%BD%B2-%E9%A1%B9%E7%9B%AE%E5%87%86%E5%A4%87">SparkSQL实战笔记（1）---- 部署、项目准备</a>
+<ul>
+<li><a href="#1-%E5%85%B3%E4%BA%8Emapreduce%E7%9A%84%E9%97%AE%E9%A2%98">1. 关于MapReduce的问题</a></li>
+<li><a href="#2-spark">2. Spark</a></li>
+<li><a href="#3-%E9%83%A8%E7%BD%B2%E9%97%AE%E9%A2%98">3. 部署问题</a>
+<ul>
+<li><a href="#31-jdk%E9%83%A8%E7%BD%B2">3.1 <code>JDK</code>部署</a></li>
+<li><a href="#32-maven%E5%92%8Cidea%E9%83%A8%E7%BD%B2">3.2 <code>Maven</code>和<code>IDEA</code>部署</a></li>
+<li><a href="#33-hadoop%E9%83%A8%E7%BD%B2">3.3 <code>Hadoop</code>部署</a>
+<ul>
+<li><a href="#331-%E4%BD%BF%E7%94%A8cdh-cdh5151">3.3.1 使用<code>CDH</code> <code>cdh5.15.1</code></a></li>
+</ul>
+</li>
+<li><a href="#34-hive%E9%83%A8%E7%BD%B2">3.4 Hive部署</a></li>
+</ul>
+</li>
+<li><a href="#4-spark%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F">4. Spark运行模式</a></li>
+<li><a href="#5-%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8">5. 构建应用</a></li>
+<li><a href="#6-%E5%AE%9E%E6%88%98%E8%AF%8D%E9%A2%91%E7%BB%9F%E8%AE%A1%E6%A1%88%E4%BE%8B">6. 实战：词频统计案例</a></li>
+<li><a href="#7-%E5%AE%9E%E6%88%98%E4%BB%A3%E7%A0%81">7. 实战代码</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.coding.me/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">SparkSQL实战笔记（1）---- 部署、项目准备</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-01-13 / 12 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="sparksql实战笔记1-部署-项目准备">SparkSQL实战笔记（1）---- 部署、项目准备</h1>
+<h2 id="1-关于mapreduce的问题">1. 关于MapReduce的问题</h2>
+<ul>
+<li>
+<p>MapReduce的槽点一</p>
+<ul>
+<li>
+<p>需求：统计单词出现的个数（词频统计）</p>
+<ul>
+<li>
+<p>file中每个单词出现的次数</p>
+<pre><code class="language-txt">hello,hello,hello
+world,world
+pk
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>读取file中每一行的数据</li>
+<li>按照分隔符把每一行的内容进行拆分</li>
+<li>按照相同的key分发到同一个任务上去进行累加的操作</li>
+</ol>
+<ul>
+<li>
+<p>这是一个简单的不能再简单的一个需求，我们需要开发很多的代码</p>
+<ol>
+<li>自定义Mapper</li>
+<li>自定义Reducer</li>
+<li>通过Driver把Mapper和Reducer串起来</li>
+<li>打包，上传到集群上去</li>
+<li>在集群上提交我们的wc程序</li>
+</ol>
+</li>
+<li>
+<p>一句话：就是会花费非常多的时间在非业务逻辑改动的工作上</p>
+</li>
+</ul>
+</li>
+<li>
+<p>MapReduce吐槽点二</p>
+</li>
+<li>
+<p><code>Input =&gt; MapReduce ==&gt; Output ==&gt; MapReduce ==&gt; Output</code></p>
+</li>
+<li>
+<p>回顾下MapReduce执行流程：</p>
+<ul>
+<li>MapTask或者ReduceTask都是进程级别</li>
+<li>第一个MR的输出要先落地，然后第二个MR把第一个MR的输出当做输入</li>
+<li>中间过程的数据是要落地</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-spark">2. Spark</h2>
+<ol>
+<li>
+<p>特性</p>
+<ol>
+<li>
+<p>Speed:</p>
+<ul>
+<li>
+<p>both batch and streaming data</p>
+</li>
+<li>
+<p>批流一体 Spark Flink</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Ease of Use</p>
+<ul>
+<li>high-level operators</li>
+</ul>
+</li>
+<li>
+<p>Generality</p>
+<ul>
+<li>stack  栈   生态</li>
+</ul>
+</li>
+<li>
+<p>Runs Everywhere</p>
+<ul>
+<li>It can access diverse data sources</li>
+<li>YARN/Local/Standalone Spark应用程序的代码需要改动吗？</li>
+<li>--master来指定你的Spark应用程序将要运行在什么模式下</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="3-部署问题">3. 部署问题</h2>
+<h3 id="31-jdk部署">3.1 <code>JDK</code>部署</h3>
+<ul>
+<li>
+<p>下载：https://www.oracle.com/index.html</p>
+</li>
+<li>
+<p>服务器端：</p>
+<ul>
+<li>
+<p>下载linux版本的jdk</p>
+</li>
+<li>
+<p>解压：<code>tar -zxvf jdk-8u91-linux-x64.tar.gz -C ~/app</code></p>
+</li>
+<li>
+<p>配置环境变量： <code>~/.bash_profile</code></p>
+<pre><code class="language-shell">export JAVA_HOME=/home/hadoop/app/jdk1.8.0_91
+export PATH=$JAVA_HOME/bin:$PATH
+</code></pre>
+</li>
+<li>
+<p>使环境变量生效：<code>source ~/.bash_profile</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>客户端：Win/Mac/Linux</p>
+<ul>
+<li>Mac/Linux：就和服务器端安装方法一致</li>
+</ul>
+</li>
+</ul>
+<h3 id="32-maven和idea部署">3.2 <code>Maven</code>和<code>IDEA</code>部署</h3>
+<ol>
+<li>
+<p>Maven：IDEA+Maven来管理应用程序</p>
+<ul>
+<li>为什么你开发的时候不直接拷贝jar包呢？</li>
+<li>在maven中的pom.xml中添加我们所需要的dependency就行</li>
+</ul>
+</li>
+<li>
+<p>官网：maven.apache.org</p>
+<ul>
+<li>
+<p><code>wget http://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz</code></p>
+</li>
+<li>
+<p>解压：<code>tar -zxvf apache-maven-3.6.1-bin.tar.gz -C ~/app/</code></p>
+</li>
+<li>
+<p>配置环境变量：<code>~/.bash_profile</code></p>
+<pre><code class="language-shell">export MAVEN_HOME=/home/hadoop/app/apache-maven-3.6.1
+export PATH=$MAVEN_HOME/bin:$PATH
+</code></pre>
+</li>
+<li>
+<p>使环境变量生效：<code>source ~/.bash_profile</code></p>
+</li>
+<li>
+<p>服务器端：你是需要进行使用maven来编译我们的spark</p>
+</li>
+<li>
+<p>客户端：Win/Mac/Linux</p>
+</li>
+<li>
+<p>我们开发应用程序是在本地/本机，IDEA+Maven，所以本地也是需要安装maven的</p>
+</li>
+<li>
+<p>本地Win/Mac/Linux的maven安装方式和服务器端是一模一样的</p>
+</li>
+<li>
+<p>如果你是win用户，一定要注意: $MAVEN_HOME/conf/setting.xml</p>
+<pre><code class="language-xml">&lt;!-- localRepository
+	   | The path to the local repository maven will use to store artifacts.
+	   |
+	   | Default: ${user.home}/.m2/repository
+	  &lt;localRepository&gt;/path/to/local/repo&lt;/localRepository&gt;
+	  --&gt;
+</code></pre>
+</li>
+<li>
+<p>Win用户，默认是在C盘，所以建议大家更改Maven本地仓库的路径</p>
+</li>
+</ul>
+</li>
+<li>
+<p>IDEA官网：http://www.jetbrains.com/</p>
+</li>
+</ol>
+<h3 id="33-hadoop部署">3.3 <code>Hadoop</code>部署</h3>
+<h4 id="331-使用cdh-cdh5151">3.3.1 使用<code>CDH</code> <code>cdh5.15.1</code></h4>
+<ul>
+<li>
+<p>下载地址：https://archive.cloudera.com/cdh5/cdh/5/</p>
+</li>
+<li>
+<p>Hadoop：<code>wget https://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.15.1.tar.gz</code></p>
+</li>
+<li>
+<p>解压：<code>tar -zxvf hadoop-2.6.0-cdh5.15.1.tar.gz -C ~/app/</code></p>
+</li>
+<li>
+<p>修改<code>hadoop-env.sh</code></p>
+<pre><code class="language-shell">export JAVA_HOME=/home/hadoop/app/jdk1.8.0_91
+</code></pre>
+</li>
+<li>
+<p>修改core-site.xml</p>
+<pre><code class="language-xml">&lt;property&gt;
+	&lt;name&gt;fs.default.name&lt;/name&gt;
+	&lt;value&gt;hdfs://hadoop000:8020&lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+</li>
+<li>
+<p>修改hdfs-site.xml</p>
+<pre><code class="language-xml">&lt;property&gt;
+	&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+	&lt;value&gt;/home/hadoop/tmp/dfs/data&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+	&lt;name&gt;dfs.replication&lt;/name&gt;
+	&lt;value&gt;1&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+	&lt;name&gt;dfs.permissions&lt;/name&gt;
+	&lt;value&gt;false&lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+</li>
+<li>
+<p>修改yarn-site.xml</p>
+<pre><code class="language-xml">&lt;property&gt;
+	&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+	&lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+</li>
+<li>
+<p>修改mapred-site.xml</p>
+<pre><code class="language-xml">&lt;property&gt;
+	&lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+	&lt;value&gt;yarn&lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+</li>
+<li>
+<p>修改slaves（可选）</p>
+<ul>
+<li>hadoop000</li>
+</ul>
+</li>
+<li>
+<p>配置系统环境变量</p>
+<pre><code class="language-shell">export HADOOP_HOME=/home/hadoop/app/hadoop-2.6.0-cdh5.15.1
+export PATH=$HADOOP_HOME/bin:$PATH
+</code></pre>
+</li>
+<li>
+<p>配置SSH的免密码登录</p>
+</li>
+<li>
+<p>在启动HDFS之前，一定要先对HDFS对格式化</p>
+<ul>
+<li>切记：格式化只会一次，因为一旦格式化了，那么HDFS上的数据就没了</li>
+<li>格式化命令：<code>hdfs namenode -format</code></li>
+</ul>
+</li>
+<li>
+<p>启动HDFS</p>
+<ol>
+<li>
+<p>逐个进程启动/停止</p>
+<pre><code class="language-shell">$ hadoop-daemon.sh start/stop namenode
+$ hadoop-daemon.sh start/stop datanode
+</code></pre>
+<ul>
+<li>jps验证</li>
+<li>如果发现有缺失的进程，那么就找缺失进程的名称对应的日志(log而不是out)</li>
+</ul>
+</li>
+<li>
+<p>一键式启动HDFS</p>
+<pre><code class="language-shell">$ start-dfs.sh
+$ stop-dfs.sh
+</code></pre>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="34-hive部署">3.4 Hive部署</h3>
+<ol>
+<li>
+<p>Hadoop：wget https://archive.cloudera.com/cdh5/cdh/5/hive-1.1.0-cdh5.15.1.tar.gz</p>
+</li>
+<li>
+<p>系统环境变量</p>
+<pre><code class="language-shell">export HIVE_HOME=/home/hadoop/app/hive-1.1.0-cdh5.15.1
+export PATH=$HIVE_HOME/bin:$PATH
+</code></pre>
+</li>
+<li>
+<p>需要安装<code>MySQL</code> 与<code>yum</code></p>
+<ul>
+<li>
+<p>需要拷贝MySQL的驱动$HIVE_HOME/lib  版本5.x</p>
+</li>
+<li>
+<p>修改<code>$HIVE_HOME/conf/hive-site.xml</code>文件</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;
+
+&lt;configuration&gt;
+&lt;property&gt;
+  &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;
+  &lt;value&gt;jdbc:mysql://localhost:3306/pk?createDatabaseIfNotExist=true&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+  &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;
+  &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;
+  &lt;value&gt;root&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;
+  &lt;value&gt;root&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;/configuration&gt;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Hive: HDFS上的数据 + MySQL中元数据信息</p>
+</li>
+</ol>
+<h2 id="4-spark运行模式">4. Spark运行模式</h2>
+<ol>
+<li>local：本地运行，在开发代码的时候，我们使用该模式进行<strong>测试</strong>是非常方便的</li>
+<li>standalone：Hadoop部署多个节点的，同理Spark可以部署多个节点  <strong>用的不多</strong></li>
+<li>YARN：将Spark作业提交到Hadoop(YARN)集群中运行，Spark仅仅只是一个客户端而已 <strong>最多的用法</strong></li>
+<li>Mesos：不常用</li>
+<li>K8S：2.3版本才正式稍微稳定   是未来比较好的一个方向</li>
+<li>补充：运行模式和代码没有任何关系，同一份代码可以不做修改运行在不同的运行模式下</li>
+</ol>
+<h2 id="5-构建应用">5. 构建应用</h2>
+<ol>
+<li>
+<p>使用<code>IDEA</code>+<code>Maven</code>来构建我们的Spark应用</p>
+</li>
+<li>
+<p>在命令行中运行一下<code>MAVEN</code>命令</p>
+<pre><code class="language-shell">mvn archetype:generate -DarchetypeGroupId=net.alchim31.maven \
+-DarchetypeArtifactId=scala-archetype-simple \
+-DremoteRepositories=http://scala-tools.org/repo-releases \
+-DarchetypeVersion=1.5 \
+-DgroupId=com.imooc.bigdata \
+-DartifactId=sparksql-train \
+-Dversion=1.0
+</code></pre>
+</li>
+<li>
+<p>打开IDEA，把这个项目中的pom.xml打开即可</p>
+</li>
+<li>
+<p>同时，在<code>pom.xml</code>中添加一下相关配置</p>
+<pre><code class="language-xml">pom.xml
+&lt;properties&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+    &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+    &lt;scala.tools.version&gt;2.11&lt;/scala.tools.version&gt;
+    &lt;scala.version&gt;2.11.8&lt;/scala.version&gt;
+    &lt;spark.version&gt;2.4.3&lt;/spark.version&gt;
+    &lt;hadoop.version&gt;2.6.0-cdh5.15.1&lt;/hadoop.version&gt;
+&lt;/properties&gt;	
+
+添加CDH的仓库
+&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;cloudera&lt;/id&gt;
+        &lt;url&gt;https://repository.cloudera.com/artifactory/cloudera-repos&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;
+
+添加Spark SQL和Hadoop Client的依赖
+&lt;!--Spark SQL依赖--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+    &lt;artifactId&gt;spark-sql_2.11&lt;/artifactId&gt;
+    &lt;version&gt;${spark.version}&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;!-- Hadoop相关依赖--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+    &lt;artifactId&gt;hadoop-client&lt;/artifactId&gt;
+    &lt;version&gt;${hadoop.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+</ol>
+<h2 id="6-实战词频统计案例">6. 实战：词频统计案例</h2>
+<ol>
+<li>
+<p>输入：文件</p>
+<ul>
+<li>需求：统计出文件中每个单词出现的次数
+<ol>
+<li>读每一行数据</li>
+<li>按照分隔符把每一行的数据拆成单词</li>
+<li>每个单词赋上次数为1</li>
+<li>按照单词进行分发，然后统计单词出现的次数</li>
+<li>把结果输出到文件中</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>输出：文件</p>
+</li>
+<li>
+<p>使用local模式运行spark-shell</p>
+<pre><code class="language-shell">./spark-shell --master local
+</code></pre>
+<ul>
+<li>
+<p>打包我们的应用程序，让其运行在local模式下</p>
+</li>
+<li>
+<p>如何运行jar包呢？</p>
+</li>
+</ul>
+<pre><code class="language-shell">./spark-submit \
+--class  com.imooc.bigdata.chapter02.SparkWordCountAppV2 \
+--master local \
+/home/hadoop/lib/sparksql-train-1.0.jar \
+file:///home/hadoop/data/wc.data file:///home/hadoop/data/out 
+</code></pre>
+<ul>
+<li>使用local模式的话，你只需要把spark的安装包解压开，什么都不用动，就能使用</li>
+</ul>
+</li>
+<li>
+<p>如何提交Spark应用程序到YARN上执行</p>
+<pre><code class="language-shell">./spark-submit \
+--class  com.imooc.bigdata.chapter02.SparkWordCountAppV2 \
+--master yarn \
+--name SparkWordCountAppV2 \
+/home/hadoop/lib/sparksql-train-1.0.jar \
+hdfs://hadoop000:8020/pk/wc.data hdfs://hadoop000:8020/pk/out
+</code></pre>
+</li>
+<li>
+<p>要将Spark应用程序运行在YARN上，一定要配置<code>HADOOP_CONF_DIR</code>或者<code>YARN_CONF_DIR</code></p>
+<p>指向<code>$HADOOP_HOME/etc/conf</code></p>
+</li>
+<li>
+<p>local和YARN模式：重点掌握</p>
+</li>
+<li>
+<p>Standalone：了解</p>
+<ul>
+<li>
+<p>多个机器，那么你每个机器都需要部署spark</p>
+</li>
+<li>
+<p>相关配置：</p>
+<pre><code class="language-shell">$SPARK_HOME/conf/slaves
+	hadoop000
+SPARK_HOME/conf/spark-env.sh
+	SPARK_MASTER_HOST=hadoop000
+</code></pre>
+</li>
+<li>
+<p>启动Spark集群</p>
+<pre><code class="language-shell">$SPARK_HOME/sbin/start-all.sh
+jps： Master  Worker
+</code></pre>
+</li>
+<li>
+<p>spark提交作业</p>
+<pre><code class="language-shell">./spark-submit \
+--class  com.imooc.bigdata.chapter02.SparkWordCountAppV2 \
+--master spark://hadoop000:7077 \
+--name SparkWordCountAppV2 \
+/home/hadoop/lib/sparksql-train-1.0.jar \
+hdfs://hadoop000:8020/pk/wc.data hdfs://hadoop000:8020/pk/out2
+</code></pre>
+</li>
+<li>
+<p>不管什么运行模式，代码不用改变，只需要在<code>spark-submit</code>脚本提交时</p>
+<p>通过<code>--master xxx</code> 来设置你的运行模式即可</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="7-实战代码">7. 实战代码</h2>
+<ul>
+<li><code>Scala</code>版本</li>
+</ul>
+<pre><code class="language-scala">package com.zth.bigdata.examples
+import org.apache.spark.{SparkConf, SparkContext}
+/**
+ * Author: 3zZ.
+ * Date: 2020/1/13 3:14 下午
+ */
+object SparkWordCountApp {
+  def main(args: Array[String]): Unit = {
+    /**
+     * master: 运行模式 local
+     */
+    val sparkConf = new SparkConf().setMaster(&quot;local&quot;).setAppName(&quot;SparkWordCountApp&quot;)
+    val sc = new SparkContext(sparkConf)
+
+    val rdd = sc.textFile(&quot;/Users/3zz/Code/Spark/spark-sql-train/data/input.txt&quot;)
+    /**
+     * 按照单词个数进行降序排列
+     */
+    rdd.flatMap(_.split(&quot;,&quot;)).map((_, 1))
+      .reduceByKey(_ + _).map(x =&gt; (x._2, x._1))
+      .sortByKey(false).map(x =&gt;(x._2,x._1))
+      .collect().foreach(println)
+    //      .saveAsTextFile(&quot;/Users/3zz/Code/Spark/spark-sql-train/data/out&quot;).
+    sc.stop()
+  }
+}
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/d-Yb1ZFrX">
+            <span class="flex-auto">Scala</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/gIc76HpAW">
+            <span class="flex-auto">BigData</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/SU7AtBJej">
+            <span class="flex-auto">SparkSQL</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/SXYhkdjhr">
+            <span class="flex-auto">Spark</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/fxWruECqJ">
+            <span class="flex-auto">Hive</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.coding.me/post/hbase-1">
+                <h3 class="post-title">
+                  HBase学习笔记 ---- 整合篇
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://zu3zz.coding.me/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>
