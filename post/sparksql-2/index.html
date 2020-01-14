@@ -1,0 +1,542 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1579002470507">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://zu3zz.coding.me/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.coding.me/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.coding.me">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1579002470507" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#sparksql-%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B02-sparksql-%E6%A6%82%E8%BF%B0">SparkSQL 实战笔记（2）---- SparkSQL 概述</a>
+<ul>
+<li><a href="#2-sql-on-hadoop">2. SQL on Hadoop</a></li>
+<li><a href="#3-spark-sql-%E6%98%AF%E4%BB%80%E4%B9%88">3. Spark SQL 是什么</a>
+<ul>
+<li><a href="#31-spark-sql-%E6%A6%82%E5%BF%B5">3.1 Spark SQL 概念</a></li>
+<li><a href="#32-spark-sql-%E6%9E%B6%E6%9E%84">3.2 Spark SQL 架构</a>
+<ul>
+<li><a href="#321-%E5%89%8D%E7%AB%AFfrontend">3.2.1 前端（FrontEnd）</a></li>
+<li><a href="#322-%E5%90%8E%E7%AB%AFbackend">3.2.2 后端（Backend）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.coding.me/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">SparkSQL实战笔记（2）---- SparkSQL 概述</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-01-14 / 6 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="sparksql-实战笔记2-sparksql-概述">SparkSQL 实战笔记（2）---- SparkSQL 概述</h1>
+<p>##1. 为什么需要 SQL？</p>
+<ol>
+<li>
+<p>事实上的标准</p>
+<ul>
+<li>
+<p>MySQL/Oracle/DB2... RBDMS 关系型数据库 是不是过时呢？</p>
+</li>
+<li>
+<p>数据规模 大数据的处理</p>
+<pre><code class="language-shell">MR：Java
+Spark：Scala、Java、Python
+</code></pre>
+</li>
+<li>
+<p>直接使用 SQL 语句来对数据进行处理分析呢？ 符合市场的需求</p>
+<pre><code class="language-shell">Hive SparkSQL Impala...
+</code></pre>
+</li>
+<li>
+<p>受众面大、容易上手、易学易用:<code>DDL DML</code></p>
+<pre><code class="language-shell"># access.log日志
+1,zhangsan,10,beijing
+2,lisi,11,shanghai
+3,wangwu,12,shenzhen
+</code></pre>
+</li>
+<li>
+<p><code>table: Hive/Spark SQL/Impala</code> ：共享元数据</p>
+<ul>
+<li>name: access</li>
+<li>columns: id int,name string,age int,city string</li>
+</ul>
+<pre><code class="language-mysql">SQL: select xxx from access where ... group by ... having....
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-sql-on-hadoop">2. SQL on Hadoop</h2>
+<ol>
+<li>
+<p>使用 SQL 语句对大数据进行统计分析，数据是在 Hadoop</p>
+</li>
+<li>
+<p><code>Apache Hive</code></p>
+<ul>
+<li>SQL 转换成一系列可以在 Hadoop 上运行的 MapReduce/Tez/Spark 作业</li>
+<li>SQL 到底底层是运行在哪种分布式引擎之上的，是可以通过一个参数来设置</li>
+<li>功能：
+<ul>
+<li>SQL：命令行、代码</li>
+<li>多语言 Apache Thrift 驱动</li>
+<li>自定义的 UDF 函数：按照标准接口实现，打包，加载到 Hive 中</li>
+<li>元数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Cloudera Impala</code></p>
+<ul>
+<li>使用了自己的执行守护进程集合，一般情况下这些进程是需要与 Hadoop DN 安装在一个节点上</li>
+<li>功能：
+<ul>
+<li>92 SQL 支持</li>
+<li>Hive 支持</li>
+<li>命令行、代码</li>
+<li>与 Hive 能够共享元数据</li>
+<li>性能方面是 Hive 要快速一些，基于内存</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Spark SQL</code></p>
+<ul>
+<li>
+<p>Spark 中的一个子模块，是不是仅仅只用 SQL 来处理呢？</p>
+<pre><code class="language-shell">$ Hive：SQL ==&gt; MapReduce
+</code></pre>
+</li>
+<li>
+<p><code>Spark</code>：能不能直接把 SQL 运行在 Spark 引擎之上呢？</p>
+<ol>
+<li><code>Shark</code>： <code>SQL==&gt;Spark</code> （不再维护）
+<ul>
+<li>优点：快 与 Hive 能够兼容</li>
+<li>缺点：执行计划优化完全依赖于 Hive 进程 vs 线程</li>
+<li>使用：需要独立维护一个打了补丁的 Hive 源码分支</li>
+</ul>
+</li>
+<li><code>Spark SQL</code>: 这是 Spark 项目中的<code>SQL</code>子项目</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Hive on Spark</code> ： 这是<code>Hive</code>项目中的，通过切换 Hive 的执行引擎即可，底层添加了 Spark 执行引擎的支持</p>
+</li>
+<li>
+<p><code>Presto</code></p>
+<ul>
+<li>交互式查询引擎 SQL</li>
+<li>功能：
+<ul>
+<li>共享元数据信息</li>
+<li>92 SQL 语法</li>
+<li>提供了一系列的连接器，<code>Hive</code> <code>Cassandra</code>...</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Drill</code></p>
+<ol>
+<li>HDFS、Hive、Spark SQL</li>
+<li>支持多种后端存储，然后直接进行各种后端数据的处理</li>
+<li>未来的趋势</li>
+</ol>
+</li>
+<li>
+<p><code>Phoenix</code></p>
+<ol>
+<li>HBase 的数据，是要基于 API 进行查询</li>
+<li>Phoenix 使用 SQL 来查询 HBase 中的数据</li>
+<li>主要点：如果想查询的快的话，还是取决于 ROWKEY 的设计</li>
+</ol>
+</li>
+</ol>
+<h2 id="3-spark-sql-是什么">3. Spark SQL 是什么</h2>
+<h3 id="31-spark-sql-概念">3.1 Spark SQL 概念</h3>
+<ol>
+<li>
+<p>Spark SQL is Apache Spark's module for working with structured data.</p>
+<ul>
+<li>误区一：Spark SQL 就是一个 SQL 处理框架</li>
+</ul>
+<ol>
+<li>
+<p>集成性：在 Spark 编程中无缝对接多种复杂的 SQL</p>
+</li>
+<li>
+<p>统一的数据访问方式：以类似的方式访问多种不同的数据源，而且可以进行相关操作</p>
+<pre><code class="language-scala">spark.read.format(&quot;json&quot;).load(path)
+spark.read.format(&quot;text&quot;).load(path)
+spark.read.format(&quot;parquet&quot;).load(path)
+spark.read.format(&quot;json&quot;).option(&quot;...&quot;,&quot;...&quot;).load(path)
+</code></pre>
+</li>
+<li>
+<p>兼容 Hive</p>
+<ul>
+<li>allowing you to access existing Hive warehouses</li>
+<li>如果你想把 Hive 的作业迁移到 Spark SQL，这样的话，迁移成本就会低很多</li>
+</ul>
+</li>
+<li>
+<p>标准的数据连接：提供标准的<code>JDBC/ODBC</code>连接方式到 Server 上</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Spark SQL 应用并不局限于 SQL</p>
+<ol>
+<li>还支持 Hive、JSON、Parquet 文件的直接读取以及操作</li>
+<li>SQL 仅仅是 Spark SQL 中的一个功能而已</li>
+</ol>
+</li>
+<li>
+<p>为什么要学习 Spark SQL</p>
+<ol>
+<li>SQL 带来的便利性</li>
+<li>Spark Core： RDD Scala/Java
+<ul>
+<li>需要熟悉 Java、Scala 语言</li>
+</ul>
+</li>
+<li>Spark SQL
+<ul>
+<li>Catalyst 为我们自动做了很多的优化工作</li>
+<li>SQL(只要了解业务逻辑，然后使用 SQL 来实现)</li>
+<li>DF/DS：面向 API 编程的，使用一些 Java/Scala</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="32-spark-sql-架构">3.2 Spark SQL 架构</h3>
+<h4 id="321-前端frontend">3.2.1 前端（FrontEnd）</h4>
+<ol>
+<li>
+<p>Hive AST : SQL 语句（字符串）==&gt; 抽象语法树</p>
+</li>
+<li>
+<p>Spark Program : DF/DS API</p>
+</li>
+<li>
+<p>Streaming SQL</p>
+</li>
+<li>
+<p>Catalyst</p>
+<ul>
+<li>Unresolved LogicPlan</li>
+</ul>
+<pre><code class="language-mysql">select empno, ename from emp
+</code></pre>
+</li>
+<li>
+<p>Schema Catalog 和 MetaStore</p>
+</li>
+<li>
+<p>LogicPlan</p>
+</li>
+<li>
+<p>Optimized LogicPlan</p>
+<pre><code class="language-mysql">select * from (select ... from xxx limit 10) limit 5;
+将我们的SQL作用上很多内置的Rule，使得我们拿到的逻辑执行计划是比较好的
+</code></pre>
+<p><code>Physical Plan</code></p>
+</li>
+</ol>
+<h4 id="322-后端backend">3.2.2 后端（Backend）</h4>
+<ol>
+<li>
+<p><code>spark-shell</code></p>
+<ul>
+<li>每个 Spark 应用程序（spark-shell）在不同目录下启动，其实在该目录下是有 metastore_db</li>
+<li>单独的</li>
+<li>如果你想 spark-shell 共享我们的元数据的话，肯定要指定元数据信息==&gt; 后续讲 Spark SQL 整合 Hive 的时候讲解</li>
+<li><code>spark.sql</code>(sql 语句)</li>
+</ul>
+</li>
+<li>
+<p>spark-sql 的使用<br>
+spark-shell 你会发现如果要操作 SQL 相关的东西，要使用 spark.sql(sql 语句)</p>
+<pre><code class="language-mysql">explain extended
+select a.key\*(3+5), b.value from t a join t b on a.key = b.key and a.key &gt; 3;
+</code></pre>
+<ul>
+<li>优化的过程中，可以把一些条件过滤前置</li>
+</ul>
+</li>
+<li>
+<p>spark-shell 启动流程分析</p>
+<ul>
+<li>
+<p>REPL: Read-Eval-Print Loop 读取-求值-输出</p>
+</li>
+<li>
+<p>提供给用户即时交互一个命令窗口</p>
+<pre><code class="language-mysql">case \$变量名 in
+模式 1
+command1
+;;
+模式 2
+command2
+;;
+\*)
+default
+;;
+esac
+</code></pre>
+</li>
+<li>
+<p>spark-shell 底层调用的是 spark-submit</p>
+</li>
+<li>
+<p>spark-submit 底层调用的是 spark-class</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>spark-sql 执行流程分析</strong></p>
+<ul>
+<li>spark-sql 底层调用的也是 spark-submit</li>
+<li>因为 spark-sql 它就是一个 Spark 应用程序，和 spark-shell 一样</li>
+<li>对于你想启动一个 Spark 应用程序，肯定要借助于 spark-submit 这脚本进行提交</li>
+<li>spark-sql 调用的类是<code>org.apache.spark.sql.hive.thriftserver.SparkSQLCLIDriver</code></li>
+<li>spark-shell 调用的类是 <code>org.apache.spark.repl.Main</code></li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/d-Yb1ZFrX">
+            <span class="flex-auto">Scala</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/gIc76HpAW">
+            <span class="flex-auto">BigData</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/SU7AtBJej">
+            <span class="flex-auto">SparkSQL</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/SXYhkdjhr">
+            <span class="flex-auto">Spark</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/_el9BOoeY">
+            <span class="flex-auto">Java</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.coding.me/post/sparksql-1">
+                <h3 class="post-title">
+                  SparkSQL实战笔记（1）---- 部署、项目准备
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://zu3zz.coding.me/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

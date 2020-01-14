@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zu3zz.coding.me</id>
     <title>风袖</title>
-    <updated>2020-01-13T09:05:19.812Z</updated>
+    <updated>2020-01-14T11:48:30.465Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zu3zz.coding.me"/>
     <link rel="self" href="https://zu3zz.coding.me/atom.xml"/>
@@ -10,6 +10,298 @@
     <logo>https://zu3zz.coding.me/images/avatar.png</logo>
     <icon>https://zu3zz.coding.me/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
+    <entry>
+        <title type="html"><![CDATA[SparkSQL实战笔记（2）---- SparkSQL 概述]]></title>
+        <id>https://zu3zz.coding.me/post/sparksql-2</id>
+        <link href="https://zu3zz.coding.me/post/sparksql-2">
+        </link>
+        <updated>2020-01-14T11:46:21.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="sparksql-实战笔记2-sparksql-概述">SparkSQL 实战笔记（2）---- SparkSQL 概述</h1>
+<p>##1. 为什么需要 SQL？</p>
+<ol>
+<li>
+<p>事实上的标准</p>
+<ul>
+<li>
+<p>MySQL/Oracle/DB2... RBDMS 关系型数据库 是不是过时呢？</p>
+</li>
+<li>
+<p>数据规模 大数据的处理</p>
+<pre><code class="language-shell">MR：Java
+Spark：Scala、Java、Python
+</code></pre>
+</li>
+<li>
+<p>直接使用 SQL 语句来对数据进行处理分析呢？ 符合市场的需求</p>
+<pre><code class="language-shell">Hive SparkSQL Impala...
+</code></pre>
+</li>
+<li>
+<p>受众面大、容易上手、易学易用:<code>DDL DML</code></p>
+<pre><code class="language-shell"># access.log日志
+1,zhangsan,10,beijing
+2,lisi,11,shanghai
+3,wangwu,12,shenzhen
+</code></pre>
+</li>
+<li>
+<p><code>table: Hive/Spark SQL/Impala</code> ：共享元数据</p>
+<ul>
+<li>name: access</li>
+<li>columns: id int,name string,age int,city string</li>
+</ul>
+<pre><code class="language-mysql">SQL: select xxx from access where ... group by ... having....
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-sql-on-hadoop">2. SQL on Hadoop</h2>
+<ol>
+<li>
+<p>使用 SQL 语句对大数据进行统计分析，数据是在 Hadoop</p>
+</li>
+<li>
+<p><code>Apache Hive</code></p>
+<ul>
+<li>SQL 转换成一系列可以在 Hadoop 上运行的 MapReduce/Tez/Spark 作业</li>
+<li>SQL 到底底层是运行在哪种分布式引擎之上的，是可以通过一个参数来设置</li>
+<li>功能：
+<ul>
+<li>SQL：命令行、代码</li>
+<li>多语言 Apache Thrift 驱动</li>
+<li>自定义的 UDF 函数：按照标准接口实现，打包，加载到 Hive 中</li>
+<li>元数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Cloudera Impala</code></p>
+<ul>
+<li>使用了自己的执行守护进程集合，一般情况下这些进程是需要与 Hadoop DN 安装在一个节点上</li>
+<li>功能：
+<ul>
+<li>92 SQL 支持</li>
+<li>Hive 支持</li>
+<li>命令行、代码</li>
+<li>与 Hive 能够共享元数据</li>
+<li>性能方面是 Hive 要快速一些，基于内存</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Spark SQL</code></p>
+<ul>
+<li>
+<p>Spark 中的一个子模块，是不是仅仅只用 SQL 来处理呢？</p>
+<pre><code class="language-shell">$ Hive：SQL ==&gt; MapReduce
+</code></pre>
+</li>
+<li>
+<p><code>Spark</code>：能不能直接把 SQL 运行在 Spark 引擎之上呢？</p>
+<ol>
+<li><code>Shark</code>： <code>SQL==&gt;Spark</code> （不再维护）
+<ul>
+<li>优点：快 与 Hive 能够兼容</li>
+<li>缺点：执行计划优化完全依赖于 Hive 进程 vs 线程</li>
+<li>使用：需要独立维护一个打了补丁的 Hive 源码分支</li>
+</ul>
+</li>
+<li><code>Spark SQL</code>: 这是 Spark 项目中的<code>SQL</code>子项目</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Hive on Spark</code> ： 这是<code>Hive</code>项目中的，通过切换 Hive 的执行引擎即可，底层添加了 Spark 执行引擎的支持</p>
+</li>
+<li>
+<p><code>Presto</code></p>
+<ul>
+<li>交互式查询引擎 SQL</li>
+<li>功能：
+<ul>
+<li>共享元数据信息</li>
+<li>92 SQL 语法</li>
+<li>提供了一系列的连接器，<code>Hive</code> <code>Cassandra</code>...</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Drill</code></p>
+<ol>
+<li>HDFS、Hive、Spark SQL</li>
+<li>支持多种后端存储，然后直接进行各种后端数据的处理</li>
+<li>未来的趋势</li>
+</ol>
+</li>
+<li>
+<p><code>Phoenix</code></p>
+<ol>
+<li>HBase 的数据，是要基于 API 进行查询</li>
+<li>Phoenix 使用 SQL 来查询 HBase 中的数据</li>
+<li>主要点：如果想查询的快的话，还是取决于 ROWKEY 的设计</li>
+</ol>
+</li>
+</ol>
+<h2 id="3-spark-sql-是什么">3. Spark SQL 是什么</h2>
+<h3 id="31-spark-sql-概念">3.1 Spark SQL 概念</h3>
+<ol>
+<li>
+<p>Spark SQL is Apache Spark's module for working with structured data.</p>
+<ul>
+<li>误区一：Spark SQL 就是一个 SQL 处理框架</li>
+</ul>
+<ol>
+<li>
+<p>集成性：在 Spark 编程中无缝对接多种复杂的 SQL</p>
+</li>
+<li>
+<p>统一的数据访问方式：以类似的方式访问多种不同的数据源，而且可以进行相关操作</p>
+<pre><code class="language-scala">spark.read.format(&quot;json&quot;).load(path)
+spark.read.format(&quot;text&quot;).load(path)
+spark.read.format(&quot;parquet&quot;).load(path)
+spark.read.format(&quot;json&quot;).option(&quot;...&quot;,&quot;...&quot;).load(path)
+</code></pre>
+</li>
+<li>
+<p>兼容 Hive</p>
+<ul>
+<li>allowing you to access existing Hive warehouses</li>
+<li>如果你想把 Hive 的作业迁移到 Spark SQL，这样的话，迁移成本就会低很多</li>
+</ul>
+</li>
+<li>
+<p>标准的数据连接：提供标准的<code>JDBC/ODBC</code>连接方式到 Server 上</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Spark SQL 应用并不局限于 SQL</p>
+<ol>
+<li>还支持 Hive、JSON、Parquet 文件的直接读取以及操作</li>
+<li>SQL 仅仅是 Spark SQL 中的一个功能而已</li>
+</ol>
+</li>
+<li>
+<p>为什么要学习 Spark SQL</p>
+<ol>
+<li>SQL 带来的便利性</li>
+<li>Spark Core： RDD Scala/Java
+<ul>
+<li>需要熟悉 Java、Scala 语言</li>
+</ul>
+</li>
+<li>Spark SQL
+<ul>
+<li>Catalyst 为我们自动做了很多的优化工作</li>
+<li>SQL(只要了解业务逻辑，然后使用 SQL 来实现)</li>
+<li>DF/DS：面向 API 编程的，使用一些 Java/Scala</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="32-spark-sql-架构">3.2 Spark SQL 架构</h3>
+<h4 id="321-前端frontend">3.2.1 前端（FrontEnd）</h4>
+<ol>
+<li>
+<p>Hive AST : SQL 语句（字符串）==&gt; 抽象语法树</p>
+</li>
+<li>
+<p>Spark Program : DF/DS API</p>
+</li>
+<li>
+<p>Streaming SQL</p>
+</li>
+<li>
+<p>Catalyst</p>
+<ul>
+<li>Unresolved LogicPlan</li>
+</ul>
+<pre><code class="language-mysql">select empno, ename from emp
+</code></pre>
+</li>
+<li>
+<p>Schema Catalog 和 MetaStore</p>
+</li>
+<li>
+<p>LogicPlan</p>
+</li>
+<li>
+<p>Optimized LogicPlan</p>
+<pre><code class="language-mysql">select * from (select ... from xxx limit 10) limit 5;
+将我们的SQL作用上很多内置的Rule，使得我们拿到的逻辑执行计划是比较好的
+</code></pre>
+<p><code>Physical Plan</code></p>
+</li>
+</ol>
+<h4 id="322-后端backend">3.2.2 后端（Backend）</h4>
+<ol>
+<li>
+<p><code>spark-shell</code></p>
+<ul>
+<li>每个 Spark 应用程序（spark-shell）在不同目录下启动，其实在该目录下是有 metastore_db</li>
+<li>单独的</li>
+<li>如果你想 spark-shell 共享我们的元数据的话，肯定要指定元数据信息==&gt; 后续讲 Spark SQL 整合 Hive 的时候讲解</li>
+<li><code>spark.sql</code>(sql 语句)</li>
+</ul>
+</li>
+<li>
+<p>spark-sql 的使用<br>
+spark-shell 你会发现如果要操作 SQL 相关的东西，要使用 spark.sql(sql 语句)</p>
+<pre><code class="language-mysql">explain extended
+select a.key\*(3+5), b.value from t a join t b on a.key = b.key and a.key &gt; 3;
+</code></pre>
+<ul>
+<li>优化的过程中，可以把一些条件过滤前置</li>
+</ul>
+</li>
+<li>
+<p>spark-shell 启动流程分析</p>
+<ul>
+<li>
+<p>REPL: Read-Eval-Print Loop 读取-求值-输出</p>
+</li>
+<li>
+<p>提供给用户即时交互一个命令窗口</p>
+<pre><code class="language-mysql">case \$变量名 in
+模式 1
+command1
+;;
+模式 2
+command2
+;;
+\*)
+default
+;;
+esac
+</code></pre>
+</li>
+<li>
+<p>spark-shell 底层调用的是 spark-submit</p>
+</li>
+<li>
+<p>spark-submit 底层调用的是 spark-class</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>spark-sql 执行流程分析</strong></p>
+<ul>
+<li>spark-sql 底层调用的也是 spark-submit</li>
+<li>因为 spark-sql 它就是一个 Spark 应用程序，和 spark-shell 一样</li>
+<li>对于你想启动一个 Spark 应用程序，肯定要借助于 spark-submit 这脚本进行提交</li>
+<li>spark-sql 调用的类是<code>org.apache.spark.sql.hive.thriftserver.SparkSQLCLIDriver</code></li>
+<li>spark-shell 调用的类是 <code>org.apache.spark.repl.Main</code></li>
+</ul>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SparkSQL实战笔记（1）---- 部署、项目准备]]></title>
         <id>https://zu3zz.coding.me/post/sparksql-1</id>
@@ -2432,269 +2724,6 @@ res0: Int = 1
 <li>IDEA</li>
 <li>Eclipse ide scala</li>
 <li>NetBeans（不常用）</li>
-</ul>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[大数据学习(1) ---- Linux基础(1)]]></title>
-        <id>https://zu3zz.coding.me/post/ruozedata-1</id>
-        <link href="https://zu3zz.coding.me/post/ruozedata-1">
-        </link>
-        <updated>2019-12-10T15:11:25.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="大数据学习1-linux基础1">大数据学习（1）---- Linux基础（1）</h1>
-<h2 id="1-提前准备">1. 提前准备</h2>
-<ol>
-<li>
-<p>CentOS6.5 虚拟机 或者 CentOS7.x 云主机</p>
-</li>
-<li>
-<p>Xshell软件、CRT、PUTTY 进行远程登录（Mac用户使用自带命令行）</p>
-</li>
-<li>
-<p>使用ssh进行远程登录</p>
-<pre><code class="language-shel">ssh root@10.211.55.5
-登录linux虚拟机
-</code></pre>
-</li>
-</ol>
-<h2 id="2-常用linux命令">2. 常用Linux命令</h2>
-<ol>
-<li>
-<p>pwd</p>
-<pre><code class="language-shell">查看当前光标所在的目录
-显示从根目录/开始 绝对路径
-</code></pre>
-</li>
-<li>
-<p>用户窥探</p>
-<pre><code class="language-shell">root 超级管理员  123456      /root
-zth 普通用户  界面创建   			/home/zth
-lyj                        /home/lyj
-xxx                        /home/xxx
-默认系统是在/home目录下 除非指定用户的home目录为其他目录
-</code></pre>
-<ul>
-<li>Linux系统的目录是从根目录开始 /</li>
-</ul>
-</li>
-<li>
-<p>ls: 查看</p>
-<pre><code class="language-shell">ls / 只显示该目录下的文件或文件夹的名称
-ls -l / 显示该目录下的文件或文件夹的明细信息
-
-[root@hadoop001 zth]# ls -l /home
-总用量 20
-drwx------.  2 root root 16384 12月 10 17:28 lost+found
-drwx------. 28 zth  zth   4096 12月 10 17:40 zth
-权限          用户    用户组      时间         名称
-</code></pre>
-</li>
-<li>
-<p>cd: 切换目录</p>
-<pre><code class="language-shell">cd /home
-
-cd    		切家目录  
-cd ~  		切家目录 ~标识
-cd /root  用户的家目录的绝对路径
-
-cd -    	回到上一次目录
-cd ../  	回退上一层目录
-
-cd ../../ 回退2个目录
-</code></pre>
-</li>
-<li>
-<p>路径</p>
-<pre><code class="language-shell">绝对路径 /根目录开始
-相对路径 不以/开始
-[root@hadoop001 ~]# ls
-anaconda-ks.cfg  Downloads           Music     Templates
-Desktop          install.log         Pictures  Videos
-Documents        install.log.syslog  Public
-[root@hadoop001 ~]# cd Desktop/   相对
-[root@hadoop001 Desktop]# 
-
-[root@hadoop001 ~]# cd /root/Desktop/ 绝对
-[root@hadoop001 Desktop]# 
-</code></pre>
-</li>
-<li>
-<p>clear: 清空屏幕</p>
-</li>
-<li>
-<p>再讲 ls</p>
-<ul>
-<li>
-<p>ls 命令简写（只有在linux中才行）</p>
-<pre><code class="language-shell">ls -l ==&gt; ll
-</code></pre>
-</li>
-<li>
-<p>查看文件大小</p>
-<pre><code class="language-shell">ll -h
-</code></pre>
-</li>
-<li>
-<p>查看文件夹或者文件的大小</p>
-<pre><code class="language-shell">du -sh Desktop/
-du -sh install.log
-</code></pre>
-</li>
-<li>
-<p>找出最新的文件或者文件夹</p>
-<pre><code class="language-shell">ll -rt
-ll -rt == ls -l -r -t == ls -lrt
-</code></pre>
-</li>
-<li>
-<p>查看隐藏文件或文件夹（隐藏是以 . 开头的文件或文件夹）</p>
-<pre><code class="language-shell">ll -a
-</code></pre>
-</li>
-</ul>
-</li>
-<li>
-<p>创建文件夹</p>
-<pre><code class="language-shell">mkdir bigdata 只能创建1个
-mkdir -p bigdata/1/2 级联创建文件夹 串行
-mkdir 4 5 6 并行
-</code></pre>
-</li>
-<li>
-<p>创建文件</p>
-<ul>
-<li>
-<p>touch的形式创建</p>
-<pre><code class="language-shell">touch zth.log 创建空文件
-</code></pre>
-</li>
-<li>
-<p>vi 的形式创建</p>
-<pre><code class="language-shell">vi zth.log 创建文件 重要！！
-1. 命令行模式 按 i 进入编辑模式
-2. esc 回退到命令行模式
-3. shift+:尾行模式  wq 保存退出
-</code></pre>
-</li>
-</ul>
-</li>
-<li>
-<p>cp: 拷贝 2 份，原有的还在</p>
-<pre><code class="language-shell">cp zth.log bigdata/
-cp -r 7 6/         文件夹拷贝 需要-r参数
-</code></pre>
-</li>
-<li>
-<p>mv: 移动 1 份，即原有的移动到新位置</p>
-<pre><code class="language-shell">mv zth1.log 6                移动文件到新的地方 名称不变
-mv zth2.log  6/zth123.log    移动文件到新的地方 改变zth2.log名称为zth123.log   
-mv 8 6  移动文件夹
-</code></pre>
-</li>
-<li>
-<p>第一种命令帮助</p>
-<pre><code class="language-shell">[root@hadoop001 ~]# ls --help
-Usage: ls [OPTION]... [FILE]...
-[]代表可以省略
-ls
-ls jepson.log jepson.log可以省略
-ls -r -t			-r -t 就属于option
-</code></pre>
-</li>
-<li>
-<p>离线查看文件内容</p>
-<ul>
-<li>
-<p>cat</p>
-<pre><code class="language-shell">cat 文件内容一下子全部显示 适用字节内容较少
-</code></pre>
-</li>
-<li>
-<p>more</p>
-<pre><code class="language-shell">more 文件内容一页一页的往下翻 按空格键往下 
-回退不了 按q退出   适用字节内容稍多的 
-</code></pre>
-</li>
-<li>
-<p>less</p>
-<pre><code class="language-shell">less 文件内容 一行行 按箭头上下滚动  按q退出
-</code></pre>
-</li>
-<li>
-<p>| 管道符</p>
-<ul>
-<li>前面的shell脚本的输出 作为后面命令的输入</li>
-</ul>
-</li>
-<li>
-<p>grep过滤</p>
-<pre><code class="language-shell">grep -C 10 拿到前后上下文共 20 行
-
-&gt; 重定向输出到文件  如果文件中有内容则覆盖
-&gt; &gt; 追加
-</code></pre>
-</li>
-<li>
-<p>对文件的内容ERROR 定位错误</p>
-<pre><code class="language-shell">假如文件假如100m+
-cat install.log | grep -C 10 &quot;ERROR&quot;
-
-假如 ERROR赛选的结果 特多 将结果保存到 error.log 中
-cat install.log | grep -C 10 &quot;ERROR&quot; &gt; error.log
-</code></pre>
-</li>
-</ul>
-</li>
-<li>
-<p>实时查看</p>
-<ol>
-<li>主要使用 tail 命令</li>
-</ol>
-<pre><code class="language-shell">打开实时窗口查看log日志
-tail -f tail1.log
-tail -F tail2.log
--F = -f + retry
-</code></pre>
-<ul>
-<li>试验一下</li>
-</ul>
-<pre><code class="language-shell">[root@hadoop001 ~]# echo &quot;123&quot; &gt;&gt; tail1.log 
-[root@hadoop001 ~]# echo &quot;123&quot; &gt;&gt; tail2.log 
-[root@hadoop001 ~]# echo &quot;4&quot; &gt;&gt; tail1.log 
-[root@hadoop001 ~]# echo &quot;4&quot; &gt;&gt; tail2.log 
-此时tail1.log 与 tail2.log都可以正常输出
-</code></pre>
-<ul>
-<li>
-<p>生产上 xxxx.log日志大小 100m 一般保留10份</p>
-</li>
-<li>
-<p>如果将xxx.log 日志中内容移到xxx.log1中，此时 xxx.log 已经不存在</p>
-</li>
-<li>
-<p>而 -f 打开的tail1.log 并不能检测到 log 文件的发生的变化</p>
-</li>
-<li>
-<p>但是使用 -F 打开的tail2.log 文件 因为有 retry 可以检测文件发生的变化</p>
-<pre><code class="language-shell">tail: 'tail2.log' has become inaccessible: No such file or directory
-tail: 'tail2.log' has appeared;  following end of new file
-</code></pre>
-</li>
-<li>
-<p>说明-f 不够强大 文件只要被移走 就算新的一模一样 也不会实时监控<br>
-反之-F 强大 实时监控</p>
-</li>
-<li>
-<p>flume踩坑案例：tail -f<br>
-http://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html#exec-source</p>
-</li>
-<li>
-<p>特别需求： 查看倒数 50 行 只能用 f 不能用 F</p>
-<pre><code class="language-shell">tail -50f xxx.log
-</code></pre>
-</li>
 </ul>
 </li>
 </ol>

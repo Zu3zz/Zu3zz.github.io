@@ -31,17 +31,38 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            文章目录
+            烟蛾敛略不胜态，风袖低昂如有情
           </p>
-          <div class="toc-container hidden lg:block">
-            <ul class="markdownIt-TOC">
-<li><a href="#hadoop-%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92">Hadoop 集群规划</a>
-<ul>
-<li><a href="#%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4">详细步骤</a></li>
-</ul>
-</li>
-</ul>
-
+          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
+            
+              
+                <a href="https://github.com/zu3zz" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
+                  <i class="remixicon-github-line"></i>
+                </a>
+              
+            
+              
+            
+              
+            
+              
+                <a href="https://www.zhihu.com/people/ga-me-35/activities" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
+                  <i class="remixicon-zhihu-line"></i>
+                </a>
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
           </div>
         </div>
       
@@ -91,195 +112,30 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">Hadoop系列(1)----多集群配置流程</h1>
-        <div class="text-sm text-gray-700 lg:my-8">
-          2019-09-09 / 3 min read
-        </div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
+        <h2 class="text-lg text-gray-700 mb-8">
+          <i class="remixicon-bookmark-line"></i> BigData
+        </h2>
         
-        <div class="post-content yue">
-          <p>🥅终于到了激动人心的伪(划掉分布式环节 如何将HDFS配置在多机器的集群上<br>
-这篇文章会详细告诉你~</p>
-<!-- more -->
-<h1 id="hadoop-集群规划">Hadoop 集群规划</h1>
-<ul>
-<li>
-<p>HDFS: NN DN</p>
-</li>
-<li>
-<p>YARN: RM NM</p>
-</li>
-<li>
-<p>hadoop000 192.168.199.234</p>
-<ul>
-<li>NN RM</li>
-<li>DN NM</li>
-</ul>
-</li>
-<li>
-<p>hadoop001 192.168.199.235</p>
-<ul>
-<li>DN NM</li>
-</ul>
-</li>
-<li>
-<p>hadoop002 192.168.199.236</p>
-<ul>
-<li>DN NM</li>
-</ul>
-</li>
-</ul>
-<h2 id="详细步骤">详细步骤</h2>
-<ul>
-<li>
-<p>对每台机器</p>
-<ul>
-<li>
-<p>修改 host 配置</p>
-<ul>
-<li>
-<p>在/etc/hostname 下修改 hostname(hadoop000/hadoop001/hadoop002)</p>
-</li>
-<li>
-<p>在/etc/hosts 下修改 ip 和 hostname 的映射关系</p>
-<ol>
-<li>192.168.199.234 hadoop000</li>
-<li>192.168.199.235 hadoop001</li>
-<li>192.168.199.236 hadoop002</li>
-<li>192.168.199.23x localhost(试机器而定)</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>
-<p>前置安装 ssh 进行免密码登录操作</p>
-</li>
-</ul>
-<pre><code class="language-shell">ssh-keygen -t rsa
-</code></pre>
-<p>在每台 hadoop 机器上进行操作</p>
-<pre><code class="language-shell">ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop000
-ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop001
-ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop002
-</code></pre>
-<ul>
-<li>
-<p>安装 java jkd</p>
-<ul>
-<li>首先在每台 hadoop 集群机器上部署 jdk</li>
-<li>将 jkd bin 配置到系统环境变量(~/.bash_profile)</li>
-<li>将 jdk 以及环境变量配置拷贝到其他节点上去(start with hadoop000)</li>
-</ul>
-<pre><code class="language-shell">scp -r jdk1.8.0_91 hadoop@hadoop001:~/app/
-scp -r jdk1.8.0_91 hadoop@hadoop002:~/app/
-
-scp ~/.bash_profile hadoop@hadoop001:~/
-scp ~/.bash_profile hadoop@hadoop002:~/
-</code></pre>
-</li>
-<li>
-<p>Hadoop 部署</p>
-<ul>
-<li>hadoop-env.sh 配置: JAVA_HOME</li>
-<li>hdfs-site.xml 配置:</li>
-</ul>
-<pre><code class="language-xml">&lt;property&gt;
-  &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
-  &lt;value&gt;/home/hadoop/app/tmp/dfs/name&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-  &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
-  &lt;value&gt;/home/hadoop/app/tmp/dfs/data&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-<ul>
-<li>yarn-site.xml</li>
-</ul>
-<pre><code class="language-xml">&lt;!--只在hadoop000机器中进行配置--&gt;
-&lt;property&gt;
-  &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
-  &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
-&lt;/property&gt;
-
-&lt;property&gt;
-    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
-    &lt;value&gt;hadoop000&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-<ul>
-<li>mapred-site.xml: 这个文件只有模板 需要自己创建</li>
-</ul>
-<pre><code class="language-xml">&lt;property&gt;
-  &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
-  &lt;value&gt;yarn&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-<ul>
-<li>配置 slaves</li>
-<li>分发 hadoop 到其他机器</li>
-</ul>
-<pre><code class="language-shell">scp -r hadoop-2.6.0-cdh5.15.1 hadoop@hadoop001:~/app/
-scp -r hadoop-2.6.0-cdh5.15.1 hadoop@hadoop002:~/app/
-
-scp ~/.bash_profile hadoop@hadoop001:~/
-scp ~/.bash_profile hadoop@hadoop002:~/
-</code></pre>
-<ul>
-<li>NN 格式化</li>
-</ul>
-<pre><code class="language-shell">hadoop namenode -format
-</code></pre>
-<ul>
-<li>在每个机器上启动 HDFS</li>
-<li>在每个机器上启动 YRAN</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-        </div>
-
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://zu3zz.coding.me/post/hive-1">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Hive系列(1)----常用操作</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/gIc76HpAW">
-            <span class="flex-auto">BigData</span>
-          </a>
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/egbOn_Rcj">
-            <span class="flex-auto">MapReduce</span>
-          </a>
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/fxWruECqJ">
-            <span class="flex-auto">Hive</span>
-          </a>
-        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-09-07 / 6 min read</div>
+    </div>
+  </section>
 
-
-        <div class="flex justify-between py-8">
-          
-            <div class="prev-post">
-              <a href="https://zu3zz.coding.me/post/yarn-1">
-                <h3 class="post-title">
-                  <i class="remixicon-arrow-left-line"></i>
-                  Yarn系列 ---- 基础、介绍、流程
-                </h3>
-              </a>
-            </div>
-          
-
-          
-            <div class="next-post">
-              <a href="https://zu3zz.coding.me/post/hive-2">
-                <h3 class="post-title">
-                  Hive系列(2)----内部表、外部表、实战
-                  <i class="remixicon-arrow-right-line"></i>
-                </h3>
-              </a>
-            </div>
-          
-        </div>
-
-        
+        <div class="pagination-container animated fadeIn">
+  
+    <a href="https://zu3zz.coding.me/tag/gIc76HpAW" class="page-btn"><i class="remixicon-arrow-left-line"></i> 上一页</a>
+  
+  
+</div>
 
       </div>
     </div>
