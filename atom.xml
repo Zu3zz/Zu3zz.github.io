@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git</id>
+    <id>https://e.coding.net/</id>
     <title>风袖</title>
-    <updated>2020-02-06T17:03:15.037Z</updated>
+    <updated>2020-02-06T17:06:08.173Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://e.coding.net/zu3zz/zu3zz.coding.me.git"/>
-    <link rel="self" href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/atom.xml"/>
+    <link rel="alternate" href="https://e.coding.net/"/>
+    <link rel="self" href="https://e.coding.net/atom.xml"/>
     <subtitle>烟蛾敛略不胜态，风袖低昂如有情</subtitle>
-    <logo>https://e.coding.net/zu3zz/zu3zz.coding.me.git/images/avatar.png</logo>
-    <icon>https://e.coding.net/zu3zz/zu3zz.coding.me.git/favicon.ico</icon>
+    <logo>https://e.coding.net/images/avatar.png</logo>
+    <icon>https://e.coding.net/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
     <entry>
         <title type="html"><![CDATA[计算机网络面试考点总结]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/interview-network</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/interview-network">
+        <id>https://e.coding.net/post/interview-network</id>
+        <link href="https://e.coding.net/post/interview-network">
         </link>
         <updated>2020-02-06T17:00:31.000Z</updated>
         <content type="html"><![CDATA[<h1 id="计算机网络面试考点总结">计算机网络面试考点总结</h1>
@@ -80,7 +80,7 @@
 </ul>
 </li>
 </ol>
-<figure data-type="image" tabindex="1"><img src="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post-images/1581008533854.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://e.coding.net//post-images/1581008533854.png" alt="" loading="lazy"></figure>
 <h2 id="4-http11">4. HTTP(1.1)</h2>
 <h3 id="1-主要特点">1. 主要特点</h3>
 <ol>
@@ -149,7 +149,7 @@
 <li>服务器接收到后，会解析Cookie生成与客户端相对应的内容</li>
 </ul>
 <h4 id="cookie的设置以及发送过程">Cookie的设置以及发送过程</h4>
-<figure data-type="image" tabindex="2"><img src="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post-images/1581008546981.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://e.coding.net//post-images/1581008546981.png" alt="" loading="lazy"></figure>
 <h4 id="session简介">Session简介</h4>
 <ul>
 <li>服务器端的机制，在服务器上保存的信息（类似hash表）</li>
@@ -168,7 +168,7 @@
 </ol>
 <h2 id="5-http和https的区别">5 HTTP和HTTPS的区别</h2>
 <h3 id="1-https简介">1. HTTPS简介</h3>
-<figure data-type="image" tabindex="3"><img src="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post-images/1581008556887.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://e.coding.net//post-images/1581008556887.png" alt="" loading="lazy"></figure>
 <hr>
 <h3 id="2-sslsecurity-sockets-layer-安全套接层">2. SSL（Security Sockets Layer, 安全套接层）</h3>
 <ol>
@@ -212,13 +212,13 @@
 <li>Socket是对TCP/IP协议的抽象，是操作系统对外开放的接口</li>
 </ul>
 <h3 id="1-socket通信流程">1. Socket通信流程</h3>
-<figure data-type="image" tabindex="4"><img src="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post-images/1581008567663.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://e.coding.net//post-images/1581008567663.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[SparkSQL实战笔记（2）---- SparkSQL 概述]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/sparksql-2</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/sparksql-2">
+        <id>https://e.coding.net/post/sparksql-2</id>
+        <link href="https://e.coding.net/post/sparksql-2">
         </link>
         <updated>2020-01-14T11:46:21.000Z</updated>
         <content type="html"><![CDATA[<h1 id="sparksql-实战笔记2-sparksql-概述">SparkSQL 实战笔记（2）---- SparkSQL 概述</h1>
@@ -509,8 +509,8 @@ esac
     </entry>
     <entry>
         <title type="html"><![CDATA[SparkSQL实战笔记（1）---- 部署、项目准备]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/sparksql-1</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/sparksql-1">
+        <id>https://e.coding.net/post/sparksql-1</id>
+        <link href="https://e.coding.net/post/sparksql-1">
         </link>
         <updated>2020-01-13T08:43:13.000Z</updated>
         <content type="html"><![CDATA[<h1 id="sparksql实战笔记1-部署-项目准备">SparkSQL实战笔记（1）---- 部署、项目准备</h1>
@@ -1047,8 +1047,8 @@ object SparkWordCountApp {
     </entry>
     <entry>
         <title type="html"><![CDATA[HBase学习笔记 ---- 整合篇]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/hbase-1</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/hbase-1">
+        <id>https://e.coding.net/post/hbase-1</id>
+        <link href="https://e.coding.net/post/hbase-1">
         </link>
         <updated>2020-01-11T15:54:39.000Z</updated>
         <content type="html"><![CDATA[<h1 id="hbase">Hbase</h1>
@@ -1718,8 +1718,8 @@ public class HbaseApp {
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（7）---- Scala隐式转换]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-7</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-7">
+        <id>https://e.coding.net/post/scala-7</id>
+        <link href="https://e.coding.net/post/scala-7">
         </link>
         <updated>2020-01-10T16:34:35.000Z</updated>
         <content type="html"><![CDATA[<h1 id="scala隐式转换">Scala隐式转换</h1>
@@ -1817,8 +1817,8 @@ object ImplicitClassApp extends App {
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（6）---- Scala函数高级操作]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-6</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-6">
+        <id>https://e.coding.net/post/scala-6</id>
+        <link href="https://e.coding.net/post/scala-6">
         </link>
         <updated>2020-01-06T16:31:47.000Z</updated>
         <content type="html"><![CDATA[<h2 id="scala-函数高级操作">Scala 函数高级操作</h2>
@@ -1952,8 +1952,8 @@ object PartitalFunctionApp extends App {
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（5）---- Scala集合]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-5</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-5">
+        <id>https://e.coding.net/post/scala-5</id>
+        <link href="https://e.coding.net/post/scala-5">
         </link>
         <updated>2020-01-04T16:29:40.000Z</updated>
         <content type="html"><![CDATA[<h1 id="scala集合">Scala集合</h1>
@@ -2078,8 +2078,8 @@ object SetApp extends App{
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（4）---- Scala模式匹配]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-4</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-4">
+        <id>https://e.coding.net/post/scala-4</id>
+        <link href="https://e.coding.net/post/scala-4">
         </link>
         <updated>2020-01-03T16:28:06.000Z</updated>
         <content type="html"><![CDATA[<h1 id="scala-模式匹配">Scala 模式匹配</h1>
@@ -2284,8 +2284,8 @@ other
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（3） ---- Scala对象]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-3</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-3">
+        <id>https://e.coding.net/post/scala-3</id>
+        <link href="https://e.coding.net/post/scala-3">
         </link>
         <updated>2020-01-03T15:42:39.000Z</updated>
         <content type="html"><![CDATA[<h1 id="scala面向对象">Scala面向对象</h1>
@@ -2620,13 +2620,13 @@ class SparkConf(loadDefaults: Boolean)
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（2） ---- Scala函数]]></title>
-        <id>https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-2</id>
-        <link href="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post/scala-2">
+        <id>https://e.coding.net/post/scala-2</id>
+        <link href="https://e.coding.net/post/scala-2">
         </link>
         <updated>2020-01-02T16:10:37.000Z</updated>
         <content type="html"><![CDATA[<h1 id="scala函数">Scala函数</h1>
 <h3 id="1-方法的定义和使用">1. 方法的定义和使用</h3>
-<figure data-type="image" tabindex="1"><img src="https://e.coding.net/zu3zz/zu3zz.coding.me.git/post-images/1577981513974.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://e.coding.net//post-images/1577981513974.png" alt="" loading="lazy"></figure>
 <ol>
 <li>
 <p>不需要<code>return</code></p>
