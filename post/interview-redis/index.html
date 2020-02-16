@@ -1,0 +1,628 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://Zu3zz.github.io//favicon.ico?v=1581859385259">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://Zu3zz.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://Zu3zz.github.io//atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://Zu3zz.github.io/">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io//images/avatar.png?v=1581859385259" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%BB%E6%B5%81%E7%BC%93%E5%AD%98redis%E7%AC%94%E8%AE%B0">主流缓存Redis笔记</a>
+<ul>
+<li><a href="#1-%E4%B8%BB%E6%B5%81%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84">1. 主流应用架构</a>
+<ul>
+<li><a href="#11-%E7%BC%93%E5%AD%98%E4%B8%AD%E9%97%B4%E4%BB%B6-memcache%E5%92%8Credis%E7%9A%84%E5%8C%BA%E5%88%AB">1.1 缓存中间件---- Memcache和Redis的区别</a>
+<ul>
+<li><a href="#1-memcache%E4%BB%A3%E7%A0%81%E5%B1%82%E6%AC%A1%E7%B1%BB%E4%BC%BChash">1. Memcache：代码层次类似Hash</a></li>
+<li><a href="#2-redis">2. Redis</a></li>
+</ul>
+</li>
+<li><a href="#12-%E4%B8%BA%E4%BB%80%E4%B9%88redis%E8%83%BD%E8%BF%99%E4%B9%88%E5%BF%AB">1.2 为什么Redis能这么快</a>
+<ul>
+<li><a href="#1-100000qps%E6%AF%8F%E7%A7%92%E5%86%85%E6%9F%A5%E8%AF%A2%E6%AC%A1%E6%95%B0">1. 100000+QPS（每秒内查询次数）</a></li>
+</ul>
+</li>
+<li><a href="#13-%E5%A4%9A%E8%B7%AFio%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B">1.3 多路I/O复用模型</a>
+<ul>
+<li><a href="#1-fd-file-descriptor%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6">1. FD: File descriptor，文件描述符</a></li>
+<li><a href="#2-%E4%BC%A0%E7%BB%9F%E7%9A%84%E9%98%BB%E5%A1%9Eio%E6%A8%A1%E5%9E%8B">2. 传统的阻塞I/O模型</a></li>
+<li><a href="#3-select-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8">3. Select 系统调用</a></li>
+<li><a href="#4-redis%E9%87%87%E7%94%A8%E7%9A%84io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E5%87%BD%E6%95%B0epollkqueueevportselect">4. Redis采用的I/O多路复用函数：epoll/kqueue/evport/select</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-redis%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2. Redis的数据类型</a>
+<ul>
+<li><a href="#1-%E4%BE%9B%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">1. 供用户使用的数据类型</a></li>
+<li><a href="#2-%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%9F%BA%E7%A1%80">2. 底层数据类型基础</a></li>
+</ul>
+</li>
+<li><a href="#3-%E4%BB%8E%E6%B5%B7%E9%87%8Fkey%E9%87%8C%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%80%E5%9B%BA%E5%AE%9A%E5%89%8D%E7%BC%80%E7%9A%84key">3. 从海量key里查询某一固定前缀的Key</a>
+<ul>
+<li><a href="#1-keys-pattern%E6%9F%A5%E6%89%BE%E6%89%80%E6%9C%89%E7%AC%A6%E5%90%88%E7%BB%99%E5%AE%9A%E6%A8%A1%E5%BC%8Fpattern%E7%9A%84key">1. KEYS pattern：查找所有符合给定模式pattern的key</a></li>
+<li><a href="#2-scan-cursor-match-pattern-count-count">2. SCAN cursor [MATCH pattern] [COUNT count]</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81">4. 如何通过Redis实现分布式锁</a>
+<ul>
+<li><a href="#1-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E9%9C%80%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98">1. 分布式锁需要解决的问题</a></li>
+<li><a href="#2-setnx-key-value%E5%A6%82%E6%9E%9Ckey%E4%B8%8D%E5%AD%98%E5%9C%A8%E5%88%99%E5%88%9B%E5%BB%BA%E5%B9%B6%E8%B5%8B%E5%80%BC">2. SETNX key value：如果key不存在，则创建并赋值</a></li>
+<li><a href="#3-%E8%A7%A3%E5%86%B3setnx-%E9%95%BF%E6%9C%9F%E6%9C%89%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98">3. 解决SETNX 长期有效的问题</a></li>
+<li><a href="#4-%E5%A4%A7%E9%87%8Fkey%E5%90%8C%E6%97%B6%E8%BF%87%E6%9C%9F%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">4. 大量key同时过期的注意事项</a></li>
+</ul>
+</li>
+<li><a href="#5-%E4%BD%BF%E7%94%A8redis%E5%81%9A%E5%BC%82%E6%AD%A5%E9%98%9F%E5%88%97">5. 使用Redis做异步队列</a>
+<ul>
+<li><a href="#1-%E4%BD%BF%E7%94%A8list%E4%BD%9C%E4%B8%BA%E9%98%9F%E5%88%97">1. 使用List作为队列</a></li>
+<li><a href="#2-pubsub%E4%B8%BB%E9%A2%98%E8%AE%A2%E9%98%85%E8%80%85%E6%A8%A1%E5%BC%8F">2. pub/sub：主题订阅者模式</a></li>
+</ul>
+</li>
+<li><a href="#6-redis%E5%A6%82%E4%BD%95%E5%81%9A%E6%8C%81%E4%B9%85%E5%8C%96">6. Redis如何做持久化</a>
+<ul>
+<li><a href="#1-rdb%E5%BF%AB%E7%85%A7%E6%8C%81%E4%B9%85%E5%8C%96%E4%BF%9D%E5%AD%98%E6%9F%90%E4%B8%AA%E6%97%B6%E9%97%B4%E7%82%B9%E7%9A%84%E5%85%A8%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BF%AB%E7%85%A7">1. RDB（快照）持久化：保存某个时间点的全量数据快照</a></li>
+<li><a href="#2-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%A7%A6%E5%8F%91rbd%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F">2. 自动化触发RBD持久化的方式</a></li>
+<li><a href="#3-bgsave%E7%9A%84%E5%8E%9F%E7%90%86">3. BGSAVE的原理</a></li>
+<li><a href="#4-aofappend-only-file%E6%8C%81%E4%B9%85%E5%8C%96%E4%BF%9D%E5%AD%98%E5%86%99%E7%8A%B6%E6%80%81">4. AOF（Append-Only-File）持久化：保存写状态</a></li>
+<li><a href="#5-%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D%E8%BF%87%E7%A8%8B">5. 数据恢复过程</a></li>
+<li><a href="#6-%E4%B8%A4%E8%80%85%E4%BC%98%E7%BC%BA%E7%82%B9">6. 两者优缺点</a></li>
+<li><a href="#7-%E4%BD%BF%E7%94%A8rdb-aof%E6%B7%B7%E5%90%88%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F">7. 使用RDB-AOF混合持久化方式</a></li>
+</ul>
+</li>
+<li><a href="#7-pipeline">7. Pipeline</a>
+<ul>
+<li><a href="#1-%E4%BD%BF%E7%94%A8pipeline%E7%9A%84%E5%A5%BD%E5%A4%84">1. 使用pipeline的好处</a></li>
+<li><a href="#2-redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6">2. Redis的同步机制</a></li>
+</ul>
+</li>
+<li><a href="#8-redis%E9%9B%86%E7%BE%A4">8. Redis集群</a>
+<ul>
+<li><a href="#1-%E5%A6%82%E4%BD%95%E4%BB%8E%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E9%87%8C%E5%BF%AB%E9%80%9F%E6%89%BE%E5%88%B0%E6%89%80%E9%9C%80">1. 如何从海量数据里快速找到所需</a></li>
+<li><a href="#2-redis%E7%9A%84%E9%9B%86%E7%BE%A4%E5%8E%9F%E7%90%86">2. Redis的集群原理</a></li>
+<li><a href="#3-%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C%E9%97%AE%E9%A2%98">3. 数据倾斜问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://Zu3zz.github.io//atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">主流缓存Redis笔记</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-02-16 / 9 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>🐽详细讲解主流缓存面试会遇到的问题，包含Redis分布式锁、异步队列、持久化、集群等🐽</p>
+<!-- more -->
+<h1 id="主流缓存redis笔记">主流缓存Redis笔记</h1>
+<h2 id="1-主流应用架构">1. 主流应用架构</h2>
+<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io//post-images/1581859003669.png" alt="" loading="lazy"></figure>
+<h3 id="11-缓存中间件-memcache和redis的区别">1.1 缓存中间件---- Memcache和Redis的区别</h3>
+<h4 id="1-memcache代码层次类似hash">1. Memcache：代码层次类似Hash</h4>
+<ul>
+<li>支持简单数据类型</li>
+<li>不支持数据持久化存储</li>
+<li>不支持主从</li>
+<li>不支持分片</li>
+</ul>
+<h4 id="2-redis">2. Redis</h4>
+<ul>
+<li>数据类型丰富</li>
+<li>支持数据磁盘持久化存储</li>
+<li>支持主从</li>
+<li>支持分片</li>
+</ul>
+<hr>
+<h3 id="12-为什么redis能这么快">1.2 为什么Redis能这么快</h3>
+<h4 id="1-100000qps每秒内查询次数">1. 100000+QPS（每秒内查询次数）</h4>
+<ul>
+<li>完全基于内存，绝大部分请求是纯粹的内存操作，执行效率高</li>
+<li>数据结构简单，对数据操作也简单</li>
+<li>采用单线程，单线程也能处理高并发请求，想多核也可以启动多实例</li>
+<li>使用多路I/O复用模型，非阻塞IO</li>
+</ul>
+<hr>
+<h3 id="13-多路io复用模型">1.3 多路I/O复用模型</h3>
+<h4 id="1-fd-file-descriptor文件描述符">1. FD: File descriptor，文件描述符</h4>
+<ul>
+<li>一个打开的文件通过唯一的描述符进行引用，该描述符是打开文件的元数据到文件本身的映射</li>
+</ul>
+<h4 id="2-传统的阻塞io模型">2. 传统的阻塞I/O模型</h4>
+<figure data-type="image" tabindex="2"><img src="https://Zu3zz.github.io//post-images/1581859021180.png" alt="" loading="lazy"></figure>
+<h4 id="3-select-系统调用">3. Select 系统调用</h4>
+<figure data-type="image" tabindex="3"><img src="https://Zu3zz.github.io//post-images/1581859027686.png" alt="" loading="lazy"></figure>
+<h4 id="4-redis采用的io多路复用函数epollkqueueevportselect">4. Redis采用的I/O多路复用函数：epoll/kqueue/evport/select</h4>
+<ul>
+<li>因地制宜</li>
+<li>优先学则时间复杂度为O(1)的I/O多路复用函数作为底层实现</li>
+<li>以时间复杂度的O(N)的select作为保底</li>
+<li>基于react设计模式监听I/O事件</li>
+</ul>
+<h2 id="2-redis的数据类型">2. Redis的数据类型</h2>
+<h3 id="1-供用户使用的数据类型">1. 供用户使用的数据类型</h3>
+<ul>
+<li>
+<p>String：最基本的数据类型，二进制安全（底层使用sdshdr）</p>
+<figure data-type="image" tabindex="4"><img src="https://Zu3zz.github.io//post-images/1581859149419.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>Hash：String元素组成的字典，适合用于存储对象（hmset key1 value1 key2 value2...）</p>
+</li>
+<li>
+<p>List：列表，按照String元素插入顺序排序</p>
+</li>
+<li>
+<p>Set：String元素组成的无序集合，通过哈希表实现，不允许重复(sadd myset 1)</p>
+</li>
+<li>
+<p>Sorted Set：通过分数来为集合中的成员进行从小到达的排序（zadd myzset 3 a)\</p>
+</li>
+<li>
+<p>高级：用来计数的HyperLogLog，用于支持存储地理位置信息的Geo</p>
+</li>
+</ul>
+<h3 id="2-底层数据类型基础">2. 底层数据类型基础</h3>
+<ol>
+<li>简单动态字符串</li>
+<li>链表</li>
+<li>字典</li>
+<li>跳跃表</li>
+<li>整数集合</li>
+<li>压缩列表</li>
+<li>对象</li>
+</ol>
+<h2 id="3-从海量key里查询某一固定前缀的key">3. 从海量key里查询某一固定前缀的Key</h2>
+<h3 id="1-keys-pattern查找所有符合给定模式pattern的key">1. KEYS pattern：查找所有符合给定模式pattern的key</h3>
+<ul>
+<li>KEYS指令一次性返回所有匹配的key</li>
+<li>键的数量过大会使得服务卡顿</li>
+</ul>
+<h3 id="2-scan-cursor-match-pattern-count-count">2. SCAN cursor [MATCH pattern] [COUNT count]</h3>
+<ul>
+<li>基于游标的迭代器，需要基于上一次的游标延续之前的迭代过程</li>
+<li>以0作为游标开始一次新的迭代，直到命令返回游标0完成一次遍历</li>
+<li>不保证每次执行都返回某个给定数量的元素，支持模糊查询</li>
+<li>一次返回的数量不可控，只能是大概率符合count参数</li>
+</ul>
+<h2 id="4-如何通过redis实现分布式锁">4. 如何通过Redis实现分布式锁</h2>
+<h3 id="1-分布式锁需要解决的问题">1. 分布式锁需要解决的问题</h3>
+<ul>
+<li>互斥性</li>
+<li>安全性</li>
+<li>死锁</li>
+<li>容错</li>
+</ul>
+<h3 id="2-setnx-key-value如果key不存在则创建并赋值">2. SETNX key value：如果key不存在，则创建并赋值</h3>
+<h3 id="3-解决setnx-长期有效的问题">3. 解决SETNX 长期有效的问题</h3>
+<ol>
+<li>
+<p>EXPIRE key seconds</p>
+<ul>
+<li>设置key的生存时间，当key过期时（生存时间为0），会被自动删除</li>
+</ul>
+</li>
+<li>
+<figure data-type="image" tabindex="5"><img src="https://Zu3zz.github.io//post-images/1581859174423.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>SET key value [EX seconds] [PX milliseconds] [NX|XX]</p>
+<ul>
+<li>EX second：设置键的过期时间为second秒</li>
+<li>PX millisecond：设置键的过期时间为millisecond毫秒</li>
+<li>NX ：只在键不存在时候，才对键进行操作 （等同于上面 SETNX key value）</li>
+<li>XX：只在键不存在时候，才对键进行操作</li>
+<li>SET 操作成功完成时， 返回OK, 否则返回nil</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-大量key同时过期的注意事项">4. 大量key同时过期的注意事项</h3>
+<ol>
+<li>集中过期，由于清除大量的key很耗时，会出现短暂的卡顿现象</li>
+<li>解决方案：在设置key的过期时间的时候，给每个key加上随机值</li>
+</ol>
+<h2 id="5-使用redis做异步队列">5. 使用Redis做异步队列</h2>
+<h3 id="1-使用list作为队列">1. 使用List作为队列</h3>
+<ol>
+<li>
+<p>RPUSH生产消息 LPOP消费消息</p>
+<ul>
+<li>缺点：没有等待队列里有值就直接消费</li>
+<li>可以通过在应用层引入Sleep机制去调用LPOP重试</li>
+</ul>
+</li>
+<li>
+<p><code>BLPOP key [key...] timeout</code>：阻塞直到队列有消息或者超时</p>
+</li>
+</ol>
+<h3 id="2-pubsub主题订阅者模式">2. pub/sub：主题订阅者模式</h3>
+<ul>
+<li>发送者（pub）发送消息，订阅者（sub）接收消息</li>
+<li>先订阅一个频道，会自动获得这个频道里的消息</li>
+<li>缺点：消息的发布是无状态的，无法表征可达</li>
+</ul>
+<h2 id="6-redis如何做持久化">6. Redis如何做持久化</h2>
+<h3 id="1-rdb快照持久化保存某个时间点的全量数据快照">1. RDB（快照）持久化：保存某个时间点的全量数据快照</h3>
+<ol>
+<li>SAVE：阻塞Redis的服务器进程，直到RDB文件被创建完毕</li>
+<li><strong>BGSAVE：Fork出一个子进程来创建RDB文件，不阻塞服务器</strong></li>
+</ol>
+<h3 id="2-自动化触发rbd持久化的方式">2. 自动化触发RBD持久化的方式</h3>
+<ol>
+<li>根据redis.conf配置里的<code>SAVE m n</code> 定时触发（用的是BGSAVE）</li>
+<li>主从复制时，主节点自动触发</li>
+<li>指定Debug Reload</li>
+<li>执行Shutdown且没有开发AOF持久化</li>
+</ol>
+<h3 id="3-bgsave的原理">3. BGSAVE的原理</h3>
+<figure data-type="image" tabindex="6"><img src="https://Zu3zz.github.io//post-images/1581859203147.png" alt="" loading="lazy"></figure>
+<ul>
+<li>系统调用fork()：创建进程，实现了Copy-on-Write</li>
+<li>缺点
+<ul>
+<li>内存数据的全量同步，数据量大会由于I/O而影响性能</li>
+<li>可能会因为Redis挂掉而损失从当前至最近一次快照期间的数据</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-aofappend-only-file持久化保存写状态">4. AOF（Append-Only-File）持久化：保存写状态</h3>
+<ol>
+<li>
+<p>记录下除了查询以外的所有变更数据库状态的指令</p>
+</li>
+<li>
+<p>以append的形式追加保存到AOF文件中（增量）</p>
+</li>
+<li>
+<p>AOF默认是关闭的 在conf文件中配置</p>
+</li>
+<li>
+<p>日志重写解决AOF文件大小不断增大的问题，原理如下：</p>
+<ul>
+<li>调用fork（），创建一个子进程</li>
+<li>子进程吧新的AOF写到一个临时文件里，不依赖原来的AOF文件</li>
+<li>主进程持续将新的变动同时写到内存和原来的AOF里</li>
+<li>主进程获取子进程重写AOF的完成信号，往新AOF同步增量变动</li>
+<li>使用新的AOF文件替换掉旧的AOF文件</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="5-数据恢复过程">5. 数据恢复过程</h3>
+<ol>
+<li>先看有没有AOF文件，再恢复</li>
+<li>在看有没有RDB文件，再恢复</li>
+</ol>
+<hr>
+<h3 id="6-两者优缺点">6. 两者优缺点</h3>
+<ol>
+<li>RDB优点：全局数据快照，文件小，恢复快</li>
+<li>RDB缺点：无法保存最近一次快照之后的数据</li>
+<li>AOF优点：可读性高，适合保存增量数据，数据不易丢失</li>
+<li>AOF缺点：文件体积大，恢复时间长</li>
+</ol>
+<hr>
+<h3 id="7-使用rdb-aof混合持久化方式">7. 使用RDB-AOF混合持久化方式</h3>
+<ul>
+<li>BGSAVE做镜像全量持久化，AOF做增量持久化</li>
+</ul>
+<h2 id="7-pipeline">7. Pipeline</h2>
+<h3 id="1-使用pipeline的好处">1. 使用pipeline的好处</h3>
+<ol>
+<li>pipeline和linux的管道类似</li>
+<li>redis基于请求/相应模型，单个请求处理需要一一应答</li>
+<li>Pipeline批量执行指令，节省多次IO往返的时间</li>
+<li>有顺序依赖的指令建议分批发送</li>
+</ol>
+<hr>
+<h3 id="2-redis的同步机制">2. Redis的同步机制</h3>
+<ol>
+<li>
+<p>主从同步原理（Master/Slave）</p>
+<figure data-type="image" tabindex="7"><img src="https://Zu3zz.github.io//post-images/1581859218260.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>全同步过程</p>
+<ul>
+<li>Slave发送sync命令到master</li>
+<li>Master启动一个后台进程，将Redis中的数据快照保存到文件中（BGSAVE）</li>
+<li>Master将保存数据快照期间接收到的写命令缓存起来</li>
+<li>Master完成写文件操作后，将该文件发送给Slave</li>
+<li>使用新的AOF文件替换掉旧的AOF文件</li>
+<li>Master将这期间收集到的增量写命令发送给Slave端</li>
+</ul>
+</li>
+<li>
+<p>增量同步过程</p>
+<ul>
+<li>Master接收到用户的操作指令，判断是否需要传播到Slave</li>
+<li>将操作记录追加到AOF文件</li>
+<li>将操作传播到其他Slave：
+<ol>
+<li>对齐主从库</li>
+<li>往相应缓存写入指令</li>
+</ol>
+</li>
+<li>将缓存中的数据发送给Slave</li>
+</ul>
+</li>
+<li>
+<p>Redis Sentinel（Redis哨兵）</p>
+<ol>
+<li>解决主从同步Master宕机后的主从切换问题：
+<ul>
+<li>监控：检查主从服务器是否运行正常</li>
+<li>提醒：通过API向管理员或者其他应用程序发送故障通知</li>
+<li>自动故障迁移：主从切换</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>流言协议Gossip</p>
+<ol>
+<li>在杂乱无章中寻求一致</li>
+<li>每个节点都随机地与对方通信，最终所有节点的状态达成一致</li>
+<li>种子节点定期随机向其他节点发送节点列表以及需要传播的消息</li>
+<li>不保证信息一定会传递给所有节点，但是最终会趋于一致</li>
+</ol>
+</li>
+</ol>
+<h2 id="8-redis集群">8. Redis集群</h2>
+<h3 id="1-如何从海量数据里快速找到所需">1. 如何从海量数据里快速找到所需</h3>
+<ul>
+<li>分片：按照某种规则去划分数据，分散存储在多个节点上</li>
+</ul>
+<hr>
+<h3 id="2-redis的集群原理">2. Redis的集群原理</h3>
+<ul>
+<li>
+<p>一致性哈希算法：对 2^32 取模，将哈希值空间组织成虚拟的圆环</p>
+</li>
+<li>
+<p>将数据key使用相同的函数Hash计算出哈希值，找到最近的Hash节点</p>
+<figure data-type="image" tabindex="8"><img src="https://Zu3zz.github.io//post-images/1581859268434.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>如果此时<code>Node C</code>宕机,数据都会到<code>Node D</code>中</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="9"><img src="https://Zu3zz.github.io//post-images/1581859274355.png" alt="" loading="lazy"></figure>
+<ul>
+<li>
+<p>新增一台服务器 <code>Node X</code></p>
+<figure data-type="image" tabindex="10"><img src="https://Zu3zz.github.io//post-images/1581859282580.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+<h3 id="3-数据倾斜问题">3. 数据倾斜问题</h3>
+<ol>
+<li>
+<p>Hash环的数据倾斜问题</p>
+<figure data-type="image" tabindex="11"><img src="https://Zu3zz.github.io//post-images/1581859296841.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>引入虚拟节点解决数据倾斜的问题（节点过少时有用）（设置虚拟节点32个）</p>
+<figure data-type="image" tabindex="12"><img src="https://Zu3zz.github.io//post-images/1581859303063.png" alt="" loading="lazy"></figure>
+</li>
+</ol>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/r3gGxAQVM/">
+            <span class="flex-auto">Interview</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/U3FdeW1UW/">
+            <span class="flex-auto">NoSQL</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/tqQSAbU7V/">
+            <span class="flex-auto">BackEnd</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/FlCGh236W/">
+            <span class="flex-auto">Redis</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://Zu3zz.github.io/post/interview-database/">
+                <h3 class="post-title">
+                  数据库面试考点
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://Zu3zz.github.io//media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

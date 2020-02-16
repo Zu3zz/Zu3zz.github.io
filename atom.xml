@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io/</id>
     <title>风袖</title>
-    <updated>2020-02-16T11:01:06.372Z</updated>
+    <updated>2020-02-16T13:23:10.128Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io/"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -11,14 +11,337 @@
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
     <entry>
+        <title type="html"><![CDATA[主流缓存Redis笔记]]></title>
+        <id>https://Zu3zz.github.io/post/interview-redis/</id>
+        <link href="https://Zu3zz.github.io/post/interview-redis/">
+        </link>
+        <updated>2020-02-16T13:15:30.000Z</updated>
+        <summary type="html"><![CDATA[<p>🐽详细讲解主流缓存面试会遇到的问题，包含Redis分布式锁、异步队列、持久化、集群等🐽</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🐽详细讲解主流缓存面试会遇到的问题，包含Redis分布式锁、异步队列、持久化、集群等🐽</p>
+<!-- more -->
+<h1 id="主流缓存redis笔记">主流缓存Redis笔记</h1>
+<h2 id="1-主流应用架构">1. 主流应用架构</h2>
+<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io//post-images/1581859003669.png" alt="" loading="lazy"></figure>
+<h3 id="11-缓存中间件-memcache和redis的区别">1.1 缓存中间件---- Memcache和Redis的区别</h3>
+<h4 id="1-memcache代码层次类似hash">1. Memcache：代码层次类似Hash</h4>
+<ul>
+<li>支持简单数据类型</li>
+<li>不支持数据持久化存储</li>
+<li>不支持主从</li>
+<li>不支持分片</li>
+</ul>
+<h4 id="2-redis">2. Redis</h4>
+<ul>
+<li>数据类型丰富</li>
+<li>支持数据磁盘持久化存储</li>
+<li>支持主从</li>
+<li>支持分片</li>
+</ul>
+<hr>
+<h3 id="12-为什么redis能这么快">1.2 为什么Redis能这么快</h3>
+<h4 id="1-100000qps每秒内查询次数">1. 100000+QPS（每秒内查询次数）</h4>
+<ul>
+<li>完全基于内存，绝大部分请求是纯粹的内存操作，执行效率高</li>
+<li>数据结构简单，对数据操作也简单</li>
+<li>采用单线程，单线程也能处理高并发请求，想多核也可以启动多实例</li>
+<li>使用多路I/O复用模型，非阻塞IO</li>
+</ul>
+<hr>
+<h3 id="13-多路io复用模型">1.3 多路I/O复用模型</h3>
+<h4 id="1-fd-file-descriptor文件描述符">1. FD: File descriptor，文件描述符</h4>
+<ul>
+<li>一个打开的文件通过唯一的描述符进行引用，该描述符是打开文件的元数据到文件本身的映射</li>
+</ul>
+<h4 id="2-传统的阻塞io模型">2. 传统的阻塞I/O模型</h4>
+<figure data-type="image" tabindex="2"><img src="https://Zu3zz.github.io//post-images/1581859021180.png" alt="" loading="lazy"></figure>
+<h4 id="3-select-系统调用">3. Select 系统调用</h4>
+<figure data-type="image" tabindex="3"><img src="https://Zu3zz.github.io//post-images/1581859027686.png" alt="" loading="lazy"></figure>
+<h4 id="4-redis采用的io多路复用函数epollkqueueevportselect">4. Redis采用的I/O多路复用函数：epoll/kqueue/evport/select</h4>
+<ul>
+<li>因地制宜</li>
+<li>优先学则时间复杂度为O(1)的I/O多路复用函数作为底层实现</li>
+<li>以时间复杂度的O(N)的select作为保底</li>
+<li>基于react设计模式监听I/O事件</li>
+</ul>
+<h2 id="2-redis的数据类型">2. Redis的数据类型</h2>
+<h3 id="1-供用户使用的数据类型">1. 供用户使用的数据类型</h3>
+<ul>
+<li>
+<p>String：最基本的数据类型，二进制安全（底层使用sdshdr）</p>
+<figure data-type="image" tabindex="4"><img src="https://Zu3zz.github.io//post-images/1581859149419.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>Hash：String元素组成的字典，适合用于存储对象（hmset key1 value1 key2 value2...）</p>
+</li>
+<li>
+<p>List：列表，按照String元素插入顺序排序</p>
+</li>
+<li>
+<p>Set：String元素组成的无序集合，通过哈希表实现，不允许重复(sadd myset 1)</p>
+</li>
+<li>
+<p>Sorted Set：通过分数来为集合中的成员进行从小到达的排序（zadd myzset 3 a)\</p>
+</li>
+<li>
+<p>高级：用来计数的HyperLogLog，用于支持存储地理位置信息的Geo</p>
+</li>
+</ul>
+<h3 id="2-底层数据类型基础">2. 底层数据类型基础</h3>
+<ol>
+<li>简单动态字符串</li>
+<li>链表</li>
+<li>字典</li>
+<li>跳跃表</li>
+<li>整数集合</li>
+<li>压缩列表</li>
+<li>对象</li>
+</ol>
+<h2 id="3-从海量key里查询某一固定前缀的key">3. 从海量key里查询某一固定前缀的Key</h2>
+<h3 id="1-keys-pattern查找所有符合给定模式pattern的key">1. KEYS pattern：查找所有符合给定模式pattern的key</h3>
+<ul>
+<li>KEYS指令一次性返回所有匹配的key</li>
+<li>键的数量过大会使得服务卡顿</li>
+</ul>
+<h3 id="2-scan-cursor-match-pattern-count-count">2. SCAN cursor [MATCH pattern] [COUNT count]</h3>
+<ul>
+<li>基于游标的迭代器，需要基于上一次的游标延续之前的迭代过程</li>
+<li>以0作为游标开始一次新的迭代，直到命令返回游标0完成一次遍历</li>
+<li>不保证每次执行都返回某个给定数量的元素，支持模糊查询</li>
+<li>一次返回的数量不可控，只能是大概率符合count参数</li>
+</ul>
+<h2 id="4-如何通过redis实现分布式锁">4. 如何通过Redis实现分布式锁</h2>
+<h3 id="1-分布式锁需要解决的问题">1. 分布式锁需要解决的问题</h3>
+<ul>
+<li>互斥性</li>
+<li>安全性</li>
+<li>死锁</li>
+<li>容错</li>
+</ul>
+<h3 id="2-setnx-key-value如果key不存在则创建并赋值">2. SETNX key value：如果key不存在，则创建并赋值</h3>
+<h3 id="3-解决setnx-长期有效的问题">3. 解决SETNX 长期有效的问题</h3>
+<ol>
+<li>
+<p>EXPIRE key seconds</p>
+<ul>
+<li>设置key的生存时间，当key过期时（生存时间为0），会被自动删除</li>
+</ul>
+</li>
+<li>
+<figure data-type="image" tabindex="5"><img src="https://Zu3zz.github.io//post-images/1581859174423.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>SET key value [EX seconds] [PX milliseconds] [NX|XX]</p>
+<ul>
+<li>EX second：设置键的过期时间为second秒</li>
+<li>PX millisecond：设置键的过期时间为millisecond毫秒</li>
+<li>NX ：只在键不存在时候，才对键进行操作 （等同于上面 SETNX key value）</li>
+<li>XX：只在键不存在时候，才对键进行操作</li>
+<li>SET 操作成功完成时， 返回OK, 否则返回nil</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-大量key同时过期的注意事项">4. 大量key同时过期的注意事项</h3>
+<ol>
+<li>集中过期，由于清除大量的key很耗时，会出现短暂的卡顿现象</li>
+<li>解决方案：在设置key的过期时间的时候，给每个key加上随机值</li>
+</ol>
+<h2 id="5-使用redis做异步队列">5. 使用Redis做异步队列</h2>
+<h3 id="1-使用list作为队列">1. 使用List作为队列</h3>
+<ol>
+<li>
+<p>RPUSH生产消息 LPOP消费消息</p>
+<ul>
+<li>缺点：没有等待队列里有值就直接消费</li>
+<li>可以通过在应用层引入Sleep机制去调用LPOP重试</li>
+</ul>
+</li>
+<li>
+<p><code>BLPOP key [key...] timeout</code>：阻塞直到队列有消息或者超时</p>
+</li>
+</ol>
+<h3 id="2-pubsub主题订阅者模式">2. pub/sub：主题订阅者模式</h3>
+<ul>
+<li>发送者（pub）发送消息，订阅者（sub）接收消息</li>
+<li>先订阅一个频道，会自动获得这个频道里的消息</li>
+<li>缺点：消息的发布是无状态的，无法表征可达</li>
+</ul>
+<h2 id="6-redis如何做持久化">6. Redis如何做持久化</h2>
+<h3 id="1-rdb快照持久化保存某个时间点的全量数据快照">1. RDB（快照）持久化：保存某个时间点的全量数据快照</h3>
+<ol>
+<li>SAVE：阻塞Redis的服务器进程，直到RDB文件被创建完毕</li>
+<li><strong>BGSAVE：Fork出一个子进程来创建RDB文件，不阻塞服务器</strong></li>
+</ol>
+<h3 id="2-自动化触发rbd持久化的方式">2. 自动化触发RBD持久化的方式</h3>
+<ol>
+<li>根据redis.conf配置里的<code>SAVE m n</code> 定时触发（用的是BGSAVE）</li>
+<li>主从复制时，主节点自动触发</li>
+<li>指定Debug Reload</li>
+<li>执行Shutdown且没有开发AOF持久化</li>
+</ol>
+<h3 id="3-bgsave的原理">3. BGSAVE的原理</h3>
+<figure data-type="image" tabindex="6"><img src="https://Zu3zz.github.io//post-images/1581859203147.png" alt="" loading="lazy"></figure>
+<ul>
+<li>系统调用fork()：创建进程，实现了Copy-on-Write</li>
+<li>缺点
+<ul>
+<li>内存数据的全量同步，数据量大会由于I/O而影响性能</li>
+<li>可能会因为Redis挂掉而损失从当前至最近一次快照期间的数据</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-aofappend-only-file持久化保存写状态">4. AOF（Append-Only-File）持久化：保存写状态</h3>
+<ol>
+<li>
+<p>记录下除了查询以外的所有变更数据库状态的指令</p>
+</li>
+<li>
+<p>以append的形式追加保存到AOF文件中（增量）</p>
+</li>
+<li>
+<p>AOF默认是关闭的 在conf文件中配置</p>
+</li>
+<li>
+<p>日志重写解决AOF文件大小不断增大的问题，原理如下：</p>
+<ul>
+<li>调用fork（），创建一个子进程</li>
+<li>子进程吧新的AOF写到一个临时文件里，不依赖原来的AOF文件</li>
+<li>主进程持续将新的变动同时写到内存和原来的AOF里</li>
+<li>主进程获取子进程重写AOF的完成信号，往新AOF同步增量变动</li>
+<li>使用新的AOF文件替换掉旧的AOF文件</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="5-数据恢复过程">5. 数据恢复过程</h3>
+<ol>
+<li>先看有没有AOF文件，再恢复</li>
+<li>在看有没有RDB文件，再恢复</li>
+</ol>
+<hr>
+<h3 id="6-两者优缺点">6. 两者优缺点</h3>
+<ol>
+<li>RDB优点：全局数据快照，文件小，恢复快</li>
+<li>RDB缺点：无法保存最近一次快照之后的数据</li>
+<li>AOF优点：可读性高，适合保存增量数据，数据不易丢失</li>
+<li>AOF缺点：文件体积大，恢复时间长</li>
+</ol>
+<hr>
+<h3 id="7-使用rdb-aof混合持久化方式">7. 使用RDB-AOF混合持久化方式</h3>
+<ul>
+<li>BGSAVE做镜像全量持久化，AOF做增量持久化</li>
+</ul>
+<h2 id="7-pipeline">7. Pipeline</h2>
+<h3 id="1-使用pipeline的好处">1. 使用pipeline的好处</h3>
+<ol>
+<li>pipeline和linux的管道类似</li>
+<li>redis基于请求/相应模型，单个请求处理需要一一应答</li>
+<li>Pipeline批量执行指令，节省多次IO往返的时间</li>
+<li>有顺序依赖的指令建议分批发送</li>
+</ol>
+<hr>
+<h3 id="2-redis的同步机制">2. Redis的同步机制</h3>
+<ol>
+<li>
+<p>主从同步原理（Master/Slave）</p>
+<figure data-type="image" tabindex="7"><img src="https://Zu3zz.github.io//post-images/1581859218260.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>全同步过程</p>
+<ul>
+<li>Slave发送sync命令到master</li>
+<li>Master启动一个后台进程，将Redis中的数据快照保存到文件中（BGSAVE）</li>
+<li>Master将保存数据快照期间接收到的写命令缓存起来</li>
+<li>Master完成写文件操作后，将该文件发送给Slave</li>
+<li>使用新的AOF文件替换掉旧的AOF文件</li>
+<li>Master将这期间收集到的增量写命令发送给Slave端</li>
+</ul>
+</li>
+<li>
+<p>增量同步过程</p>
+<ul>
+<li>Master接收到用户的操作指令，判断是否需要传播到Slave</li>
+<li>将操作记录追加到AOF文件</li>
+<li>将操作传播到其他Slave：
+<ol>
+<li>对齐主从库</li>
+<li>往相应缓存写入指令</li>
+</ol>
+</li>
+<li>将缓存中的数据发送给Slave</li>
+</ul>
+</li>
+<li>
+<p>Redis Sentinel（Redis哨兵）</p>
+<ol>
+<li>解决主从同步Master宕机后的主从切换问题：
+<ul>
+<li>监控：检查主从服务器是否运行正常</li>
+<li>提醒：通过API向管理员或者其他应用程序发送故障通知</li>
+<li>自动故障迁移：主从切换</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>流言协议Gossip</p>
+<ol>
+<li>在杂乱无章中寻求一致</li>
+<li>每个节点都随机地与对方通信，最终所有节点的状态达成一致</li>
+<li>种子节点定期随机向其他节点发送节点列表以及需要传播的消息</li>
+<li>不保证信息一定会传递给所有节点，但是最终会趋于一致</li>
+</ol>
+</li>
+</ol>
+<h2 id="8-redis集群">8. Redis集群</h2>
+<h3 id="1-如何从海量数据里快速找到所需">1. 如何从海量数据里快速找到所需</h3>
+<ul>
+<li>分片：按照某种规则去划分数据，分散存储在多个节点上</li>
+</ul>
+<hr>
+<h3 id="2-redis的集群原理">2. Redis的集群原理</h3>
+<ul>
+<li>
+<p>一致性哈希算法：对 2^32 取模，将哈希值空间组织成虚拟的圆环</p>
+</li>
+<li>
+<p>将数据key使用相同的函数Hash计算出哈希值，找到最近的Hash节点</p>
+<figure data-type="image" tabindex="8"><img src="https://Zu3zz.github.io//post-images/1581859268434.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>如果此时<code>Node C</code>宕机,数据都会到<code>Node D</code>中</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="9"><img src="https://Zu3zz.github.io//post-images/1581859274355.png" alt="" loading="lazy"></figure>
+<ul>
+<li>
+<p>新增一台服务器 <code>Node X</code></p>
+<figure data-type="image" tabindex="10"><img src="https://Zu3zz.github.io//post-images/1581859282580.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+<h3 id="3-数据倾斜问题">3. 数据倾斜问题</h3>
+<ol>
+<li>
+<p>Hash环的数据倾斜问题</p>
+<figure data-type="image" tabindex="11"><img src="https://Zu3zz.github.io//post-images/1581859296841.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>引入虚拟节点解决数据倾斜的问题（节点过少时有用）（设置虚拟节点32个）</p>
+<figure data-type="image" tabindex="12"><img src="https://Zu3zz.github.io//post-images/1581859303063.png" alt="" loading="lazy"></figure>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[数据库面试考点]]></title>
         <id>https://Zu3zz.github.io/post/interview-database/</id>
         <link href="https://Zu3zz.github.io/post/interview-database/">
         </link>
         <updated>2020-02-12T10:51:52.000Z</updated>
-        <summary type="html"><![CDATA[<p>🐰一问详细讲解数据库面试常见问题，包含索引、锁、事务等内容🐰</p>
+        <summary type="html"><![CDATA[<p>🐰详细讲解数据库面试常见问题，包含索引、锁、事务等内容🐰</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>🐰一问详细讲解数据库面试常见问题，包含索引、锁、事务等内容🐰</p>
+        <content type="html"><![CDATA[<p>🐰详细讲解数据库面试常见问题，包含索引、锁、事务等内容🐰</p>
 <!-- more -->
 <h1 id="数据库面试总结">数据库面试总结</h1>
 <h2 id="1-架构">1. 架构</h2>
@@ -2539,342 +2862,6 @@ CTO name is 3zz ,floor: 22
 Employee name is zhangsan ,floor: 2
 other
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Scala学习笔记（3） ---- Scala对象]]></title>
-        <id>https://Zu3zz.github.io/post/scala-3/</id>
-        <link href="https://Zu3zz.github.io/post/scala-3/">
-        </link>
-        <updated>2020-01-03T15:42:39.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="scala面向对象">Scala面向对象</h1>
-<h2 id="1-面向对象概述">1. 面向对象概述</h2>
-<ol>
-<li>Java / Scala OO(Objecet Orientaed)
-<ul>
-<li>封装：属性、方法封装到类中</li>
-<li>继承：父类和子类之间的关系</li>
-<li>多态：父类引用指向子类对象（重要）</li>
-</ul>
-</li>
-</ol>
-<h2 id="2-类的定义与使用">2. 类的定义与使用</h2>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/3 4:55 下午
- */
-object SimpleObjectApp {
-  def main(args: Array[String]): Unit = {
-    val person = new People()
-    person.name = &quot;messi&quot;
-//    person.age = 30
-    println(person.name + &quot;..&quot; + person.age)
-    println(&quot;invoke eat method:&quot;+person.eat())
-    person.watchTv(&quot;basailuona&quot;)
-    person.sex()
-  }
-}
-class People{
-  // 定义属性
-  // var可以自动生成 getter 和 setter
-  // _ 是占位符
-  var name:String = _
-  // val只能自动生成 getter
-  val age:Int = 10
-  private [this] val gender = &quot;male&quot;
-  // 定义方法
-  def eat():String = {
-    name+ &quot;eat...&quot;
-  }
-  def sex(): Unit ={
-    println(&quot;gender is &quot; + gender)
-  }
-  def watchTv(teamName:String): Unit ={
-    println(name + &quot;is watching &quot; + teamName)
-  }
-}
-// 返回
-messi..10
-invoke eat method:messieat...
-messiis watching basailuona
-gender is male
-</code></pre>
-<ul>
-<li>占位符<code>_</code>
-<ul>
-<li>定义占位符必须使用<code>var</code></li>
-<li>定义之前必须先确定变量的类型</li>
-</ul>
-</li>
-<li><code>private [this]</code>关键字的变量
-<ul>
-<li>只能在类的内部被拿到</li>
-</ul>
-</li>
-</ul>
-<h2 id="3-构造器">3. 构造器</h2>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/3 6:23 下午
- */
-object ConstructorApp {
-  def main(args: Array[String]): Unit = {
-    val person = new Person(&quot;zhangsan&quot;, 30)
-    println(person.school + &quot;: &quot;+person.name+&quot; : &quot;+ person.age)
-    val person2 = new Person(&quot;3zz&quot;, 18,&quot;M&quot;)
-    println(person2.school + &quot;: &quot;+person2.name+&quot; : &quot;+ person2.age+&quot;:&quot;+person2.gender)
-  }
-}
-// 主构造器
-class Person(val name:String, val age:Int){
-  println(&quot;Constructor enter..&quot;)
-  val school = &quot;ustc&quot;
-  var gender:String = _
-  // 附属构造器
-  def this(name:String, age:Int, gender:String){
-    this(name, age)// 附属构造器的第一行代码必须要调用主构造器或者其他附属构造器
-    this.gender = gender
-  }
-  println(&quot;Constructor leave..&quot;)
-}
-// 返回结果
-Constructor enter..
-Constructor leave..
-ustc: zhangsan : 30
-Constructor enter..
-Constructor leave..
-ustc: 3zz : 18:M
-</code></pre>
-<ul>
-<li>主构造器
-<ul>
-<li>class关键字后面括号内的内容</li>
-</ul>
-</li>
-<li>附属构造器
-<ul>
-<li>类内部的<code>this()</code>方法，需要在第一行调用主构造器或者其他附属构造器</li>
-</ul>
-</li>
-<li>需要注意的是，如果主构造器中的属性没有<code>val</code>或者<code>var</code>，类外部无法调用该属性</li>
-</ul>
-<h2 id="4-继承与重写">4. 继承与重写</h2>
-<ol>
-<li>继承</li>
-</ol>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/3 6:23 下午
- */
-object ConstructorApp {
-  def main(args: Array[String]): Unit = {
-    val student = new Student(&quot;3z&quot;,18,&quot;CS&quot;)
-    println(student.name+&quot; : &quot; + student.major)
-  }
-}
-// 主构造器
-class Person(val name:String, val age:Int){
-  println(&quot;Constructor person enter..&quot;)
-  val school = &quot;ustc&quot;
-  var gender:String = _
-  // 附属构造器
-  def this(name:String, age:Int, gender:String){
-    this(name, age)// 附属构造器的第一行代码必须要调用主构造器或者其他附属构造器
-    this.gender = gender
-  }
-  println(&quot;Constructor person leave..&quot;)
-}
-class Student(name:String, age:Int,val major:String) extends Person(name, age){
-  println(&quot;Constructor student enter..&quot;)
-  println(&quot;Constructor student leave..&quot;)
-}
-</code></pre>
-<ul>
-<li>继承的时候还是属性需要注意
-<ul>
-<li>父类已经有的前面可以没有关键字</li>
-<li>父类没有的需要添加<code>val</code>或者<code>var</code></li>
-</ul>
-</li>
-</ul>
-<ol start="2">
-<li>重写：使用<code>override</code>关键字</li>
-</ol>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/3 6:23 下午
- */
-object ConstructorApp {
-  def main(args: Array[String]): Unit = {
-    val student = new Student(&quot;3z&quot;,18,&quot;CS&quot;)
-    println(student.name+&quot; : &quot; + student.major)
-    println(student.toString)
-  }
-}
-// 主构造器
-class Person(val name:String, val age:Int){
-  println(&quot;Constructor person enter..&quot;)
-  val school = &quot;ustc&quot;
-  println(&quot;Constructor person leave..&quot;)
-}
-class Student(name:String, age:Int,val major:String) extends Person(name, age){
-  println(&quot;Constructor student enter..&quot;)
-  // 重写父类中的school属性
-  override val school = &quot;tsing&quot;
-  // 重写Object类中的toString()方法
-  override def toString: String = {
-    &quot;name: &quot; + name +&quot;age :&quot;+age+&quot;school: &quot; + school
-  }
-  println(&quot;Constructor student leave..&quot;)
-}
-// 返回结果
-Constructor person enter..
-Constructor person leave..
-Constructor student enter..
-Constructor student leave..
-3z : CS
-name: 3zage :18school: tsing
-</code></pre>
-<h2 id="5-抽象类">5. 抽象类</h2>
-<ol>
-<li>类的一个或者多个方法没有完整的实现（只有定义，没有实现）</li>
-</ol>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/3 10:01 下午
- */
-object AbstractApp {
-  def main(args: Array[String]): Unit = {
-    val student = new Student2()
-    println(student.name)
-    student.speak
-  }
-}
-abstract class Person2{
-  def speak
-  val name:String
-  val age:Int
-}
-// 需要重写抽象类中的方法和属性
-class Student2 extends Person2 {
-  override def speak: Unit = {
-    println(&quot;speak&quot;)
-  }
-  override val name: String = &quot;3z&quot;
-  override val age: Int = 18
-}
-</code></pre>
-<h2 id="6-伴生类与apply">6. 伴生类与Apply</h2>
-<ol>
-<li>伴生类与伴生对象</li>
-</ol>
-<pre><code class="language-scala">/**
- * 如果有一个class， 还有一个与class同名的object
- * 那么就称这个object是class的伴生对象，class是object的伴生类
- */
-// 伴生类
-class ApplyTest{
-
-}
-// 伴生对象
-object ApplyTest{
-
-}
-</code></pre>
-<ol start="2">
-<li>
-<p><code>apply</code>方法</p>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/3 10:33 下午
- */
-object ApplyApp {
-  def main(args: Array[String]): Unit = {
-    for (i &lt;- 1 to 10) {
-      ApplyTest.incr
-    }
-    println(ApplyTest.count) // 说明object本身是一个单例对象
-    val b = ApplyTest() // ==&gt; 默认调用 Object.apply 方法
-    println(&quot;---------------------------&quot;)
-    val c = new ApplyTest()// 类名() ====&gt; Class.apply()
-    println(c) // com.zth.fun.ApplyTest@68c4039c
-    c()// 对象() ====&gt; Object.apply()
-    // class applytest apply...
-  }
-}
-
-/**
- * 如果有一个class， 还有一个与class同名的object
- * 那么就称这个object是class的伴生对象，class是object的伴生类
- */
-// 伴生类
-class ApplyTest {
-  def apply() = {
-    println(&quot;class applytest apply...&quot;)
-  }
-}
-// 伴生对象
-object ApplyTest {
-  println(&quot;object applytest enter..&quot;)
-  var count = 0
-  def incr = {
-    count += 1
-  }
-  // 最佳实践：在Object的apply方法中去new Class
-  def apply() = {
-    println(&quot;object applytest apply&quot;)
-    // 在object中的apply中new class
-    new ApplyTest
-  }
-  println(&quot;object applytest leave..&quot;)
-}
-// 返回结果
-object applytest enter..
-object applytest leave..
-object applytest apply
----------------------------
-com.zth.fun.ApplyTest@68c4039c
-class applytest apply...
-</code></pre>
-<ul>
-<li>伴生对象<code>object</code>本身是一个单例对象，只会被调用一次</li>
-<li><code>类名()</code> ====&gt; <code>Class.apply()</code></li>
-<li><code>对象()</code> ====&gt; <code>Object.apply()</code></li>
-<li><code>apply</code>方法的最佳实践是在伴生对象的<code>apply</code>方法中<code>new</code> 一个伴生类</li>
-</ul>
-</li>
-</ol>
-<h2 id="7-case-class">7. Case Class</h2>
-<ol>
-<li>通常用在模式匹配里面</li>
-</ol>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/3 11:23 下午
- */
-// 通常用在模式匹配里面
-object CaseClassApp {
-  def main(args: Array[String]): Unit = {
-    println(Dog(&quot;wangcai&quot;).name)
-  }
-}
-// case class不用new
-case class Dog(name:String)
-</code></pre>
-<h2 id="8-trait">8. Trait</h2>
-<ol>
-<li>
-<p>相当于<code>Java</code>中的<code>interface</code></p>
-</li>
-<li>
-<p><code>Scala</code>中如何实现多个接口的实现？</p>
-<pre><code class="language-scala">trait xxx extends aTrait with BTrait
-// 实际例子
-class SparkConf(loadDefaults: Boolean)
-	extends Cloneable with Logging with Serializable
-</code></pre>
-</li>
-</ol>
 ]]></content>
     </entry>
 </feed>
