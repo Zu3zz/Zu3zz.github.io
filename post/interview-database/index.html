@@ -1,0 +1,537 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://Zu3zz.github.io//favicon.ico?v=1581850669087">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://Zu3zz.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://Zu3zz.github.io//atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://Zu3zz.github.io/">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://Zu3zz.github.io//images/avatar.png?v=1581850669087" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93">数据库面试总结</a>
+<ul>
+<li><a href="#1-%E6%9E%B6%E6%9E%84">1. 架构</a>
+<ul>
+<li><a href="#1-rdbms">1. RDBMS</a></li>
+</ul>
+</li>
+<li><a href="#2-%E7%B4%A2%E5%BC%95">2. 索引</a>
+<ul>
+<li><a href="#1-%E4%BC%98%E5%8C%96%E7%B4%A2%E5%BC%95">1. 优化索引</a></li>
+<li><a href="#2-hash%E7%B4%A2%E5%BC%95">2. Hash索引</a>
+<ul>
+<li><a href="#%E7%BC%BA%E7%82%B9">缺点：</a></li>
+</ul>
+</li>
+<li><a href="#3-bitmap%E7%B4%A2%E5%BC%95%E4%BA%86%E8%A7%A3">3. BitMap索引（了解）</a></li>
+<li><a href="#4-%E5%AF%86%E9%9B%86%E7%B4%A2%E5%BC%95%E4%B8%8E%E7%A8%80%E7%96%8F%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB">4. 密集索引与稀疏索引的区别</a></li>
+<li><a href="#5-%E9%97%AE%E9%A2%98%E5%9B%9E%E9%A1%BE%E4%B8%8E%E6%80%BB%E7%BB%93">5. 问题回顾与总结</a></li>
+<li><a href="#6-%E4%B8%80%E4%BA%9B%E8%A1%8D%E7%94%9F%E9%97%AE%E9%A2%98">6. 一些衍生问题</a>
+<ul>
+<li><a href="#61-%E5%A6%82%E4%BD%95%E5%AE%9A%E4%BD%8D%E5%B9%B6%E4%BC%98%E5%8C%96%E6%85%A2%E6%9F%A5%E8%AF%A2sql">6.1 如何定位并优化慢查询Sql</a></li>
+<li><a href="#62-%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E7%9A%84%E6%9C%80%E5%B7%A6%E5%8C%B9%E9%85%8D%E5%8E%9F%E5%88%99%E7%9A%84%E6%88%90%E5%9B%A0">6.2 联合索引的最左匹配原则的成因</a></li>
+<li><a href="#63-%E7%B4%A2%E5%BC%95%E6%98%AF%E5%BB%BA%E7%AB%8B%E7%9A%84%E8%B6%8A%E5%A4%9A%E8%B6%8A%E5%A5%BD%E5%90%97">6.3 索引是建立的越多越好吗</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3-%E9%94%81">3. 锁</a>
+<ul>
+<li><a href="#31-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">3.1 常见问题</a>
+<ul>
+<li><a href="#1-myisam%E4%B8%8Einnodb%E5%85%B3%E4%BA%8E%E9%94%81%E6%96%B9%E9%9D%A2%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88">1. MyISAM与InnoDB关于锁方面的区别是什么</a></li>
+<li><a href="#2-myisam%E9%80%82%E5%90%88%E7%9A%84%E5%9C%BA%E6%99%AF">2. MyISAM适合的场景</a></li>
+<li><a href="#3-innodb%E9%80%82%E5%90%88%E7%9A%84%E5%9C%BA%E6%99%AF">3. InnoDB适合的场景</a></li>
+</ul>
+</li>
+<li><a href="#32-%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB">3.2 数据库锁的分类</a>
+<ul>
+<li><a href="#1-%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F">1. 乐观锁的实现方式</a></li>
+</ul>
+</li>
+<li><a href="#33-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7">3.3 数据库事务的四大特性</a></li>
+<li><a href="#34-%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%BB%A5%E5%8F%8A%E5%90%84%E7%BA%A7%E5%88%AB%E4%B8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E8%AE%BF%E9%97%AE%E9%97%AE%E9%A2%98">3.4 事务隔离级别以及各级别下的并发访问问题</a></li>
+<li><a href="#35-innodb%E8%AF%BE%E9%87%8D%E5%A4%8D%E8%AF%BB%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%B8%8B%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%B9%BB%E8%AF%BB">3.5 InnoDB课重复读隔离级别下如何避免幻读</a></li>
+<li><a href="#36-rc-rr%E7%BA%A7%E5%88%AB%E4%B8%8B%E7%9A%84innodb%E7%9A%84%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%AF%BB%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0">3.6 RC、RR级别下的InnoDB的非阻塞读如何实现</a></li>
+</ul>
+</li>
+<li><a href="#4-%E8%AF%AD%E6%B3%95">4. 语法</a>
+<ul>
+<li><a href="#1-group-by%E5%88%86%E7%BB%84">1. GROUP BY（分组）</a></li>
+<li><a href="#2-having%E8%BF%87%E6%BB%A4">2. HAVING（过滤）</a></li>
+<li><a href="#3%E8%87%AA%E5%B7%B1%E5%A4%9A%E7%BB%83">3.自己多练</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://Zu3zz.github.io//atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">数据库面试考点</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-02-12 / 7 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="数据库面试总结">数据库面试总结</h1>
+<h2 id="1-架构">1. 架构</h2>
+<h3 id="1-rdbms">1. RDBMS</h3>
+<ol>
+<li>程序实例
+<ul>
+<li>存储管理</li>
+<li>缓存机制</li>
+<li>SQL解析</li>
+<li>日志管理</li>
+<li>权限划分</li>
+<li><strong>索引管理</strong></li>
+<li><strong>锁管理</strong></li>
+</ul>
+</li>
+<li>存储（文件系统）</li>
+</ol>
+<h2 id="2-索引">2. 索引</h2>
+<ol>
+<li>为什么要使用索引：避免全表扫描/快速查询数据</li>
+<li>什么样的信息能成为索引：主键、唯一键</li>
+<li>索引的数据结构
+<ul>
+<li>建立二叉查找树进行二分查找</li>
+<li>建立B-Tree结构进行查找</li>
+<li>建立B+-Tree结构进行查找</li>
+<li>建立Hash结构进行查找</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="1-优化索引">1. 优化索引</h3>
+<ol>
+<li>
+<p>二叉查找树</p>
+<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io//post-images/1581850416812.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>B-Tree（logn）</p>
+<ol>
+<li>根节点至少包括两个孩子</li>
+<li>树中每个节点最多含有m个孩子（m&gt;=2）</li>
+<li>除根节点和叶节点外，其他每个节点至少有ceil（m/2）个孩子</li>
+<li>所有叶子节点都位于同一层</li>
+</ol>
+<figure data-type="image" tabindex="2"><img src="https://Zu3zz.github.io//post-images/1581850429749.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>B+树</p>
+<ol>
+<li>定义基本与B树相同</li>
+<li>除了非叶子节点的指针必须与叶子结点数相同</li>
+<li>非叶子节点的子树指针P[i]，指向关键字符[K[i]，K[i+1]]的子树</li>
+<li>非叶子节点仅用来索引，数据都保存在叶子结点中</li>
+<li>所有叶子节点均有一个链指针指向下一个叶子结点</li>
+</ol>
+<figure data-type="image" tabindex="3"><img src="https://Zu3zz.github.io//post-images/1581850440775.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>为什么B+树更适合用来做存储索引</p>
+<ul>
+<li>B+树的磁盘读写代价更低</li>
+<li>B+树的查询效率更加稳定</li>
+<li>B+树更有利于对数据库的扫描</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="2-hash索引">2. Hash索引</h3>
+<figure data-type="image" tabindex="4"><img src="https://Zu3zz.github.io//post-images/1581850457121.png" alt="" loading="lazy"></figure>
+<h4 id="缺点">缺点：</h4>
+<ol>
+<li>仅仅能满足“=”，“IN&quot;，不能使用范围查询</li>
+<li>无法被用来避免数据的排序操作</li>
+<li>不能利用部分索引键查询</li>
+<li>不能避免表扫描</li>
+<li>遇到大量Hash值相等的情况后性能并不一定就会比B-Tree索引高</li>
+</ol>
+<hr>
+<h3 id="3-bitmap索引了解">3. BitMap索引（了解）</h3>
+<ul>
+<li>位图索引</li>
+</ul>
+<hr>
+<h3 id="4-密集索引与稀疏索引的区别">4. 密集索引与稀疏索引的区别</h3>
+<ul>
+<li>密集索引文件中的每个搜索码值都对应一个索引值</li>
+<li>系数索引文件只为索引码的某些值建立索引项</li>
+</ul>
+<ol>
+<li>对于InnoDB
+<ol>
+<li>若一个主键被定义，则该主键作为密集索引</li>
+<li>若没有主键被定义，该表的第一个唯一非空索引则作为密集索引</li>
+<li>若没有，innodb内部会生成一个隐藏主键（密集索引）</li>
+<li>非主键索引存储相关键位和其对应的主键值，包含两次查找</li>
+<li>索引和数据是存在一起的</li>
+</ol>
+</li>
+<li>对于MyISAM
+<ol>
+<li>都是稀疏索引</li>
+<li>索引和数据是分开的</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 id="5-问题回顾与总结">5. 问题回顾与总结</h3>
+<ol>
+<li>为什么要使用索引</li>
+<li>什么样的信息能成为索引</li>
+<li>索引的数据结构</li>
+<li>密集索引和系数索引的区别</li>
+</ol>
+<hr>
+<h3 id="6-一些衍生问题">6. 一些衍生问题</h3>
+<h4 id="61-如何定位并优化慢查询sql">6.1 如何定位并优化慢查询Sql</h4>
+<ol>
+<li>根据慢日志定位慢查询sql</li>
+<li>使用explain等工具分析sql
+<ul>
+<li>using filesort：文件排序 不能使用索引</li>
+<li>using temporary：使用临时表</li>
+</ul>
+</li>
+<li>修改sql或者尽量让sql走索引</li>
+</ol>
+<h4 id="62-联合索引的最左匹配原则的成因">6.2 联合索引的最左匹配原则的成因</h4>
+<ul>
+<li>MySQL会一直向右匹配到范围查询（&gt;、&lt;、between、like）就停止匹配</li>
+</ul>
+<pre><code class="language-sql"> a = 1 and b = 2 and c &gt; 3 and d = 4 
+ 如果遇到（a,b,c,d)这样的，到c就停止了
+</code></pre>
+<h4 id="63-索引是建立的越多越好吗">6.3 索引是建立的越多越好吗</h4>
+<ul>
+<li>否。数据量小的表不需要建立索引，建立或增加额外的索引开销</li>
+<li>数据变更需要维护索引，因此更多的索引意味着更多的维护成本</li>
+<li>更多的索引意味着也需要更多的空间</li>
+</ul>
+<h2 id="3-锁">3. 锁</h2>
+<h3 id="31-常见问题">3.1 常见问题</h3>
+<ol>
+<li>MyISAM与InnoDB关于锁方面的区别是什么</li>
+<li>数据库事务的四大特性</li>
+<li>事务隔离级别以及各2级别下的并发访问问题</li>
+<li>InnoDB可重复读隔离级别下如何避免幻读</li>
+<li>RC、RR级别下的InnoDB的非阻塞读如何实现</li>
+</ol>
+<hr>
+<h4 id="1-myisam与innodb关于锁方面的区别是什么">1. MyISAM与InnoDB关于锁方面的区别是什么</h4>
+<ol>
+<li>MyISAM默认用的是表级锁，不支持行级锁</li>
+<li>InnoDB默认用的是行级锁，也支持表级锁</li>
+<li>写锁 又叫 排它锁</li>
+<li>读锁 又叫 共享锁</li>
+<li>先读再写不会被锁</li>
+<li>先写再读会被锁</li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://Zu3zz.github.io//post-images/1581850500524.png" alt="" loading="lazy"></figure>
+<h4 id="2-myisam适合的场景">2. MyISAM适合的场景</h4>
+<ol>
+<li>频繁执行全表count语句</li>
+<li>对数据进行增删改的频率不搞，查询非常频繁</li>
+<li>没有事务</li>
+</ol>
+<h4 id="3-innodb适合的场景">3. InnoDB适合的场景</h4>
+<ol>
+<li>数据增删改查都相当频繁</li>
+<li>可靠性要求比较高，要求支持事务</li>
+</ol>
+<h3 id="32-数据库锁的分类">3.2 数据库锁的分类</h3>
+<ul>
+<li>按锁的粒度分化，可分为表级锁、行级锁、页级锁</li>
+<li>按锁的级别划分，可分为共享锁、排它锁</li>
+<li>按枷锁方式划分，课分为自动锁、显式锁</li>
+<li>按操作划分，可分为DML锁、DDL锁</li>
+<li>按使用方式划分，可分为乐观锁、悲观锁</li>
+</ul>
+<h4 id="1-乐观锁的实现方式">1. 乐观锁的实现方式</h4>
+<ul>
+<li>基于时间戳</li>
+<li>基于版本号（写SQL语句的时候先检查version）</li>
+</ul>
+<h3 id="33-数据库事务的四大特性">3.3 数据库事务的四大特性</h3>
+<ol>
+<li>原子性（Atomic）：发生错误回滚</li>
+<li>一致性（Consistency）</li>
+<li>隔离性（Isolation）：一个事务的执行不应该影响到其他事务</li>
+<li>持久性（Durability）：redo log</li>
+</ol>
+<h3 id="34-事务隔离级别以及各级别下的并发访问问题">3.4 事务隔离级别以及各级别下的并发访问问题</h3>
+<ol>
+<li>更新丢失：mysql所有事务隔离级别在数据库层面上均可避免</li>
+<li>脏读：一个事务读到另外一个事务未提交的数据：READ——COMMITTED事务隔离级别以上可避免（MyISAM默认）
+<ul>
+<li>只能读到其他事务提交的级别，就不会造成问题了</li>
+</ul>
+</li>
+<li>不可重复读：REPEATABLE-READ事务隔离级别以上可避免（InnoDB默认）</li>
+<li>幻读：另外一个事务对同一个数据库进行了插入或者删除操作：SERIALIZABLE事务隔离级别可避免</li>
+</ol>
+<figure data-type="image" tabindex="6"><img src="https://Zu3zz.github.io//post-images/1581850513584.png" alt="" loading="lazy"></figure>
+<h3 id="35-innodb课重复读隔离级别下如何避免幻读">3.5 InnoDB课重复读隔离级别下如何避免幻读</h3>
+<ol>
+<li>表象：快照读（非阻塞读）——伪MVCC
+<ul>
+<li>当前读：update、delete、insert、select...lock in share mode</li>
+<li>快照读：不加锁的非阻塞读、select</li>
+<li>再次调用快照读会出问题</li>
+</ul>
+</li>
+<li>内在：next-key锁（行锁+gap锁）（搞不懂）
+<ul>
+<li>在Serializable下 是用的这个</li>
+</ul>
+</li>
+</ol>
+<h3 id="36-rc-rr级别下的innodb的非阻塞读如何实现">3.6 RC、RR级别下的InnoDB的非阻塞读如何实现</h3>
+<ol>
+<li>数据行里的DB_TRX_ID、DB_ROLL_PTR、DB_ROW_ID字段</li>
+<li>从 undo日志 里恢复</li>
+<li>read view</li>
+</ol>
+<h2 id="4-语法">4. 语法</h2>
+<ol>
+<li>GROUP BY</li>
+<li>HAVING</li>
+<li>统计相关：COUNT、SUM、MAX、MIN、AVG</li>
+</ol>
+<h3 id="1-group-by分组">1. GROUP BY（分组）</h3>
+<ul>
+<li>满足 “select字句中的列名必须为分组列或者列函数”</li>
+<li>列函数对于group by字句定义的每个组各返回一个结果</li>
+<li>如果用group by，那么你的Select语句中选出的列要么是你group by里用到的列，要么就是带有之前我们说的如sum min等列函数的列，如果带上其他的，会报错。</li>
+</ul>
+<h3 id="2-having过滤">2. HAVING（过滤）</h3>
+<ul>
+<li>通常与GROUP BY字句一起使用</li>
+<li>WHERE过滤行，HAVING过滤组</li>
+<li>出现在同一行sql的顺序：WHERE&gt;GROUP BY&gt;HAVING</li>
+</ul>
+<h3 id="3自己多练">3.自己多练</h3>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/uhv6L1Wqc/">
+            <span class="flex-auto">Database</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/r3gGxAQVM/">
+            <span class="flex-auto">Interview</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/U3FdeW1UW/">
+            <span class="flex-auto">NoSQL</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://Zu3zz.github.io/tag/7acBApeyq/">
+            <span class="flex-auto">MySQL</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://Zu3zz.github.io/post/interview-network/">
+                <h3 class="post-title">
+                  计算机网络面试考点总结
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://Zu3zz.github.io//media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>
