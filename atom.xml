@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io/</id>
     <title>风袖</title>
-    <updated>2020-02-16T10:57:56.150Z</updated>
+    <updated>2020-02-16T11:01:06.372Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io/"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -16,7 +16,11 @@
         <link href="https://Zu3zz.github.io/post/interview-database/">
         </link>
         <updated>2020-02-12T10:51:52.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="数据库面试总结">数据库面试总结</h1>
+        <summary type="html"><![CDATA[<p>🐰一问详细讲解数据库面试常见问题，包含索引、锁、事务等内容🐰</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🐰一问详细讲解数据库面试常见问题，包含索引、锁、事务等内容🐰</p>
+<!-- more -->
+<h1 id="数据库面试总结">数据库面试总结</h1>
 <h2 id="1-架构">1. 架构</h2>
 <h3 id="1-rdbms">1. RDBMS</h3>
 <ol>
@@ -267,7 +271,11 @@
         <link href="https://Zu3zz.github.io/post/interview-network/">
         </link>
         <updated>2020-02-06T17:00:31.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="计算机网络面试考点总结">计算机网络面试考点总结</h1>
+        <summary type="html"><![CDATA[<p>🐱一文总结计算机网络面试常见考点，包括TCP HTTP等🐱</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🐱一文总结计算机网络面试常见考点，包括TCP HTTP等🐱</p>
+<!-- more -->
+<h1 id="计算机网络面试考点总结">计算机网络面试考点总结</h1>
 <h2 id="1-tcp的三次握手">1. TCP的三次握手</h2>
 <ol>
 <li>第一次握手，建立连接时，客户端发送一个SYN包，SYN=j到服务器，并且进入SYN_SEND状态，等到服务器确认</li>
