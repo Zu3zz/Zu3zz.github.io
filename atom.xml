@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Zu3zz.github.io/</id>
     <title>风袖</title>
-    <updated>2020-02-16T13:23:10.128Z</updated>
+    <updated>2020-03-21T12:33:55.116Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Zu3zz.github.io/"/>
     <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
@@ -10,6 +10,135 @@
     <logo>https://Zu3zz.github.io/images/avatar.png</logo>
     <icon>https://Zu3zz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
+    <entry>
+        <title type="html"><![CDATA[Java多并发(1) -- 线程创建]]></title>
+        <id>https://Zu3zz.github.io/post/java-thread-1/</id>
+        <link href="https://Zu3zz.github.io/post/java-thread-1/">
+        </link>
+        <updated>2020-03-21T12:33:07.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="java多并发-线程创建">Java多并发 -- 线程创建</h1>
+<h2 id="实现多线程的方法">实现多线程的方法</h2>
+<ul>
+<li>
+<p>实现多线程的官方正确方法：2种</p>
+<ul>
+<li>
+<p>方法一：实现Runnable接口</p>
+<pre><code class="language-java">// 用Runnable方式创建线程
+public class RunnableStyle implements Runnable{
+  public static void main(String[] args){
+    Thread thread = new Thread(new RunnableStyle());
+    thread.start();
+  }
+  @Override
+  public void run() {
+    System.out.println(&quot;用Runnable方法实现线程&quot;);
+  }
+}
+// 打印输出 用Runnable方法实现线程
+</code></pre>
+</li>
+<li>
+<p>方法二： 继承Thread类</p>
+<pre><code class="language-java">// 用Thread方式创建线程
+public class ThreadStyle extends Thread{
+  public static void main(String[] args){
+    new ThreadStyle().start();
+  }
+  @Override
+  public void run() {
+    System.out.println(&quot;用Thread类实现线程&quot;);
+  }
+}
+// 打印输出 用Thread类实现线程
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>两种方法的对比</p>
+<ul>
+<li>方法1（实现Runnable接口）更好</li>
+<li>解耦</li>
+<li>性能消耗更低</li>
+<li>如果已经继承，限制了可扩展性</li>
+</ul>
+</li>
+<li>
+<p>两种方法的本质对比（看源码）</p>
+<ul>
+<li>方法一：最终调用target.run()</li>
+<li>方法二：run()整个都被重写</li>
+</ul>
+</li>
+<li>
+<p>同时使用两种方法会怎么样？</p>
+<pre><code class="language-java">/**
+ * 描述：     同时使用Runnable和Thread两种实现线程的方式
+ */
+public class BothRunnableThread {
+    public static void main(String[] args) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(&quot;我来自Runnable&quot;);
+            }
+        }) {
+            @Override
+            public void run() {
+                System.out.println(&quot;我来自Thread&quot;);
+            }
+        }.start();
+    }
+}
+// 打印输出 我来自Thread
+</code></pre>
+</li>
+<li>
+<p>准确的来说，创建线程只有一种方式就是构造Thread类，而实现线程的单元创建有两种方法：</p>
+<ul>
+<li>方法一：实现Runnable接口的run方法，并把Runnable实例传给Thread类</li>
+<li>方法二：重写Thread类的run方法（继承Thread类）</li>
+</ul>
+</li>
+<li>
+<p>典型错误观点</p>
+<ul>
+<li>线程池创建线程也算是一种新建线程的方式</li>
+<li>通过 **Callable ** 和 <strong>FutureTask</strong> 来创建线程</li>
+<li><strong>无返回值</strong>是实现runnable接口，**有返回值 **是实现Callable接口，所以callable是新的实现线程的方式</li>
+<li>定时器（底层也是自动创建）</li>
+<li>匿名内部类（语法层面）</li>
+<li>Lambda表达式（语法层面）</li>
+</ul>
+</li>
+<li>
+<p>本质万变不离其宗</p>
+</li>
+<li>
+<p>常见面试问题</p>
+<ul>
+<li>有多少种实现线程的方法？5点思路
+<ul>
+<li>从不同的角度看，会有不同的答案</li>
+<li>典型答案是两种</li>
+<li>我们看原理，两种本质都是一样的</li>
+<li>具体展开说其他方式</li>
+<li>结论</li>
+</ul>
+</li>
+<li>实现Runnable接口和继承Thread类那种方式更好
+<ul>
+<li>从代码架构角度（解耦合）</li>
+<li>新建线程的损耗（新建类消耗大）</li>
+<li>Java不支持双继承（继承会麻烦）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[主流缓存Redis笔记]]></title>
         <id>https://Zu3zz.github.io/post/interview-redis/</id>
@@ -2656,212 +2785,6 @@ object SetApp extends App{
 <h2 id="4-map">4. Map</h2>
 <h2 id="5-option-some-none">5. Option &amp; Some &amp; None</h2>
 <h2 id="6-tuple">6. Tuple</h2>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Scala学习笔记（4）---- Scala模式匹配]]></title>
-        <id>https://Zu3zz.github.io/post/scala-4/</id>
-        <link href="https://Zu3zz.github.io/post/scala-4/">
-        </link>
-        <updated>2020-01-03T16:28:06.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="scala-模式匹配">Scala 模式匹配</h1>
-<h2 id="1-基本模式匹配">1. 基本模式匹配</h2>
-<ol>
-<li>
-<p><code>Java</code>中： 对一个值进行条件判断，返回针对不同的条件进行不同的处理：<code>switch case</code></p>
-</li>
-<li>
-<p><code>scala</code>中：</p>
-<pre><code class="language-scala">变量 match {
-  case value1 ==&gt; 代码1
-  case value2 ==&gt; 代码2
-  ....
-  case _ =&gt; 代码N
-}
-</code></pre>
-</li>
-<li>
-<p>一个栗子</p>
-<pre><code class="language-scala">import scala.util.Random
-/**
- * Author: 3zZ.
- * Date: 2020/1/10 12:10 上午
- */
-object MatchApp extends App {
-  val names = Array(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
-  val name = names(Random.nextInt(names.length))
-  name match{
-    case &quot;a&quot; =&gt; println(1)
-    case &quot;b&quot; =&gt; println(2)
-    case _ =&gt; println(&quot;不知道&quot;)
-  }
-  def judgeGrade(grade: String): Unit ={
-    grade match{
-      case &quot;A&quot; =&gt; println(&quot;Excellent..&quot;)
-      case &quot;B&quot; =&gt; println(&quot;Good..&quot;)
-      case &quot;C&quot; =&gt; println(&quot;Just so so..&quot;)
-      case _ =&gt; println(&quot;u need worker harder&quot;)
-    }
-  }
-  judgeGrade(&quot;A&quot;)
-  judgeGrade(&quot;C&quot;)
-  judgeGrade(&quot;G&quot;)
-}
-// 输出结果
-1
-Excellent..
-Just so so..
-u need worker harder
-</code></pre>
-</li>
-</ol>
-<h2 id="2-加条件">2. 加条件</h2>
-<ul>
-<li>
-<p>双重过滤</p>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/10 12:10 上午
- */
-object MatchApp extends App {
-  def judgeGrade(name:String, grade: String): Unit ={
-    grade match{
-      case &quot;A&quot; =&gt; println(&quot;Excellent..&quot;)
-      case &quot;B&quot; =&gt; println(&quot;Good..&quot;)
-      case &quot;C&quot; =&gt; println(&quot;Just so so..&quot;)
-      case _ if(name == &quot;lisi&quot;) =&gt; println(name + &quot; u need worker harder&quot;)
-      case _  =&gt; println(&quot;u need worker harder&quot;)
-    }
-  }
-  judgeGrade(&quot;zhangsan&quot;,&quot;D&quot;)
-  judgeGrade(&quot;lisi&quot;,&quot;D&quot;)// 双重过滤
-}
-// 输出
-u need worker harder
-lisi u need worker harder
-</code></pre>
-</li>
-</ul>
-<h2 id="3-数组array中的过滤">3. 数组(Array)中的过滤</h2>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/10 12:10 上午
- */
-object MatchApp extends App {
-  def greeting(array: Array[String]): Unit = {
-    array match {
-      case Array(&quot;zhangsan&quot;) =&gt; println(&quot;hello zhangsan&quot;)
-      case Array(x, y) =&gt; println(&quot;hi: &quot; + x +&quot; and &quot; + y)
-      case Array(&quot;zhangsan&quot;, _*) =&gt; println(&quot;hi: zhangsan and other&quot;)
-      case _ =&gt; println(&quot;hi everybody&quot;)
-    }
-  }
-  greeting(Array(&quot;zhangsan&quot;))
-  greeting(Array(&quot;zhangsan&quot;, &quot;lisi&quot;))
-  greeting(Array(&quot;zhangsan&quot;, &quot;lisi&quot;, &quot;wangwu&quot;))
-}
-// 返回结果
-hello zhangsan
-hi: zhangsan and lisi
-hi: zhangsan and other
-</code></pre>
-<h2 id="4-list中的过滤">4. List中的过滤</h2>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/10 12:10 上午
- */
-object MatchApp extends App {
-  def greeting(list: List[String]): Unit = {
-    list match {
-      case &quot;zhangsan&quot; :: Nil =&gt; println(&quot;Hi: zhangsan&quot;)
-      case x :: y :: Nil =&gt; println(&quot;Hi:&quot; + x + &quot; , &quot; + y)
-      case &quot;zhangsan&quot;::tail =&gt; println(&quot;Hi: zhangsan and others&quot;)
-      case _ =&gt; println(&quot;hi: everyone&quot;)
-    }
-  }
-  greeting(List(&quot;zhangsan&quot;))
-  greeting(List(&quot;zhangsan&quot;,&quot;lisi&quot;))
-  greeting(List(&quot;zhangsan&quot;,&quot;lisi&quot;,&quot;wangwu&quot;))
-  greeting(List(&quot;wangwu&quot;,&quot;zhangsan&quot;,&quot;lisi&quot;))
-}
-// 返回
-Hi: zhangsan
-Hi: zhangsan , lisi
-Hi: zhangsan and others
-hi: everyone
-</code></pre>
-<h2 id="5-类型匹配">5. 类型匹配</h2>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/10 12:10 上午
- */
-object MatchApp extends App {
-  def matchType(obj: Any): Unit = {
-    obj match {
-      case x: Int =&gt; println(&quot;Int&quot;)
-      case s:String =&gt; println(&quot;String&quot;)
-      case m:Map[_,_] =&gt; m.foreach(println)
-      case _ =&gt; println(&quot;other type&quot;)
-    }
-  }
-  matchType(1)
-  matchType(&quot;1&quot;)
-  matchType(Map(&quot;name&quot; -&gt; &quot;a&quot;))
-  matchType(1f)
-}
-// 返回
-Int
-String
-(name,a)
-other type
-</code></pre>
-<h2 id="6-异常处理">6. 异常处理</h2>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/10 1:26 上午
- */
-object ExceptionApp extends App {
-  try {
-    val i = 10 / 0
-    println(i)
-  } catch {
-    case e: ArithmeticException =&gt; println(&quot;除数不能为0&quot;)
-    case e: Exception =&gt; println(e.getMessage)
-  } finally {
-    // 释放资源
-  }
-}
-</code></pre>
-<ul>
-<li>在catch中判断异常</li>
-<li>在finally中释放资源</li>
-</ul>
-<h2 id="7-case-class中的匹配">7. Case Class中的匹配</h2>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/10 1:26 上午
- */
-object ExceptionApp extends App {
-  def caseclassMatch(person: Person): Unit ={
-    person match{
-      case CTO(name, floor) =&gt; println(&quot;CTO name is &quot;+name+&quot; ,floor: &quot;+ floor)
-      case Employee(name, floor) =&gt; println(&quot;Employee name is &quot;+name+&quot; ,floor: &quot;+ floor)
-      case _ =&gt; println(&quot;other&quot;)
-    }
-  }
-  class Person
-  case class CTO(name:String, floor:String) extends Person
-  case class Employee(name:String, floor:String) extends Person
-  case class Other(name:String) extends Person
-  caseclassMatch(CTO(&quot;3zz&quot;,&quot;22&quot;))
-  caseclassMatch(Employee(&quot;zhangsan&quot;, &quot;2&quot;))
-  caseclassMatch(Other(&quot;lisi&quot;))
-}
-// 返回
-CTO name is 3zz ,floor: 22
-Employee name is zhangsan ,floor: 2
-other
-</code></pre>
 ]]></content>
     </entry>
 </feed>
