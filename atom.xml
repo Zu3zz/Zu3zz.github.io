@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://Zu3zz.github.io/</id>
+    <id>https://zu3zz.coding.me</id>
     <title>风袖</title>
-    <updated>2020-03-21T12:33:55.116Z</updated>
+    <updated>2020-03-26T08:24:27.999Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://Zu3zz.github.io/"/>
-    <link rel="self" href="https://Zu3zz.github.io/atom.xml"/>
+    <link rel="alternate" href="https://zu3zz.coding.me"/>
+    <link rel="self" href="https://zu3zz.coding.me/atom.xml"/>
     <subtitle>烟蛾敛略不胜态，风袖低昂如有情</subtitle>
-    <logo>https://Zu3zz.github.io/images/avatar.png</logo>
-    <icon>https://Zu3zz.github.io/favicon.ico</icon>
+    <logo>https://zu3zz.coding.me/images/avatar.png</logo>
+    <icon>https://zu3zz.coding.me/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
     <entry>
         <title type="html"><![CDATA[Java多并发(1) -- 线程创建]]></title>
-        <id>https://Zu3zz.github.io/post/java-thread-1/</id>
-        <link href="https://Zu3zz.github.io/post/java-thread-1/">
+        <id>https://zu3zz.coding.me/post/java-thread-1/</id>
+        <link href="https://zu3zz.coding.me/post/java-thread-1/">
         </link>
         <updated>2020-03-21T12:33:07.000Z</updated>
         <content type="html"><![CDATA[<h1 id="java多并发-线程创建">Java多并发 -- 线程创建</h1>
@@ -141,8 +141,8 @@ public class BothRunnableThread {
     </entry>
     <entry>
         <title type="html"><![CDATA[主流缓存Redis笔记]]></title>
-        <id>https://Zu3zz.github.io/post/interview-redis/</id>
-        <link href="https://Zu3zz.github.io/post/interview-redis/">
+        <id>https://zu3zz.coding.me/post/interview-redis/</id>
+        <link href="https://zu3zz.coding.me/post/interview-redis/">
         </link>
         <updated>2020-02-16T13:15:30.000Z</updated>
         <summary type="html"><![CDATA[<p>🐽详细讲解主流缓存面试会遇到的问题，包含Redis分布式锁、异步队列、持久化、集群等🐽</p>
@@ -151,7 +151,7 @@ public class BothRunnableThread {
 <!-- more -->
 <h1 id="主流缓存redis笔记">主流缓存Redis笔记</h1>
 <h2 id="1-主流应用架构">1. 主流应用架构</h2>
-<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io//post-images/1581859003669.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1581859003669.png" alt="" loading="lazy"></figure>
 <h3 id="11-缓存中间件-memcache和redis的区别">1.1 缓存中间件---- Memcache和Redis的区别</h3>
 <h4 id="1-memcache代码层次类似hash">1. Memcache：代码层次类似Hash</h4>
 <ul>
@@ -183,9 +183,9 @@ public class BothRunnableThread {
 <li>一个打开的文件通过唯一的描述符进行引用，该描述符是打开文件的元数据到文件本身的映射</li>
 </ul>
 <h4 id="2-传统的阻塞io模型">2. 传统的阻塞I/O模型</h4>
-<figure data-type="image" tabindex="2"><img src="https://Zu3zz.github.io//post-images/1581859021180.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://zu3zz.coding.me/post-images/1581859021180.png" alt="" loading="lazy"></figure>
 <h4 id="3-select-系统调用">3. Select 系统调用</h4>
-<figure data-type="image" tabindex="3"><img src="https://Zu3zz.github.io//post-images/1581859027686.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://zu3zz.coding.me/post-images/1581859027686.png" alt="" loading="lazy"></figure>
 <h4 id="4-redis采用的io多路复用函数epollkqueueevportselect">4. Redis采用的I/O多路复用函数：epoll/kqueue/evport/select</h4>
 <ul>
 <li>因地制宜</li>
@@ -198,7 +198,7 @@ public class BothRunnableThread {
 <ul>
 <li>
 <p>String：最基本的数据类型，二进制安全（底层使用sdshdr）</p>
-<figure data-type="image" tabindex="4"><img src="https://Zu3zz.github.io//post-images/1581859149419.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://zu3zz.coding.me/post-images/1581859149419.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>Hash：String元素组成的字典，适合用于存储对象（hmset key1 value1 key2 value2...）</p>
@@ -257,7 +257,7 @@ public class BothRunnableThread {
 </ul>
 </li>
 <li>
-<figure data-type="image" tabindex="5"><img src="https://Zu3zz.github.io//post-images/1581859174423.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://zu3zz.coding.me/post-images/1581859174423.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>SET key value [EX seconds] [PX milliseconds] [NX|XX]</p>
@@ -309,7 +309,7 @@ public class BothRunnableThread {
 <li>执行Shutdown且没有开发AOF持久化</li>
 </ol>
 <h3 id="3-bgsave的原理">3. BGSAVE的原理</h3>
-<figure data-type="image" tabindex="6"><img src="https://Zu3zz.github.io//post-images/1581859203147.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://zu3zz.coding.me/post-images/1581859203147.png" alt="" loading="lazy"></figure>
 <ul>
 <li>系统调用fork()：创建进程，实现了Copy-on-Write</li>
 <li>缺点
@@ -374,7 +374,7 @@ public class BothRunnableThread {
 <ol>
 <li>
 <p>主从同步原理（Master/Slave）</p>
-<figure data-type="image" tabindex="7"><img src="https://Zu3zz.github.io//post-images/1581859218260.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://zu3zz.coding.me/post-images/1581859218260.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>全同步过程</p>
@@ -436,36 +436,36 @@ public class BothRunnableThread {
 </li>
 <li>
 <p>将数据key使用相同的函数Hash计算出哈希值，找到最近的Hash节点</p>
-<figure data-type="image" tabindex="8"><img src="https://Zu3zz.github.io//post-images/1581859268434.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://zu3zz.coding.me/post-images/1581859268434.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>如果此时<code>Node C</code>宕机,数据都会到<code>Node D</code>中</p>
 </li>
 </ul>
-<figure data-type="image" tabindex="9"><img src="https://Zu3zz.github.io//post-images/1581859274355.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://zu3zz.coding.me/post-images/1581859274355.png" alt="" loading="lazy"></figure>
 <ul>
 <li>
 <p>新增一台服务器 <code>Node X</code></p>
-<figure data-type="image" tabindex="10"><img src="https://Zu3zz.github.io//post-images/1581859282580.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="https://zu3zz.coding.me/post-images/1581859282580.png" alt="" loading="lazy"></figure>
 </li>
 </ul>
 <h3 id="3-数据倾斜问题">3. 数据倾斜问题</h3>
 <ol>
 <li>
 <p>Hash环的数据倾斜问题</p>
-<figure data-type="image" tabindex="11"><img src="https://Zu3zz.github.io//post-images/1581859296841.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="https://zu3zz.coding.me/post-images/1581859296841.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>引入虚拟节点解决数据倾斜的问题（节点过少时有用）（设置虚拟节点32个）</p>
-<figure data-type="image" tabindex="12"><img src="https://Zu3zz.github.io//post-images/1581859303063.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="12"><img src="https://zu3zz.coding.me/post-images/1581859303063.png" alt="" loading="lazy"></figure>
 </li>
 </ol>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[数据库面试考点]]></title>
-        <id>https://Zu3zz.github.io/post/interview-database/</id>
-        <link href="https://Zu3zz.github.io/post/interview-database/">
+        <id>https://zu3zz.coding.me/post/interview-database/</id>
+        <link href="https://zu3zz.coding.me/post/interview-database/">
         </link>
         <updated>2020-02-12T10:51:52.000Z</updated>
         <summary type="html"><![CDATA[<p>🐰详细讲解数据库面试常见问题，包含索引、锁、事务等内容🐰</p>
@@ -507,7 +507,7 @@ public class BothRunnableThread {
 <ol>
 <li>
 <p>二叉查找树</p>
-<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io//post-images/1581850416812.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1581850416812.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>B-Tree（logn）</p>
@@ -517,7 +517,7 @@ public class BothRunnableThread {
 <li>除根节点和叶节点外，其他每个节点至少有ceil（m/2）个孩子</li>
 <li>所有叶子节点都位于同一层</li>
 </ol>
-<figure data-type="image" tabindex="2"><img src="https://Zu3zz.github.io//post-images/1581850429749.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://zu3zz.coding.me/post-images/1581850429749.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>B+树</p>
@@ -528,7 +528,7 @@ public class BothRunnableThread {
 <li>非叶子节点仅用来索引，数据都保存在叶子结点中</li>
 <li>所有叶子节点均有一个链指针指向下一个叶子结点</li>
 </ol>
-<figure data-type="image" tabindex="3"><img src="https://Zu3zz.github.io//post-images/1581850440775.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://zu3zz.coding.me/post-images/1581850440775.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>为什么B+树更适合用来做存储索引</p>
@@ -541,7 +541,7 @@ public class BothRunnableThread {
 </ol>
 <hr>
 <h3 id="2-hash索引">2. Hash索引</h3>
-<figure data-type="image" tabindex="4"><img src="https://Zu3zz.github.io//post-images/1581850457121.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://zu3zz.coding.me/post-images/1581850457121.png" alt="" loading="lazy"></figure>
 <h4 id="缺点">缺点：</h4>
 <ol>
 <li>仅仅能满足“=”，“IN&quot;，不能使用范围查询</li>
@@ -631,7 +631,7 @@ public class BothRunnableThread {
 <li>先读再写不会被锁</li>
 <li>先写再读会被锁</li>
 </ol>
-<figure data-type="image" tabindex="5"><img src="https://Zu3zz.github.io//post-images/1581850500524.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://zu3zz.coding.me/post-images/1581850500524.png" alt="" loading="lazy"></figure>
 <h4 id="2-myisam适合的场景">2. MyISAM适合的场景</h4>
 <ol>
 <li>频繁执行全表count语句</li>
@@ -674,7 +674,7 @@ public class BothRunnableThread {
 <li>不可重复读：REPEATABLE-READ事务隔离级别以上可避免（InnoDB默认）</li>
 <li>幻读：另外一个事务对同一个数据库进行了插入或者删除操作：SERIALIZABLE事务隔离级别可避免</li>
 </ol>
-<figure data-type="image" tabindex="6"><img src="https://Zu3zz.github.io//post-images/1581850513584.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://zu3zz.coding.me/post-images/1581850513584.png" alt="" loading="lazy"></figure>
 <h3 id="35-innodb课重复读隔离级别下如何避免幻读">3.5 InnoDB课重复读隔离级别下如何避免幻读</h3>
 <ol>
 <li>表象：快照读（非阻塞读）——伪MVCC
@@ -719,8 +719,8 @@ public class BothRunnableThread {
     </entry>
     <entry>
         <title type="html"><![CDATA[计算机网络面试考点总结]]></title>
-        <id>https://Zu3zz.github.io/post/interview-network/</id>
-        <link href="https://Zu3zz.github.io/post/interview-network/">
+        <id>https://zu3zz.coding.me/post/interview-network/</id>
+        <link href="https://zu3zz.coding.me/post/interview-network/">
         </link>
         <updated>2020-02-06T17:00:31.000Z</updated>
         <summary type="html"><![CDATA[<p>🐱一文总结计算机网络面试常见考点，包括TCP HTTP等🐱</p>
@@ -791,7 +791,7 @@ public class BothRunnableThread {
 </ul>
 </li>
 </ol>
-<figure data-type="image" tabindex="1"><img src="https://Zu3zz.github.io//post-images/1581008533854.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1581008533854.png" alt="" loading="lazy"></figure>
 <h2 id="4-http11">4. HTTP(1.1)</h2>
 <h3 id="1-主要特点">1. 主要特点</h3>
 <ol>
@@ -860,7 +860,7 @@ public class BothRunnableThread {
 <li>服务器接收到后，会解析Cookie生成与客户端相对应的内容</li>
 </ul>
 <h4 id="cookie的设置以及发送过程">Cookie的设置以及发送过程</h4>
-<figure data-type="image" tabindex="2"><img src="https://Zu3zz.github.io//post-images/1581008546981.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://zu3zz.coding.me/post-images/1581008546981.png" alt="" loading="lazy"></figure>
 <h4 id="session简介">Session简介</h4>
 <ul>
 <li>服务器端的机制，在服务器上保存的信息（类似hash表）</li>
@@ -879,7 +879,7 @@ public class BothRunnableThread {
 </ol>
 <h2 id="5-http和https的区别">5 HTTP和HTTPS的区别</h2>
 <h3 id="1-https简介">1. HTTPS简介</h3>
-<figure data-type="image" tabindex="3"><img src="https://Zu3zz.github.io//post-images/1581008556887.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://zu3zz.coding.me/post-images/1581008556887.png" alt="" loading="lazy"></figure>
 <hr>
 <h3 id="2-sslsecurity-sockets-layer-安全套接层">2. SSL（Security Sockets Layer, 安全套接层）</h3>
 <ol>
@@ -923,13 +923,13 @@ public class BothRunnableThread {
 <li>Socket是对TCP/IP协议的抽象，是操作系统对外开放的接口</li>
 </ul>
 <h3 id="1-socket通信流程">1. Socket通信流程</h3>
-<figure data-type="image" tabindex="4"><img src="https://Zu3zz.github.io//post-images/1581008567663.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://zu3zz.coding.me/post-images/1581008567663.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[SparkSQL实战笔记（2）---- SparkSQL 概述]]></title>
-        <id>https://Zu3zz.github.io/post/sparksql-2/</id>
-        <link href="https://Zu3zz.github.io/post/sparksql-2/">
+        <id>https://zu3zz.coding.me/post/sparksql-2/</id>
+        <link href="https://zu3zz.coding.me/post/sparksql-2/">
         </link>
         <updated>2020-01-14T11:46:21.000Z</updated>
         <content type="html"><![CDATA[<h1 id="sparksql-实战笔记2-sparksql-概述">SparkSQL 实战笔记（2）---- SparkSQL 概述</h1>
@@ -1220,8 +1220,8 @@ esac
     </entry>
     <entry>
         <title type="html"><![CDATA[SparkSQL实战笔记（1）---- 部署、项目准备]]></title>
-        <id>https://Zu3zz.github.io/post/sparksql-1/</id>
-        <link href="https://Zu3zz.github.io/post/sparksql-1/">
+        <id>https://zu3zz.coding.me/post/sparksql-1/</id>
+        <link href="https://zu3zz.coding.me/post/sparksql-1/">
         </link>
         <updated>2020-01-13T08:43:13.000Z</updated>
         <content type="html"><![CDATA[<h1 id="sparksql实战笔记1-部署-项目准备">SparkSQL实战笔记（1）---- 部署、项目准备</h1>
@@ -1758,8 +1758,8 @@ object SparkWordCountApp {
     </entry>
     <entry>
         <title type="html"><![CDATA[HBase学习笔记 ---- 整合篇]]></title>
-        <id>https://Zu3zz.github.io/post/hbase-1/</id>
-        <link href="https://Zu3zz.github.io/post/hbase-1/">
+        <id>https://zu3zz.coding.me/post/hbase-1/</id>
+        <link href="https://zu3zz.coding.me/post/hbase-1/">
         </link>
         <updated>2020-01-11T15:54:39.000Z</updated>
         <content type="html"><![CDATA[<h1 id="hbase">Hbase</h1>
@@ -2429,8 +2429,8 @@ public class HbaseApp {
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（7）---- Scala隐式转换]]></title>
-        <id>https://Zu3zz.github.io/post/scala-7/</id>
-        <link href="https://Zu3zz.github.io/post/scala-7/">
+        <id>https://zu3zz.coding.me/post/scala-7/</id>
+        <link href="https://zu3zz.coding.me/post/scala-7/">
         </link>
         <updated>2020-01-10T16:34:35.000Z</updated>
         <content type="html"><![CDATA[<h1 id="scala隐式转换">Scala隐式转换</h1>
@@ -2528,8 +2528,8 @@ object ImplicitClassApp extends App {
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（6）---- Scala函数高级操作]]></title>
-        <id>https://Zu3zz.github.io/post/scala-6/</id>
-        <link href="https://Zu3zz.github.io/post/scala-6/">
+        <id>https://zu3zz.coding.me/post/scala-6/</id>
+        <link href="https://zu3zz.coding.me/post/scala-6/">
         </link>
         <updated>2020-01-06T16:31:47.000Z</updated>
         <content type="html"><![CDATA[<h2 id="scala-函数高级操作">Scala 函数高级操作</h2>
@@ -2663,8 +2663,8 @@ object PartitalFunctionApp extends App {
     </entry>
     <entry>
         <title type="html"><![CDATA[Scala学习笔记（5）---- Scala集合]]></title>
-        <id>https://Zu3zz.github.io/post/scala-5/</id>
-        <link href="https://Zu3zz.github.io/post/scala-5/">
+        <id>https://zu3zz.coding.me/post/scala-5/</id>
+        <link href="https://zu3zz.coding.me/post/scala-5/">
         </link>
         <updated>2020-01-04T16:29:40.000Z</updated>
         <content type="html"><![CDATA[<h1 id="scala集合">Scala集合</h1>
