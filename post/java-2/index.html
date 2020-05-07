@@ -1,0 +1,863 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1588819422670">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://zu3zz.coding.me/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.coding.me/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.coding.me">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1588819422670" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%B9%B6%E5%8F%91">Java多线程和并发</a></li>
+<li><a href="#1-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B">1. 进程与线程</a><br>
+*
+<ul>
+<li><a href="#1-%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB">1. 进程和线程的区别</a></li>
+<li><a href="#2-java%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB">2. Java进程和线程的关系</a></li>
+<li><a href="#3-thread%E4%B8%AD%E7%9A%84start%E5%92%8Crun%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB">3. Thread中的start()和run()方法的区别</a></li>
+<li><a href="#4-thread%E5%92%8Crunnable%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB">4. Thread和Runnable有什么关系</a></li>
+<li><a href="#5-%E5%A6%82%E4%BD%95%E7%BB%99run%E6%96%B9%E6%B3%95%E4%BC%A0%E5%8F%82">5. 如何给run()方法传参</a></li>
+<li><a href="#6-%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81">6. 线程的状态</a></li>
+<li><a href="#7-sleep%E5%92%8Cwait%E7%9A%84%E5%8C%BA%E5%88%AB">7. sleep和wait的区别</a></li>
+<li><a href="#8-notify%E4%B8%8Enotifyall%E7%9A%84%E5%8C%BA%E5%88%AB">8. notify与notifyAll的区别</a></li>
+<li><a href="#9-yield">9. yield</a></li>
+<li><a href="#10-%E4%B8%AD%E6%96%AD%E7%BA%BF%E7%A8%8B">10. 中断线程</a></li>
+<li><a href="#11-%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81">11. 线程状态</a></li>
+</ul>
+</li>
+<li><a href="#2-%E9%94%81%E7%9B%B8%E5%85%B3">2. 锁相关</a>
+<ul>
+<li><a href="#1-synchronized">1. Synchronized</a></li>
+<li><a href="#2-synchronized%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86">2. Synchronized底层原理</a>
+<ul>
+<li><a href="#1-%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B1%80">1. 对象在内存中的布局</a></li>
+<li><a href="#2-%E5%AF%B9%E8%B1%A1%E5%A4%B4%E7%9A%84%E7%BB%93%E6%9E%84">2. 对象头的结构</a></li>
+<li><a href="#3-mark-word%E7%9A%84%E7%BB%93%E6%9E%84">3. Mark Word的结构</a></li>
+<li><a href="#4-monitor">4. Monitor</a></li>
+<li><a href="#5-synchronized%E5%8F%91%E5%B1%95">5. Synchronized发展</a></li>
+<li><a href="#6-%E8%87%AA%E6%97%8B%E9%94%81%E4%B8%8E%E8%87%AA%E9%80%82%E5%BA%94%E8%87%AA%E6%97%8B%E9%94%81%E9%94%81%E4%BC%98%E5%8C%96">6. 自旋锁与自适应自旋锁（锁优化）</a></li>
+<li><a href="#7-synchronized%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%8A%B6%E6%80%81">7. Synchronized的四种状态</a></li>
+<li><a href="#8-%E5%81%8F%E5%90%91%E9%94%81-%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81-%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%E7%9A%84%E6%B1%87%E6%80%BB">8. 偏向锁、轻量级锁、重量级锁的汇总</a></li>
+</ul>
+</li>
+<li><a href="#3-synchronized%E5%92%8Creentrantlock%E7%9A%84%E5%8C%BA%E5%88%AB">3. Synchronized和ReentrantLock的区别</a>
+<ul>
+<li><a href="#1-reentrantlock%E5%86%8D%E5%85%A5%E9%94%81">1. ReentrantLock（再入锁）</a></li>
+<li><a href="#2-%E5%85%AC%E5%B9%B3%E6%80%A7%E7%9A%84%E8%AE%BE%E7%BD%AE">2. 公平性的设置</a></li>
+<li><a href="#3-%E5%8C%BA%E5%88%AB">3. 区别</a></li>
+</ul>
+</li>
+<li><a href="#4-jmm%E6%A8%A1%E5%9E%8B">4. JMM模型</a></li>
+<li><a href="#5-volatile">5. Volatile</a></li>
+<li><a href="#6-volatile%E5%92%8Csynchronized%E7%9A%84%E5%8C%BA%E5%88%AB">6. Volatile和synchronized的区别</a></li>
+<li><a href="#7-cascompare-and-swap">7. CAS(Compare and Swap)</a></li>
+<li><a href="#8-java%E7%BA%BF%E7%A8%8B%E6%B1%A0">8. Java线程池</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.coding.me/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Java面试总结(2) -- 线程篇</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-03-09 / 15 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>Java面试总结第二篇~ 主要是线程与线程池的相关知识点</p>
+<!-- more -->
+<h2 id="java多线程和并发">Java多线程和并发</h2>
+<h2 id="1-进程与线程">1. 进程与线程</h2>
+<h4 id="1-进程和线程的区别">1. 进程和线程的区别</h4>
+<ol>
+<li>
+<p>进程和线程的由来</p>
+<ul>
+<li>串行</li>
+<li>批处理</li>
+<li>进程：独占内存空间，保存各自运行状态，相互间不干扰且可以互相切换，为并发处理任务提供了可能</li>
+<li>线程：共享进程的内存资源，相互间切换更快速，支持更细粒度的任务控制，使进程内的子任务得以并发执行</li>
+</ul>
+</li>
+<li>
+<p>进程是资源分配的最小单位，线程是CPU调度的最小单位</p>
+<ul>
+<li>
+<p>所有与进程相关的资源，都被记录在PCB中</p>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1588818996521.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>进程是抢占处理机的调度单位；线程属于某个进程，共享其资源</p>
+</li>
+<li>
+<p>线程只由堆栈寄存器、程序计数器和TCB组成</p>
+<figure data-type="image" tabindex="2"><img src="https://zu3zz.coding.me/post-images/1588819009068.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>线程不能看做独立应用，而进程可看做独立应用</li>
+<li>进程有独立的地址空间，相互不影响，线程只是进程的不同执行路径</li>
+<li>线程没有独立的地址空间，多进程的程序比多线程程序要更健壮</li>
+<li>进程的切换比线程的切换开销大</li>
+</ul>
+</li>
+</ol>
+<h4 id="2-java进程和线程的关系">2. Java进程和线程的关系</h4>
+<ol>
+<li>Java对操作系统提供的功能进行封装，包括进程和线程</li>
+<li>运行一个程序会产生一个进程，进程包含至少一个线程</li>
+<li>每个进程对应一个JVM实例，多个线程共享JVM里的堆</li>
+<li>Java采用单线程编程模型，程序会主动创建主线程</li>
+<li>主线程可以创建子线程，原则上要后于子线程完成执行</li>
+</ol>
+<h4 id="3-thread中的start和run方法的区别">3. Thread中的start()和run()方法的区别</h4>
+<ol>
+<li>
+<p>start()方法底层是c++代码：调用了jvm中的JVM_StartThread方法，创建了一个新线程</p>
+<figure data-type="image" tabindex="3"><img src="https://zu3zz.coding.me/post-images/1588819024584.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>调用start()方法会创建一个新的子线程并启动</p>
+</li>
+<li>
+<p>run()方法只是Thread的一个普通方法的调用</p>
+</li>
+</ol>
+<h4 id="4-thread和runnable有什么关系">4. Thread和Runnable有什么关系</h4>
+<ol>
+<li>Thread是实现了Runnable接口的类，使得run支持多线程</li>
+<li>因类的单一继承原则，推荐多使用Runnable接口</li>
+</ol>
+<h4 id="5-如何给run方法传参">5. 如何给run()方法传参</h4>
+<ul>
+<li>
+<p>实现的方式主要有三种</p>
+<ul>
+<li>构造函数传参</li>
+<li>成员变量传参</li>
+<li>回调函数传参</li>
+</ul>
+</li>
+<li>
+<p>如何处理线程的返回值：三种</p>
+<ul>
+<li>
+<p>主线程等待法（Thread.sleep()）外面循环等待</p>
+</li>
+<li>
+<p>使用Thread类的join()阻塞当前线程以等待子线程处理完毕：用join()代替循环等待</p>
+</li>
+<li>
+<p>通过Callable接口实现：通过FutureTask Or 线程池获取</p>
+<pre><code class="language-java">// 首先实现Callable接口 重写call方法
+public class MyCallable implements Callable&lt;String&gt; {
+    @Override
+    public String call() throws Exception{
+        String value=&quot;test&quot;;
+        System.out.println(&quot;Ready to work&quot;);
+        Thread.currentThread().sleep(5000);
+        System.out.println(&quot;task done&quot;);
+        return value;
+    }
+}
+</code></pre>
+<p>在FutureTask中实现该方法</p>
+<pre><code class="language-java">// 新建一个FutureTask 用isDone方法获取是否已经执行完毕的状态
+public class FutureTaskDemo {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        FutureTask&lt;String&gt; task = new FutureTask&lt;String&gt;(new MyCallable());
+        new Thread(task).start();
+        if(!task.isDone()){
+            System.out.println(&quot;task has not finished, please wait!&quot;);
+        }
+        System.out.println(&quot;task return: &quot; + task.get());
+    }
+}
+</code></pre>
+<p>通过线程池</p>
+<pre><code class="language-java">public class ThreadPoolDemo {
+    public static void main(String[] args) {
+        ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
+        Future&lt;String&gt; future = newCachedThreadPool.submit(new MyCallable());
+        if(!future.isDone()){
+            System.out.println(&quot;task has not finished, please wait!&quot;);
+        }
+        try {
+            System.out.println(future.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } finally {
+            newCachedThreadPool.shutdown();
+        }
+    }
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-线程的状态">6. 线程的状态</h4>
+<ul>
+<li>
+<p>枚举类型中有六个状态</p>
+<ol>
+<li>
+<p>新建New：创建后尚未启动的线程的状态</p>
+</li>
+<li>
+<p>运行Runnable：包含Running和Ready</p>
+</li>
+<li>
+<p>无限期等待 Waiting：不会被分配CPU执行时间，需要显式被唤醒</p>
+<pre><code class="language-shell">没有设置Timeout参数的Object.wait()方法
+没有设置TImeout参数的Thread.join()方法
+LockSupport.park()方法
+</code></pre>
+</li>
+<li>
+<p>限期等待Timed Waiting：在一定时间后会由系统自动唤醒</p>
+<pre><code class="language-shell">Thread.sleep()方法
+设置了Timeout参数的Object.wait()方法
+设置了Tiimeout参数的Thread.join()方法
+LockSupport.parkNanos()方法
+LockSupport.parkUntil()方法
+</code></pre>
+</li>
+<li>
+<p>阻塞 Blocked：等待获取排它锁</p>
+</li>
+<li>
+<p>结束Terminated：已终止线程的状态，线程已经结束执行（结束了在调用会报错）</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="7-sleep和wait的区别">7. sleep和wait的区别</h4>
+<ul>
+<li>sleep（）是Thread类中的方法 wait是Object类中定义的方法</li>
+<li>sleep（）可以在任何地方使用</li>
+<li>wait（）方法只能在synchronized方法或synchronized块中使用</li>
+<li>最主要的区别：
+<ul>
+<li>Thread.sleep只会让出cpu，不会导致锁行为的改变</li>
+<li>Object.wait不仅会让出cpu，还会释放已经占有的同步资源锁</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-notify与notifyall的区别">8. notify与notifyAll的区别</h4>
+<ul>
+<li>两个概念
+<ul>
+<li>锁池 EntryList：其他线程等待锁的释放的地方</li>
+<li>等待池 WaitSet：调用了wait（）中，就进入了等待池</li>
+</ul>
+</li>
+<li>区别：
+<ul>
+<li>notifyAll会让所有处于等待池的线程全部进入锁池去竞争获取锁的机会</li>
+<li>notify只会随机选取一个处于等到吃的线程进入锁池去竞争锁的机会</li>
+</ul>
+</li>
+</ul>
+<h4 id="9-yield">9. yield</h4>
+<ul>
+<li>表示当前线程愿意让出CPU的使用权，但是线程调度器可能会忽略这个暗示</li>
+<li>取决于调度器</li>
+</ul>
+<h4 id="10-中断线程">10. 中断线程</h4>
+<ul>
+<li>通过调用stop（）方法停止线程：已抛弃</li>
+<li>suspend（）、 resume（）方法也都被废弃</li>
+<li>目前：调用interrupt（），通知线程应该中断了
+<ul>
+<li>如果处于被阻塞状态，那么退出阻塞状态，抛出<code>InterruptedException</code>异常</li>
+<li>如果正常活动状态，那么会将该线程的中断标志设置为true，该线程将会继续执行</li>
+<li>检查中断标记</li>
+</ul>
+</li>
+</ul>
+<h4 id="11-线程状态">11. 线程状态</h4>
+<figure data-type="image" tabindex="4"><img src="https://zu3zz.coding.me/post-images/1588819136266.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://zu3zz.coding.me/post-images/1588819144367.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://zu3zz.coding.me/post-images/1588819150432.jpg" alt="" loading="lazy"></figure>
+<h2 id="2-锁相关">2. 锁相关</h2>
+<h3 id="1-synchronized">1. Synchronized</h3>
+<ul>
+<li>互斥锁：同一时间只有一个线程持有</li>
+<li>可见性：修改操作对其他线程是可见的</li>
+<li>锁的不是代码，是对象</li>
+<li>根据锁的分类：获取对象锁和获取类锁
+<ul>
+<li>同步代码块（synchronized（this） synchronized（类实例对象））锁的是括号中的实例对象</li>
+<li>同步非静态方法（synchronized method）</li>
+</ul>
+</li>
+<li>获取类锁的两种用法
+<ul>
+<li>同步代码块（synchronized（类.class）），锁是小括号（）中的类对象（Class对象）</li>
+<li>同步静态方法（synchronized static method），锁是当前对象的类对象（Class对象）</li>
+</ul>
+</li>
+<li>对象锁和类锁的总结
+<ol>
+<li>有线程访问对象的同步代码块时，另外的线程可以访问该对象的非同步代码块</li>
+<li>若锁住的是同一个对象，一个线程在访问对象的同步代码块时，另一个访问对象的同步代码块的线程会被阻塞</li>
+<li>若锁住的是同一个对象，一个线程在访问对象的同步方法时，另一个访问对象同步方法的线程会被阻塞</li>
+<li>若锁住的是同一个对象，一个线程在访问对象的同步代码块时，另一个访问对象同步方法的线程会被阻塞，反之亦然</li>
+<li>同一个类的不同对象的对象锁互不干扰</li>
+<li>类所由于也是一种特殊的对象锁，因此和上述1，2，3，4一直，而由于一个类只有一把对象锁，所以同一个类的不同对象使用类锁将会是同步的</li>
+<li>类所和对象锁互不干扰</li>
+</ol>
+</li>
+</ul>
+<h3 id="2-synchronized底层原理">2. Synchronized底层原理</h3>
+<h4 id="1-对象在内存中的布局">1. 对象在内存中的布局</h4>
+<ul>
+<li>对象头</li>
+<li>实例数据</li>
+<li>对齐填充</li>
+</ul>
+<h4 id="2-对象头的结构">2. 对象头的结构</h4>
+<figure data-type="image" tabindex="7"><img src="https://zu3zz.coding.me/post-images/1588819178301.png" alt="" loading="lazy"></figure>
+<h4 id="3-mark-word的结构">3. Mark Word的结构</h4>
+<figure data-type="image" tabindex="8"><img src="https://zu3zz.coding.me/post-images/1588819188233.png" alt="" loading="lazy"></figure>
+<h4 id="4-monitor">4. Monitor</h4>
+<ol>
+<li>
+<p>每个Java对象天生自带了一把看不见的锁</p>
+</li>
+<li>
+<p>Monitor锁的竞争、释放与获取</p>
+</li>
+</ol>
+<figure data-type="image" tabindex="9"><img src="https://zu3zz.coding.me/post-images/1588819197733.png" alt="" loading="lazy"></figure>
+<h4 id="5-synchronized发展">5. Synchronized发展</h4>
+<ul>
+<li>
+<p>什么是重入：一个线程再次请求自己持有对象锁的临界资源，这种情况属于重入</p>
+<ul>
+<li>Synchronized是可重入的</li>
+</ul>
+</li>
+<li>
+<p>早期版本中，Synchronized属于重量级锁，依赖于Mutex Lock实现</p>
+</li>
+<li>
+<p>线程之间的切换要从用户态转到核心态，开销较大</p>
+</li>
+<li>
+<p>Java6之后，Synchronized性能得到了很大的提升</p>
+<ul>
+<li>Adaptive Spinning</li>
+<li>Lightweight Locking</li>
+<li>Lock Eliminate</li>
+<li>Biased Locking</li>
+<li>Lock Coarsening</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-自旋锁与自适应自旋锁锁优化">6. 自旋锁与自适应自旋锁（锁优化）</h4>
+<ol>
+<li>自旋锁
+<ul>
+<li>一些共享数据的锁定状态持续时间较短，切换线程不值得</li>
+<li>通过让线程执行忙循环等待锁的释放，不让出CPU</li>
+<li>缺点：若锁被其他线程长时间占用，会带来许多性能上的开销（PreBlockSpin）</li>
+</ul>
+</li>
+<li>自适应自旋锁
+<ul>
+<li>自选的次数不再固定</li>
+<li>由前一次在同一个锁上的自选时间及锁的拥有者的状态来决定</li>
+</ul>
+</li>
+<li>锁消除
+<ul>
+<li>JIT编译时，对运行上下文进行扫描，去除不可能存在竞争的锁</li>
+</ul>
+</li>
+<li>锁粗化
+<ul>
+<li>将锁的范围加大，避免反复加锁和解锁</li>
+</ul>
+</li>
+</ol>
+<h4 id="7-synchronized的四种状态">7. Synchronized的四种状态</h4>
+<blockquote>
+<p>无锁、偏向锁、轻量级锁、重量级锁</p>
+</blockquote>
+<ul>
+<li>膨胀方向：无锁-&gt;偏向锁-&gt;轻量级锁-&gt;重量级锁</li>
+</ul>
+<ol>
+<li>
+<p>偏向锁</p>
+<ul>
+<li>锁不存在多线程竞争，总是由容易线程多次获得
+<ul>
+<li>一个线程获得一个锁之后，进入偏向模式，此时Mark Word的结构变成了变相所结构</li>
+<li>再次请求锁时，无需再做任何同步操作，获取过程只要检查Mark Word的锁标记位为偏向锁以及当前线程Id等于MarkWord中的ThreadID即可 ，省去了大量有关锁申请的操作</li>
+<li>不适用于锁竞争比较激烈的场景</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>轻量级锁</p>
+<ul>
+<li>由偏向锁升级而来，偏向锁运行在一个线程进入同步快的情况下，当第二个线程加入锁征用的时候，偏向锁就会升级成为轻量级锁</li>
+<li>适用的场景：线程交替执行同步块</li>
+<li>同一时间访问同一锁，就会导致轻量级锁膨胀为重量级锁</li>
+</ul>
+</li>
+<li>
+<p>锁的内存语义</p>
+<ul>
+<li>当线程刷新时，Java内存模型会把该线程对应的本地内存中的共享变量刷新到主内存中</li>
+<li>而当线程获取锁时，Java内存模型会吧该线程对应的本地内存置为无效，从而使得被监视器保护的临界区代码必须从主内存中读取共享变量</li>
+</ul>
+</li>
+</ol>
+<h4 id="8-偏向锁-轻量级锁-重量级锁的汇总">8. 偏向锁、轻量级锁、重量级锁的汇总</h4>
+<figure data-type="image" tabindex="10"><img src="https://zu3zz.coding.me/post-images/1588819222315.png" alt="" loading="lazy"></figure>
+<h3 id="3-synchronized和reentrantlock的区别">3. Synchronized和ReentrantLock的区别</h3>
+<h4 id="1-reentrantlock再入锁">1. ReentrantLock（再入锁）</h4>
+<ul>
+<li>位于Java.util.concurrent.locks包</li>
+<li>和CountDownLatch、FutureTask、Semaphore一样基于AQS AbstractQueuedSynchronizer实现</li>
+<li>能够实现比Synchronized更细粒度的控制，比如fairness</li>
+<li>调用lock（）之后，必须调用unlock（）释放锁</li>
+<li>性能未必比Synchronized高，并且也是可重入的</li>
+</ul>
+<h4 id="2-公平性的设置">2. 公平性的设置</h4>
+<ul>
+<li>
+<p>公平性</p>
+<pre><code class="language-java">ReentrantLock fairLock = new ReentrantLock(true);
+</code></pre>
+</li>
+<li>
+<p>参数为true时，倾向于将锁赋予等待时间最久的线程</p>
+</li>
+<li>
+<p>公平锁：获取锁的顺序按照先后调用lock方法的顺序（慎用）</p>
+</li>
+<li>
+<p>非公平锁：抢占的顺序不一定，看运气</p>
+</li>
+<li>
+<p>Synchronized是非公平锁</p>
+</li>
+<li>
+<p>ReentrantLock将锁对象化</p>
+<ul>
+<li>判断是否有线程，或者某个特定线程，在排队等待获取锁</li>
+<li>带超时的获取锁的尝试</li>
+<li>感知有没有成功的获取锁</li>
+</ul>
+</li>
+<li>
+<p>是否能将wait/notify/notifyAll对象化？</p>
+<ul>
+<li>JUC包下的locks.Condition</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-区别">3. 区别</h4>
+<ol>
+<li>Synchronized是关键字</li>
+<li>ReentrantLock是类，比Synchronized更灵活</li>
+<li>ReentrantLock可以对获取锁的等待时间进行设置，避免死锁</li>
+<li>ReentrantLock可以获取各种锁的信息</li>
+<li>可以灵活的实现多路通知</li>
+<li>机制不同：sync操作的是MarkWord，lock调用Unsafe类的park（）方法</li>
+</ol>
+<h3 id="4-jmm模型">4. JMM模型</h3>
+<ol>
+<li>
+<p>Java内存模型：一组规范</p>
+<figure data-type="image" tabindex="11"><img src="https://zu3zz.coding.me/post-images/1588819256199.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>JMM中的主内存</p>
+<ul>
+<li>存储Java实例对象</li>
+<li>包括成员变量、类信息、常量、静态变量等</li>
+<li>属于数据共享的区域，多线程并发操作时会引发线程安全问题</li>
+</ul>
+</li>
+<li>
+<p>JMM中的工作内存</p>
+<ul>
+<li>存储当前方法的所有本地变量信息，本地变量对其他线程不可见</li>
+<li>字节码行号指示器、Native方法信息</li>
+<li>属于线程私有数据区域，不存在线程安全问题</li>
+</ul>
+</li>
+<li>
+<p>JMM与Java内存区域</p>
+<ol>
+<li>概念不同</li>
+<li>JMM描述的是一组规则，围绕原子性、有序性、可见性展开</li>
+<li>相似点：存在共享区域和私有区域</li>
+</ol>
+</li>
+<li>
+<p>主内存和工作内存</p>
+<ol>
+<li>方法里的基本数据类型，本地变量将直接存储在工作内存的栈帧结构中</li>
+<li>引用类型的本地变量：引用存储在工作内存中，实例存储在主内存中</li>
+<li>成员变量、static变量、类信息均会被存储在主内存中</li>
+<li>主内存共享的方式是线程各拷贝一份数据到工作内存，操作完成之后刷新回主内存</li>
+</ol>
+<figure data-type="image" tabindex="12"><img src="https://zu3zz.coding.me/post-images/1588819271332.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>指令重排序需要满足的条件</p>
+<ul>
+<li>在单线程环境下不能改变程序运行的结果</li>
+<li>存在数据以来关系的不允许重排序</li>
+</ul>
+<blockquote>
+<p>无法通过happens-before原则推导出来的，才能进行指令的重排序</p>
+</blockquote>
+<ul>
+<li>
+<p>A操作的结果需要对B操作课件，则A与B存在happens-before关系</p>
+</li>
+<li>
+<p>happens-before八大原则</p>
+<figure data-type="image" tabindex="13"><img src="https://zu3zz.coding.me/post-images/1588819282966.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-volatile">5. Volatile</h3>
+<ul>
+<li>JVM提供的轻量级同步机制</li>
+<li>保证被volatile修饰的共享变量对所有线程总是可见的</li>
+<li>禁止指令的重排序优化</li>
+</ul>
+<ol>
+<li>volatile的可见性：原子操作</li>
+<li>volatile变量为何立即可见
+<ul>
+<li>当写一个volatile变量时，JMM会吧该线程对应的工作内存中的共享变量值刷新到主内存中</li>
+<li>当读取一个volatile变量时，JMM会吧该线程对应的工作内存置为无效</li>
+</ul>
+</li>
+<li>volatile如何禁止重排优化
+<ul>
+<li>内存屏障（Memory Barrier）
+<ol>
+<li>保证特定操作的执行顺序</li>
+<li>保证某些变量的内存可见性</li>
+</ol>
+</li>
+<li>通过从插入内存屏障指令禁止在内存屏障前后的指令执行重排序优化</li>
+<li>强制刷出CPU的缓存数据，因此任何CPU上的线程都能读取到这些数据的最新版本</li>
+</ul>
+</li>
+</ol>
+<figure data-type="image" tabindex="14"><img src="https://zu3zz.coding.me/post-images/1588819294199.png" alt="" loading="lazy"></figure>
+<h3 id="6-volatile和synchronized的区别">6. Volatile和synchronized的区别</h3>
+<figure data-type="image" tabindex="15"><img src="https://zu3zz.coding.me/post-images/1588819308732.png" alt="" loading="lazy"></figure>
+<h3 id="7-cascompare-and-swap">7. CAS(Compare and Swap)</h3>
+<ol>
+<li>支持原子更新操作，适用于计数器，序列发生器等场景</li>
+<li>属于乐观锁机制</li>
+<li>CAS操作失败时由开发者决定是继续尝试，还是执行别的操作</li>
+<li>CAS思想
+<ol>
+<li>三个操作数 内存位置 V 预期原值 A和新值 B</li>
+<li>缺点
+<ul>
+<li>若循环时间长，则开销很大</li>
+<li>只能保证一个共享变量的原子操作</li>
+<li>ABA问题：AtomicStampedReference：控制版本</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="8-java线程池">8. Java线程池</h3>
+<ol>
+<li>
+<p>利用Executors创建不同的线程池满足不同的场景</p>
+<figure data-type="image" tabindex="16"><img src="https://zu3zz.coding.me/post-images/1588819326547.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>Fork/Join框架</p>
+<ul>
+<li>大任务分割成若干个小任务并执行，汇总小任务结果</li>
+<li>Work-Stealing算法：从其他队列里窃取任务来执行：双端队列</li>
+</ul>
+</li>
+<li>
+<p>为什么要用</p>
+<ul>
+<li>降低资源消耗</li>
+<li>提高线程的可管理性</li>
+</ul>
+</li>
+<li>
+<p>ThreadPoolExecutor</p>
+<figure data-type="image" tabindex="17"><img src="https://zu3zz.coding.me/post-images/1588819339498.png" alt="" loading="lazy"></figure>
+<ul>
+<li>
+<p>构造函数</p>
+<pre><code class="language-shell">coolPoolSize: 核心线程的最大个数
+maximumPoolSize：线程不够用时能够创建的最大线程数
+workQUeue：任务等待队列（排队机制不同）
+keepAliceTime：抢占的顺序不一定，看运气
+threadFactory：创建新线程，Executors.defaultThreadFactory()
+handler：线程池的饱和策略
+	1. AbortPolicy：直接抛出异常，默认
+	2. discardPolicy：直接丢弃任务
+	3. CallerRunnsPolicy：用调用者所在的线程来执行任务
+	4. DiscardOldestPolicy：丢弃最靠前的任务，并执行当前任务
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>新任务提交execute执行后的判断</p>
+<figure data-type="image" tabindex="18"><img src="https://zu3zz.coding.me/post-images/1588819361031.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>线程池的状态</p>
+<ol>
+<li>Running：能接受新提交的任务，并且也能处理阻塞队列中的任务</li>
+<li>ShutDown：不能在接受新提交的任务，但可以处理存量任务</li>
+<li>Stop（Shutdown now）：不在接受新提交的任务，也不处理存量任务</li>
+<li>Tidying：所有任务都已终止</li>
+<li>terminated：terminated（）方法执行完后进入该状态</li>
+</ol>
+</li>
+<li>
+<p>线程池的大小如何设定</p>
+<ul>
+<li>CPU密集型：线程数= CPU核数 + 1</li>
+<li>I/O密集型：线程数= CPU核数 * （1 + 平均等待时间/ 平均工作时间）</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/tqQSAbU7V/">
+            <span class="flex-auto">BackEnd</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/_el9BOoeY/">
+            <span class="flex-auto">Java</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.coding.me/post/java-1/">
+                <h3 class="post-title">
+                  Java面试总结(1) -- JVM
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://zu3zz.coding.me/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>
