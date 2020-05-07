@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
 <meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1585211065393">
+<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1588818080803">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://zu3zz.coding.me">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1585211065393" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1588818080803" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -89,6 +89,15 @@
 <li><a href="#3%E8%87%AA%E5%B7%B1%E5%A4%9A%E7%BB%83">3.自己多练</a></li>
 </ul>
 </li>
+<li><a href="#5-myisam%E4%B8%8Einnodb%E5%8C%BA%E5%88%AB">5 MyISAM与InnoDB区别</a></li>
+<li><a href="#6-sql%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BC%98%E5%8C%96">6. SQL语句的优化</a><br>
+*
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%BD%8D%E6%85%A2sql%E8%AF%AD%E5%8F%A5">1. 定位慢SQL语句</a></li>
+<li><a href="#2-%E4%BD%BF%E7%94%A8explain">2. 使用EXPLAIN</a></li>
+<li><a href="#3-%E4%BD%BF%E7%94%A8profile">3. 使用PROFILE</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -145,7 +154,7 @@
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
         <h1 class="text-3xl font-bold lg:mt-16">数据库面试考点</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2020-02-12 / 7 min read
+          2020-02-12 / 10 min read
         </div>
         
         <div class="post-content yue">
@@ -394,6 +403,52 @@
 <li>出现在同一行sql的顺序：WHERE&gt;GROUP BY&gt;HAVING</li>
 </ul>
 <h3 id="3自己多练">3.自己多练</h3>
+<h2 id="5-myisam与innodb区别">5 MyISAM与InnoDB区别</h2>
+<ol>
+<li>InnoDB支持事务，MyISAM不支持，对于InnoDB每一条SQL语言都默认封装成事务，自动提交，这样会影响速度，所以最好把多条SQL语言放在begin和commit之间，组成一个事务；</li>
+<li>InnoDB支持外键，而MyISAM不支持。对一个包含外键的InnoDB表转为MYISAM会失败；</li>
+<li>InnoDB是聚集索引，使用B+Tree作为索引结构，数据文件是和（主键）索引绑在一起的（表数据文件本身就是按B+Tree组织的一个索引结构），必须要有主键，通过主键索引效率很高。但是辅助索引需要两次查询，先查询到主键，然后再通过主键查询到数据。因此，主键不应该过大，因为主键太大，其他索引也都会很大。</li>
+<li>InnoDB不保存表的具体行数，执行select count(*) from table时需要全表扫描。而MyISAM用一个变量保存了整个表的行数，执行上述语句时只需要读出该变量即可，速度很快（注意不能加有任何WHERE条件）</li>
+<li>Innodb不支持全文索引，而MyISAM支持全文索引，在涉及全文索引领域的查询效率上MyISAM速度更快高；PS：5.7以后的InnoDB支持全文索引了</li>
+<li>MyISAM表格可以被压缩后进行查询操作</li>
+<li>InnoDB支持表、行(默认)级锁，而MyISAM支持表级锁</li>
+<li>InnoDB表必须有主键（用户没有指定的话会自己找或生产一个主键），而Myisam可以没有</li>
+<li>Innodb存储文件有frm、ibd，而Myisam是frm、MYD、MYI
+<ul>
+<li>Innodb：frm是表定义文件，ibd是数据文件</li>
+<li>Myisam：frm是表定义文件，myd是数据文件，myi是索引文件</li>
+</ul>
+</li>
+</ol>
+<h2 id="6-sql语句的优化">6. SQL语句的优化</h2>
+<h4 id="1-定位慢sql语句">1. 定位慢SQL语句</h4>
+<ul>
+<li>
+<p>好慢询可以帮我们找到执行慢的 SQL，在使用前，我们需要先看下慢查询是否已经开启，使用下面这条命令即可：</p>
+<pre><code class="language-sql">mysql &gt; show variables like '%slow_query_log';
+</code></pre>
+</li>
+<li>
+<p>我们能看到 slow_query_log=OFF，也就是说慢查询日志此时是关上的。我们可以把慢查询日志打开，注意设置变量值的时候需要使用 global，否则会报错</p>
+<pre><code class="language-sql">mysql &gt; set global slow_query_log='ON';
+mysql &gt; set global long_query_time = 3;
+</code></pre>
+</li>
+</ul>
+<h4 id="2-使用explain">2. 使用EXPLAIN</h4>
+<p>EXPLAIN 可以帮助我们了解数据表的读取顺序、SELECT 子句的类型、数据表的访问类型、可使用的索引、实际使用的索引、使用的索引长度、上一个表的连接匹配条件、被优化器查询的行的数量以及额外的信息（比如是否使用了外部排序，是否使用了临时表等）等。</p>
+<pre><code class="language-sql">EXPLAIN SELECT comment_id, comment_text, user_id FROM product_comment WHERE comment_id = 500000;
+</code></pre>
+<h4 id="3-使用profile">3. 使用PROFILE</h4>
+<ul>
+<li>SHOW PROFILE 相比 EXPLAIN 能看到更进一步的执行解析，包括 SQL 都做了什么、所花费的时间等。默认情况下，profiling 是关闭的，我们可以在会话级别开启这个功能。</li>
+</ul>
+<pre><code class="language-sql">mysql &gt; set profiling = 'ON';
+mysql &gt; show profiles;
+</code></pre>
+<ul>
+<li>不过 SHOW PROFILE 命令将被弃用，我们可以从 information_schema 中的 profiling 数据表进行查看。</li>
+</ul>
 
         </div>
 

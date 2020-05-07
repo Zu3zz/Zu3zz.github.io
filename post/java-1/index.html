@@ -1,0 +1,568 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1588818080803">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://zu3zz.coding.me/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.coding.me/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.coding.me">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1588818080803" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#java%E9%9D%A2%E8%AF%95%E7%82%B9">Java面试点</a>
+<ul>
+<li><a href="#1-jvm">1. JVM</a>
+<ul>
+<li><a href="#11-%E8%B0%88%E8%B0%88java%E7%9A%84%E7%89%B9%E6%80%A7">1.1 谈谈java的特性</a></li>
+<li><a href="#12-jvm%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BDclass%E6%96%87%E4%BB%B6">1.2 JVM如何加载.class文件</a>
+<ul>
+<li><a href="#java%E8%99%9A%E6%8B%9F%E6%9C%BA">Java虚拟机</a></li>
+</ul>
+</li>
+<li><a href="#13-%E8%B0%88%E8%B0%88%E5%8F%8D%E5%B0%84">1.3 谈谈反射</a></li>
+<li><a href="#14-%E7%B1%BB%E4%BB%8E%E7%BC%96%E8%AF%91%E5%88%B0%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B">1.4 类从编译到执行的过程</a>
+<ul>
+<li><a href="#1-%E8%B0%88%E8%B0%88classloader">1. 谈谈ClassLoader</a></li>
+<li><a href="#2-classloader%E7%9A%84%E7%A7%8D%E7%B1%BB">2. ClassLoader的种类</a></li>
+<li><a href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89classloader%E7%9A%84%E5%AE%9E%E7%8E%B0">3. 自定义ClassLoader的实现</a></li>
+</ul>
+</li>
+<li><a href="#16-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F">1.6 类的加载方式</a>
+<ul>
+<li><a href="#1-loadclass%E5%92%8Cforname%E7%9A%84%E5%8C%BA%E5%88%AB">1. loadClass和forName的区别</a></li>
+</ul>
+</li>
+<li><a href="#17-java%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B">1.7 Java的内存模型</a>
+<ul>
+<li><a href="#1-%E5%86%85%E5%AD%98%E7%AE%80%E4%BB%8B">1. 内存简介</a></li>
+<li><a href="#2%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%92%E5%88%86">2.地址空间的划分</a></li>
+<li><a href="#3-jvm%E6%9E%B6%E6%9E%84">3. JVM架构</a></li>
+<li><a href="#4-jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8Bjdk8">4. JVM内存模型——JDK8</a></li>
+<li><a href="#5-%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB">5. 线程共享</a></li>
+</ul>
+</li>
+<li><a href="#18-jvm%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0">1.8 JVM调优参数</a></li>
+<li><a href="#19-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5">1.9 内存分配策略</a>
+<ul>
+<li><a href="#1-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5">1. 内存分配策略</a></li>
+<li><a href="#2-java%E5%86%85%E5%AD%98%E4%B8%AD%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB">2. Java内存中堆和栈的区别</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.coding.me/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Java面试总结(1) -- JVM</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-03-07 / 7 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>Java面试第一篇 关于JVM的那些事情</p>
+<!-- more -->
+<h1 id="java面试点">Java面试点</h1>
+<h2 id="1-jvm">1. JVM</h2>
+<h3 id="11-谈谈java的特性">1.1 谈谈java的特性</h3>
+<ol>
+<li>平台无关性：使用<code>javap</code>先将<code>java</code>文件编译成<code>class</code>文件</li>
+<li>面向对象</li>
+<li>GC</li>
+<li>语言特性</li>
+<li>类库</li>
+<li>异常处理</li>
+</ol>
+<h3 id="12-jvm如何加载class文件">1.2 JVM如何加载.class文件</h3>
+<h4 id="java虚拟机">Java虚拟机</h4>
+<ol>
+<li>Class Loader：依据特定格式，加载class到内存</li>
+<li>Execution Engine：对命令进行解析</li>
+<li>Native Interface：融合不同语言的原生库为java所用</li>
+<li>Runtiime Data Area：JVM内存空间结构模型（重要）</li>
+</ol>
+<h3 id="13-谈谈反射">1.3 谈谈反射</h3>
+<pre><code class="language-java">// 有一个Robot类如下
+public class Robot {
+    private String name;
+    public void sayHi(String helloSentence){
+        System.out.println(helloSentence + &quot; &quot; + name);
+    }
+    private String throwHello(String tag){
+        return &quot;Hello &quot; + tag;
+    }
+    static {
+        System.out.println(&quot;Hello Robot&quot;);
+    }
+}
+// 如何使用反射调用私有方法以及属性
+public class ReflectSample {
+    public static void main(String[] args) throws Exception {
+      // 获得当前类对象
+      Class rc = Class.forName(&quot;com.interview.javabasic.reflect.Robot&quot;);
+      // 新创建一个当前类的实例
+      Robot r = (Robot) rc.newInstance();
+      // Class name is com.interview.javabasic.reflect.Robot
+      System.out.println(&quot;Class name is &quot; + rc.getName());
+      // 定义一个方法类
+      Method getHello = rc.getDeclaredMethod(&quot;throwHello&quot;, String.class);
+      // 设置调用私有方法为true
+      getHello.setAccessible(true);
+      Object str = getHello.invoke(r, &quot;Bob&quot;);
+      // getHello result is Hello Bob
+      System.out.println(&quot;getHello result is &quot; + str);
+      // 正常调用公共方法
+      Method sayHi = rc.getMethod(&quot;sayHi&quot;, String.class);
+      sayHi.invoke(r, &quot;Welcome&quot;);
+      Field name = rc.getDeclaredField(&quot;name&quot;);
+      name.setAccessible(true);
+      name.set(r, &quot;Alice&quot;);
+      sayHi.invoke(r, &quot;Welcome&quot;);
+      System.out.println(System.getProperty(&quot;java.ext.dirs&quot;));
+      System.out.println(System.getProperty(&quot;java.class.path&quot;));
+    }
+}
+</code></pre>
+<h3 id="14-类从编译到执行的过程">1.4 类从编译到执行的过程</h3>
+<ol>
+<li>编译器将Robot.java源文件编译为Robot.class字节码文件</li>
+<li>ClassLoader将字节码转换为JVM中的<code>Class&lt;Robot&gt;</code>对象</li>
+<li>JVM利用<code>Class&lt;Robot&gt;</code>对象实例化为Robot对象</li>
+</ol>
+<h4 id="1-谈谈classloader">1. 谈谈ClassLoader</h4>
+<ul>
+<li>ClassLoader主要工作在Class装载的加载阶段</li>
+<li>其主要作用是从系统外部获得Class二进制数据流。</li>
+<li>他是Java的核心组件，所有的Class都是由ClassLoader进行加载的</li>
+<li>ClassLoader负责通过将Class文件里的二进制数据流装载进系统</li>
+<li>然后交给Java虚拟机进行连接、初始化等操作</li>
+</ul>
+<h4 id="2-classloader的种类">2. ClassLoader的种类</h4>
+<ol>
+<li>BootStrapClassLoader：C++编写，加载核心库java.*</li>
+<li>ExtClassLoader：Java编写，加载扩展库 javax.*</li>
+<li>AppClassLoader：Java编写，加载程序所在目录</li>
+</ol>
+<h4 id="3-自定义classloader的实现">3. 自定义ClassLoader的实现</h4>
+<ol>
+<li>关键函数
+<ul>
+<li>findClass</li>
+<li>defineClass</li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-java">public class MyClassLoader extends ClassLoader {
+  	// 需要加载的类的路径
+    private String path;
+  	// class的名字
+    private String classLoaderName;
+    public MyClassLoader(String path, String classLoaderName) {
+        this.path = path;
+        this.classLoaderName = classLoaderName;
+    }
+    //用于寻找类文件
+    @Override
+    public Class findClass(String name) {
+        byte[] b = loadClassData(name);
+        return defineClass(name, b, 0, b.length);
+    }
+    //用于加载类文件
+    private byte[] loadClassData(String name) {
+        name = path + name + &quot;.class&quot;;
+        InputStream in = null;
+        ByteArrayOutputStream out = null;
+        try {
+            in = new FileInputStream(new File(name));
+            out = new ByteArrayOutputStream();
+            int i = 0;
+            while ((i = in.read()) != -1) {
+                out.write(i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return out.toByteArray();
+    }
+}
+</code></pre>
+<p>###1.5 双亲委派机制</p>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1588817688490.png" alt="" loading="lazy"></figure>
+<ul>
+<li>避免多份同样字节码的加载</li>
+</ul>
+<h3 id="16-类的加载方式">1.6 类的加载方式</h3>
+<ol>
+<li>隐式加载：new</li>
+<li>显示加载：loadClass，forName等</li>
+</ol>
+<h4 id="1-loadclass和forname的区别">1. loadClass和forName的区别</h4>
+<ol>
+<li>
+<p>类的装载过程</p>
+<ul>
+<li>加载
+<ol>
+<li>通过ClassLoader加载class文件字节码，生成class对象</li>
+</ol>
+</li>
+<li>链接
+<ol>
+<li>校验：检查加载的class的正确性和安全性</li>
+<li>准备：为类变量分配存储空间并设置类变量初始化</li>
+<li>解析：JVM将常量池内的符号引用转换为直接引用</li>
+</ol>
+</li>
+<li>初始化
+<ol>
+<li>执行类变量赋值和静态代码块</li>
+</ol>
+</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://zu3zz.coding.me/post-images/1588817704849.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>两者区别</p>
+<ul>
+<li>Class.forName得到的class是已经初始化完成的</li>
+<li>ClassLoader.loadClass得到的class是还没有完成链接的</li>
+</ul>
+</li>
+</ol>
+<h3 id="17-java的内存模型">1.7 Java的内存模型</h3>
+<h4 id="1-内存简介">1. 内存简介</h4>
+<figure data-type="image" tabindex="3"><img src="https://zu3zz.coding.me/post-images/1588817717649.png" alt="" loading="lazy"></figure>
+<h4 id="2地址空间的划分">2.地址空间的划分</h4>
+<ol>
+<li>内核空间</li>
+<li>用户空间</li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://zu3zz.coding.me/post-images/1588817731598.png" alt="" loading="lazy"></figure>
+<h4 id="3-jvm架构">3. JVM架构</h4>
+<figure data-type="image" tabindex="5"><img src="https://zu3zz.coding.me/post-images/1588817740833.png" alt="" loading="lazy"></figure>
+<ul>
+<li>Class Loader：依据特定格式，加载class到内存</li>
+<li>Execution Engine：对命令进行解析</li>
+<li>Native Interface：融合不同开发语言的原生库为java所用</li>
+<li>Runtime Data Area：JVM内存空间结构模型</li>
+</ul>
+<h4 id="4-jvm内存模型jdk8">4. JVM内存模型——JDK8</h4>
+<figure data-type="image" tabindex="6"><img src="https://zu3zz.coding.me/post-images/1588817751249.png" alt="" loading="lazy"></figure>
+<ul>
+<li>线程私有：程序计数器、虚拟机栈、本地方法栈</li>
+<li>线程共享：MetaSpace、Java堆</li>
+<li>程序计数器（Program Counter Register）：
+<ul>
+<li>当前线程所执行的字节码行号指示器（逻辑计数器）</li>
+<li>改变计数器的值来选取下一条需要执行的字节码指令</li>
+<li>和线程是一对一的关系即”线程私有“</li>
+<li>对Java方法计数，如果是Native方法则计数器值为Undefined</li>
+<li>不会发生内存泄漏</li>
+</ul>
+</li>
+<li>Java虚拟机栈（Stack）
+<ul>
+<li>Java方法执行的内存模型</li>
+<li>包含多个栈帧</li>
+</ul>
+</li>
+<li>局部变量表和操作数栈
+<ul>
+<li>局部变量表：包含方法执行过程中的所有变量</li>
+<li>操作数栈：入栈、出栈、复制、交换、产生消费变量</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-线程共享">5. 线程共享</h4>
+<ol>
+<li>
+<p>元空间（MetaSpace）和永久代（PermGen）的区别</p>
+<ul>
+<li>
+<p>元空间使用本地内存，而永久代使用的是jvm的内存</p>
+<pre><code class="language-java">java.lang.OutOfMemoryError: PermGen Space
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><code>MetaSpace</code>相比<code>PermGem</code>的优势</p>
+<ul>
+<li>字符串常量池存在永久代中，容易出现性能问题和内存溢出</li>
+<li>类和方法的信息大小难以确定，给永久代的大小指定带来困难</li>
+<li>永久代会为GC带来不必要的复杂性</li>
+<li>方便<code>HotSpot</code>与其他<code>JVM</code>如<code>Jrockit</code>的继承</li>
+</ul>
+</li>
+<li>
+<p>Java堆（Heap）</p>
+<ul>
+<li>
+<p>对象实例的分配区域</p>
+<figure data-type="image" tabindex="7"><img src="https://zu3zz.coding.me/post-images/1588817797666.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>GC管理的主要区域</p>
+<figure data-type="image" tabindex="8"><img src="https://zu3zz.coding.me/post-images/1588817804182.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="18-jvm调优参数">1.8 JVM调优参数</h3>
+<ul>
+<li>-Xms：堆的初始大小</li>
+<li>-Xmx：堆能达到的最大值</li>
+<li>-Xss：规定了每个线程虚拟机栈（堆栈）的大小</li>
+</ul>
+<pre><code class="language-java">// 示例代码
+java -Xms128m -Xmx128m -Xss256k -jar xxxxx.jar
+</code></pre>
+<h3 id="19-内存分配策略">1.9 内存分配策略</h3>
+<h4 id="1-内存分配策略">1. 内存分配策略</h4>
+<ul>
+<li>静态存储：编译时确定每个数据目标在运行时的存储空间需求</li>
+<li>栈式存储（动态存储）：数据区需求在编译时未知，运行时模块入口前确定</li>
+<li>堆式存储：编译时或运行时模块入口都无法确定，动态分配</li>
+</ul>
+<h4 id="2-java内存中堆和栈的区别">2. Java内存中堆和栈的区别</h4>
+<ul>
+<li>联系：引用对象、数组时，栈里定义变量保存堆中目标的首地址</li>
+<li>管理方式：栈自动释放，堆需要GC</li>
+<li>空间大小：栈比堆小</li>
+<li>碎片相关：栈产生的碎片远小于堆</li>
+<li>分配方式：栈支持静态和动态分配，而堆仅支持动态分配</li>
+<li>效率：栈的效率比堆高</li>
+<li>详解一个普通的类在加载的时候（元空间、堆、线程独占部分）之间的联系</li>
+</ul>
+<pre><code class="language-java">// 有如下一个类
+public class HelloWorld {
+  private String name;
+  public void sayHello() {
+    System.out.println(&quot;Hello&quot; + name);
+  }
+  public void setName(String name){
+    this.name = name;
+  }
+  public static void main(String[] args){
+    int a = 1;
+    HelloWorld hw = new HelloWorld();
+    hw.setName(&quot;test&quot;);
+    hw.sayHello();
+  }
+}
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://zu3zz.coding.me/post-images/1588817818449.png" alt="" loading="lazy"></figure>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/_el9BOoeY/">
+            <span class="flex-auto">Java</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.coding.me/post/java-thread-1/">
+                <h3 class="post-title">
+                  Java多线程与并发(1) -- 线程创建
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://zu3zz.coding.me/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

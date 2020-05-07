@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zu3zz.coding.me</id>
     <title>风袖</title>
-    <updated>2020-03-26T08:38:01.377Z</updated>
+    <updated>2020-05-07T02:21:24.383Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zu3zz.coding.me"/>
     <link rel="self" href="https://zu3zz.coding.me/atom.xml"/>
@@ -11,12 +11,325 @@
     <icon>https://zu3zz.coding.me/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
     <entry>
-        <title type="html"><![CDATA[Java多并发(1) -- 线程创建]]></title>
+        <title type="html"><![CDATA[Java面试总结(1) -- JVM]]></title>
+        <id>https://zu3zz.coding.me/post/java-1/</id>
+        <link href="https://zu3zz.coding.me/post/java-1/">
+        </link>
+        <updated>2020-03-07T02:13:36.000Z</updated>
+        <summary type="html"><![CDATA[<p>Java面试第一篇 关于JVM的那些事情</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Java面试第一篇 关于JVM的那些事情</p>
+<!-- more -->
+<h1 id="java面试点">Java面试点</h1>
+<h2 id="1-jvm">1. JVM</h2>
+<h3 id="11-谈谈java的特性">1.1 谈谈java的特性</h3>
+<ol>
+<li>平台无关性：使用<code>javap</code>先将<code>java</code>文件编译成<code>class</code>文件</li>
+<li>面向对象</li>
+<li>GC</li>
+<li>语言特性</li>
+<li>类库</li>
+<li>异常处理</li>
+</ol>
+<h3 id="12-jvm如何加载class文件">1.2 JVM如何加载.class文件</h3>
+<h4 id="java虚拟机">Java虚拟机</h4>
+<ol>
+<li>Class Loader：依据特定格式，加载class到内存</li>
+<li>Execution Engine：对命令进行解析</li>
+<li>Native Interface：融合不同语言的原生库为java所用</li>
+<li>Runtiime Data Area：JVM内存空间结构模型（重要）</li>
+</ol>
+<h3 id="13-谈谈反射">1.3 谈谈反射</h3>
+<pre><code class="language-java">// 有一个Robot类如下
+public class Robot {
+    private String name;
+    public void sayHi(String helloSentence){
+        System.out.println(helloSentence + &quot; &quot; + name);
+    }
+    private String throwHello(String tag){
+        return &quot;Hello &quot; + tag;
+    }
+    static {
+        System.out.println(&quot;Hello Robot&quot;);
+    }
+}
+// 如何使用反射调用私有方法以及属性
+public class ReflectSample {
+    public static void main(String[] args) throws Exception {
+      // 获得当前类对象
+      Class rc = Class.forName(&quot;com.interview.javabasic.reflect.Robot&quot;);
+      // 新创建一个当前类的实例
+      Robot r = (Robot) rc.newInstance();
+      // Class name is com.interview.javabasic.reflect.Robot
+      System.out.println(&quot;Class name is &quot; + rc.getName());
+      // 定义一个方法类
+      Method getHello = rc.getDeclaredMethod(&quot;throwHello&quot;, String.class);
+      // 设置调用私有方法为true
+      getHello.setAccessible(true);
+      Object str = getHello.invoke(r, &quot;Bob&quot;);
+      // getHello result is Hello Bob
+      System.out.println(&quot;getHello result is &quot; + str);
+      // 正常调用公共方法
+      Method sayHi = rc.getMethod(&quot;sayHi&quot;, String.class);
+      sayHi.invoke(r, &quot;Welcome&quot;);
+      Field name = rc.getDeclaredField(&quot;name&quot;);
+      name.setAccessible(true);
+      name.set(r, &quot;Alice&quot;);
+      sayHi.invoke(r, &quot;Welcome&quot;);
+      System.out.println(System.getProperty(&quot;java.ext.dirs&quot;));
+      System.out.println(System.getProperty(&quot;java.class.path&quot;));
+    }
+}
+</code></pre>
+<h3 id="14-类从编译到执行的过程">1.4 类从编译到执行的过程</h3>
+<ol>
+<li>编译器将Robot.java源文件编译为Robot.class字节码文件</li>
+<li>ClassLoader将字节码转换为JVM中的<code>Class&lt;Robot&gt;</code>对象</li>
+<li>JVM利用<code>Class&lt;Robot&gt;</code>对象实例化为Robot对象</li>
+</ol>
+<h4 id="1-谈谈classloader">1. 谈谈ClassLoader</h4>
+<ul>
+<li>ClassLoader主要工作在Class装载的加载阶段</li>
+<li>其主要作用是从系统外部获得Class二进制数据流。</li>
+<li>他是Java的核心组件，所有的Class都是由ClassLoader进行加载的</li>
+<li>ClassLoader负责通过将Class文件里的二进制数据流装载进系统</li>
+<li>然后交给Java虚拟机进行连接、初始化等操作</li>
+</ul>
+<h4 id="2-classloader的种类">2. ClassLoader的种类</h4>
+<ol>
+<li>BootStrapClassLoader：C++编写，加载核心库java.*</li>
+<li>ExtClassLoader：Java编写，加载扩展库 javax.*</li>
+<li>AppClassLoader：Java编写，加载程序所在目录</li>
+</ol>
+<h4 id="3-自定义classloader的实现">3. 自定义ClassLoader的实现</h4>
+<ol>
+<li>关键函数
+<ul>
+<li>findClass</li>
+<li>defineClass</li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-java">public class MyClassLoader extends ClassLoader {
+  	// 需要加载的类的路径
+    private String path;
+  	// class的名字
+    private String classLoaderName;
+    public MyClassLoader(String path, String classLoaderName) {
+        this.path = path;
+        this.classLoaderName = classLoaderName;
+    }
+    //用于寻找类文件
+    @Override
+    public Class findClass(String name) {
+        byte[] b = loadClassData(name);
+        return defineClass(name, b, 0, b.length);
+    }
+    //用于加载类文件
+    private byte[] loadClassData(String name) {
+        name = path + name + &quot;.class&quot;;
+        InputStream in = null;
+        ByteArrayOutputStream out = null;
+        try {
+            in = new FileInputStream(new File(name));
+            out = new ByteArrayOutputStream();
+            int i = 0;
+            while ((i = in.read()) != -1) {
+                out.write(i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return out.toByteArray();
+    }
+}
+</code></pre>
+<p>###1.5 双亲委派机制</p>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1588817688490.png" alt="" loading="lazy"></figure>
+<ul>
+<li>避免多份同样字节码的加载</li>
+</ul>
+<h3 id="16-类的加载方式">1.6 类的加载方式</h3>
+<ol>
+<li>隐式加载：new</li>
+<li>显示加载：loadClass，forName等</li>
+</ol>
+<h4 id="1-loadclass和forname的区别">1. loadClass和forName的区别</h4>
+<ol>
+<li>
+<p>类的装载过程</p>
+<ul>
+<li>加载
+<ol>
+<li>通过ClassLoader加载class文件字节码，生成class对象</li>
+</ol>
+</li>
+<li>链接
+<ol>
+<li>校验：检查加载的class的正确性和安全性</li>
+<li>准备：为类变量分配存储空间并设置类变量初始化</li>
+<li>解析：JVM将常量池内的符号引用转换为直接引用</li>
+</ol>
+</li>
+<li>初始化
+<ol>
+<li>执行类变量赋值和静态代码块</li>
+</ol>
+</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://zu3zz.coding.me/post-images/1588817704849.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>两者区别</p>
+<ul>
+<li>Class.forName得到的class是已经初始化完成的</li>
+<li>ClassLoader.loadClass得到的class是还没有完成链接的</li>
+</ul>
+</li>
+</ol>
+<h3 id="17-java的内存模型">1.7 Java的内存模型</h3>
+<h4 id="1-内存简介">1. 内存简介</h4>
+<figure data-type="image" tabindex="3"><img src="https://zu3zz.coding.me/post-images/1588817717649.png" alt="" loading="lazy"></figure>
+<h4 id="2地址空间的划分">2.地址空间的划分</h4>
+<ol>
+<li>内核空间</li>
+<li>用户空间</li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://zu3zz.coding.me/post-images/1588817731598.png" alt="" loading="lazy"></figure>
+<h4 id="3-jvm架构">3. JVM架构</h4>
+<figure data-type="image" tabindex="5"><img src="https://zu3zz.coding.me/post-images/1588817740833.png" alt="" loading="lazy"></figure>
+<ul>
+<li>Class Loader：依据特定格式，加载class到内存</li>
+<li>Execution Engine：对命令进行解析</li>
+<li>Native Interface：融合不同开发语言的原生库为java所用</li>
+<li>Runtime Data Area：JVM内存空间结构模型</li>
+</ul>
+<h4 id="4-jvm内存模型jdk8">4. JVM内存模型——JDK8</h4>
+<figure data-type="image" tabindex="6"><img src="https://zu3zz.coding.me/post-images/1588817751249.png" alt="" loading="lazy"></figure>
+<ul>
+<li>线程私有：程序计数器、虚拟机栈、本地方法栈</li>
+<li>线程共享：MetaSpace、Java堆</li>
+<li>程序计数器（Program Counter Register）：
+<ul>
+<li>当前线程所执行的字节码行号指示器（逻辑计数器）</li>
+<li>改变计数器的值来选取下一条需要执行的字节码指令</li>
+<li>和线程是一对一的关系即”线程私有“</li>
+<li>对Java方法计数，如果是Native方法则计数器值为Undefined</li>
+<li>不会发生内存泄漏</li>
+</ul>
+</li>
+<li>Java虚拟机栈（Stack）
+<ul>
+<li>Java方法执行的内存模型</li>
+<li>包含多个栈帧</li>
+</ul>
+</li>
+<li>局部变量表和操作数栈
+<ul>
+<li>局部变量表：包含方法执行过程中的所有变量</li>
+<li>操作数栈：入栈、出栈、复制、交换、产生消费变量</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-线程共享">5. 线程共享</h4>
+<ol>
+<li>
+<p>元空间（MetaSpace）和永久代（PermGen）的区别</p>
+<ul>
+<li>
+<p>元空间使用本地内存，而永久代使用的是jvm的内存</p>
+<pre><code class="language-java">java.lang.OutOfMemoryError: PermGen Space
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><code>MetaSpace</code>相比<code>PermGem</code>的优势</p>
+<ul>
+<li>字符串常量池存在永久代中，容易出现性能问题和内存溢出</li>
+<li>类和方法的信息大小难以确定，给永久代的大小指定带来困难</li>
+<li>永久代会为GC带来不必要的复杂性</li>
+<li>方便<code>HotSpot</code>与其他<code>JVM</code>如<code>Jrockit</code>的继承</li>
+</ul>
+</li>
+<li>
+<p>Java堆（Heap）</p>
+<ul>
+<li>
+<p>对象实例的分配区域</p>
+<figure data-type="image" tabindex="7"><img src="https://zu3zz.coding.me/post-images/1588817797666.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>GC管理的主要区域</p>
+<figure data-type="image" tabindex="8"><img src="https://zu3zz.coding.me/post-images/1588817804182.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="18-jvm调优参数">1.8 JVM调优参数</h3>
+<ul>
+<li>-Xms：堆的初始大小</li>
+<li>-Xmx：堆能达到的最大值</li>
+<li>-Xss：规定了每个线程虚拟机栈（堆栈）的大小</li>
+</ul>
+<pre><code class="language-java">// 示例代码
+java -Xms128m -Xmx128m -Xss256k -jar xxxxx.jar
+</code></pre>
+<h3 id="19-内存分配策略">1.9 内存分配策略</h3>
+<h4 id="1-内存分配策略">1. 内存分配策略</h4>
+<ul>
+<li>静态存储：编译时确定每个数据目标在运行时的存储空间需求</li>
+<li>栈式存储（动态存储）：数据区需求在编译时未知，运行时模块入口前确定</li>
+<li>堆式存储：编译时或运行时模块入口都无法确定，动态分配</li>
+</ul>
+<h4 id="2-java内存中堆和栈的区别">2. Java内存中堆和栈的区别</h4>
+<ul>
+<li>联系：引用对象、数组时，栈里定义变量保存堆中目标的首地址</li>
+<li>管理方式：栈自动释放，堆需要GC</li>
+<li>空间大小：栈比堆小</li>
+<li>碎片相关：栈产生的碎片远小于堆</li>
+<li>分配方式：栈支持静态和动态分配，而堆仅支持动态分配</li>
+<li>效率：栈的效率比堆高</li>
+<li>详解一个普通的类在加载的时候（元空间、堆、线程独占部分）之间的联系</li>
+</ul>
+<pre><code class="language-java">// 有如下一个类
+public class HelloWorld {
+  private String name;
+  public void sayHello() {
+    System.out.println(&quot;Hello&quot; + name);
+  }
+  public void setName(String name){
+    this.name = name;
+  }
+  public static void main(String[] args){
+    int a = 1;
+    HelloWorld hw = new HelloWorld();
+    hw.setName(&quot;test&quot;);
+    hw.sayHello();
+  }
+}
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://zu3zz.coding.me/post-images/1588817818449.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java多线程与并发(1) -- 线程创建]]></title>
         <id>https://zu3zz.coding.me/post/java-thread-1/</id>
         <link href="https://zu3zz.coding.me/post/java-thread-1/">
         </link>
-        <updated>2020-03-21T12:33:07.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="java多并发-线程创建">Java多并发 -- 线程创建</h1>
+        <updated>2020-02-21T12:33:07.000Z</updated>
+        <summary type="html"><![CDATA[<p>Java多进程的第一篇~ 关于线程创建的方法与底层原理😇</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Java多进程的第一篇~ 关于线程创建的方法与底层原理😇</p>
+<!-- more -->
+<h1 id="java多并发-线程创建">Java多并发 -- 线程创建</h1>
 <h2 id="实现多线程的方法">实现多线程的方法</h2>
 <ul>
 <li>
@@ -715,6 +1028,52 @@ public class BothRunnableThread {
 <li>出现在同一行sql的顺序：WHERE&gt;GROUP BY&gt;HAVING</li>
 </ul>
 <h3 id="3自己多练">3.自己多练</h3>
+<h2 id="5-myisam与innodb区别">5 MyISAM与InnoDB区别</h2>
+<ol>
+<li>InnoDB支持事务，MyISAM不支持，对于InnoDB每一条SQL语言都默认封装成事务，自动提交，这样会影响速度，所以最好把多条SQL语言放在begin和commit之间，组成一个事务；</li>
+<li>InnoDB支持外键，而MyISAM不支持。对一个包含外键的InnoDB表转为MYISAM会失败；</li>
+<li>InnoDB是聚集索引，使用B+Tree作为索引结构，数据文件是和（主键）索引绑在一起的（表数据文件本身就是按B+Tree组织的一个索引结构），必须要有主键，通过主键索引效率很高。但是辅助索引需要两次查询，先查询到主键，然后再通过主键查询到数据。因此，主键不应该过大，因为主键太大，其他索引也都会很大。</li>
+<li>InnoDB不保存表的具体行数，执行select count(*) from table时需要全表扫描。而MyISAM用一个变量保存了整个表的行数，执行上述语句时只需要读出该变量即可，速度很快（注意不能加有任何WHERE条件）</li>
+<li>Innodb不支持全文索引，而MyISAM支持全文索引，在涉及全文索引领域的查询效率上MyISAM速度更快高；PS：5.7以后的InnoDB支持全文索引了</li>
+<li>MyISAM表格可以被压缩后进行查询操作</li>
+<li>InnoDB支持表、行(默认)级锁，而MyISAM支持表级锁</li>
+<li>InnoDB表必须有主键（用户没有指定的话会自己找或生产一个主键），而Myisam可以没有</li>
+<li>Innodb存储文件有frm、ibd，而Myisam是frm、MYD、MYI
+<ul>
+<li>Innodb：frm是表定义文件，ibd是数据文件</li>
+<li>Myisam：frm是表定义文件，myd是数据文件，myi是索引文件</li>
+</ul>
+</li>
+</ol>
+<h2 id="6-sql语句的优化">6. SQL语句的优化</h2>
+<h4 id="1-定位慢sql语句">1. 定位慢SQL语句</h4>
+<ul>
+<li>
+<p>好慢询可以帮我们找到执行慢的 SQL，在使用前，我们需要先看下慢查询是否已经开启，使用下面这条命令即可：</p>
+<pre><code class="language-sql">mysql &gt; show variables like '%slow_query_log';
+</code></pre>
+</li>
+<li>
+<p>我们能看到 slow_query_log=OFF，也就是说慢查询日志此时是关上的。我们可以把慢查询日志打开，注意设置变量值的时候需要使用 global，否则会报错</p>
+<pre><code class="language-sql">mysql &gt; set global slow_query_log='ON';
+mysql &gt; set global long_query_time = 3;
+</code></pre>
+</li>
+</ul>
+<h4 id="2-使用explain">2. 使用EXPLAIN</h4>
+<p>EXPLAIN 可以帮助我们了解数据表的读取顺序、SELECT 子句的类型、数据表的访问类型、可使用的索引、实际使用的索引、使用的索引长度、上一个表的连接匹配条件、被优化器查询的行的数量以及额外的信息（比如是否使用了外部排序，是否使用了临时表等）等。</p>
+<pre><code class="language-sql">EXPLAIN SELECT comment_id, comment_text, user_id FROM product_comment WHERE comment_id = 500000;
+</code></pre>
+<h4 id="3-使用profile">3. 使用PROFILE</h4>
+<ul>
+<li>SHOW PROFILE 相比 EXPLAIN 能看到更进一步的执行解析，包括 SQL 都做了什么、所花费的时间等。默认情况下，profiling 是关闭的，我们可以在会话级别开启这个功能。</li>
+</ul>
+<pre><code class="language-sql">mysql &gt; set profiling = 'ON';
+mysql &gt; show profiles;
+</code></pre>
+<ul>
+<li>不过 SHOW PROFILE 命令将被弃用，我们可以从 information_schema 中的 profiling 数据表进行查看。</li>
+</ul>
 ]]></content>
     </entry>
     <entry>
@@ -2659,132 +3018,6 @@ object PartitalFunctionApp extends App {
 }
 
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Scala学习笔记（5）---- Scala集合]]></title>
-        <id>https://zu3zz.coding.me/post/scala-5/</id>
-        <link href="https://zu3zz.coding.me/post/scala-5/">
-        </link>
-        <updated>2020-01-04T16:29:40.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="scala集合">Scala集合</h1>
-<h2 id="1-数组">1. 数组</h2>
-<h3 id="11-定长数组array">1.1 定长数组<code>Array</code></h3>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/8 7:56 下午
- */
-object ArrayApp extends App {
-  val a = new Array[String](5) // Array(null,...null)
-  a.length // 5
-  a(1) = &quot;hello&quot;
-  a(1) // String = &quot;hello&quot;
-  val b = Array(&quot;hadoop&quot;, &quot;spark&quot;, &quot;storm&quot;)
-  b(1) = &quot;flink&quot;
-  b // Array(hadoop, flink, storm)
-  val c = Array(2,3,4,5,6,7,8,9)
-  c.sum // Int = 44
-  c.min // Int = 9
-  c.max // Int = 2
-  c.mkString // String = 23456789
-  c.mkString(&quot;,&quot;) //String = 2,3,4,5,6,7,8,9
-  c.mkString(&quot;&lt;&quot;,&quot;,&quot;,&quot;&gt;&quot;) // String = &lt;2,3,4,5,6,7,8,9&gt;
-  c.toString // String = [I@44e3760b
-}
-</code></pre>
-<h3 id="12-变长数组arraybuffer">1.2 变长数组<code>ArrayBuffer</code></h3>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/8 7:56 下午
- */
-object ArrayApp extends App {
-  val c = scala.collection.mutable.ArrayBuffer[Int]()
-  c += 1 // ArrayBuffer(1)
-  c += (2,3,4,5) // ArrayBuffer(1, 2, 3, 4, 5)
-  c ++= Array(6,7,8) // ArrayBuffer(1, 2, 3, 4, 5, 6, 7, 8)
-  c.insert(0,0) // ArrayBuffer(0, 1, 2, 3, 4, 5, 6, 7, 8)
-  c.remove(1) // ArrayBuffer(0, 2, 3, 4, 5, 6, 7, 8)
-  c.remove(0,3) // ArrayBuffer(4, 5, 6, 7, 8)
-  c.trimEnd(2) // ArrayBuffer(4, 5, 6)
-  c.toArray.mkString // 456(Array类型)
-  for(ele &lt;- c){
-    println(ele) // 遍历 4 5 6
-  }
-  for(i &lt;- (0 until c.length).reverse) {
-    println(c(i)) // 逆序 6 5 4
-  }
-}
-</code></pre>
-<h2 id="2-list">2. List</h2>
-<ul>
-<li>有序的</li>
-<li>可以重复的</li>
-</ul>
-<h3 id="21-nil是什么">2.1 Nil是什么</h3>
-<pre><code class="language-scala">scala&gt; Nil
-scala.collection.immutable.Nil.type = List()
-</code></pre>
-<ul>
-<li><code>Nil</code>就是一个空的<code>List</code></li>
-</ul>
-<h3 id="22-list使用">2.2 List使用</h3>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/9 4:57 下午
- */
-object ListApp extends App {
-  val l = List(1,2,3,4,5) // l: List[Int] = List(1, 2, 3, 4, 5)
-  l.head // Int = 1
-  l.tail // List[Int] = List(2, 3, 4, 5)
-  val l2 = 1 :: Nil // l2: List[Int] = List(1)
-  val l3 = 2 :: l2 //  l3: List[Int] = List(2, 1)
-  val l4 = 1 :: 2 :: 3 :: Nil // l4: List[Int] = List(1, 2, 3)
-  val l5 = scala.collection.mutable.ListBuffer[Int]()
-  l5 +=  2 // ListBuffer(2)
-  l5 += (3,4,5) // ListBuffer(2, 3, 4, 5)
-  l5 ++= List(6,7,8) // ListBuffer(2, 3, 4, 5, 6, 7, 8)
-  l5 -= 2 // ListBuffer(3, 4, 5, 6, 7, 8)
-  l5 -= (1,4) // ListBuffer(2, 3, 5, 6, 7, 8)
-  l5 --= List(2,3,5,6) // ListBuffer(7, 8)
-  l5.toList // List[Int] = List(7, 8)
-  l5.toArray // Array[Int] = Array(1, 3, 4, 5)
-  l5.head // Int = 1
-  l5.isEmpty // Boolean = false
-  l5.tail // scala.collection.mutable.ListBuffer[Int] = ListBuffer(3, 4, 5)
-  l5.tail.head // Int = 3
-  
-  def sum(nums:Int*):Int = {
-    if(nums.length == 0){
-      0
-    } else{
-      nums.head + sum(nums.tail:_*) // 自动把Seq转换为Int*
-    }
-  }
-  sum(1,2,3,4) // Int = 10
-}
-</code></pre>
-<h2 id="3-set">3. Set</h2>
-<ul>
-<li>无序的</li>
-<li>不可重复的</li>
-</ul>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/9 6:24 下午
- */
-object SetApp extends App{
-  val set = scala.collection.mutable.Set[Int]()
-  set += 1 // set.type = Set(1)
-  set += (2,1) // set.type = Set(1,2)
-}
-
-</code></pre>
-<ul>
-<li>其他用法基本与<code>List</code>相同</li>
-</ul>
-<h2 id="4-map">4. Map</h2>
-<h2 id="5-option-some-none">5. Option &amp; Some &amp; None</h2>
-<h2 id="6-tuple">6. Tuple</h2>
 ]]></content>
     </entry>
 </feed>
