@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zu3zz.coding.me</id>
     <title>风袖</title>
-    <updated>2020-05-07T04:04:23.885Z</updated>
+    <updated>2020-05-12T09:03:20.343Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zu3zz.coding.me"/>
     <link rel="self" href="https://zu3zz.coding.me/atom.xml"/>
@@ -10,6 +10,619 @@
     <logo>https://zu3zz.coding.me/images/avatar.png</logo>
     <icon>https://zu3zz.coding.me/favicon.ico</icon>
     <rights>All rights reserved 2020, 风袖</rights>
+    <entry>
+        <title type="html"><![CDATA[SpringCloud 分布式优惠券(1)---SpringBoot相关]]></title>
+        <id>https://zu3zz.coding.me/post/springcloud-discount-1/</id>
+        <link href="https://zu3zz.coding.me/post/springcloud-discount-1/">
+        </link>
+        <updated>2020-05-12T09:00:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>🥕SpringCloud实战分布式优惠券系列的第一篇，主要讲解SpringBoot中的一些高级特性🥕</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>🥕SpringCloud实战分布式优惠券系列的第一篇，主要讲解SpringBoot中的一些高级特性🥕</p>
+<!-- more -->
+<h2 id="springcloud-分布式优惠券1-springboot相关">SpringCloud 分布式优惠券(1)---SpringBoot相关</h2>
+<h3 id="1-自动装配原理">1. 自动装配原理</h3>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1589274133972.png" alt="" loading="lazy"></figure>
+<h3 id="2-配置文件">2. 配置文件</h3>
+<ul>
+<li>同一目录下的application和bootstrap
+<ol>
+<li>bootstrap优先级高于application，优先被加载</li>
+<li>bootstrap用于应用程序上下文的引导阶段，由父ApplicationContext加载</li>
+<li>bootstrap是系统级别的配置（不变的参数），application是应用级别的配置</li>
+</ol>
+</li>
+<li>不同位置的配置文件加载顺序（优先级）
+<ul>
+<li><code>file: ./config/</code> - 优先级最高（项目根路径下的config）</li>
+<li><code>file: ./</code> - 优先级第二（项目根路径下）</li>
+<li><code>classpath: /config/</code> - 优先级第三 （项目resources/config下）</li>
+<li><code>classpath: /</code> - 优先级第四（项目resources目录下）</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-配置注入">3. 配置注入</h3>
+<ol>
+<li>
+<p>直接使用<code>@Value</code>的形式</p>
+<pre><code class="language-java">@Value(&quot;${zth.springboot.version}&quot;)
+private String version
+</code></pre>
+</li>
+<li>
+<p>需要在pom.xml中首先配置用于数据绑定的依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+  &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>applicaiton.yml配置文件如下</p>
+<pre><code class="language-yml"># application.yml
+zth:
+	springboot:
+		version: 2.3.1
+		name: study
+</code></pre>
+<p>新建一个配置类，需要注意的是配置类中的值需要和applicaiton.yml文件中一致</p>
+<pre><code class="language-java">@Data
+@Component
+@ConfigurationProperties(prefix = &quot;zth.springboot&quot;)
+public class SpringBootConfig {
+  private String version;
+	private String name;
+}
+</code></pre>
+<p>使用<code>@Autowired</code>就可以注入<code>SpringBootConfig</code>了</p>
+</li>
+</ol>
+<h3 id="4-定时应用">4. 定时应用</h3>
+<ol>
+<li>
+<p>需要在主配置上开启允许定时任务的注解<code>@EnableScheduling</code></p>
+</li>
+<li>
+<p>新建一个定时任务类</p>
+<pre><code class="language-java">@Slf4j
+@Component
+public class BootSchedule {
+  private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern(
+  	&quot;HH:mm:ss&quot;
+  );
+  // 上一次开始执行时间点之后3秒再执行
+  @Scheduled(fixedRate = 3000)
+  public void schedule01(){
+    log.info(&quot;schedule01 -&gt; {}&quot;, LocalDateTime.now().format(fmt));
+  }
+  // 第一次延迟2s之后执行
+  // 上一次执行完毕时间点之后3秒再执行
+  @Scheduled(initialDelay = 2000, fixedDelay = 3000)
+  public void schedule02(){
+    log.info(&quot;schedule02 -&gt; {}&quot;, LocalDateTime.now().format(fmt));
+  }
+  
+  // 每3s执行一次
+  // 使用cron表达式的形式
+  @Scheduled(cron = &quot;*/3 * * * * ?&quot;)
+  public void schedule04(){
+    log.info(&quot;schedule02 -&gt; {}&quot;, LocalDateTime.now().format(fmt));
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="5-异步任务">5. 异步任务</h3>
+<h4 id="1-异步方法">1. 异步方法</h4>
+<ol>
+<li>
+<p>首先需要在pom.xml中添加springboot的web依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>在启动类中开启异步的注释<code>@EnableAsync</code></p>
+<pre><code class="language-java">@EnableAsync
+@EnableScheduling
+@SpringBootApplication
+public class SpringBootStudyApplication{
+  public static void main(String[] args){
+    // ...
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>新建一个异步处理服务<code>asyncService</code></p>
+<pre><code class="language-java">@Slf4j
+@Service
+public class AsyncService {
+  @Async(&quot;getAsyncExecutor&quot;)
+  public void asyncProcess() throws InterruptedException {
+    log.info(&quot;async process task, current thread name -&gt; {}&quot;,
+            Thread.currentThread().getName());
+    TimeUnit.SECONDS.sleep(2);
+  }
+  @Async(&quot;getAsyncExecutor&quot;)
+  public Future&lt;Integer&gt; asyncProcessHasReturn() throws InterruptedException {
+    log.info(&quot;async process task(has return), current thread name -&gt; {}&quot;,
+            Thread.currentThread().getName());
+    TimeUnit.SECONDS.sleep(2);
+    return new AsyncResult&lt;&gt;(100);
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="2-自定义异步线程池">2. 自定义异步线程池</h4>
+<ol>
+<li>
+<p><code>SpringBoot</code>中自带的异步线程池中有问题</p>
+</li>
+<li>
+<p>在<code>config</code>目录中定义一个<code>AsyncPoolConfig</code></p>
+<pre><code class="language-java">@Slf4j
+@Configuration
+public class AsyncPoolConfig implements AsyncConfigurer {
+  @Bean
+  @Override
+  public Excutor getAsyncExecutor() {
+    ThreadPoolTaskExcutor excutor = new ThreadPoolTaskExecutor();
+    excutor.setCorePoolSize(10);
+    excutor.setMaxPoolSize(20);
+    excutor.setQueueCapacity(20);
+    excutor.setKeepAliveSeconds(60);
+    excutor.setThreadNamePrefix(&quot;ZthAsync_&quot;);
+    excutor.setWaitForTasksToCompleteOnShutDown(true);
+    excutor.setAwaitTerminationSeconds(60);
+    // 拒绝策略
+    excutor.setRejectedExecutionHandler(
+    	new ThreadPoolExcutor.CallerRunsPolicy()
+    );
+    excutor.initialize();
+    return excutor;
+  }
+  // 定义异步任务的异常处理类
+  @Override
+  public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+    return new AsyncExceptionHandler();
+  }
+  class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
+    @Override
+    public void handleUncaughtException(Throwable throwable,
+                                       Method method, Object... objects){
+      log.info(&quot;AsyncError: {}, Method: {}, Param: {}&quot;,
+              throwable.getMessage(),
+              method.getName(),
+              JSON.toJSONString(objects));
+      throwable.printStackTrace();
+      // TODO 发送提示（邮件or短信）
+    }
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="6-单元测试">6. 单元测试</h3>
+<ol>
+<li>
+<p>首先引入单元测试的<code>pom.xml</code>配置</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+<li>
+<p>新建同名类路径，新建基础测试用例</p>
+<pre><code class="language-java">@SpringBootTest
+@RunWith(SpringRunner.class)
+public class SpringBootStudyTests {
+  @Test
+  public void contextLoad(){
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>新建上述异步任务测试用例</p>
+<pre><code class="language-java">@Slf4j
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class AsyncServiceTest {
+    @Autowired
+    private AsyncService asyncService;
+    @Test
+    public void testAsyncProcess() throws InterruptedException {
+        asyncService.asyncProcess();
+        log.info(&quot;coming in testAsyncProcess...&quot;);
+    }
+    @Test
+    public void testAsyncProcessHasReturn() throws Exception {
+        long start = System.currentTimeMillis();
+        Future&lt;Integer&gt; result = asyncService.asyncProcessHasReturn();
+//        log.info(&quot;get async task value: {}&quot;, result.get());
+        log.info(&quot;get async task value: {}&quot;,
+                result.get(1, TimeUnit.SECONDS));
+        log.info(&quot;time elapse for async task: {}ms&quot;,
+                System.currentTimeMillis() - start);
+    }
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="7-开机启动任务">7. 开机启动任务</h3>
+<ol>
+<li>
+<p>第一种方式：<code>ApplicationRunner</code></p>
+<pre><code class="language-java">@Order(2)
+@Slf4j
+@Component
+public class BootApplicationRunner implements ApplicationRunner {
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        log.info(&quot;This is BootApplicationRunner...&quot;);
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>第二种方式：<code>CommandLineRunner</code></p>
+<pre><code class="language-java">@Order(1)
+@Slf4j
+@Component
+public class BootCommandLineRunner implements CommandLineRunner {
+    @Override
+    public void run(String... args) throws Exception {
+        log.info(&quot;This is BootCommandLineRunner...&quot;);
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>默认情况下<code>ApplicationRunner</code>高于<code>CommandLIineRunner</code></p>
+</li>
+</ol>
+<h3 id="8-jackson的使用">8. Jackson的使用</h3>
+<ol>
+<li>
+<p>新建一个简单VO类<code>Coder</code></p>
+<pre><code class="language-java">// Coder.java
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonIgnoreProperties({ &quot;address&quot; })
+public class Coder {
+    private String name;
+    private int age;
+    // @JsonIgnore -&gt; 使用打在类上面的JsonIgnore
+    private String address;
+    @JsonProperty(&quot;rt&quot;)
+    @JsonFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+    private Date registerTime;
+}
+</code></pre>
+</li>
+<li>
+<p>可以在<code>config</code>目录下定义一个<code>JacksonConfig</code>类，用于对时间字段的序列化修饰</p>
+<pre><code class="language-java">@Configuration
+public class JacksonConfig {
+    @Bean
+    public ObjectMapper getObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        // 不序列化包含null的字段
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        // format对象
+        mapper.setDateFormat(new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;));
+        return mapper;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>在controller中新建一个方法用来测试Jackson</p>
+<pre><code class="language-java">// Controller.java
+/**
+* 127.0.0.1:8000/zth/springboot/jackson
+**/
+@GetMapping(&quot;/jackson&quot;)
+public Imoocer jackson() throws Exception {
+  Imoocer imoocer = Imoocer.builder()
+    .name(&quot;zth&quot;)
+    .age(19)
+    .address(&quot;shanghai&quot;)
+    .registerTime(new Date())
+    .build();
+  // 序列化
+  String jsonImoocer = mapper.writeValueAsString(imoocer);
+  log.info(&quot;imoocer jackson: {}&quot;, jsonImoocer);
+  return mapper.readValue(jsonImoocer, Imoocer.class);
+}
+// 返回结果
+{
+  &quot;name&quot;: &quot;qinyi&quot;,
+  &quot;age&quot;: 23,
+  &quot;rt&quot;: &quot;2020-05-12&quot;
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="9-acutator监控">9. Acutator监控</h3>
+<h4 id="1-基本使用">1. 基本使用</h4>
+<ol>
+<li>
+<p>Actuator是什么，能做什么？</p>
+<ul>
+<li>是什么：是SpringBoot提供的对应用系统的自省和监控的集成功能</li>
+<li>能做什么：查看应用（配置）信息、环境信息以及对应用进行监控</li>
+</ul>
+</li>
+<li>
+<p>Actuator监控分类：</p>
+<ul>
+<li>原生端点
+<ul>
+<li>应用配置类（运行时信息）</li>
+<li>度量指标类（运行期的信息）</li>
+<li>操作控制类（shutdown 默认不开启）</li>
+</ul>
+</li>
+<li>自定义端点</li>
+</ul>
+</li>
+<li>
+<p>添加pom.xml依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+<li>
+<p>在application.yml中配置端点开启状况</p>
+<pre><code class="language-yaml">management:
+  endpoint:
+    shutdown:
+      enabled: true # 最特殊的监控端点 一般不开启
+  endpoints:
+    web:
+      exposure:
+        include: &quot;*&quot; # 打开所有的监控点 []可以选择要打开哪些
+</code></pre>
+</li>
+<li>
+<p>请求<code>localhost:8000/zth/acuator/health</code>端口</p>
+<pre><code class="language-json">{
+  &quot;status&quot;: &quot;UP&quot;
+}
+</code></pre>
+</li>
+<li>
+<p>在application.yml中配置info信息</p>
+<pre><code class="language-yaml">info:
+  app:
+    name: zth-springboot-study
+    groupId: com.zth.springboot.study
+    version: 1.0-SNAPSHOT
+</code></pre>
+<p>请求<code>localhost:8000/zth/acuator/info</code>端口，此时返回信息如下</p>
+<pre><code class="language-json">{
+  &quot;app&quot;: {
+    &quot;name&quot;: &quot;zth-springboot-study&quot;,
+    &quot;groupId&quot;: &quot;com.zth.springboot.study&quot;,
+    &quot;version&quot;: &quot;1.0-SNAPSHOT&quot;
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="2-常用选项和配置">2. 常用选项和配置</h4>
+<ol>
+<li>
+<p>应用配置类常用监控</p>
+<ul>
+<li>自己配置的info信息：/actuator/info</li>
+<li>应用中bean的信息：/actuator/beans</li>
+<li>应用中URI路径信息：/actuator/mappings</li>
+</ul>
+</li>
+<li>
+<p>度量指标类常用监控</p>
+<ul>
+<li>检查应用的运行状态：/actuator/health</li>
+<li>当前线程活动快照：/actuator/threaddump</li>
+</ul>
+</li>
+<li>
+<p>操作控制类常用监控</p>
+<ul>
+<li>
+<p>关闭应用（POST）：/actuator/shutdown</p>
+<pre><code class="language-shell">curl -x post &quot;http://loccalhost:8000/actuator/shutdown&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="3-端点使用">3. 端点使用</h4>
+<ol>
+<li>
+<p>新建一个文件夹endpoint，新建DateTimeEndPoint类</p>
+<pre><code class="language-java">// DateTimeEndPoint.java
+/**
+ * &lt;h1&gt;自定义事件端点&lt;/h1&gt;
+ */
+@Endpoint(id = &quot;datetime&quot;)
+public class DateTimeEndPoint {
+    private String format = &quot;yyyy-MM-dd HH:mm:ss&quot;;
+    // 用来显示监控指标
+    // zth/actuator/datetime
+    @ReadOperation
+    public Map&lt;String, Object&gt; info() {
+        Map&lt;String, Object&gt; info = new HashMap&lt;&gt;();
+        info.put(&quot;name&quot;, &quot;zth&quot;);
+        info.put(&quot;age&quot;, &quot;23&quot;);
+        info.put(&quot;datetime&quot;, new SimpleDateFormat(format).format(new Date()));
+        return info;
+    }
+
+    // 动态更改监控指标
+    @WriteOperation
+    public void setFormat(String format) {
+        this.format = format;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>在endpoint文件夹下新建自定义端点配置类DateTimeEndpointConfig</p>
+<pre><code class="language-java">// DateTimeEndpointConfig.java
+// 自定义端点配置类
+@Configuration
+public class DateTimeEndpointConfig {
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnEnabledEndpoint
+    public DateTimeEndPoint dateTimeEndPoint() {
+        return new DateTimeEndPoint();
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>在postman中使用GET请求<code>localhost:8000/zth/actuator/datetime</code></p>
+<pre><code class="language-json">{
+  &quot;datetime&quot;: &quot;2020-05-12 08:08:08&quot;,
+  &quot;name&quot;: &quot;zth&quot;,
+  &quot;age&quot;: &quot;23&quot;
+}
+</code></pre>
+<p>当使用POST请求<code>localhost:8000/zth/actuator/datetime</code>时带如下请求体时</p>
+<pre><code class="language-json">{
+  &quot;format&quot;: &quot;yyyy-MM-dd&quot;
+}
+</code></pre>
+<p>无返回结果，再次使用GET请求访问<code>localhost:8000/zth/actuator/datetime</code>，返回结果如下</p>
+<pre><code class="language-json">{
+  &quot;datetime&quot;: &quot;2020-05-12&quot;,
+  &quot;name&quot;: &quot;zth&quot;,
+  &quot;age&quot;: &quot;23&quot;
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="10-自定义starter">10. 自定义starter</h3>
+<h4 id="1-自定义starter项目准备">1. 自定义starter项目准备</h4>
+<ol>
+<li>
+<p>创建一个<code>springboot</code>项目，<code>groupId</code>按照<code>xxxx-spring-boot-starter</code>的格式命名</p>
+</li>
+<li>
+<p>添加pom.xml文件依赖</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;com.zth.springboot&lt;/groupId&gt;
+    &lt;artifactId&gt;split-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starters&lt;/artifactId&gt;
+        &lt;version&gt;2.1.4.RELEASE&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+    &lt;/properties&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-autoconfigure&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/project&gt;
+</code></pre>
+</li>
+<li>
+<p>新建service目录，service方法还有对应的实现类</p>
+<pre><code class="language-java">// ISplitService.java
+// 字符串分割服务接口定义
+public interface ISplitService {
+    List&lt;String&gt; split(String value);
+}
+</code></pre>
+<p>对应的实现类</p>
+<pre><code class="language-java">// SplitServiceImpl.java
+public class SplitServiceImpl implements ISplitService {
+    @SuppressWarnings(&quot;all&quot;)
+    @Override
+    public List&lt;String&gt; split(String value) {
+        // jdk1.8中的stream流
+        return Stream.of(StringUtils.split(value, &quot;,&quot;))
+                .collect(Collectors.toList());
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>新建configure目录，新建自动配置类</p>
+<pre><code class="language-java">@Configuration
+@ConditionalOnClass(value = { ISplitService.class, SplitServiceImpl.class})
+public class SplitAutoConfigure {
+    @Bean
+    @ConditionalOnMissingBean
+    ISplitService starterService() {
+        return new SplitServiceImpl();
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>在resources文件夹下，新建META-INF文件夹，添加配置类<code>spring.factories</code></p>
+<pre><code class="language-shell"># 类似key = value的键值对形式
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.imooc.springboot.configure.SplitAutoConfigure
+</code></pre>
+</li>
+<li>
+<p>在terminal中，输入如下指令实现编译打包</p>
+<pre><code class="language-shell">$ mvn clean install -Dmaven.test.skip=true
+</code></pre>
+</li>
+</ol>
+<h3 id="11-使用脚本管理springboot项目">11. 使用脚本管理springboot项目</h3>
+<ol>
+<li>
+<p>在resources下新建start.sh文件</p>
+<pre><code class="language-sh">#!/user/bin/env bash
+nohup java -jar zth-spring-boot-study.jar &amp;
+</code></pre>
+</li>
+<li>
+<p>关闭应用脚本 stop.sh</p>
+<pre><code class="language-sh">#!/user/bin/env bash
+pid = `ps -ef | grep zth-spring-boot-study.jar | grep -v grep | awk '{print $2}'` 
+if [[ -z &quot;${pid}&quot; ]]
+then
+	echo application is already stopped
+else
+	echo kill ${pid}
+	kill -9 ${pid}
+fi
+</code></pre>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java面试总结(2) -- 线程篇]]></title>
         <id>https://zu3zz.coding.me/post/java-2/</id>
@@ -3377,105 +3990,6 @@ public class HbaseApp {
 </ul>
 </li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Scala学习笔记（7）---- Scala隐式转换]]></title>
-        <id>https://zu3zz.coding.me/post/scala-7/</id>
-        <link href="https://zu3zz.coding.me/post/scala-7/">
-        </link>
-        <updated>2020-01-10T16:34:35.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="scala隐式转换">Scala隐式转换</h1>
-<h2 id="1-隐式转换概念">1. 隐式转换概念</h2>
-<ul>
-<li>隐式转换就是将一个类赋予另外一个类中的属性和能力</li>
-</ul>
-<h2 id="2-例子">2. 例子</h2>
-<ul>
-<li>将所有隐式转换的方法单独放到一个文件中</li>
-</ul>
-<pre><code class="language-scala">// ImplicitApp.scala
-import java.io.File
-/**
- * Author: 3zZ.
- * Date: 2020/1/10 11:15 下午
- */
-object ImplicitAspect {
-  // 定义隐式转换函数即可
-  // 案例1 将只有eat方法的普通人变成有fly方法的超人
-  implicit def man2superman(man:Man): Superman = new Superman(man.name)
-  // 案例2 为File对象添加直接读的方法
-  implicit def file2Richfile(file: File): Richfile = new Richfile(file)
-}
-</code></pre>
-<ul>
-<li>在需要使用的文件进行引入</li>
-</ul>
-<pre><code class="language-scala">import java.io.File
-import ImplicitAspect._
-/**
- * Author: 3zZ.
- * Date: 2020/1/10 11:00 下午
- */
-object ImplicitApp extends App {
-  // 定义隐式转换函数即可
-  // 案例1
-  val man = new Man(&quot;3z&quot;)
-  man.fly() // 能够成功飞行
-  // 案例2 为File对象添加直接读的方法
-  val file = new File(&quot;/Users/3zz/Desktop/test.txt&quot;)
-  file.read() // 能够正常读出文件
-}
-class Man(val name: String) {
-  def eat(): Unit = {
-    println(s&quot;man $name is eating&quot;)
-  }
-}
-class Superman(val name: String) {
-  def fly(): Unit = {
-    println(s&quot;superman $name is flying&quot;)
-  }
-}
-class Richfile(val file:File){
-  def read() ={
-    scala.io.Source.fromFile(file.getPath).mkString
-  }
-}
-</code></pre>
-<h2 id="3-隐式参数例子">3. 隐式参数例子</h2>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/10 11:00 下午
- */
-object ImplicitApp extends App {
-  implicit val test = &quot;test&quot;
-  def testParam(implicit name:String ): Unit ={
-    println(name)
-  }
-//  testParam 什么都不填会报错 (如果在上面定义了test 就不会报错)
-//  testParam(&quot;123&quot;) 正常输出 123
-  implicit val name1: String = &quot;implicit_name&quot;
-  testParam // 此时有了implicit 就不会报错 正常输出 implicit_name
-  testParam(&quot;3z&quot;) // 输出 3z
-  implicit val s1 = &quot;s1&quot;
-  implicit val s2 = &quot;s3&quot;
-  testParam // 此时会报错 因为有两个不确定
-}
-</code></pre>
-<h2 id="4-隐式类例子">4. 隐式类例子</h2>
-<pre><code class="language-scala">/**
- * Author: 3zZ.
- * Date: 2020/1/10 11:32 下午
- */
-object ImplicitClassApp extends App {
-  implicit class Cal(x:Int){
-    def add(a:Int) = a + x
-  }
-  // 1本身是没有add方法的
-  // 上面的隐式类为所有的Int类型添加了add方法
-  println(1.add(3)) // 4
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>

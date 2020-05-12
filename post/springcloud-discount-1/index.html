@@ -1,0 +1,871 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1589274196919">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://zu3zz.coding.me/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.coding.me/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.coding.me">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1589274196919" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#springcloud-%E5%88%86%E5%B8%83%E5%BC%8F%E4%BC%98%E6%83%A0%E5%88%B81-springboot%E7%9B%B8%E5%85%B3">SpringCloud 分布式优惠券(1)---SpringBoot相关</a>
+<ul>
+<li><a href="#1-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86">1. 自动装配原理</a></li>
+<li><a href="#2-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">2. 配置文件</a></li>
+<li><a href="#3-%E9%85%8D%E7%BD%AE%E6%B3%A8%E5%85%A5">3. 配置注入</a></li>
+<li><a href="#4-%E5%AE%9A%E6%97%B6%E5%BA%94%E7%94%A8">4. 定时应用</a></li>
+<li><a href="#5-%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1">5. 异步任务</a>
+<ul>
+<li><a href="#1-%E5%BC%82%E6%AD%A5%E6%96%B9%E6%B3%95">1. 异步方法</a></li>
+<li><a href="#2-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E6%AD%A5%E7%BA%BF%E7%A8%8B%E6%B1%A0">2. 自定义异步线程池</a></li>
+</ul>
+</li>
+<li><a href="#6-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">6. 单元测试</a></li>
+<li><a href="#7-%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E4%BB%BB%E5%8A%A1">7. 开机启动任务</a></li>
+<li><a href="#8-jackson%E7%9A%84%E4%BD%BF%E7%94%A8">8. Jackson的使用</a></li>
+<li><a href="#9-acutator%E7%9B%91%E6%8E%A7">9. Acutator监控</a>
+<ul>
+<li><a href="#1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8">1. 基本使用</a></li>
+<li><a href="#2-%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%92%8C%E9%85%8D%E7%BD%AE">2. 常用选项和配置</a></li>
+<li><a href="#3-%E7%AB%AF%E7%82%B9%E4%BD%BF%E7%94%A8">3. 端点使用</a></li>
+</ul>
+</li>
+<li><a href="#10-%E8%87%AA%E5%AE%9A%E4%B9%89starter">10. 自定义starter</a>
+<ul>
+<li><a href="#1-%E8%87%AA%E5%AE%9A%E4%B9%89starter%E9%A1%B9%E7%9B%AE%E5%87%86%E5%A4%87">1. 自定义starter项目准备</a></li>
+</ul>
+</li>
+<li><a href="#11-%E4%BD%BF%E7%94%A8%E8%84%9A%E6%9C%AC%E7%AE%A1%E7%90%86springboot%E9%A1%B9%E7%9B%AE">11. 使用脚本管理springboot项目</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.coding.me/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">SpringCloud 分布式优惠券(1)---SpringBoot相关</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-05-12 / 13 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>🥕SpringCloud实战分布式优惠券系列的第一篇，主要讲解SpringBoot中的一些高级特性🥕</p>
+<!-- more -->
+<h2 id="springcloud-分布式优惠券1-springboot相关">SpringCloud 分布式优惠券(1)---SpringBoot相关</h2>
+<h3 id="1-自动装配原理">1. 自动装配原理</h3>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1589274133972.png" alt="" loading="lazy"></figure>
+<h3 id="2-配置文件">2. 配置文件</h3>
+<ul>
+<li>同一目录下的application和bootstrap
+<ol>
+<li>bootstrap优先级高于application，优先被加载</li>
+<li>bootstrap用于应用程序上下文的引导阶段，由父ApplicationContext加载</li>
+<li>bootstrap是系统级别的配置（不变的参数），application是应用级别的配置</li>
+</ol>
+</li>
+<li>不同位置的配置文件加载顺序（优先级）
+<ul>
+<li><code>file: ./config/</code> - 优先级最高（项目根路径下的config）</li>
+<li><code>file: ./</code> - 优先级第二（项目根路径下）</li>
+<li><code>classpath: /config/</code> - 优先级第三 （项目resources/config下）</li>
+<li><code>classpath: /</code> - 优先级第四（项目resources目录下）</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-配置注入">3. 配置注入</h3>
+<ol>
+<li>
+<p>直接使用<code>@Value</code>的形式</p>
+<pre><code class="language-java">@Value(&quot;${zth.springboot.version}&quot;)
+private String version
+</code></pre>
+</li>
+<li>
+<p>需要在pom.xml中首先配置用于数据绑定的依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+  &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>applicaiton.yml配置文件如下</p>
+<pre><code class="language-yml"># application.yml
+zth:
+	springboot:
+		version: 2.3.1
+		name: study
+</code></pre>
+<p>新建一个配置类，需要注意的是配置类中的值需要和applicaiton.yml文件中一致</p>
+<pre><code class="language-java">@Data
+@Component
+@ConfigurationProperties(prefix = &quot;zth.springboot&quot;)
+public class SpringBootConfig {
+  private String version;
+	private String name;
+}
+</code></pre>
+<p>使用<code>@Autowired</code>就可以注入<code>SpringBootConfig</code>了</p>
+</li>
+</ol>
+<h3 id="4-定时应用">4. 定时应用</h3>
+<ol>
+<li>
+<p>需要在主配置上开启允许定时任务的注解<code>@EnableScheduling</code></p>
+</li>
+<li>
+<p>新建一个定时任务类</p>
+<pre><code class="language-java">@Slf4j
+@Component
+public class BootSchedule {
+  private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern(
+  	&quot;HH:mm:ss&quot;
+  );
+  // 上一次开始执行时间点之后3秒再执行
+  @Scheduled(fixedRate = 3000)
+  public void schedule01(){
+    log.info(&quot;schedule01 -&gt; {}&quot;, LocalDateTime.now().format(fmt));
+  }
+  // 第一次延迟2s之后执行
+  // 上一次执行完毕时间点之后3秒再执行
+  @Scheduled(initialDelay = 2000, fixedDelay = 3000)
+  public void schedule02(){
+    log.info(&quot;schedule02 -&gt; {}&quot;, LocalDateTime.now().format(fmt));
+  }
+  
+  // 每3s执行一次
+  // 使用cron表达式的形式
+  @Scheduled(cron = &quot;*/3 * * * * ?&quot;)
+  public void schedule04(){
+    log.info(&quot;schedule02 -&gt; {}&quot;, LocalDateTime.now().format(fmt));
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="5-异步任务">5. 异步任务</h3>
+<h4 id="1-异步方法">1. 异步方法</h4>
+<ol>
+<li>
+<p>首先需要在pom.xml中添加springboot的web依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>在启动类中开启异步的注释<code>@EnableAsync</code></p>
+<pre><code class="language-java">@EnableAsync
+@EnableScheduling
+@SpringBootApplication
+public class SpringBootStudyApplication{
+  public static void main(String[] args){
+    // ...
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>新建一个异步处理服务<code>asyncService</code></p>
+<pre><code class="language-java">@Slf4j
+@Service
+public class AsyncService {
+  @Async(&quot;getAsyncExecutor&quot;)
+  public void asyncProcess() throws InterruptedException {
+    log.info(&quot;async process task, current thread name -&gt; {}&quot;,
+            Thread.currentThread().getName());
+    TimeUnit.SECONDS.sleep(2);
+  }
+  @Async(&quot;getAsyncExecutor&quot;)
+  public Future&lt;Integer&gt; asyncProcessHasReturn() throws InterruptedException {
+    log.info(&quot;async process task(has return), current thread name -&gt; {}&quot;,
+            Thread.currentThread().getName());
+    TimeUnit.SECONDS.sleep(2);
+    return new AsyncResult&lt;&gt;(100);
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="2-自定义异步线程池">2. 自定义异步线程池</h4>
+<ol>
+<li>
+<p><code>SpringBoot</code>中自带的异步线程池中有问题</p>
+</li>
+<li>
+<p>在<code>config</code>目录中定义一个<code>AsyncPoolConfig</code></p>
+<pre><code class="language-java">@Slf4j
+@Configuration
+public class AsyncPoolConfig implements AsyncConfigurer {
+  @Bean
+  @Override
+  public Excutor getAsyncExecutor() {
+    ThreadPoolTaskExcutor excutor = new ThreadPoolTaskExecutor();
+    excutor.setCorePoolSize(10);
+    excutor.setMaxPoolSize(20);
+    excutor.setQueueCapacity(20);
+    excutor.setKeepAliveSeconds(60);
+    excutor.setThreadNamePrefix(&quot;ZthAsync_&quot;);
+    excutor.setWaitForTasksToCompleteOnShutDown(true);
+    excutor.setAwaitTerminationSeconds(60);
+    // 拒绝策略
+    excutor.setRejectedExecutionHandler(
+    	new ThreadPoolExcutor.CallerRunsPolicy()
+    );
+    excutor.initialize();
+    return excutor;
+  }
+  // 定义异步任务的异常处理类
+  @Override
+  public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+    return new AsyncExceptionHandler();
+  }
+  class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
+    @Override
+    public void handleUncaughtException(Throwable throwable,
+                                       Method method, Object... objects){
+      log.info(&quot;AsyncError: {}, Method: {}, Param: {}&quot;,
+              throwable.getMessage(),
+              method.getName(),
+              JSON.toJSONString(objects));
+      throwable.printStackTrace();
+      // TODO 发送提示（邮件or短信）
+    }
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="6-单元测试">6. 单元测试</h3>
+<ol>
+<li>
+<p>首先引入单元测试的<code>pom.xml</code>配置</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+<li>
+<p>新建同名类路径，新建基础测试用例</p>
+<pre><code class="language-java">@SpringBootTest
+@RunWith(SpringRunner.class)
+public class SpringBootStudyTests {
+  @Test
+  public void contextLoad(){
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>新建上述异步任务测试用例</p>
+<pre><code class="language-java">@Slf4j
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class AsyncServiceTest {
+    @Autowired
+    private AsyncService asyncService;
+    @Test
+    public void testAsyncProcess() throws InterruptedException {
+        asyncService.asyncProcess();
+        log.info(&quot;coming in testAsyncProcess...&quot;);
+    }
+    @Test
+    public void testAsyncProcessHasReturn() throws Exception {
+        long start = System.currentTimeMillis();
+        Future&lt;Integer&gt; result = asyncService.asyncProcessHasReturn();
+//        log.info(&quot;get async task value: {}&quot;, result.get());
+        log.info(&quot;get async task value: {}&quot;,
+                result.get(1, TimeUnit.SECONDS));
+        log.info(&quot;time elapse for async task: {}ms&quot;,
+                System.currentTimeMillis() - start);
+    }
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="7-开机启动任务">7. 开机启动任务</h3>
+<ol>
+<li>
+<p>第一种方式：<code>ApplicationRunner</code></p>
+<pre><code class="language-java">@Order(2)
+@Slf4j
+@Component
+public class BootApplicationRunner implements ApplicationRunner {
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        log.info(&quot;This is BootApplicationRunner...&quot;);
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>第二种方式：<code>CommandLineRunner</code></p>
+<pre><code class="language-java">@Order(1)
+@Slf4j
+@Component
+public class BootCommandLineRunner implements CommandLineRunner {
+    @Override
+    public void run(String... args) throws Exception {
+        log.info(&quot;This is BootCommandLineRunner...&quot;);
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>默认情况下<code>ApplicationRunner</code>高于<code>CommandLIineRunner</code></p>
+</li>
+</ol>
+<h3 id="8-jackson的使用">8. Jackson的使用</h3>
+<ol>
+<li>
+<p>新建一个简单VO类<code>Coder</code></p>
+<pre><code class="language-java">// Coder.java
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonIgnoreProperties({ &quot;address&quot; })
+public class Coder {
+    private String name;
+    private int age;
+    // @JsonIgnore -&gt; 使用打在类上面的JsonIgnore
+    private String address;
+    @JsonProperty(&quot;rt&quot;)
+    @JsonFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+    private Date registerTime;
+}
+</code></pre>
+</li>
+<li>
+<p>可以在<code>config</code>目录下定义一个<code>JacksonConfig</code>类，用于对时间字段的序列化修饰</p>
+<pre><code class="language-java">@Configuration
+public class JacksonConfig {
+    @Bean
+    public ObjectMapper getObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        // 不序列化包含null的字段
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        // format对象
+        mapper.setDateFormat(new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;));
+        return mapper;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>在controller中新建一个方法用来测试Jackson</p>
+<pre><code class="language-java">// Controller.java
+/**
+* 127.0.0.1:8000/zth/springboot/jackson
+**/
+@GetMapping(&quot;/jackson&quot;)
+public Imoocer jackson() throws Exception {
+  Imoocer imoocer = Imoocer.builder()
+    .name(&quot;zth&quot;)
+    .age(19)
+    .address(&quot;shanghai&quot;)
+    .registerTime(new Date())
+    .build();
+  // 序列化
+  String jsonImoocer = mapper.writeValueAsString(imoocer);
+  log.info(&quot;imoocer jackson: {}&quot;, jsonImoocer);
+  return mapper.readValue(jsonImoocer, Imoocer.class);
+}
+// 返回结果
+{
+  &quot;name&quot;: &quot;qinyi&quot;,
+  &quot;age&quot;: 23,
+  &quot;rt&quot;: &quot;2020-05-12&quot;
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="9-acutator监控">9. Acutator监控</h3>
+<h4 id="1-基本使用">1. 基本使用</h4>
+<ol>
+<li>
+<p>Actuator是什么，能做什么？</p>
+<ul>
+<li>是什么：是SpringBoot提供的对应用系统的自省和监控的集成功能</li>
+<li>能做什么：查看应用（配置）信息、环境信息以及对应用进行监控</li>
+</ul>
+</li>
+<li>
+<p>Actuator监控分类：</p>
+<ul>
+<li>原生端点
+<ul>
+<li>应用配置类（运行时信息）</li>
+<li>度量指标类（运行期的信息）</li>
+<li>操作控制类（shutdown 默认不开启）</li>
+</ul>
+</li>
+<li>自定义端点</li>
+</ul>
+</li>
+<li>
+<p>添加pom.xml依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+<li>
+<p>在application.yml中配置端点开启状况</p>
+<pre><code class="language-yaml">management:
+  endpoint:
+    shutdown:
+      enabled: true # 最特殊的监控端点 一般不开启
+  endpoints:
+    web:
+      exposure:
+        include: &quot;*&quot; # 打开所有的监控点 []可以选择要打开哪些
+</code></pre>
+</li>
+<li>
+<p>请求<code>localhost:8000/zth/acuator/health</code>端口</p>
+<pre><code class="language-json">{
+  &quot;status&quot;: &quot;UP&quot;
+}
+</code></pre>
+</li>
+<li>
+<p>在application.yml中配置info信息</p>
+<pre><code class="language-yaml">info:
+  app:
+    name: zth-springboot-study
+    groupId: com.zth.springboot.study
+    version: 1.0-SNAPSHOT
+</code></pre>
+<p>请求<code>localhost:8000/zth/acuator/info</code>端口，此时返回信息如下</p>
+<pre><code class="language-json">{
+  &quot;app&quot;: {
+    &quot;name&quot;: &quot;zth-springboot-study&quot;,
+    &quot;groupId&quot;: &quot;com.zth.springboot.study&quot;,
+    &quot;version&quot;: &quot;1.0-SNAPSHOT&quot;
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="2-常用选项和配置">2. 常用选项和配置</h4>
+<ol>
+<li>
+<p>应用配置类常用监控</p>
+<ul>
+<li>自己配置的info信息：/actuator/info</li>
+<li>应用中bean的信息：/actuator/beans</li>
+<li>应用中URI路径信息：/actuator/mappings</li>
+</ul>
+</li>
+<li>
+<p>度量指标类常用监控</p>
+<ul>
+<li>检查应用的运行状态：/actuator/health</li>
+<li>当前线程活动快照：/actuator/threaddump</li>
+</ul>
+</li>
+<li>
+<p>操作控制类常用监控</p>
+<ul>
+<li>
+<p>关闭应用（POST）：/actuator/shutdown</p>
+<pre><code class="language-shell">curl -x post &quot;http://loccalhost:8000/actuator/shutdown&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="3-端点使用">3. 端点使用</h4>
+<ol>
+<li>
+<p>新建一个文件夹endpoint，新建DateTimeEndPoint类</p>
+<pre><code class="language-java">// DateTimeEndPoint.java
+/**
+ * &lt;h1&gt;自定义事件端点&lt;/h1&gt;
+ */
+@Endpoint(id = &quot;datetime&quot;)
+public class DateTimeEndPoint {
+    private String format = &quot;yyyy-MM-dd HH:mm:ss&quot;;
+    // 用来显示监控指标
+    // zth/actuator/datetime
+    @ReadOperation
+    public Map&lt;String, Object&gt; info() {
+        Map&lt;String, Object&gt; info = new HashMap&lt;&gt;();
+        info.put(&quot;name&quot;, &quot;zth&quot;);
+        info.put(&quot;age&quot;, &quot;23&quot;);
+        info.put(&quot;datetime&quot;, new SimpleDateFormat(format).format(new Date()));
+        return info;
+    }
+
+    // 动态更改监控指标
+    @WriteOperation
+    public void setFormat(String format) {
+        this.format = format;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>在endpoint文件夹下新建自定义端点配置类DateTimeEndpointConfig</p>
+<pre><code class="language-java">// DateTimeEndpointConfig.java
+// 自定义端点配置类
+@Configuration
+public class DateTimeEndpointConfig {
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnEnabledEndpoint
+    public DateTimeEndPoint dateTimeEndPoint() {
+        return new DateTimeEndPoint();
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>在postman中使用GET请求<code>localhost:8000/zth/actuator/datetime</code></p>
+<pre><code class="language-json">{
+  &quot;datetime&quot;: &quot;2020-05-12 08:08:08&quot;,
+  &quot;name&quot;: &quot;zth&quot;,
+  &quot;age&quot;: &quot;23&quot;
+}
+</code></pre>
+<p>当使用POST请求<code>localhost:8000/zth/actuator/datetime</code>时带如下请求体时</p>
+<pre><code class="language-json">{
+  &quot;format&quot;: &quot;yyyy-MM-dd&quot;
+}
+</code></pre>
+<p>无返回结果，再次使用GET请求访问<code>localhost:8000/zth/actuator/datetime</code>，返回结果如下</p>
+<pre><code class="language-json">{
+  &quot;datetime&quot;: &quot;2020-05-12&quot;,
+  &quot;name&quot;: &quot;zth&quot;,
+  &quot;age&quot;: &quot;23&quot;
+}
+</code></pre>
+</li>
+</ol>
+<h3 id="10-自定义starter">10. 自定义starter</h3>
+<h4 id="1-自定义starter项目准备">1. 自定义starter项目准备</h4>
+<ol>
+<li>
+<p>创建一个<code>springboot</code>项目，<code>groupId</code>按照<code>xxxx-spring-boot-starter</code>的格式命名</p>
+</li>
+<li>
+<p>添加pom.xml文件依赖</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;com.zth.springboot&lt;/groupId&gt;
+    &lt;artifactId&gt;split-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starters&lt;/artifactId&gt;
+        &lt;version&gt;2.1.4.RELEASE&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+    &lt;/properties&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-autoconfigure&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/project&gt;
+</code></pre>
+</li>
+<li>
+<p>新建service目录，service方法还有对应的实现类</p>
+<pre><code class="language-java">// ISplitService.java
+// 字符串分割服务接口定义
+public interface ISplitService {
+    List&lt;String&gt; split(String value);
+}
+</code></pre>
+<p>对应的实现类</p>
+<pre><code class="language-java">// SplitServiceImpl.java
+public class SplitServiceImpl implements ISplitService {
+    @SuppressWarnings(&quot;all&quot;)
+    @Override
+    public List&lt;String&gt; split(String value) {
+        // jdk1.8中的stream流
+        return Stream.of(StringUtils.split(value, &quot;,&quot;))
+                .collect(Collectors.toList());
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>新建configure目录，新建自动配置类</p>
+<pre><code class="language-java">@Configuration
+@ConditionalOnClass(value = { ISplitService.class, SplitServiceImpl.class})
+public class SplitAutoConfigure {
+    @Bean
+    @ConditionalOnMissingBean
+    ISplitService starterService() {
+        return new SplitServiceImpl();
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>在resources文件夹下，新建META-INF文件夹，添加配置类<code>spring.factories</code></p>
+<pre><code class="language-shell"># 类似key = value的键值对形式
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.imooc.springboot.configure.SplitAutoConfigure
+</code></pre>
+</li>
+<li>
+<p>在terminal中，输入如下指令实现编译打包</p>
+<pre><code class="language-shell">$ mvn clean install -Dmaven.test.skip=true
+</code></pre>
+</li>
+</ol>
+<h3 id="11-使用脚本管理springboot项目">11. 使用脚本管理springboot项目</h3>
+<ol>
+<li>
+<p>在resources下新建start.sh文件</p>
+<pre><code class="language-sh">#!/user/bin/env bash
+nohup java -jar zth-spring-boot-study.jar &amp;
+</code></pre>
+</li>
+<li>
+<p>关闭应用脚本 stop.sh</p>
+<pre><code class="language-sh">#!/user/bin/env bash
+pid = `ps -ef | grep zth-spring-boot-study.jar | grep -v grep | awk '{print $2}'` 
+if [[ -z &quot;${pid}&quot; ]]
+then
+	echo application is already stopped
+else
+	echo kill ${pid}
+	kill -9 ${pid}
+fi
+</code></pre>
+</li>
+</ol>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/rAV1Yp-Gr/">
+            <span class="flex-auto">SpringCloud</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/VaOfOOWC5/">
+            <span class="flex-auto">SpringBoot</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/tqQSAbU7V/">
+            <span class="flex-auto">BackEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.coding.me/post/java-2/">
+                <h3 class="post-title">
+                  Java面试总结(2) -- 线程篇
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://zu3zz.coding.me/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>
