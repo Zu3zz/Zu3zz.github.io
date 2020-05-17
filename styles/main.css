@@ -752,19 +752,8 @@ a {
   margin: 4px 8px;
 }
 
-      .sidebar {
-        width: 300px;
-      }
-      .main-container {
-        margin-left: 300px;
-      }
-    
       .sidebar .top-container .site-nav {
         color: #343a40;
-      }
-    
-      .post-item .right .feature-container {
-        border-radius: 5px;
       }
     
       body {
