@@ -1,112 +1,164 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
-<title>数据库面试考点 | 风袖</title>
-<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731493762">
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731629533">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
 <link rel="stylesheet" href="https://zu3zz.github.io/styles/main.css">
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.github.io/atom.xml">
 
 
 
   </head>
   <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://zu3zz.github.io">
-        <img src="https://zu3zz.github.io/images/avatar.png?v=1589731493762" class="site-logo">
-        <h1 class="site-title">风袖</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.github.io/images/avatar.png?v=1589731629533" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
-    </div>
-    <div>
       
-        
-          <a href="/" class="site-nav">
-            首页
-          </a>
-        
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93">数据库面试总结</a>
+<ul>
+<li><a href="#1-%E6%9E%B6%E6%9E%84">1. 架构</a>
+<ul>
+<li><a href="#1-rdbms">1. RDBMS</a></li>
+</ul>
+</li>
+<li><a href="#2-%E7%B4%A2%E5%BC%95">2. 索引</a>
+<ul>
+<li><a href="#1-%E4%BC%98%E5%8C%96%E7%B4%A2%E5%BC%95">1. 优化索引</a></li>
+<li><a href="#2-hash%E7%B4%A2%E5%BC%95">2. Hash索引</a>
+<ul>
+<li><a href="#%E7%BC%BA%E7%82%B9">缺点：</a></li>
+</ul>
+</li>
+<li><a href="#3-bitmap%E7%B4%A2%E5%BC%95%E4%BA%86%E8%A7%A3">3. BitMap索引（了解）</a></li>
+<li><a href="#4-%E5%AF%86%E9%9B%86%E7%B4%A2%E5%BC%95%E4%B8%8E%E7%A8%80%E7%96%8F%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB">4. 密集索引与稀疏索引的区别</a></li>
+<li><a href="#5-%E9%97%AE%E9%A2%98%E5%9B%9E%E9%A1%BE%E4%B8%8E%E6%80%BB%E7%BB%93">5. 问题回顾与总结</a></li>
+<li><a href="#6-%E4%B8%80%E4%BA%9B%E8%A1%8D%E7%94%9F%E9%97%AE%E9%A2%98">6. 一些衍生问题</a>
+<ul>
+<li><a href="#61-%E5%A6%82%E4%BD%95%E5%AE%9A%E4%BD%8D%E5%B9%B6%E4%BC%98%E5%8C%96%E6%85%A2%E6%9F%A5%E8%AF%A2sql">6.1 如何定位并优化慢查询Sql</a></li>
+<li><a href="#62-%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E7%9A%84%E6%9C%80%E5%B7%A6%E5%8C%B9%E9%85%8D%E5%8E%9F%E5%88%99%E7%9A%84%E6%88%90%E5%9B%A0">6.2 联合索引的最左匹配原则的成因</a></li>
+<li><a href="#63-%E7%B4%A2%E5%BC%95%E6%98%AF%E5%BB%BA%E7%AB%8B%E7%9A%84%E8%B6%8A%E5%A4%9A%E8%B6%8A%E5%A5%BD%E5%90%97">6.3 索引是建立的越多越好吗</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3-%E9%94%81">3. 锁</a>
+<ul>
+<li><a href="#31-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">3.1 常见问题</a>
+<ul>
+<li><a href="#1-myisam%E4%B8%8Einnodb%E5%85%B3%E4%BA%8E%E9%94%81%E6%96%B9%E9%9D%A2%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88">1. MyISAM与InnoDB关于锁方面的区别是什么</a></li>
+<li><a href="#2-myisam%E9%80%82%E5%90%88%E7%9A%84%E5%9C%BA%E6%99%AF">2. MyISAM适合的场景</a></li>
+<li><a href="#3-innodb%E9%80%82%E5%90%88%E7%9A%84%E5%9C%BA%E6%99%AF">3. InnoDB适合的场景</a></li>
+</ul>
+</li>
+<li><a href="#32-%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB">3.2 数据库锁的分类</a>
+<ul>
+<li><a href="#1-%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F">1. 乐观锁的实现方式</a></li>
+</ul>
+</li>
+<li><a href="#33-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7">3.3 数据库事务的四大特性</a></li>
+<li><a href="#34-%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%BB%A5%E5%8F%8A%E5%90%84%E7%BA%A7%E5%88%AB%E4%B8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E8%AE%BF%E9%97%AE%E9%97%AE%E9%A2%98">3.4 事务隔离级别以及各级别下的并发访问问题</a></li>
+<li><a href="#35-innodb%E8%AF%BE%E9%87%8D%E5%A4%8D%E8%AF%BB%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%B8%8B%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%B9%BB%E8%AF%BB">3.5 InnoDB课重复读隔离级别下如何避免幻读</a></li>
+<li><a href="#36-rc-rr%E7%BA%A7%E5%88%AB%E4%B8%8B%E7%9A%84innodb%E7%9A%84%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%AF%BB%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0">3.6 RC、RR级别下的InnoDB的非阻塞读如何实现</a></li>
+</ul>
+</li>
+<li><a href="#4-%E8%AF%AD%E6%B3%95">4. 语法</a>
+<ul>
+<li><a href="#1-group-by%E5%88%86%E7%BB%84">1. GROUP BY（分组）</a></li>
+<li><a href="#2-having%E8%BF%87%E6%BB%A4">2. HAVING（过滤）</a></li>
+<li><a href="#3%E8%87%AA%E5%B7%B1%E5%A4%9A%E7%BB%83">3.自己多练</a></li>
+</ul>
+</li>
+<li><a href="#5-myisam%E4%B8%8Einnodb%E5%8C%BA%E5%88%AB">5 MyISAM与InnoDB区别</a></li>
+<li><a href="#6-sql%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BC%98%E5%8C%96">6. SQL语句的优化</a><br>
+*
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%BD%8D%E6%85%A2sql%E8%AF%AD%E5%8F%A5">1. 定位慢SQL语句</a></li>
+<li><a href="#2-%E4%BD%BF%E7%94%A8explain">2. 使用EXPLAIN</a></li>
+<li><a href="#3-%E4%BD%BF%E7%94%A8profile">3. 使用PROFILE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
       
-        
-          <a href="/archives" class="site-nav">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="site-nav">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="site-nav">
-            关于
-          </a>
-        
-      
-        
-          <a href="/projects" class="site-nav">
-            项目
-          </a>
-        
-      
-    </div>
-  </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      烟蛾敛略不胜态，风袖低昂如有情
-    </div>
-    <div class="site-footer">
-      By 3zz. | <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
     </div>
   </div>
 </div>
 
-
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">数据库面试考点</h2>
-            <div class="post-date">2020-02-12</div>
-            
-            <div class="post-content">
-              <p>🐰详细讲解数据库面试常见问题，包含索引、锁、事务等内容🐰</p>
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">数据库面试考点</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-02-12 / 10 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>🐰详细讲解数据库面试常见问题，包含索引、锁、事务等内容🐰</p>
 <!-- more -->
 <h1 id="数据库面试总结">数据库面试总结</h1>
 <h2 id="1-架构">1. 架构</h2>
@@ -398,66 +450,154 @@ mysql &gt; show profiles;
 <li>不过 SHOW PROFILE 命令将被弃用，我们可以从 information_schema 中的 profiling 数据表进行查看。</li>
 </ul>
 
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://zu3zz.github.io/tag/uhv6L1Wqc/" class="tag">
-                    Database
-                  </a>
-                
-                  <a href="https://zu3zz.github.io/tag/r3gGxAQVM/" class="tag">
-                    Interview
-                  </a>
-                
-                  <a href="https://zu3zz.github.io/tag/U3FdeW1UW/" class="tag">
-                    NoSQL
-                  </a>
-                
-                  <a href="https://zu3zz.github.io/tag/7acBApeyq/" class="tag">
-                    MySQL
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://zu3zz.github.io/post/interview-network/">
-                  <h3 class="post-title">
-                    计算机网络面试考点总结
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-
-          </div>
-
         </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/uhv6L1Wqc/">
+            <span class="flex-auto">Database</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/r3gGxAQVM/">
+            <span class="flex-auto">Interview</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/U3FdeW1UW/">
+            <span class="flex-auto">NoSQL</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/7acBApeyq/">
+            <span class="flex-auto">MySQL</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://zu3zz.github.io/post/interview-redis/">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  主流缓存Redis笔记
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.github.io/post/interview-network/">
+                <h3 class="post-title">
+                  计算机网络面试考点总结
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
       </div>
     </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://zu3zz.github.io/media/prism.js"></script>  
+<script>
 
-<script type="application/javascript">
+Prism.highlightAll()
 
-AOS.init();
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-hljs.initHighlightingOnLoad()
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
 
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
 </script>
-
-
-
-
+  
   </body>
 </html>

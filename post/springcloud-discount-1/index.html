@@ -1,112 +1,133 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
-<title>SpringCloud 分布式优惠券(1)---SpringBoot相关 | 风袖</title>
-<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731493762">
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731629533">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
 <link rel="stylesheet" href="https://zu3zz.github.io/styles/main.css">
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.github.io/atom.xml">
 
 
 
   </head>
   <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://zu3zz.github.io">
-        <img src="https://zu3zz.github.io/images/avatar.png?v=1589731493762" class="site-logo">
-        <h1 class="site-title">风袖</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.github.io/images/avatar.png?v=1589731629533" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
-    </div>
-    <div>
       
-        
-          <a href="/" class="site-nav">
-            首页
-          </a>
-        
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#springcloud-%E5%88%86%E5%B8%83%E5%BC%8F%E4%BC%98%E6%83%A0%E5%88%B81-springboot%E7%9B%B8%E5%85%B3">SpringCloud 分布式优惠券(1)---SpringBoot相关</a>
+<ul>
+<li><a href="#1-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86">1. 自动装配原理</a></li>
+<li><a href="#2-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">2. 配置文件</a></li>
+<li><a href="#3-%E9%85%8D%E7%BD%AE%E6%B3%A8%E5%85%A5">3. 配置注入</a></li>
+<li><a href="#4-%E5%AE%9A%E6%97%B6%E5%BA%94%E7%94%A8">4. 定时应用</a></li>
+<li><a href="#5-%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1">5. 异步任务</a>
+<ul>
+<li><a href="#1-%E5%BC%82%E6%AD%A5%E6%96%B9%E6%B3%95">1. 异步方法</a></li>
+<li><a href="#2-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E6%AD%A5%E7%BA%BF%E7%A8%8B%E6%B1%A0">2. 自定义异步线程池</a></li>
+</ul>
+</li>
+<li><a href="#6-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">6. 单元测试</a></li>
+<li><a href="#7-%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E4%BB%BB%E5%8A%A1">7. 开机启动任务</a></li>
+<li><a href="#8-jackson%E7%9A%84%E4%BD%BF%E7%94%A8">8. Jackson的使用</a></li>
+<li><a href="#9-acutator%E7%9B%91%E6%8E%A7">9. Acutator监控</a>
+<ul>
+<li><a href="#1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8">1. 基本使用</a></li>
+<li><a href="#2-%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%92%8C%E9%85%8D%E7%BD%AE">2. 常用选项和配置</a></li>
+<li><a href="#3-%E7%AB%AF%E7%82%B9%E4%BD%BF%E7%94%A8">3. 端点使用</a></li>
+</ul>
+</li>
+<li><a href="#10-%E8%87%AA%E5%AE%9A%E4%B9%89starter">10. 自定义starter</a>
+<ul>
+<li><a href="#1-%E8%87%AA%E5%AE%9A%E4%B9%89starter%E9%A1%B9%E7%9B%AE%E5%87%86%E5%A4%87">1. 自定义starter项目准备</a></li>
+</ul>
+</li>
+<li><a href="#11-%E4%BD%BF%E7%94%A8%E8%84%9A%E6%9C%AC%E7%AE%A1%E7%90%86springboot%E9%A1%B9%E7%9B%AE">11. 使用脚本管理springboot项目</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
       
-        
-          <a href="/archives" class="site-nav">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="site-nav">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="site-nav">
-            关于
-          </a>
-        
-      
-        
-          <a href="/projects" class="site-nav">
-            项目
-          </a>
-        
-      
-    </div>
-  </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      烟蛾敛略不胜态，风袖低昂如有情
-    </div>
-    <div class="site-footer">
-      By 3zz. | <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
     </div>
   </div>
 </div>
 
-
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">SpringCloud 分布式优惠券(1)---SpringBoot相关</h2>
-            <div class="post-date">2020-05-12</div>
-            
-            <div class="post-content">
-              <p>🥕SpringCloud实战分布式优惠券系列的第一篇，主要讲解SpringBoot中的一些高级特性🥕</p>
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">SpringCloud 分布式优惠券(1)---SpringBoot相关</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-05-12 / 13 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>🥕SpringCloud实战分布式优惠券系列的第一篇，主要讲解SpringBoot中的一些高级特性🥕</p>
 <!-- more -->
 <h2 id="springcloud-分布式优惠券1-springboot相关">SpringCloud 分布式优惠券(1)---SpringBoot相关</h2>
 <h3 id="1-自动装配原理">1. 自动装配原理</h3>
@@ -710,62 +731,141 @@ fi
 </li>
 </ol>
 
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://zu3zz.github.io/tag/rAV1Yp-Gr/" class="tag">
-                    SpringCloud
-                  </a>
-                
-                  <a href="https://zu3zz.github.io/tag/VaOfOOWC5/" class="tag">
-                    SpringBoot
-                  </a>
-                
-                  <a href="https://zu3zz.github.io/tag/tqQSAbU7V/" class="tag">
-                    BackEnd
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://zu3zz.github.io/post/java-2/">
-                  <h3 class="post-title">
-                    Java面试总结(2) -- 线程篇
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-
-          </div>
-
         </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/rAV1Yp-Gr/">
+            <span class="flex-auto">SpringCloud</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/VaOfOOWC5/">
+            <span class="flex-auto">SpringBoot</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/tqQSAbU7V/">
+            <span class="flex-auto">BackEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.github.io/post/java-2/">
+                <h3 class="post-title">
+                  Java面试总结(2) -- 线程篇
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
       </div>
     </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://zu3zz.github.io/media/prism.js"></script>  
+<script>
 
-<script type="application/javascript">
+Prism.highlightAll()
 
-AOS.init();
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-hljs.initHighlightingOnLoad()
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
 
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
 </script>
-
-
-
-
+  
   </body>
 </html>

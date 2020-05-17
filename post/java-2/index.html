@@ -1,112 +1,149 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
-<title>Java面试总结(2) -- 线程篇 | 风袖</title>
-<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731493762">
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
+<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731629533">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
 <link rel="stylesheet" href="https://zu3zz.github.io/styles/main.css">
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.github.io/atom.xml">
 
 
 
   </head>
   <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://zu3zz.github.io">
-        <img src="https://zu3zz.github.io/images/avatar.png?v=1589731493762" class="site-logo">
-        <h1 class="site-title">风袖</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://zu3zz.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.github.io/images/avatar.png?v=1589731629533" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
-    </div>
-    <div>
       
-        
-          <a href="/" class="site-nav">
-            首页
-          </a>
-        
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%B9%B6%E5%8F%91">Java多线程和并发</a></li>
+<li><a href="#1-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B">1. 进程与线程</a><br>
+*
+<ul>
+<li><a href="#1-%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB">1. 进程和线程的区别</a></li>
+<li><a href="#2-java%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB">2. Java进程和线程的关系</a></li>
+<li><a href="#3-thread%E4%B8%AD%E7%9A%84start%E5%92%8Crun%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB">3. Thread中的start()和run()方法的区别</a></li>
+<li><a href="#4-thread%E5%92%8Crunnable%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB">4. Thread和Runnable有什么关系</a></li>
+<li><a href="#5-%E5%A6%82%E4%BD%95%E7%BB%99run%E6%96%B9%E6%B3%95%E4%BC%A0%E5%8F%82">5. 如何给run()方法传参</a></li>
+<li><a href="#6-%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81">6. 线程的状态</a></li>
+<li><a href="#7-sleep%E5%92%8Cwait%E7%9A%84%E5%8C%BA%E5%88%AB">7. sleep和wait的区别</a></li>
+<li><a href="#8-notify%E4%B8%8Enotifyall%E7%9A%84%E5%8C%BA%E5%88%AB">8. notify与notifyAll的区别</a></li>
+<li><a href="#9-yield">9. yield</a></li>
+<li><a href="#10-%E4%B8%AD%E6%96%AD%E7%BA%BF%E7%A8%8B">10. 中断线程</a></li>
+<li><a href="#11-%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81">11. 线程状态</a></li>
+</ul>
+</li>
+<li><a href="#2-%E9%94%81%E7%9B%B8%E5%85%B3">2. 锁相关</a>
+<ul>
+<li><a href="#1-synchronized">1. Synchronized</a></li>
+<li><a href="#2-synchronized%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86">2. Synchronized底层原理</a>
+<ul>
+<li><a href="#1-%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B1%80">1. 对象在内存中的布局</a></li>
+<li><a href="#2-%E5%AF%B9%E8%B1%A1%E5%A4%B4%E7%9A%84%E7%BB%93%E6%9E%84">2. 对象头的结构</a></li>
+<li><a href="#3-mark-word%E7%9A%84%E7%BB%93%E6%9E%84">3. Mark Word的结构</a></li>
+<li><a href="#4-monitor">4. Monitor</a></li>
+<li><a href="#5-synchronized%E5%8F%91%E5%B1%95">5. Synchronized发展</a></li>
+<li><a href="#6-%E8%87%AA%E6%97%8B%E9%94%81%E4%B8%8E%E8%87%AA%E9%80%82%E5%BA%94%E8%87%AA%E6%97%8B%E9%94%81%E9%94%81%E4%BC%98%E5%8C%96">6. 自旋锁与自适应自旋锁（锁优化）</a></li>
+<li><a href="#7-synchronized%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%8A%B6%E6%80%81">7. Synchronized的四种状态</a></li>
+<li><a href="#8-%E5%81%8F%E5%90%91%E9%94%81-%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81-%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%E7%9A%84%E6%B1%87%E6%80%BB">8. 偏向锁、轻量级锁、重量级锁的汇总</a></li>
+</ul>
+</li>
+<li><a href="#3-synchronized%E5%92%8Creentrantlock%E7%9A%84%E5%8C%BA%E5%88%AB">3. Synchronized和ReentrantLock的区别</a>
+<ul>
+<li><a href="#1-reentrantlock%E5%86%8D%E5%85%A5%E9%94%81">1. ReentrantLock（再入锁）</a></li>
+<li><a href="#2-%E5%85%AC%E5%B9%B3%E6%80%A7%E7%9A%84%E8%AE%BE%E7%BD%AE">2. 公平性的设置</a></li>
+<li><a href="#3-%E5%8C%BA%E5%88%AB">3. 区别</a></li>
+</ul>
+</li>
+<li><a href="#4-jmm%E6%A8%A1%E5%9E%8B">4. JMM模型</a></li>
+<li><a href="#5-volatile">5. Volatile</a></li>
+<li><a href="#6-volatile%E5%92%8Csynchronized%E7%9A%84%E5%8C%BA%E5%88%AB">6. Volatile和synchronized的区别</a></li>
+<li><a href="#7-cascompare-and-swap">7. CAS(Compare and Swap)</a></li>
+<li><a href="#8-java%E7%BA%BF%E7%A8%8B%E6%B1%A0">8. Java线程池</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
       
-        
-          <a href="/archives" class="site-nav">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="site-nav">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="site-nav">
-            关于
-          </a>
-        
-      
-        
-          <a href="/projects" class="site-nav">
-            项目
-          </a>
-        
-      
-    </div>
-  </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      烟蛾敛略不胜态，风袖低昂如有情
-    </div>
-    <div class="site-footer">
-      By 3zz. | <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
     </div>
   </div>
 </div>
 
-
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">Java面试总结(2) -- 线程篇</h2>
-            <div class="post-date">2020-03-09</div>
-            
-            <div class="post-content">
-              <p>Java面试总结第二篇~ 主要是线程与线程池的相关知识点</p>
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+      
+        <a href="/projects" class="menu" style="animation-delay: 0.8s">
+          项目
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">By 3zz.</div>
+    <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Java面试总结(2) -- 线程篇</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-03-09 / 15 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>Java面试总结第二篇~ 主要是线程与线程池的相关知识点</p>
 <!-- more -->
 <h2 id="java多线程和并发">Java多线程和并发</h2>
 <h2 id="1-进程与线程">1. 进程与线程</h2>
@@ -690,58 +727,146 @@ handler：线程池的饱和策略
 </li>
 </ol>
 
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://zu3zz.github.io/tag/tqQSAbU7V/" class="tag">
-                    BackEnd
-                  </a>
-                
-                  <a href="https://zu3zz.github.io/tag/_el9BOoeY/" class="tag">
-                    Java
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://zu3zz.github.io/post/java-1/">
-                  <h3 class="post-title">
-                    Java面试总结(1) -- JVM
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-
-          </div>
-
         </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/tqQSAbU7V/">
+            <span class="flex-auto">BackEnd</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/_el9BOoeY/">
+            <span class="flex-auto">Java</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://zu3zz.github.io/post/springcloud-discount-1/">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  SpringCloud 分布式优惠券(1)---SpringBoot相关
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://zu3zz.github.io/post/java-1/">
+                <h3 class="post-title">
+                  Java面试总结(1) -- JVM
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
       </div>
     </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://zu3zz.github.io/media/prism.js"></script>  
+<script>
 
-<script type="application/javascript">
+Prism.highlightAll()
 
-AOS.init();
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-hljs.initHighlightingOnLoad()
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
 
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
 </script>
-
-
-
-
+  
   </body>
 </html>
