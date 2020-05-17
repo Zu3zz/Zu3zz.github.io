@@ -4,14 +4,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>风袖</title>
 <meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://zu3zz.coding.me/favicon.ico?v=1589274196919">
+<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589730611919">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
-<link rel="stylesheet" href="https://zu3zz.coding.me/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.coding.me/atom.xml">
+<link rel="stylesheet" href="https://zu3zz.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.github.io/atom.xml">
 
 
 
@@ -23,8 +23,8 @@
     <div class="sidebar-content">
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
-        <a href="https://zu3zz.coding.me">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.coding.me/images/avatar.png?v=1589274196919" alt="">
+        <a href="https://zu3zz.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.github.io/images/avatar.png?v=1589730611919" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
       </div>
@@ -158,7 +158,7 @@
   </div>
   <div class="site-footer">
     <div class="py-4 text-gray-700">By 3zz.</div>
-    <a class="rss" href="https://zu3zz.coding.me/atom.xml" target="_blank">RSS</a>
+    <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
   </div>
 </div>
 <div class="mask" onclick="closeMenu()">
@@ -174,7 +174,7 @@
 <!-- more -->
 <h1 id="主流缓存redis笔记">主流缓存Redis笔记</h1>
 <h2 id="1-主流应用架构">1. 主流应用架构</h2>
-<figure data-type="image" tabindex="1"><img src="https://zu3zz.coding.me/post-images/1581859003669.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://zu3zz.github.io/post-images/1581859003669.png" alt="" loading="lazy"></figure>
 <h3 id="11-缓存中间件-memcache和redis的区别">1.1 缓存中间件---- Memcache和Redis的区别</h3>
 <h4 id="1-memcache代码层次类似hash">1. Memcache：代码层次类似Hash</h4>
 <ul>
@@ -206,9 +206,9 @@
 <li>一个打开的文件通过唯一的描述符进行引用，该描述符是打开文件的元数据到文件本身的映射</li>
 </ul>
 <h4 id="2-传统的阻塞io模型">2. 传统的阻塞I/O模型</h4>
-<figure data-type="image" tabindex="2"><img src="https://zu3zz.coding.me/post-images/1581859021180.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://zu3zz.github.io/post-images/1581859021180.png" alt="" loading="lazy"></figure>
 <h4 id="3-select-系统调用">3. Select 系统调用</h4>
-<figure data-type="image" tabindex="3"><img src="https://zu3zz.coding.me/post-images/1581859027686.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://zu3zz.github.io/post-images/1581859027686.png" alt="" loading="lazy"></figure>
 <h4 id="4-redis采用的io多路复用函数epollkqueueevportselect">4. Redis采用的I/O多路复用函数：epoll/kqueue/evport/select</h4>
 <ul>
 <li>因地制宜</li>
@@ -221,7 +221,7 @@
 <ul>
 <li>
 <p>String：最基本的数据类型，二进制安全（底层使用sdshdr）</p>
-<figure data-type="image" tabindex="4"><img src="https://zu3zz.coding.me/post-images/1581859149419.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://zu3zz.github.io/post-images/1581859149419.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>Hash：String元素组成的字典，适合用于存储对象（hmset key1 value1 key2 value2...）</p>
@@ -280,7 +280,7 @@
 </ul>
 </li>
 <li>
-<figure data-type="image" tabindex="5"><img src="https://zu3zz.coding.me/post-images/1581859174423.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://zu3zz.github.io/post-images/1581859174423.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>SET key value [EX seconds] [PX milliseconds] [NX|XX]</p>
@@ -332,7 +332,7 @@
 <li>执行Shutdown且没有开发AOF持久化</li>
 </ol>
 <h3 id="3-bgsave的原理">3. BGSAVE的原理</h3>
-<figure data-type="image" tabindex="6"><img src="https://zu3zz.coding.me/post-images/1581859203147.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://zu3zz.github.io/post-images/1581859203147.png" alt="" loading="lazy"></figure>
 <ul>
 <li>系统调用fork()：创建进程，实现了Copy-on-Write</li>
 <li>缺点
@@ -397,7 +397,7 @@
 <ol>
 <li>
 <p>主从同步原理（Master/Slave）</p>
-<figure data-type="image" tabindex="7"><img src="https://zu3zz.coding.me/post-images/1581859218260.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://zu3zz.github.io/post-images/1581859218260.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>全同步过程</p>
@@ -459,47 +459,47 @@
 </li>
 <li>
 <p>将数据key使用相同的函数Hash计算出哈希值，找到最近的Hash节点</p>
-<figure data-type="image" tabindex="8"><img src="https://zu3zz.coding.me/post-images/1581859268434.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://zu3zz.github.io/post-images/1581859268434.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>如果此时<code>Node C</code>宕机,数据都会到<code>Node D</code>中</p>
 </li>
 </ul>
-<figure data-type="image" tabindex="9"><img src="https://zu3zz.coding.me/post-images/1581859274355.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://zu3zz.github.io/post-images/1581859274355.png" alt="" loading="lazy"></figure>
 <ul>
 <li>
 <p>新增一台服务器 <code>Node X</code></p>
-<figure data-type="image" tabindex="10"><img src="https://zu3zz.coding.me/post-images/1581859282580.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="https://zu3zz.github.io/post-images/1581859282580.png" alt="" loading="lazy"></figure>
 </li>
 </ul>
 <h3 id="3-数据倾斜问题">3. 数据倾斜问题</h3>
 <ol>
 <li>
 <p>Hash环的数据倾斜问题</p>
-<figure data-type="image" tabindex="11"><img src="https://zu3zz.coding.me/post-images/1581859296841.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="https://zu3zz.github.io/post-images/1581859296841.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>引入虚拟节点解决数据倾斜的问题（节点过少时有用）（设置虚拟节点32个）</p>
-<figure data-type="image" tabindex="12"><img src="https://zu3zz.coding.me/post-images/1581859303063.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="12"><img src="https://zu3zz.github.io/post-images/1581859303063.png" alt="" loading="lazy"></figure>
 </li>
 </ol>
 
         </div>
 
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/r3gGxAQVM/">
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/r3gGxAQVM/">
             <span class="flex-auto">Interview</span>
           </a>
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/U3FdeW1UW/">
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/U3FdeW1UW/">
             <span class="flex-auto">NoSQL</span>
           </a>
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/tqQSAbU7V/">
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/tqQSAbU7V/">
             <span class="flex-auto">BackEnd</span>
           </a>
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.coding.me/tag/FlCGh236W/">
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/FlCGh236W/">
             <span class="flex-auto">Redis</span>
           </a>
         
@@ -508,7 +508,7 @@
         <div class="flex justify-between py-8">
           
             <div class="prev-post">
-              <a href="https://zu3zz.coding.me/post/java-thread-1/">
+              <a href="https://zu3zz.github.io/post/java-thread-1/">
                 <h3 class="post-title">
                   <i class="remixicon-arrow-left-line"></i>
                   Java多线程与并发(1) -- 线程创建
@@ -519,7 +519,7 @@
 
           
             <div class="next-post">
-              <a href="https://zu3zz.coding.me/post/interview-database/">
+              <a href="https://zu3zz.github.io/post/interview-database/">
                 <h3 class="post-title">
                   数据库面试考点
                   <i class="remixicon-arrow-right-line"></i>
@@ -534,7 +534,7 @@
       </div>
     </div>
 
-    <script src="https://zu3zz.coding.me/media/prism.js"></script>  
+    <script src="https://zu3zz.github.io/media/prism.js"></script>  
 <script>
 
 Prism.highlightAll()
