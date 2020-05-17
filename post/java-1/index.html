@@ -1,142 +1,112 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>风袖</title>
-<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589730611919">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <meta charset="utf-8" >
 
+<title>Java面试总结(1) -- JVM | 风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731257565">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zu3zz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.github.io/atom.xml">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 
   </head>
   <body>
-    <div id="app" class="main px-4 flex flex-col lg:flex-row">
-      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
-  <div class="lg:sticky top-0">
-    <div class="sidebar-content">
-      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
-        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
-        <a href="https://zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.github.io/images/avatar.png?v=1589730611919" alt="">
-        </a>
-        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
-      </div>
-      
-        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
-          <p class="my-4 text-gray-600 font-light hidden lg:block">
-            文章目录
-          </p>
-          <div class="toc-container hidden lg:block">
-            <ul class="markdownIt-TOC">
-<li><a href="#java%E9%9D%A2%E8%AF%95%E7%82%B9">Java面试点</a>
-<ul>
-<li><a href="#1-jvm">1. JVM</a>
-<ul>
-<li><a href="#11-%E8%B0%88%E8%B0%88java%E7%9A%84%E7%89%B9%E6%80%A7">1.1 谈谈java的特性</a></li>
-<li><a href="#12-jvm%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BDclass%E6%96%87%E4%BB%B6">1.2 JVM如何加载.class文件</a>
-<ul>
-<li><a href="#java%E8%99%9A%E6%8B%9F%E6%9C%BA">Java虚拟机</a></li>
-</ul>
-</li>
-<li><a href="#13-%E8%B0%88%E8%B0%88%E5%8F%8D%E5%B0%84">1.3 谈谈反射</a></li>
-<li><a href="#14-%E7%B1%BB%E4%BB%8E%E7%BC%96%E8%AF%91%E5%88%B0%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B">1.4 类从编译到执行的过程</a>
-<ul>
-<li><a href="#1-%E8%B0%88%E8%B0%88classloader">1. 谈谈ClassLoader</a></li>
-<li><a href="#2-classloader%E7%9A%84%E7%A7%8D%E7%B1%BB">2. ClassLoader的种类</a></li>
-<li><a href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89classloader%E7%9A%84%E5%AE%9E%E7%8E%B0">3. 自定义ClassLoader的实现</a></li>
-</ul>
-</li>
-<li><a href="#16-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F">1.6 类的加载方式</a>
-<ul>
-<li><a href="#1-loadclass%E5%92%8Cforname%E7%9A%84%E5%8C%BA%E5%88%AB">1. loadClass和forName的区别</a></li>
-</ul>
-</li>
-<li><a href="#17-java%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B">1.7 Java的内存模型</a>
-<ul>
-<li><a href="#1-%E5%86%85%E5%AD%98%E7%AE%80%E4%BB%8B">1. 内存简介</a></li>
-<li><a href="#2%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%92%E5%88%86">2.地址空间的划分</a></li>
-<li><a href="#3-jvm%E6%9E%B6%E6%9E%84">3. JVM架构</a></li>
-<li><a href="#4-jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8Bjdk8">4. JVM内存模型——JDK8</a></li>
-<li><a href="#5-%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB">5. 线程共享</a></li>
-</ul>
-</li>
-<li><a href="#18-jvm%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0">1.8 JVM调优参数</a></li>
-<li><a href="#19-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5">1.9 内存分配策略</a>
-<ul>
-<li><a href="#1-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5">1. 内存分配策略</a></li>
-<li><a href="#2-java%E5%86%85%E5%AD%98%E4%B8%AD%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB">2. Java内存中堆和栈的区别</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+    <div id="app" class="main">
 
-          </div>
-        </div>
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zu3zz.github.io">
+        <img src="https://zu3zz.github.io/images/avatar.png?v=1589731257565" class="site-logo">
+        <h1 class="site-title">风袖</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/projects" class="site-nav">
+            项目
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      烟蛾敛略不胜态，风袖低昂如有情
+    </div>
+    <div class="site-footer">
+      By 3zz. | <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
     </div>
   </div>
 </div>
 
-<div class="menu-container">
-  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
-  <div>
-    
-      
-        <a href="/" class="menu" style="animation-delay: 0s">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu" style="animation-delay: 0.2s">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu" style="animation-delay: 0.4s">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
-          关于
-        </a>
-      
-    
-      
-        <a href="/projects" class="menu" style="animation-delay: 0.8s">
-          项目
-        </a>
-      
-    
-  </div>
-  <div class="site-footer">
-    <div class="py-4 text-gray-700">By 3zz.</div>
-    <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
-  </div>
-</div>
-<div class="mask" onclick="closeMenu()">
-</div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">Java面试总结(1) -- JVM</h1>
-        <div class="text-sm text-gray-700 lg:my-8">
-          2020-03-07 / 7 min read
-        </div>
-        
-        <div class="post-content yue">
-          <p>Java面试第一篇 关于JVM的那些事情</p>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Java面试总结(1) -- JVM</h2>
+            <div class="post-date">2020-03-07</div>
+            
+            <div class="post-content">
+              <p>Java面试第一篇 关于JVM的那些事情</p>
 <!-- more -->
 <h1 id="java面试点">Java面试点</h1>
 <h2 id="1-jvm">1. JVM</h2>
@@ -436,142 +406,54 @@ public class HelloWorld {
 </code></pre>
 <figure data-type="image" tabindex="9"><img src="https://zu3zz.github.io/post-images/1588817818449.png" alt="" loading="lazy"></figure>
 
-        </div>
-
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/_el9BOoeY/">
-            <span class="flex-auto">Java</span>
-          </a>
-        
-
-
-        <div class="flex justify-between py-8">
-          
-            <div class="prev-post">
-              <a href="https://zu3zz.github.io/post/java-2/">
-                <h3 class="post-title">
-                  <i class="remixicon-arrow-left-line"></i>
-                  Java面试总结(2) -- 线程篇
-                </h3>
-              </a>
             </div>
-          
+            
+              <div class="tag-container">
+                
+                  <a href="https://zu3zz.github.io/tag/_el9BOoeY/" class="tag">
+                    Java
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zu3zz.github.io/post/java-thread-1/">
+                  <h3 class="post-title">
+                    Java多线程与并发(1) -- 线程创建
+                  </h3>
+                </a>
+              </div>
+            
 
-          
-            <div class="next-post">
-              <a href="https://zu3zz.github.io/post/java-thread-1/">
-                <h3 class="post-title">
-                  Java多线程与并发(1) -- 线程创建
-                  <i class="remixicon-arrow-right-line"></i>
-                </h3>
-              </a>
-            </div>
-          
+            
+
+          </div>
+
         </div>
-
-        
-
       </div>
     </div>
 
-    <script src="https://zu3zz.github.io/media/prism.js"></script>  
-<script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-Prism.highlightAll()
+<script type="application/javascript">
 
-let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-// This should probably be throttled.
-// Especially because it triggers during smooth scrolling.
-// https://lodash.com/docs/4.17.10#throttle
-// You could do like...
-// window.addEventListener("scroll", () => {
-//    _.throttle(doThatStuff, 100);
-// });
-// Only not doing it here to keep this Pen dependency-free.
+hljs.initHighlightingOnLoad()
 
-window.addEventListener("scroll", event => {
-  let fromTop = window.scrollY;
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-  mainNavLinks.forEach((link, index) => {
-    let section = document.getElementById(decodeURI(link.hash).substring(1));
-    let nextSection = null
-    if (mainNavLinks[index + 1]) {
-      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-    }
-    if (section.offsetTop <= fromTop) {
-      if (nextSection) {
-        if (nextSection.offsetTop > fromTop) {
-          link.classList.add("current");
-        } else {
-          link.classList.remove("current");    
-        }
-      } else {
-        link.classList.add("current");
-      }
-    } else {
-      link.classList.remove("current");
-    }
-  });
-});
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
-
-  if ("IntersectionObserver" in window) {
-    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          let lazyImage = entry.target
-          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
-          lazyImage.classList.remove("lazy")
-          lazyImageObserver.unobserve(lazyImage)
-        }
-      });
-    });
-
-    lazyImages.forEach(function(lazyImage) {
-      lazyImageObserver.observe(lazyImage)
-    })
-  } else {
-    // Possibly fall back to a more compatible method here
-  }
-});
-
-const menuContainer = document.querySelector('.menu-container')
-const menus = document.querySelectorAll('.menu-container .menu')
-const mask = document.querySelector('.mask')
-const contentWrapper = document.querySelector('.content-wrapper')
-const latestArticle = document.querySelector('.latest-article')
-const readMore = document.querySelector('.read-more')
-const indexPage = document.querySelector('.index-page')
-
-const isHome = location.pathname === '/'
-if (latestArticle) {
-  latestArticle.style.display = isHome ? 'block' : 'none'
-  readMore.style.display = isHome ? 'block' : 'none'
-  indexPage.style.display = isHome ? 'none' : 'block'
-}
-
-const openMenu = () => {
-  menuContainer.classList.add('open')
-  menus.forEach(menu => {
-    menu.classList.add('animated', 'fadeInLeft')
-  })
-  mask.classList.add('open')
-  contentWrapper.classList.add('is-second')
-}
-
-const closeMenu = () => {
-  menuContainer.classList.remove('open')
-  menus.forEach(menu => {
-    menu.classList.remove('animated', 'fadeInLeft')
-  })
-  mask.classList.remove('open')
-  contentWrapper.classList.remove('is-second')
-}
 </script>
-  
+
+
+
+
   </body>
 </html>

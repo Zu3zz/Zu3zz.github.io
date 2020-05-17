@@ -1,176 +1,112 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>风袖</title>
-<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589730611919">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <meta charset="utf-8" >
 
+<title>主流缓存Redis笔记 | 风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731257565">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zu3zz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.github.io/atom.xml">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 
   </head>
   <body>
-    <div id="app" class="main px-4 flex flex-col lg:flex-row">
-      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
-  <div class="lg:sticky top-0">
-    <div class="sidebar-content">
-      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
-        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
-        <a href="https://zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.github.io/images/avatar.png?v=1589730611919" alt="">
-        </a>
-        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
-      </div>
-      
-        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
-          <p class="my-4 text-gray-600 font-light hidden lg:block">
-            文章目录
-          </p>
-          <div class="toc-container hidden lg:block">
-            <ul class="markdownIt-TOC">
-<li><a href="#%E4%B8%BB%E6%B5%81%E7%BC%93%E5%AD%98redis%E7%AC%94%E8%AE%B0">主流缓存Redis笔记</a>
-<ul>
-<li><a href="#1-%E4%B8%BB%E6%B5%81%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84">1. 主流应用架构</a>
-<ul>
-<li><a href="#11-%E7%BC%93%E5%AD%98%E4%B8%AD%E9%97%B4%E4%BB%B6-memcache%E5%92%8Credis%E7%9A%84%E5%8C%BA%E5%88%AB">1.1 缓存中间件---- Memcache和Redis的区别</a>
-<ul>
-<li><a href="#1-memcache%E4%BB%A3%E7%A0%81%E5%B1%82%E6%AC%A1%E7%B1%BB%E4%BC%BChash">1. Memcache：代码层次类似Hash</a></li>
-<li><a href="#2-redis">2. Redis</a></li>
-</ul>
-</li>
-<li><a href="#12-%E4%B8%BA%E4%BB%80%E4%B9%88redis%E8%83%BD%E8%BF%99%E4%B9%88%E5%BF%AB">1.2 为什么Redis能这么快</a>
-<ul>
-<li><a href="#1-100000qps%E6%AF%8F%E7%A7%92%E5%86%85%E6%9F%A5%E8%AF%A2%E6%AC%A1%E6%95%B0">1. 100000+QPS（每秒内查询次数）</a></li>
-</ul>
-</li>
-<li><a href="#13-%E5%A4%9A%E8%B7%AFio%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B">1.3 多路I/O复用模型</a>
-<ul>
-<li><a href="#1-fd-file-descriptor%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6">1. FD: File descriptor，文件描述符</a></li>
-<li><a href="#2-%E4%BC%A0%E7%BB%9F%E7%9A%84%E9%98%BB%E5%A1%9Eio%E6%A8%A1%E5%9E%8B">2. 传统的阻塞I/O模型</a></li>
-<li><a href="#3-select-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8">3. Select 系统调用</a></li>
-<li><a href="#4-redis%E9%87%87%E7%94%A8%E7%9A%84io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E5%87%BD%E6%95%B0epollkqueueevportselect">4. Redis采用的I/O多路复用函数：epoll/kqueue/evport/select</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#2-redis%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2. Redis的数据类型</a>
-<ul>
-<li><a href="#1-%E4%BE%9B%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">1. 供用户使用的数据类型</a></li>
-<li><a href="#2-%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%9F%BA%E7%A1%80">2. 底层数据类型基础</a></li>
-</ul>
-</li>
-<li><a href="#3-%E4%BB%8E%E6%B5%B7%E9%87%8Fkey%E9%87%8C%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%80%E5%9B%BA%E5%AE%9A%E5%89%8D%E7%BC%80%E7%9A%84key">3. 从海量key里查询某一固定前缀的Key</a>
-<ul>
-<li><a href="#1-keys-pattern%E6%9F%A5%E6%89%BE%E6%89%80%E6%9C%89%E7%AC%A6%E5%90%88%E7%BB%99%E5%AE%9A%E6%A8%A1%E5%BC%8Fpattern%E7%9A%84key">1. KEYS pattern：查找所有符合给定模式pattern的key</a></li>
-<li><a href="#2-scan-cursor-match-pattern-count-count">2. SCAN cursor [MATCH pattern] [COUNT count]</a></li>
-</ul>
-</li>
-<li><a href="#4-%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81">4. 如何通过Redis实现分布式锁</a>
-<ul>
-<li><a href="#1-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E9%9C%80%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98">1. 分布式锁需要解决的问题</a></li>
-<li><a href="#2-setnx-key-value%E5%A6%82%E6%9E%9Ckey%E4%B8%8D%E5%AD%98%E5%9C%A8%E5%88%99%E5%88%9B%E5%BB%BA%E5%B9%B6%E8%B5%8B%E5%80%BC">2. SETNX key value：如果key不存在，则创建并赋值</a></li>
-<li><a href="#3-%E8%A7%A3%E5%86%B3setnx-%E9%95%BF%E6%9C%9F%E6%9C%89%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98">3. 解决SETNX 长期有效的问题</a></li>
-<li><a href="#4-%E5%A4%A7%E9%87%8Fkey%E5%90%8C%E6%97%B6%E8%BF%87%E6%9C%9F%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">4. 大量key同时过期的注意事项</a></li>
-</ul>
-</li>
-<li><a href="#5-%E4%BD%BF%E7%94%A8redis%E5%81%9A%E5%BC%82%E6%AD%A5%E9%98%9F%E5%88%97">5. 使用Redis做异步队列</a>
-<ul>
-<li><a href="#1-%E4%BD%BF%E7%94%A8list%E4%BD%9C%E4%B8%BA%E9%98%9F%E5%88%97">1. 使用List作为队列</a></li>
-<li><a href="#2-pubsub%E4%B8%BB%E9%A2%98%E8%AE%A2%E9%98%85%E8%80%85%E6%A8%A1%E5%BC%8F">2. pub/sub：主题订阅者模式</a></li>
-</ul>
-</li>
-<li><a href="#6-redis%E5%A6%82%E4%BD%95%E5%81%9A%E6%8C%81%E4%B9%85%E5%8C%96">6. Redis如何做持久化</a>
-<ul>
-<li><a href="#1-rdb%E5%BF%AB%E7%85%A7%E6%8C%81%E4%B9%85%E5%8C%96%E4%BF%9D%E5%AD%98%E6%9F%90%E4%B8%AA%E6%97%B6%E9%97%B4%E7%82%B9%E7%9A%84%E5%85%A8%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BF%AB%E7%85%A7">1. RDB（快照）持久化：保存某个时间点的全量数据快照</a></li>
-<li><a href="#2-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%A7%A6%E5%8F%91rbd%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F">2. 自动化触发RBD持久化的方式</a></li>
-<li><a href="#3-bgsave%E7%9A%84%E5%8E%9F%E7%90%86">3. BGSAVE的原理</a></li>
-<li><a href="#4-aofappend-only-file%E6%8C%81%E4%B9%85%E5%8C%96%E4%BF%9D%E5%AD%98%E5%86%99%E7%8A%B6%E6%80%81">4. AOF（Append-Only-File）持久化：保存写状态</a></li>
-<li><a href="#5-%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D%E8%BF%87%E7%A8%8B">5. 数据恢复过程</a></li>
-<li><a href="#6-%E4%B8%A4%E8%80%85%E4%BC%98%E7%BC%BA%E7%82%B9">6. 两者优缺点</a></li>
-<li><a href="#7-%E4%BD%BF%E7%94%A8rdb-aof%E6%B7%B7%E5%90%88%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F">7. 使用RDB-AOF混合持久化方式</a></li>
-</ul>
-</li>
-<li><a href="#7-pipeline">7. Pipeline</a>
-<ul>
-<li><a href="#1-%E4%BD%BF%E7%94%A8pipeline%E7%9A%84%E5%A5%BD%E5%A4%84">1. 使用pipeline的好处</a></li>
-<li><a href="#2-redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6">2. Redis的同步机制</a></li>
-</ul>
-</li>
-<li><a href="#8-redis%E9%9B%86%E7%BE%A4">8. Redis集群</a>
-<ul>
-<li><a href="#1-%E5%A6%82%E4%BD%95%E4%BB%8E%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E9%87%8C%E5%BF%AB%E9%80%9F%E6%89%BE%E5%88%B0%E6%89%80%E9%9C%80">1. 如何从海量数据里快速找到所需</a></li>
-<li><a href="#2-redis%E7%9A%84%E9%9B%86%E7%BE%A4%E5%8E%9F%E7%90%86">2. Redis的集群原理</a></li>
-<li><a href="#3-%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C%E9%97%AE%E9%A2%98">3. 数据倾斜问题</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+    <div id="app" class="main">
 
-          </div>
-        </div>
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zu3zz.github.io">
+        <img src="https://zu3zz.github.io/images/avatar.png?v=1589731257565" class="site-logo">
+        <h1 class="site-title">风袖</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/projects" class="site-nav">
+            项目
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      烟蛾敛略不胜态，风袖低昂如有情
+    </div>
+    <div class="site-footer">
+      By 3zz. | <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
     </div>
   </div>
 </div>
 
-<div class="menu-container">
-  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
-  <div>
-    
-      
-        <a href="/" class="menu" style="animation-delay: 0s">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu" style="animation-delay: 0.2s">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu" style="animation-delay: 0.4s">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
-          关于
-        </a>
-      
-    
-      
-        <a href="/projects" class="menu" style="animation-delay: 0.8s">
-          项目
-        </a>
-      
-    
-  </div>
-  <div class="site-footer">
-    <div class="py-4 text-gray-700">By 3zz.</div>
-    <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
-  </div>
-</div>
-<div class="mask" onclick="closeMenu()">
-</div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">主流缓存Redis笔记</h1>
-        <div class="text-sm text-gray-700 lg:my-8">
-          2020-02-16 / 9 min read
-        </div>
-        
-        <div class="post-content yue">
-          <p>🐽详细讲解主流缓存面试会遇到的问题，包含Redis分布式锁、异步队列、持久化、集群等🐽</p>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">主流缓存Redis笔记</h2>
+            <div class="post-date">2020-02-16</div>
+            
+            <div class="post-content">
+              <p>🐽详细讲解主流缓存面试会遇到的问题，包含Redis分布式锁、异步队列、持久化、集群等🐽</p>
 <!-- more -->
 <h1 id="主流缓存redis笔记">主流缓存Redis笔记</h1>
 <h2 id="1-主流应用架构">1. 主流应用架构</h2>
@@ -484,154 +420,66 @@
 </li>
 </ol>
 
-        </div>
-
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/r3gGxAQVM/">
-            <span class="flex-auto">Interview</span>
-          </a>
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/U3FdeW1UW/">
-            <span class="flex-auto">NoSQL</span>
-          </a>
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/tqQSAbU7V/">
-            <span class="flex-auto">BackEnd</span>
-          </a>
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/FlCGh236W/">
-            <span class="flex-auto">Redis</span>
-          </a>
-        
-
-
-        <div class="flex justify-between py-8">
-          
-            <div class="prev-post">
-              <a href="https://zu3zz.github.io/post/java-thread-1/">
-                <h3 class="post-title">
-                  <i class="remixicon-arrow-left-line"></i>
-                  Java多线程与并发(1) -- 线程创建
-                </h3>
-              </a>
             </div>
-          
+            
+              <div class="tag-container">
+                
+                  <a href="https://zu3zz.github.io/tag/r3gGxAQVM/" class="tag">
+                    Interview
+                  </a>
+                
+                  <a href="https://zu3zz.github.io/tag/U3FdeW1UW/" class="tag">
+                    NoSQL
+                  </a>
+                
+                  <a href="https://zu3zz.github.io/tag/tqQSAbU7V/" class="tag">
+                    BackEnd
+                  </a>
+                
+                  <a href="https://zu3zz.github.io/tag/FlCGh236W/" class="tag">
+                    Redis
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zu3zz.github.io/post/interview-database/">
+                  <h3 class="post-title">
+                    数据库面试考点
+                  </h3>
+                </a>
+              </div>
+            
 
-          
-            <div class="next-post">
-              <a href="https://zu3zz.github.io/post/interview-database/">
-                <h3 class="post-title">
-                  数据库面试考点
-                  <i class="remixicon-arrow-right-line"></i>
-                </h3>
-              </a>
-            </div>
-          
+            
+
+          </div>
+
         </div>
-
-        
-
       </div>
     </div>
 
-    <script src="https://zu3zz.github.io/media/prism.js"></script>  
-<script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-Prism.highlightAll()
+<script type="application/javascript">
 
-let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-// This should probably be throttled.
-// Especially because it triggers during smooth scrolling.
-// https://lodash.com/docs/4.17.10#throttle
-// You could do like...
-// window.addEventListener("scroll", () => {
-//    _.throttle(doThatStuff, 100);
-// });
-// Only not doing it here to keep this Pen dependency-free.
+hljs.initHighlightingOnLoad()
 
-window.addEventListener("scroll", event => {
-  let fromTop = window.scrollY;
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-  mainNavLinks.forEach((link, index) => {
-    let section = document.getElementById(decodeURI(link.hash).substring(1));
-    let nextSection = null
-    if (mainNavLinks[index + 1]) {
-      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-    }
-    if (section.offsetTop <= fromTop) {
-      if (nextSection) {
-        if (nextSection.offsetTop > fromTop) {
-          link.classList.add("current");
-        } else {
-          link.classList.remove("current");    
-        }
-      } else {
-        link.classList.add("current");
-      }
-    } else {
-      link.classList.remove("current");
-    }
-  });
-});
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
-
-  if ("IntersectionObserver" in window) {
-    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          let lazyImage = entry.target
-          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
-          lazyImage.classList.remove("lazy")
-          lazyImageObserver.unobserve(lazyImage)
-        }
-      });
-    });
-
-    lazyImages.forEach(function(lazyImage) {
-      lazyImageObserver.observe(lazyImage)
-    })
-  } else {
-    // Possibly fall back to a more compatible method here
-  }
-});
-
-const menuContainer = document.querySelector('.menu-container')
-const menus = document.querySelectorAll('.menu-container .menu')
-const mask = document.querySelector('.mask')
-const contentWrapper = document.querySelector('.content-wrapper')
-const latestArticle = document.querySelector('.latest-article')
-const readMore = document.querySelector('.read-more')
-const indexPage = document.querySelector('.index-page')
-
-const isHome = location.pathname === '/'
-if (latestArticle) {
-  latestArticle.style.display = isHome ? 'block' : 'none'
-  readMore.style.display = isHome ? 'block' : 'none'
-  indexPage.style.display = isHome ? 'none' : 'block'
-}
-
-const openMenu = () => {
-  menuContainer.classList.add('open')
-  menus.forEach(menu => {
-    menu.classList.add('animated', 'fadeInLeft')
-  })
-  mask.classList.add('open')
-  contentWrapper.classList.add('is-second')
-}
-
-const closeMenu = () => {
-  menuContainer.classList.remove('open')
-  menus.forEach(menu => {
-    menu.classList.remove('animated', 'fadeInLeft')
-  })
-  mask.classList.remove('open')
-  contentWrapper.classList.remove('is-second')
-}
 </script>
-  
+
+
+
+
   </body>
 </html>

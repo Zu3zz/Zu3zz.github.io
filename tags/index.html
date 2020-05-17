@@ -1,380 +1,195 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>风袖</title>
-<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589730611919">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <meta charset="utf-8" >
 
+<title>标签列表 | 风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731257565">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zu3zz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.github.io/atom.xml">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 
   </head>
   <body>
-    <div id="app" class="main px-4 flex flex-col lg:flex-row">
-      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
-  <div class="lg:sticky top-0">
-    <div class="sidebar-content">
-      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
-        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
-        <a href="https://zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.github.io/images/avatar.png?v=1589730611919" alt="">
-        </a>
-        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zu3zz.github.io">
+        <img src="https://zu3zz.github.io/images/avatar.png?v=1589731257565" class="site-logo">
+        <h1 class="site-title">风袖</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
       </div>
+    </div>
+    <div>
       
-        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
-          <p class="my-4 text-gray-600 font-light hidden lg:block">
-            烟蛾敛略不胜态，风袖低昂如有情
-          </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/projects" class="site-nav">
+            项目
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      烟蛾敛略不胜态，风袖低昂如有情
+    </div>
+    <div class="site-footer">
+      By 3zz. | <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="tag-list-title">标签列表</h2>
+          <div class="tags-container">
             
-              
-                <a href="https://github.com/zu3zz" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/rAV1Yp-Gr/">SpringCloud</a>
             
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/VaOfOOWC5/">SpringBoot</a>
             
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/tqQSAbU7V/">BackEnd</a>
             
-              
-                <a href="https://www.zhihu.com/people/ga-me-35/activities" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-zhihu-line"></i>
-                </a>
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/_el9BOoeY/">Java</a>
             
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/r3gGxAQVM/">Interview</a>
             
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/U3FdeW1UW/">NoSQL</a>
             
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/FlCGh236W/">Redis</a>
             
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/uhv6L1Wqc/">Database</a>
             
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/7acBApeyq/">MySQL</a>
             
-              
+              <a class="tag" href="https://zu3zz.github.io/tag/58z22fyTT/">Computer Network</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/d-Yb1ZFrX/">Scala</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/gIc76HpAW/">BigData</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/SU7AtBJej/">SparkSQL</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/SXYhkdjhr/">Spark</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/fxWruECqJ/">Hive</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/fAzDxdx7A/">HBase</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/yf0i5Glys/">Linux</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/ITpFJisjB/">Nginx</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/gkOi3b2wx/">Zookeeper</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/jmeIOwq49/">Python</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/VQJGfklWj/">Kafka</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/lyighyBv5/">Algorithm</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/MzVUE1KTI/">LeetCode</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/atQXWdwzr/">Data Structure</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/uge4gU_2X/">Hadoop</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/egbOn_Rcj/">MapReduce</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/SMOJCZD7o/">Yarn</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/wL1rhNefO/">Cpp</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/eDo687J7B/">React</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/2Iiv88cUt/">Node.js</a>
+            
+              <a class="tag" href="https://zu3zz.github.io/tag/Zkk1cdrv0/">Koa</a>
             
           </div>
         </div>
-      
-    </div>
-  </div>
-</div>
-
-<div class="menu-container">
-  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
-  <div>
-    
-      
-        <a href="/" class="menu" style="animation-delay: 0s">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu" style="animation-delay: 0.2s">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu" style="animation-delay: 0.4s">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
-          关于
-        </a>
-      
-    
-      
-        <a href="/projects" class="menu" style="animation-delay: 0.8s">
-          项目
-        </a>
-      
-    
-  </div>
-  <div class="site-footer">
-    <div class="py-4 text-gray-700">By 3zz.</div>
-    <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
-  </div>
-</div>
-<div class="mask" onclick="closeMenu()">
-</div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-2-line"></i> 标签云
-        </h2>
-        <div class="tags-container">
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/rAV1Yp-Gr/" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-              <span class="flex-auto">SpringCloud</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/VaOfOOWC5/" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-              <span class="flex-auto">SpringBoot</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/tqQSAbU7V/" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-              <span class="flex-auto">BackEnd</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">13</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/_el9BOoeY/" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-              <span class="flex-auto">Java</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">10</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/r3gGxAQVM/" :style="{ 'animation-delay': `${4 * 0.2}s` }">
-              <span class="flex-auto">Interview</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">3</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/U3FdeW1UW/" :style="{ 'animation-delay': `${5 * 0.2}s` }">
-              <span class="flex-auto">NoSQL</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">3</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/FlCGh236W/" :style="{ 'animation-delay': `${6 * 0.2}s` }">
-              <span class="flex-auto">Redis</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/uhv6L1Wqc/" :style="{ 'animation-delay': `${7 * 0.2}s` }">
-              <span class="flex-auto">Database</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/7acBApeyq/" :style="{ 'animation-delay': `${8 * 0.2}s` }">
-              <span class="flex-auto">MySQL</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">7</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/58z22fyTT/" :style="{ 'animation-delay': `${9 * 0.2}s` }">
-              <span class="flex-auto">Computer Network</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/d-Yb1ZFrX/" :style="{ 'animation-delay': `${10 * 0.2}s` }">
-              <span class="flex-auto">Scala</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">9</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/gIc76HpAW/" :style="{ 'animation-delay': `${11 * 0.2}s` }">
-              <span class="flex-auto">BigData</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">16</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/SU7AtBJej/" :style="{ 'animation-delay': `${12 * 0.2}s` }">
-              <span class="flex-auto">SparkSQL</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/SXYhkdjhr/" :style="{ 'animation-delay': `${13 * 0.2}s` }">
-              <span class="flex-auto">Spark</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/fxWruECqJ/" :style="{ 'animation-delay': `${14 * 0.2}s` }">
-              <span class="flex-auto">Hive</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/fAzDxdx7A/" :style="{ 'animation-delay': `${15 * 0.2}s` }">
-              <span class="flex-auto">HBase</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/yf0i5Glys/" :style="{ 'animation-delay': `${16 * 0.2}s` }">
-              <span class="flex-auto">Linux</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">3</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/ITpFJisjB/" :style="{ 'animation-delay': `${17 * 0.2}s` }">
-              <span class="flex-auto">Nginx</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/gkOi3b2wx/" :style="{ 'animation-delay': `${18 * 0.2}s` }">
-              <span class="flex-auto">Zookeeper</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/jmeIOwq49/" :style="{ 'animation-delay': `${19 * 0.2}s` }">
-              <span class="flex-auto">Python</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/VQJGfklWj/" :style="{ 'animation-delay': `${20 * 0.2}s` }">
-              <span class="flex-auto">Kafka</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/lyighyBv5/" :style="{ 'animation-delay': `${21 * 0.2}s` }">
-              <span class="flex-auto">Algorithm</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/MzVUE1KTI/" :style="{ 'animation-delay': `${22 * 0.2}s` }">
-              <span class="flex-auto">LeetCode</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">3</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/atQXWdwzr/" :style="{ 'animation-delay': `${23 * 0.2}s` }">
-              <span class="flex-auto">Data Structure</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/uge4gU_2X/" :style="{ 'animation-delay': `${24 * 0.2}s` }">
-              <span class="flex-auto">Hadoop</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">3</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/egbOn_Rcj/" :style="{ 'animation-delay': `${25 * 0.2}s` }">
-              <span class="flex-auto">MapReduce</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/SMOJCZD7o/" :style="{ 'animation-delay': `${26 * 0.2}s` }">
-              <span class="flex-auto">Yarn</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/wL1rhNefO/" :style="{ 'animation-delay': `${27 * 0.2}s` }">
-              <span class="flex-auto">Cpp</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/eDo687J7B/" :style="{ 'animation-delay': `${28 * 0.2}s` }">
-              <span class="flex-auto">React</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/2Iiv88cUt/" :style="{ 'animation-delay': `${29 * 0.2}s` }">
-              <span class="flex-auto">Node.js</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">3</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/Zkk1cdrv0/" :style="{ 'animation-delay': `${30 * 0.2}s` }">
-              <span class="flex-auto">Koa</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
-          
-        </div>
       </div>
     </div>
 
-    <script src="https://zu3zz.github.io/media/prism.js"></script>  
-<script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-Prism.highlightAll()
+<script type="application/javascript">
 
-let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-// This should probably be throttled.
-// Especially because it triggers during smooth scrolling.
-// https://lodash.com/docs/4.17.10#throttle
-// You could do like...
-// window.addEventListener("scroll", () => {
-//    _.throttle(doThatStuff, 100);
-// });
-// Only not doing it here to keep this Pen dependency-free.
+hljs.initHighlightingOnLoad()
 
-window.addEventListener("scroll", event => {
-  let fromTop = window.scrollY;
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-  mainNavLinks.forEach((link, index) => {
-    let section = document.getElementById(decodeURI(link.hash).substring(1));
-    let nextSection = null
-    if (mainNavLinks[index + 1]) {
-      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-    }
-    if (section.offsetTop <= fromTop) {
-      if (nextSection) {
-        if (nextSection.offsetTop > fromTop) {
-          link.classList.add("current");
-        } else {
-          link.classList.remove("current");    
-        }
-      } else {
-        link.classList.add("current");
-      }
-    } else {
-      link.classList.remove("current");
-    }
-  });
-});
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
-
-  if ("IntersectionObserver" in window) {
-    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          let lazyImage = entry.target
-          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
-          lazyImage.classList.remove("lazy")
-          lazyImageObserver.unobserve(lazyImage)
-        }
-      });
-    });
-
-    lazyImages.forEach(function(lazyImage) {
-      lazyImageObserver.observe(lazyImage)
-    })
-  } else {
-    // Possibly fall back to a more compatible method here
-  }
-});
-
-const menuContainer = document.querySelector('.menu-container')
-const menus = document.querySelectorAll('.menu-container .menu')
-const mask = document.querySelector('.mask')
-const contentWrapper = document.querySelector('.content-wrapper')
-const latestArticle = document.querySelector('.latest-article')
-const readMore = document.querySelector('.read-more')
-const indexPage = document.querySelector('.index-page')
-
-const isHome = location.pathname === '/'
-if (latestArticle) {
-  latestArticle.style.display = isHome ? 'block' : 'none'
-  readMore.style.display = isHome ? 'block' : 'none'
-  indexPage.style.display = isHome ? 'none' : 'block'
-}
-
-const openMenu = () => {
-  menuContainer.classList.add('open')
-  menus.forEach(menu => {
-    menu.classList.add('animated', 'fadeInLeft')
-  })
-  mask.classList.add('open')
-  contentWrapper.classList.add('is-second')
-}
-
-const closeMenu = () => {
-  menuContainer.classList.remove('open')
-  menus.forEach(menu => {
-    menu.classList.remove('animated', 'fadeInLeft')
-  })
-  mask.classList.remove('open')
-  contentWrapper.classList.remove('is-second')
-}
 </script>
-  
+
+
+
+
   </body>
 </html>

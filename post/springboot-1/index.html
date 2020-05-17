@@ -1,142 +1,112 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>风袖</title>
-<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589730611919">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <meta charset="utf-8" >
 
+<title>SpringBoot系列(1) ---- SpringBoot入门 | 风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731257565">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zu3zz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.github.io/atom.xml">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 
   </head>
   <body>
-    <div id="app" class="main px-4 flex flex-col lg:flex-row">
-      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
-  <div class="lg:sticky top-0">
-    <div class="sidebar-content">
-      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
-        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
-        <a href="https://zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.github.io/images/avatar.png?v=1589730611919" alt="">
-        </a>
-        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
-      </div>
-      
-        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
-          <p class="my-4 text-gray-600 font-light hidden lg:block">
-            文章目录
-          </p>
-          <div class="toc-container hidden lg:block">
-            <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#1-spring-boot-%E5%85%A5%E9%97%A8">1、Spring Boot 入门</a>
-<ul>
-<li><a href="#1-spring-boot-%E7%AE%80%E4%BB%8B">1、 Spring Boot 简介</a></li>
-</ul>
-</li>
-<li><a href="#2-%E5%BE%AE%E6%9C%8D%E5%8A%A1">2、微服务</a></li>
-<li><a href="#3-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">3、环境准备</a>
-<ul>
-<li><a href="#1-maven%E8%AE%BE%E7%BD%AE">1、MAVEN设置</a></li>
-<li><a href="#2-idea%E8%AE%BE%E7%BD%AE">2、IDEA设置</a></li>
-</ul>
-</li>
-<li><a href="#4-spring-boot-helloworld">4、Spring Boot HelloWorld</a>
-<ul>
-<li><a href="#1-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAmaven%E5%B7%A5%E7%A8%8Bjar">1、创建一个maven工程；(jar)</a></li>
-<li><a href="#2-%E5%AF%BC%E5%85%A5spring-boot%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BE%9D%E8%B5%96">2、导入spring boot相关的依赖</a></li>
-<li><a href="#3-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E4%B8%BB%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8spring-boot%E5%BA%94%E7%94%A8">3、编写一个主程序：启动Spring Boot应用</a></li>
-<li><a href="#4-%E7%BC%96%E5%86%99%E7%9B%B8%E5%85%B3%E7%9A%84controller-service">4、编写相关的Controller、Service</a></li>
-<li><a href="#5-%E8%BF%90%E8%A1%8C%E4%B8%BB%E7%A8%8B%E5%BA%8F%E6%B5%8B%E8%AF%95">5、运行主程序测试</a></li>
-<li><a href="#6-%E7%AE%80%E5%8C%96%E9%83%A8%E7%BD%B2">6、简化部署</a></li>
-</ul>
-</li>
-<li><a href="#5-hello-world-%E6%8E%A2%E7%A9%B6">5、Hello World 探究</a>
-<ul>
-<li><a href="#1-pom%E6%96%87%E4%BB%B6">1、POM文件</a>
-<ul>
-<li><a href="#1-%E7%88%B6%E9%A1%B9%E7%9B%AE">1、父项目</a></li>
-<li><a href="#2-%E5%90%AF%E5%8A%A8%E5%99%A8">2、启动器</a></li>
-</ul>
-</li>
-<li><a href="#2-%E4%B8%BB%E7%A8%8B%E5%BA%8F%E7%B1%BB%E4%B8%BB%E5%85%A5%E5%8F%A3%E7%B1%BB">2、主程序类，主入口类</a></li>
-</ul>
-</li>
-<li><a href="#6-%E4%BD%BF%E7%94%A8spring-initializer%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAspring-boot%E9%A1%B9%E7%9B%AE">6、使用Spring Initializer快速创建Spring Boot项目</a>
-<ul>
-<li><a href="#1-idea-%E4%BD%BF%E7%94%A8spring-initializer%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">1、IDEA: 使用Spring Initializer快速创建项目</a></li>
-<li><a href="#2-sts%E4%BD%BF%E7%94%A8-spring-starter-project%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">2、STS使用 Spring Starter Project快速创建项目</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+    <div id="app" class="main">
 
-          </div>
-        </div>
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zu3zz.github.io">
+        <img src="https://zu3zz.github.io/images/avatar.png?v=1589731257565" class="site-logo">
+        <h1 class="site-title">风袖</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/projects" class="site-nav">
+            项目
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      烟蛾敛略不胜态，风袖低昂如有情
+    </div>
+    <div class="site-footer">
+      By 3zz. | <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
     </div>
   </div>
 </div>
 
-<div class="menu-container">
-  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
-  <div>
-    
-      
-        <a href="/" class="menu" style="animation-delay: 0s">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu" style="animation-delay: 0.2s">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu" style="animation-delay: 0.4s">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
-          关于
-        </a>
-      
-    
-      
-        <a href="/projects" class="menu" style="animation-delay: 0.8s">
-          项目
-        </a>
-      
-    
-  </div>
-  <div class="site-footer">
-    <div class="py-4 text-gray-700">By 3zz.</div>
-    <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
-  </div>
-</div>
-<div class="mask" onclick="closeMenu()">
-</div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">SpringBoot系列(1) ---- SpringBoot入门</h1>
-        <div class="text-sm text-gray-700 lg:my-8">
-          2019-10-07 / 8 min read
-        </div>
-        
-        <div class="post-content yue">
-          <p>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉<br>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">SpringBoot系列(1) ---- SpringBoot入门</h2>
+            <div class="post-date">2019-10-07</div>
+            
+            <div class="post-content">
+              <p>🎉开新坑啦 Java后端系列之SpringBoot篇第一章：SpringBoot入门🎉<br>
 🎊🎊有源码级别的分析哦~~🎊🎊</p>
 <!-- more -->
 <h2 id="1-spring-boot-入门">1、Spring Boot 入门</h2>
@@ -379,150 +349,62 @@ public @interface EnableAutoConfiguration {}
 <h3 id="2-sts使用-spring-starter-project快速创建项目">2、STS使用 Spring Starter Project快速创建项目</h3>
 <hr>
 
-        </div>
-
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/VaOfOOWC5/">
-            <span class="flex-auto">SpringBoot</span>
-          </a>
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/tqQSAbU7V/">
-            <span class="flex-auto">BackEnd</span>
-          </a>
-        
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://zu3zz.github.io/tag/_el9BOoeY/">
-            <span class="flex-auto">Java</span>
-          </a>
-        
-
-
-        <div class="flex justify-between py-8">
-          
-            <div class="prev-post">
-              <a href="https://zu3zz.github.io/post/springboot-2/">
-                <h3 class="post-title">
-                  <i class="remixicon-arrow-left-line"></i>
-                  SpringBoot系列(2) ---- 配置文件
-                </h3>
-              </a>
             </div>
-          
+            
+              <div class="tag-container">
+                
+                  <a href="https://zu3zz.github.io/tag/VaOfOOWC5/" class="tag">
+                    SpringBoot
+                  </a>
+                
+                  <a href="https://zu3zz.github.io/tag/tqQSAbU7V/" class="tag">
+                    BackEnd
+                  </a>
+                
+                  <a href="https://zu3zz.github.io/tag/_el9BOoeY/" class="tag">
+                    Java
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zu3zz.github.io/post/leetcode-double-week-10/">
+                  <h3 class="post-title">
+                    LeetCode-double-week-10
+                  </h3>
+                </a>
+              </div>
+            
 
-          
-            <div class="next-post">
-              <a href="https://zu3zz.github.io/post/leetcode-double-week-10/">
-                <h3 class="post-title">
-                  LeetCode-double-week-10
-                  <i class="remixicon-arrow-right-line"></i>
-                </h3>
-              </a>
-            </div>
-          
+            
+
+          </div>
+
         </div>
-
-        
-
       </div>
     </div>
 
-    <script src="https://zu3zz.github.io/media/prism.js"></script>  
-<script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-Prism.highlightAll()
+<script type="application/javascript">
 
-let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-// This should probably be throttled.
-// Especially because it triggers during smooth scrolling.
-// https://lodash.com/docs/4.17.10#throttle
-// You could do like...
-// window.addEventListener("scroll", () => {
-//    _.throttle(doThatStuff, 100);
-// });
-// Only not doing it here to keep this Pen dependency-free.
+hljs.initHighlightingOnLoad()
 
-window.addEventListener("scroll", event => {
-  let fromTop = window.scrollY;
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-  mainNavLinks.forEach((link, index) => {
-    let section = document.getElementById(decodeURI(link.hash).substring(1));
-    let nextSection = null
-    if (mainNavLinks[index + 1]) {
-      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-    }
-    if (section.offsetTop <= fromTop) {
-      if (nextSection) {
-        if (nextSection.offsetTop > fromTop) {
-          link.classList.add("current");
-        } else {
-          link.classList.remove("current");    
-        }
-      } else {
-        link.classList.add("current");
-      }
-    } else {
-      link.classList.remove("current");
-    }
-  });
-});
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
-
-  if ("IntersectionObserver" in window) {
-    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          let lazyImage = entry.target
-          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
-          lazyImage.classList.remove("lazy")
-          lazyImageObserver.unobserve(lazyImage)
-        }
-      });
-    });
-
-    lazyImages.forEach(function(lazyImage) {
-      lazyImageObserver.observe(lazyImage)
-    })
-  } else {
-    // Possibly fall back to a more compatible method here
-  }
-});
-
-const menuContainer = document.querySelector('.menu-container')
-const menus = document.querySelectorAll('.menu-container .menu')
-const mask = document.querySelector('.mask')
-const contentWrapper = document.querySelector('.content-wrapper')
-const latestArticle = document.querySelector('.latest-article')
-const readMore = document.querySelector('.read-more')
-const indexPage = document.querySelector('.index-page')
-
-const isHome = location.pathname === '/'
-if (latestArticle) {
-  latestArticle.style.display = isHome ? 'block' : 'none'
-  readMore.style.display = isHome ? 'block' : 'none'
-  indexPage.style.display = isHome ? 'none' : 'block'
-}
-
-const openMenu = () => {
-  menuContainer.classList.add('open')
-  menus.forEach(menu => {
-    menu.classList.add('animated', 'fadeInLeft')
-  })
-  mask.classList.add('open')
-  contentWrapper.classList.add('is-second')
-}
-
-const closeMenu = () => {
-  menuContainer.classList.remove('open')
-  menus.forEach(menu => {
-    menu.classList.remove('animated', 'fadeInLeft')
-  })
-  mask.classList.remove('open')
-  contentWrapper.classList.remove('is-second')
-}
 </script>
-  
+
+
+
+
   </body>
 </html>

@@ -1,570 +1,588 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>风袖</title>
-<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情" />
-<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589730611919">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <meta charset="utf-8" >
 
+<title>文章归档 | 风袖</title>
+<meta name="description" content="烟蛾敛略不胜态，风袖低昂如有情">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zu3zz.github.io/favicon.ico?v=1589731257565">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zu3zz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="风袖 - Atom Feed" href="https://zu3zz.github.io/atom.xml">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 
   </head>
   <body>
-    <div id="app" class="main px-4 flex flex-col lg:flex-row">
-      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
-  <div class="lg:sticky top-0">
-    <div class="sidebar-content">
-      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
-        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
-        <a href="https://zu3zz.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://zu3zz.github.io/images/avatar.png?v=1589730611919" alt="">
-        </a>
-        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">风袖</h1>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zu3zz.github.io">
+        <img src="https://zu3zz.github.io/images/avatar.png?v=1589731257565" class="site-logo">
+        <h1 class="site-title">风袖</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
       </div>
+    </div>
+    <div>
       
-        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
-          <p class="my-4 text-gray-600 font-light hidden lg:block">
-            烟蛾敛略不胜态，风袖低昂如有情
-          </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/projects" class="site-nav">
+            项目
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Zu3zz" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      烟蛾敛略不胜态，风袖低昂如有情
+    </div>
+    <div class="site-footer">
+      By 3zz. | <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+
+          <h2 class="archives-title">文章归档</h2>
+          <div class="archives-container">
             
+              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2020</h2>
               
-                <a href="https://github.com/zu3zz" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/springcloud-discount-1/">
+                      <h2 class="post-title">
+                        SpringCloud 分布式优惠券(1)---SpringBoot相关
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/java-2/">
+                      <h2 class="post-title">
+                        Java面试总结(2) -- 线程篇
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/java-1/">
+                      <h2 class="post-title">
+                        Java面试总结(1) -- JVM
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/java-thread-1/">
+                      <h2 class="post-title">
+                        Java多线程与并发(1) -- 线程创建
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/interview-redis/">
+                      <h2 class="post-title">
+                        主流缓存Redis笔记
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/interview-database/">
+                      <h2 class="post-title">
+                        数据库面试考点
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/interview-network/">
+                      <h2 class="post-title">
+                        计算机网络面试考点总结
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/sparksql-2/">
+                      <h2 class="post-title">
+                        SparkSQL实战笔记（2）---- SparkSQL 概述
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/sparksql-1/">
+                      <h2 class="post-title">
+                        SparkSQL实战笔记（1）---- 部署、项目准备
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/hbase-1/">
+                      <h2 class="post-title">
+                        HBase学习笔记 ---- 整合篇
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/scala-7/">
+                      <h2 class="post-title">
+                        Scala学习笔记（7）---- Scala隐式转换
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/scala-6/">
+                      <h2 class="post-title">
+                        Scala学习笔记（6）---- Scala函数高级操作
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/scala-5/">
+                      <h2 class="post-title">
+                        Scala学习笔记（5）---- Scala集合
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/scala-4/">
+                      <h2 class="post-title">
+                        Scala学习笔记（4）---- Scala模式匹配
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/scala-3/">
+                      <h2 class="post-title">
+                        Scala学习笔记（3） ---- Scala对象
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/scala-2/">
+                      <h2 class="post-title">
+                        Scala学习笔记（2） ---- Scala函数
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/scala-1/">
+                      <h2 class="post-title">
+                        Scala学习笔记（1）---- Scala基础
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
               
             
+              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2019</h2>
               
-            
+                
               
-            
+                
               
-                <a href="https://www.zhihu.com/people/ga-me-35/activities" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-zhihu-line"></i>
-                </a>
+                
               
-            
+                
               
-            
+                
               
-            
+                
               
-            
+                
               
-            
+                
               
-            
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/ruozedata-1/">
+                      <h2 class="post-title">
+                        大数据学习(1) ---- Linux基础(1)
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/mysql-5/">
+                      <h2 class="post-title">
+                        深入浅出MySQL(5) ---- MySQL常用函数
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/mysql-4/">
+                      <h2 class="post-title">
+                        深入浅出MySQL(4) ---- 常见数据操作
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/mysql-3/">
+                      <h2 class="post-title">
+                        深入浅出MySQL(3) ---- 存储引擎
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/mysql-2/">
+                      <h2 class="post-title">
+                        深入浅出MySQL(2) ---- 数据库、数据表、数据类型
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/mysql-1/">
+                      <h2 class="post-title">
+                        深入浅出MySQL(1) ---- 基础与概念
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/message-queue-python/">
+                      <h2 class="post-title">
+                        Python与常用消息中间件
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/springboot-3/">
+                      <h2 class="post-title">
+                        SpringBoot系列(3) ---- 日志
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/springboot-2/">
+                      <h2 class="post-title">
+                        SpringBoot系列(2) ---- 配置文件
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/springboot-1/">
+                      <h2 class="post-title">
+                        SpringBoot系列(1) ---- SpringBoot入门
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/leetcode-double-week-10/">
+                      <h2 class="post-title">
+                        LeetCode-double-week-10
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/hdfs-1/">
+                      <h2 class="post-title">
+                        HDFS系列(1)----安装
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/yarn-1/">
+                      <h2 class="post-title">
+                        Yarn系列 ---- 基础、介绍、流程
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/hadoop-1/">
+                      <h2 class="post-title">
+                        Hadoop系列(1)----多集群配置流程
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/hive-2/">
+                      <h2 class="post-title">
+                        Hive系列(2)----内部表、外部表、实战
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/hive-1/">
+                      <h2 class="post-title">
+                        Hive系列(1)----常用操作
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/leetcode-stock/">
+                      <h2 class="post-title">
+                        leetcode-股票买卖问题(121,122,123,188,309,714)
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/leetcode-weeklycontest-150/">
+                      <h2 class="post-title">
+                        Leetcode-weeklyContest-150
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/heap-sort/">
+                      <h2 class="post-title">
+                        堆排序(Heap Sort)
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/react-ssr/">
+                      <h2 class="post-title">
+                        从头梳理服务器渲染原理(SSR)
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/koa-tricks/">
+                      <h2 class="post-title">
+                        用优雅的代码武装我们的koa2项目
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://zu3zz.github.io/post/react-jian-shu/">
+                      <h2 class="post-title">
+                        迈出React的第一步
+                      </h2>
+                    </a>
+                  </article>
+                
               
             
           </div>
-        </div>
-      
-    </div>
-  </div>
-</div>
 
-<div class="menu-container">
-  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
-  <div>
-    
-      
-        <a href="/" class="menu" style="animation-delay: 0s">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu" style="animation-delay: 0.2s">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu" style="animation-delay: 0.4s">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
-          关于
-        </a>
-      
-    
-      
-        <a href="/projects" class="menu" style="animation-delay: 0.8s">
-          项目
-        </a>
-      
-    
-  </div>
-  <div class="site-footer">
-    <div class="py-4 text-gray-700">By 3zz.</div>
-    <a class="rss" href="https://zu3zz.github.io/atom.xml" target="_blank">RSS</a>
-  </div>
-</div>
-<div class="mask" onclick="closeMenu()">
-</div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-archive-line"></i> 文章归档
-        </h2>
-        
-
-        <div class="archives-container">
-          
-            <h2 class="text-gray-600 py-4 animated fadeIn">
-              <i class="remixicon-map-pin-time-line"></i>
-              2020
-            </h2>
-            
-              
-                <a href="https://zu3zz.github.io/post/springcloud-discount-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    SpringCloud 分布式优惠券(1)---SpringBoot相关
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-05-12</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/java-2/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Java面试总结(2) -- 线程篇
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-03-09</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/java-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Java面试总结(1) -- JVM
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-03-07</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/java-thread-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Java多线程与并发(1) -- 线程创建
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-02-21</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/interview-redis/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    主流缓存Redis笔记
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-02-16</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/interview-database/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    数据库面试考点
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-02-12</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/interview-network/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    计算机网络面试考点总结
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-02-07</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/sparksql-2/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    SparkSQL实战笔记（2）---- SparkSQL 概述
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-14</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/sparksql-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    SparkSQL实战笔记（1）---- 部署、项目准备
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-13</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/hbase-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    HBase学习笔记 ---- 整合篇
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-11</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/scala-7/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Scala学习笔记（7）---- Scala隐式转换
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-11</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/scala-6/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Scala学习笔记（6）---- Scala函数高级操作
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-07</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/scala-5/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Scala学习笔记（5）---- Scala集合
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-05</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/scala-4/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Scala学习笔记（4）---- Scala模式匹配
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-04</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/scala-3/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Scala学习笔记（3） ---- Scala对象
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-03</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/scala-2/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Scala学习笔记（2） ---- Scala函数
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-03</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/scala-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Scala学习笔记（1）---- Scala基础
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2020-01-02</div>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-          
-            <h2 class="text-gray-600 py-4 animated fadeIn">
-              <i class="remixicon-map-pin-time-line"></i>
-              2019
-            </h2>
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/ruozedata-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    大数据学习(1) ---- Linux基础(1)
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-12-10</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/mysql-5/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    深入浅出MySQL(5) ---- MySQL常用函数
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-11-05</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/mysql-4/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    深入浅出MySQL(4) ---- 常见数据操作
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-11-01</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/mysql-3/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    深入浅出MySQL(3) ---- 存储引擎
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-10-28</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/mysql-2/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    深入浅出MySQL(2) ---- 数据库、数据表、数据类型
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-10-26</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/mysql-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    深入浅出MySQL(1) ---- 基础与概念
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-10-25</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/message-queue-python/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Python与常用消息中间件
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-10-18</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/springboot-3/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    SpringBoot系列(3) ---- 日志
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-10-13</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/springboot-2/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    SpringBoot系列(2) ---- 配置文件
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-10-10</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/springboot-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    SpringBoot系列(1) ---- SpringBoot入门
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-10-07</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/leetcode-double-week-10/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    LeetCode-double-week-10
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-10-06</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/hdfs-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    HDFS系列(1)----安装
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-09-13</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/yarn-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Yarn系列 ---- 基础、介绍、流程
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-09-10</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/hadoop-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Hadoop系列(1)----多集群配置流程
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-09-09</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/hive-2/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Hive系列(2)----内部表、外部表、实战
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-09-09</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/hive-1/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Hive系列(1)----常用操作
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-09-07</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/leetcode-stock/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    leetcode-股票买卖问题(121,122,123,188,309,714)
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-08-18</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/leetcode-weeklycontest-150/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    Leetcode-weeklyContest-150
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-08-18</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/heap-sort/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    堆排序(Heap Sort)
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-08-17</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/react-ssr/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    从头梳理服务器渲染原理(SSR)
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-08-14</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/koa-tricks/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    用优雅的代码武装我们的koa2项目
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-08-10</div>
-              
-            
-              
-                <a href="https://zu3zz.github.io/post/react-jian-shu/" class="post">
-                  <h2 class="inline-block font-bold text-lg post-title animated fadeIn">
-                    迈出React的第一步
-                  </h2>
-                </a>
-                <div class="text-sm font-light mt-3 mb-6 text-gray-400 animated fadeInDown" style="animation-delay: 0.4s">2019-08-10</div>
-              
-            
-          
-        </div>
-
-        <div>
-          <div class="pagination-container animated fadeIn">
+          <div class="pagination-container">
   
   
 </div>
@@ -573,104 +591,25 @@
       </div>
     </div>
 
-    <script src="https://zu3zz.github.io/media/prism.js"></script>  
-<script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-Prism.highlightAll()
+<script type="application/javascript">
 
-let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-// This should probably be throttled.
-// Especially because it triggers during smooth scrolling.
-// https://lodash.com/docs/4.17.10#throttle
-// You could do like...
-// window.addEventListener("scroll", () => {
-//    _.throttle(doThatStuff, 100);
-// });
-// Only not doing it here to keep this Pen dependency-free.
+hljs.initHighlightingOnLoad()
 
-window.addEventListener("scroll", event => {
-  let fromTop = window.scrollY;
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-  mainNavLinks.forEach((link, index) => {
-    let section = document.getElementById(decodeURI(link.hash).substring(1));
-    let nextSection = null
-    if (mainNavLinks[index + 1]) {
-      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-    }
-    if (section.offsetTop <= fromTop) {
-      if (nextSection) {
-        if (nextSection.offsetTop > fromTop) {
-          link.classList.add("current");
-        } else {
-          link.classList.remove("current");    
-        }
-      } else {
-        link.classList.add("current");
-      }
-    } else {
-      link.classList.remove("current");
-    }
-  });
-});
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
-
-  if ("IntersectionObserver" in window) {
-    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          let lazyImage = entry.target
-          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
-          lazyImage.classList.remove("lazy")
-          lazyImageObserver.unobserve(lazyImage)
-        }
-      });
-    });
-
-    lazyImages.forEach(function(lazyImage) {
-      lazyImageObserver.observe(lazyImage)
-    })
-  } else {
-    // Possibly fall back to a more compatible method here
-  }
-});
-
-const menuContainer = document.querySelector('.menu-container')
-const menus = document.querySelectorAll('.menu-container .menu')
-const mask = document.querySelector('.mask')
-const contentWrapper = document.querySelector('.content-wrapper')
-const latestArticle = document.querySelector('.latest-article')
-const readMore = document.querySelector('.read-more')
-const indexPage = document.querySelector('.index-page')
-
-const isHome = location.pathname === '/'
-if (latestArticle) {
-  latestArticle.style.display = isHome ? 'block' : 'none'
-  readMore.style.display = isHome ? 'block' : 'none'
-  indexPage.style.display = isHome ? 'none' : 'block'
-}
-
-const openMenu = () => {
-  menuContainer.classList.add('open')
-  menus.forEach(menu => {
-    menu.classList.add('animated', 'fadeInLeft')
-  })
-  mask.classList.add('open')
-  contentWrapper.classList.add('is-second')
-}
-
-const closeMenu = () => {
-  menuContainer.classList.remove('open')
-  menus.forEach(menu => {
-    menu.classList.remove('animated', 'fadeInLeft')
-  })
-  mask.classList.remove('open')
-  contentWrapper.classList.remove('is-second')
-}
 </script>
-  
+
+
+
+
   </body>
 </html>
